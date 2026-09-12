@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aalto University &mdash; Sign Language Kinematics &amp; Biomechanical Digital Twins</title>
+  <title>Sign Language Kinematics &mdash; Biomechanical Digital Twins &amp; Foundation Models | Aalto CS &middot; ELLIS Finland</title>
   
-  <!-- Inter Font from Google Fonts for clean grotesque typography -->
+  <!-- Inter Font from Google Fonts for clean Scandinavian grotesque typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -56,10 +56,10 @@
 
     /* Radial Glowing Aura matching Aalto's Designs for a Cooler Planet */
     .aalto-glow-aura {
-      background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.45) 0%, rgba(6, 182, 212, 0.25) 35%, rgba(0, 0, 0, 0.95) 70%, #000000 100%);
+      background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.45) 0%, rgba(6, 182, 212, 0.22) 38%, rgba(0, 0, 0, 0.95) 72%, #000000 100%);
     }
     
-    /* Subtle custom scrollbar */
+    /* Custom scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
     }
@@ -77,31 +77,33 @@
 </head>
 <body class="bg-black text-neutral-100 selection:bg-sky-500 selection:text-black min-h-screen flex flex-col justify-between">
 
-  <!-- ==================== TOP UTILITY NAVIGATION ==================== -->
+  <!-- ==================== TOP NAVIGATION BAR ==================== -->
   <header class="border-b border-neutral-900 bg-black/95 sticky top-0 z-50 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       
-      <!-- Left: Aalto Brand Emblem & Slogan -->
+      <!-- Left: Research Project Identity & Institutional Mark -->
       <div class="flex items-center gap-3 sm:gap-4">
-        <a href="#top" class="flex items-center gap-3 group" title="Aalto University Home">
-          <!-- Stylized Aalto 'a' emblem with cyan stroke -->
-          <div class="w-9 h-9 flex items-center justify-center">
-            <svg class="w-9 h-9 transform group-hover:scale-105 transition duration-200" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M34 14v22M34 26c-2.5-3.5-6-5-10-5-6.5 0-11 4.5-11 11s4.5 11 11 11c4 0 7.5-1.5 10-5" stroke="#38bdf8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M13 19c3.5-3.5 8-5 13-5 5.5 0 8 2 8 8" stroke="#38bdf8" stroke-width="4.5" stroke-linecap="round"/>
+        <a href="#top" class="flex items-center gap-3 group" title="Sign Language Kinematics Research Home">
+          <!-- Sleek geometric kinematic hand icon in cyan -->
+          <div class="w-9 h-9 bg-neutral-950 border border-neutral-800 rounded flex items-center justify-center group-hover:border-sky-500/50 transition">
+            <svg class="w-5 h-5 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/>
+              <path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/>
+              <path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/>
+              <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>
             </svg>
           </div>
-          <span class="text-base sm:text-lg font-bold text-white tracking-tight">Sign of Change</span>
+          <div class="flex flex-col">
+            <span class="text-sm sm:text-base font-bold text-white tracking-tight leading-tight">Sign Language Kinematics</span>
+            <span class="text-[11px] text-neutral-400 font-medium leading-none">Aalto University &middot; ELLIS Finland</span>
+          </div>
         </a>
-        <span class="hidden md:inline-block text-xs uppercase tracking-widest text-neutral-500 border-l border-neutral-800 pl-3">
-          Doctoral Research Dossier
-        </span>
       </div>
 
-      <!-- Right: Utility Links matching Aalto Screenshot -->
+      <!-- Right: Research Actions & Utility Links -->
       <nav class="flex items-center gap-3 sm:gap-5 text-xs sm:text-sm font-medium text-neutral-300">
         <a href="Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf" target="_blank" class="hidden sm:inline-flex items-center gap-1.5 hover:text-white transition">
-          <svg class="w-4 h-4 text-sky-400 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          <svg class="w-4 h-4 text-sky-400 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
           <span>Proposal PDF</span>
         </a>
         
@@ -110,27 +112,20 @@
           <span>3D Engine</span>
         </a>
 
-        <span class="text-neutral-700 select-none">|</span>
-
-        <div class="flex items-center gap-1 text-neutral-400 hover:text-white cursor-pointer transition">
-          <svg class="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-          <span class="font-semibold text-white">EN</span>
-          <span class="text-xs">&#9662;</span>
-        </div>
-
         <a href="#dossier" class="hidden md:inline-flex items-center gap-1 hover:text-white transition">
           <svg class="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
           <span>Dossier</span>
         </a>
 
-        <a href="https://github.com/Joeytribb/sign-language-kinematics" target="_blank" class="inline-flex items-center gap-1 text-sky-400 hover:text-sky-300 transition">
-          <svg class="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
-          <span class="hidden sm:inline">GitHub</span>
+        <a href="#community" class="hidden lg:inline-flex items-center gap-1 hover:text-white transition text-neutral-400">
+          <span>Kuurojen Liitto</span>
         </a>
 
-        <a href="#menu-overview" class="inline-flex items-center gap-1.5 hover:text-white transition pl-1">
-          <svg class="w-5 h-5 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-          <span class="hidden sm:inline">Menu</span>
+        <span class="text-neutral-800 select-none">|</span>
+
+        <a href="https://github.com/Joeytribb/sign-language-kinematics" target="_blank" class="inline-flex items-center gap-1.5 text-sky-400 hover:text-sky-300 transition">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          <span class="hidden sm:inline">GitHub</span>
         </a>
       </nav>
 
@@ -140,31 +135,42 @@
   <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-16 sm:space-y-24 w-full">
 
-    <!-- ==================== HERO MASTHEAD ==================== -->
-    <section id="top" class="space-y-4 pt-2 sm:pt-6">
-      <h1 class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-white tracking-aalto-tight leading-none select-none">
-        Aalto University
+    <!-- ==================== HERO IDENTITY & MASTHEAD ==================== -->
+    <section id="top" class="space-y-4 pt-2 sm:pt-4">
+      <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-sky-400 font-bold bg-neutral-950 px-3 py-1.5 border border-neutral-800">
+        <span>Doctoral Research Dossier &middot; Department of Computer Science &middot; ELLIS Finland</span>
+      </div>
+      
+      <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white tracking-aalto-tight leading-none select-none">
+        Sign Language Kinematics
       </h1>
-      <div class="flex flex-wrap items-center gap-y-2 gap-x-4 text-sm sm:text-base text-neutral-400 font-medium tracking-tight">
-        <span>Department of Computer Science</span>
-        <span class="text-neutral-600">&bull;</span>
-        <span>ELLIS Institute Finland</span>
-        <span class="text-neutral-600">&bull;</span>
-        <span class="text-sky-400">Doctoral Application Dossier</span>
+      <p class="text-xl sm:text-2xl md:text-3xl text-neutral-300 font-bold tracking-tight">
+        Biomechanical Scaffolding &amp; Foundation Digital Twins
+      </p>
+      
+      <div class="flex flex-wrap items-center gap-y-2 gap-x-6 text-xs sm:text-sm text-neutral-400 pt-1">
+        <div><span class="text-neutral-500">Applicant:</span> <span class="text-white font-semibold">Iniyan Andrews Joseph</span></div>
+        <span class="text-neutral-700">&bull;</span>
+        <div><span class="text-neutral-500">Focus:</span> <span class="text-sky-300 font-medium">Kinematic Digital Twins &amp; Assistive AI</span></div>
+        <span class="text-neutral-700">&bull;</span>
+        <div><span class="text-neutral-500">Target Supercomputer:</span> <span class="text-white font-medium">EuroHPC LUMI (AMD MI250X)</span></div>
       </div>
     </section>
 
-    <!-- ==================== FEATURED EDITORIAL HERO GRID (1:1 with Screenshot) ==================== -->
+    <!-- ==================== FEATURED ASYMMETRIC EDITORIAL GRID (Aalto 2-Column Split) ==================== -->
     <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
       
       <!-- Left Editorial Column -->
       <div class="flex flex-col justify-between space-y-6 sm:space-y-8 pr-0 lg:pr-6">
         <div class="space-y-4 sm:space-y-6">
           <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight">
-            Curious to catch a glimpse of tomorrow?
+            How do we teach artificial intelligence to move like a human signer?
           </h2>
           <p class="text-base sm:text-lg text-neutral-300 leading-relaxed font-normal">
-            Closed-loop spatial scaffolding, causal memory, and manifold-projected anatomy-aware diffusion: our neuro-symbolic research framework bridges 15-DOF continuous biomechanics with foundational language models to pioneer next-generation Finnish and American Sign Language digital twins.
+            Current generative neural avatars rely on unconstrained 2D/3D coordinate regression&mdash;inevitably causing rubbery, physically impossible finger deformations and severe phonological smearing.
+          </p>
+          <p class="text-sm sm:text-base text-neutral-400 leading-relaxed">
+            Our framework solves this by decoupling linguistic planning from physical actuation: continuous 15-DOF forward kinematics, a quartic biomechanical strain objective \(P_{\mathrm{strain}}(	heta)\), and manifold residual diffusion \(\Pi_{\mathcal{M}}\) guarantee zero bone stretching and authentic spatial agreement in Finnish and American Sign Language.
           </p>
         </div>
 
@@ -178,13 +184,19 @@
           <div>
             <a href="Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf" target="_blank" class="aalto-link text-base sm:text-lg">
               <span class="text-xl font-bold leading-none">&rarr;</span>
-              <span class="link-text">Read full research proposal (14 Pages PDF)</span>
+              <span class="link-text">Read full technical proposal (14 Pages PDF)</span>
+            </a>
+          </div>
+          <div>
+            <a href="#community" class="aalto-link text-base sm:text-lg text-neutral-400">
+              <span class="text-xl font-bold leading-none">&rarr;</span>
+              <span class="link-text">Explore Kuurojen Liitto ry participatory co-design</span>
             </a>
           </div>
         </div>
       </div>
 
-      <!-- Right Editorial Column: Signature Luminous Aura Card (Designs for a Cooler Planet Aesthetic) -->
+      <!-- Right Editorial Column: Signature Luminous Aura Card (Adapted for Hand Kinematics) -->
       <div class="relative w-full min-h-[380px] sm:min-h-[440px] bg-black border border-neutral-900 rounded-none overflow-hidden flex flex-col items-center justify-center p-8 sm:p-12 shadow-2xl">
         
         <!-- Center Luminous Radial Aura -->
@@ -193,22 +205,25 @@
         <!-- Content inside Aura -->
         <div class="relative z-10 text-center space-y-2 select-none">
           <div class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-none uppercase">
-            SPATIAL SIGN
+            BIOMECHANICAL
           </div>
-          <div class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-neutral-100 italic leading-none uppercase">
-            KINEMATICS
+          <div class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-neutral-200 italic leading-none uppercase">
+            DIGITAL TWIN
           </div>
           <div class="pt-4 flex items-center justify-center gap-2">
             <span class="text-xs uppercase tracking-aalto-wide text-emerald-300 font-bold bg-black/70 px-3 py-1 border border-emerald-500/30">
-              Digital Twin 2026
+              15-DOF Kinematics &bull; 60 Hz Real-Time
             </span>
+          </div>
+          <div class="pt-2 text-xs text-neutral-400 font-mono tracking-tight">
+            MCP &bull; PIP &bull; DIP &bull; Manifold Diffusion &bull; LUMI Scalable
           </div>
         </div>
 
-        <!-- Quick Launch Pill at Bottom of Card -->
+        <!-- Quick Jump Button -->
         <div class="relative z-10 pt-8">
           <a href="#kinematics-demo" class="inline-flex items-center gap-2 bg-white text-black hover:bg-neutral-200 font-bold px-5 py-2.5 text-xs sm:text-sm tracking-tight transition">
-            <span>Explore Interactive Engine Below</span>
+            <span>Interact with 3D Hand Model Below</span>
             <span>&darr;</span>
           </a>
         </div>
@@ -217,82 +232,76 @@
 
     </section>
 
-    <!-- ==================== SECOND EDITORIAL ROW (Matching Screenshot Lower Row) ==================== -->
-    <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch pt-4 border-t border-neutral-900">
-      
-      <!-- Left Visual Card: Hand Kinematics & Tracking Matrix -->
-      <div class="bg-neutral-950 border border-neutral-900 p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
-        <div class="space-y-4 relative z-10">
-          <div class="flex items-center justify-between text-xs text-neutral-400">
-            <span class="uppercase tracking-widest text-sky-400 font-semibold">PoC Kinematic Architecture</span>
-            <span>15-DOF &bull; 60 Hz</span>
-          </div>
-          <div class="grid grid-cols-5 gap-2 pt-2">
-            <!-- Mini visual indicators for 5 fingers / phonological features -->
-            <div class="bg-neutral-900 border border-neutral-800 p-3 text-center">
-              <div class="text-[10px] text-neutral-500 uppercase">Thumb</div>
-              <div class="text-xs font-bold text-sky-400 pt-1">CMC/IP</div>
-            </div>
-            <div class="bg-neutral-900 border border-neutral-800 p-3 text-center">
-              <div class="text-[10px] text-neutral-500 uppercase">Index</div>
-              <div class="text-xs font-bold text-sky-400 pt-1">MCP/DIP</div>
-            </div>
-            <div class="bg-neutral-900 border border-neutral-800 p-3 text-center">
-              <div class="text-[10px] text-neutral-500 uppercase">Middle</div>
-              <div class="text-xs font-bold text-sky-400 pt-1">MCP/DIP</div>
-            </div>
-            <div class="bg-neutral-900 border border-neutral-800 p-3 text-center">
-              <div class="text-[10px] text-neutral-500 uppercase">Ring</div>
-              <div class="text-xs font-bold text-sky-400 pt-1">MCP/DIP</div>
-            </div>
-            <div class="bg-neutral-900 border border-neutral-800 p-3 text-center">
-              <div class="text-[10px] text-neutral-500 uppercase">Pinky</div>
-              <div class="text-xs font-bold text-sky-400 pt-1">MCP/DIP</div>
-            </div>
-          </div>
-          <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed pt-2">
-            Rigid skeleton kinematics constrained by the Biomechanical Pain Objective \(P_{\mathrm{strain}}(	heta)\), soft-body collision repulsion, and manifold residual projection \(\Pi_{\mathcal{M}}\) for zero bone stretching.
-          </p>
-        </div>
-
-        <div class="pt-6 relative z-10">
-          <a href="04_Procedural_Engine_PoC/anatomical_finger.html" class="aalto-link text-sm">
-            <span class="text-base font-bold">&rarr;</span>
-            <span class="link-text">Test 26 Ground-Truth Signs in WebGL</span>
-          </a>
-        </div>
+    <!-- ==================== RESEARCH ARCHITECTURE BENTO GRID ==================== -->
+    <section class="space-y-8 pt-4 border-t border-neutral-900">
+      <div>
+        <div class="text-xs uppercase tracking-widest text-neutral-400 font-semibold">Core Research Pillars</div>
+        <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight mt-1">The "Brain vs. Muscles" Foundation</h2>
       </div>
 
-      <!-- Right Editorial Story Card -->
-      <div class="bg-neutral-950 border border-neutral-900 p-6 sm:p-8 flex flex-col justify-between space-y-6">
-        <div class="space-y-4">
-          <div class="text-xs uppercase tracking-widest text-emerald-400 font-semibold">
-            ELLIS Finland &middot; Aalto Doctoral Track
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Card 1: Forward Kinematics (Muscles) -->
+        <div class="bg-neutral-950 border border-neutral-900 p-6 sm:p-8 flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div class="text-xs uppercase tracking-widest text-sky-400 font-bold">01 / Actuation &bull; 60 Hz</div>
+            <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">15-DOF Anatomical Scaffolding</h3>
+            <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed">
+              Models 3 distinct rigid phalanges per finger (MCP, PIP, DIP; thumb CMC, MCP, IP) under tendon spring dynamics, soft-body collision repulsion, and quartic strain penalty \(P_{\mathrm{strain}}(	heta)\).
+            </p>
+            <div class="bg-black/60 border border-neutral-800 p-3 font-mono text-[11px] text-sky-300">
+              \(\mathbf{X} = \Pi_{\mathcal{M}}(\mathbf{\hat{P}} + \Delta \mathbf{X})\) &mdash; Zero bone stretch
+            </div>
           </div>
-          <h3 class="text-2xl sm:text-3xl font-bold text-white tracking-tight leading-snug">
-            Doctoral dossier explores assistive digital twins from first principles
-          </h3>
-          <p class="text-sm text-neutral-300 leading-relaxed">
-            Spanning our 14-page technical proposal, 2-page doctoral motivation letter, and academic curriculum vitae, this dossier presents a complete 4-year research program aligned with Finland's Sign Language Act (<em>Viittomakielilaki 352/2015</em>) and scaled for EuroHPC LUMI compute infrastructure.
-          </p>
-        </div>
-
-        <div class="space-y-3 pt-4 border-t border-neutral-900">
-          <div>
-            <a href="Motivation_Letter.pdf" target="_blank" class="aalto-link text-sm">
+          <div class="pt-4 border-t border-neutral-900">
+            <a href="04_Procedural_Engine_PoC/anatomical_finger.html" class="aalto-link text-xs sm:text-sm">
               <span class="text-base font-bold">&rarr;</span>
-              <span class="link-text">Read Doctoral Motivation Letter (2 Pages)</span>
-            </a>
-          </div>
-          <div>
-            <a href="CV_Iniyan-Joseph_Aalto.pdf" target="_blank" class="aalto-link text-sm">
-              <span class="text-base font-bold">&rarr;</span>
-              <span class="link-text">Read Academic Curriculum Vitae (2 Pages)</span>
+              <span class="link-text">Test 26 Ground-Truth Signs</span>
             </a>
           </div>
         </div>
-      </div>
 
+        <!-- Card 2: Linguistic Planning (Brain) -->
+        <div class="bg-neutral-950 border border-neutral-900 p-6 sm:p-8 flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div class="text-xs uppercase tracking-widest text-emerald-400 font-bold">02 / Linguistic Planning &bull; 1&ndash;2 Hz</div>
+            <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Spatial-SignLLM Foundation Bridge</h3>
+            <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed">
+              Discourse-level translation tokenized into discrete 3D spatial registers \(\mathcal{V}_{\mathrm{spatial}}\), maintaining a decoupled \(O(1)\) causal spatial memory bank \(\mathcal{M}_t\) with 180&deg; perspective invariance.
+            </p>
+            <div class="bg-black/60 border border-neutral-800 p-3 font-mono text-[11px] text-emerald-300">
+              \(\mathcal{V}_{\mathrm{total}} = \mathcal{V}_{\mathrm{text}} \cup \mathcal{V}_{\mathrm{phono}} \cup \mathcal{V}_{\mathrm{spatial}}\)
+            </div>
+          </div>
+          <div class="pt-4 border-t border-neutral-900">
+            <a href="Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf" target="_blank" class="aalto-link text-xs sm:text-sm">
+              <span class="text-base font-bold">&rarr;</span>
+              <span class="link-text">Read Architecture (Proposal Sec. 3)</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 3: Societal Grounding (Community) -->
+        <div id="community" class="bg-neutral-950 border border-neutral-900 p-6 sm:p-8 flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div class="text-xs uppercase tracking-widest text-purple-400 font-bold">03 / Ethical &amp; Legal Grounding</div>
+            <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Participatory Co-Design</h3>
+            <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed">
+              Full legal compliance with Finland's Sign Language Act (<em>Viittomakielilaki 352/2015</em>) and the WHO Disability Mandate. All evaluation protocols co-designed alongside deaf native signers at <em>Kuurojen Liitto ry</em>.
+            </p>
+            <div class="bg-black/60 border border-neutral-800 p-3 font-mono text-[11px] text-purple-300">
+              Kuurojen Liitto ry &bull; Participatory Co-Design
+            </div>
+          </div>
+          <div class="pt-4 border-t border-neutral-900">
+            <a href="Motivation_Letter.pdf" target="_blank" class="aalto-link text-xs sm:text-sm">
+              <span class="text-base font-bold">&rarr;</span>
+              <span class="link-text">Read Community Framework</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
     </section>
 
     <!-- ==================== VISITOR & REVIEWER ACKNOWLEDGMENT CARD ==================== -->
@@ -333,42 +342,6 @@
       </div>
     </section>
 
-    <!-- ==================== THREE CORE SCIENTIFIC PRINCIPLES (Aalto Editorial Columns) ==================== -->
-    <section id="menu-overview" class="space-y-8 pt-4 border-t border-neutral-900">
-      <div>
-        <div class="text-xs uppercase tracking-widest text-neutral-400 font-semibold">Foundational Architecture</div>
-        <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight mt-1">Core Scientific Principles</h2>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        <div class="border-t-2 border-white pt-6 space-y-3">
-          <div class="text-xs uppercase tracking-widest text-sky-400 font-bold">01 / Macro vs Micro</div>
-          <h3 class="text-xl font-bold text-white">The "Brain vs. Muscles" Principle</h3>
-          <p class="text-sm text-neutral-400 leading-relaxed">
-            High-level linguistic discourse is planned at 1&ndash;2 Hz by Spatial-SignLLM, while continuous musculoskeletal execution is handled by deterministic 15-DOF IK and manifold residual diffusion at 60 Hz.
-          </p>
-        </div>
-
-        <div class="border-t-2 border-white pt-6 space-y-3">
-          <div class="text-xs uppercase tracking-widest text-emerald-400 font-bold">02 / Manifold Geometry</div>
-          <h3 class="text-xl font-bold text-white">Manifold-Projected Diffusion</h3>
-          <p class="text-sm text-neutral-400 leading-relaxed">
-            Residual noise diffusion operates on rigid kinematic scaffolds with holonomic SHAKE/RATTLE projections, mathematically guaranteeing zero bone stretching and preventing rubbery artifacts.
-          </p>
-        </div>
-
-        <div class="border-t-2 border-white pt-6 space-y-3">
-          <div class="text-xs uppercase tracking-widest text-purple-400 font-bold">03 / Discourse Memory</div>
-          <h3 class="text-xl font-bold text-white">Decoupled Causal Spatial Memory</h3>
-          <p class="text-sm text-neutral-400 leading-relaxed">
-            An external \(O(1)\) stateful register tracks active 3D referent loci across unlimited dialogue turns, applying deictic parity for 180&deg; perspective invariance across signing interlocutors.
-          </p>
-        </div>
-
-      </div>
-    </section>
-
     <!-- ==================== INTERACTIVE KINEMATICS ENGINE EMBED ==================== -->
     <section id="kinematics-demo" class="space-y-4 pt-4 border-t border-neutral-900">
       <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
@@ -396,7 +369,7 @@
       <div>
         <div class="text-xs uppercase tracking-widest text-neutral-400 font-semibold">Application Documents</div>
         <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight mt-1">Doctoral Application Dossier</h2>
-        <p class="text-sm text-neutral-400 mt-1">Complete, verified application documents prepared for the Aalto University CS Doctoral Committee.</p>
+        <p class="text-sm text-neutral-400 mt-1">Complete, peer-reviewed application documents prepared for the Aalto University CS Doctoral Committee.</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
@@ -457,19 +430,19 @@
 
   </main>
 
-  <!-- ==================== AALTO SCANDINAVIAN FOOTER ==================== -->
+  <!-- ==================== SCANDINAVIAN ACADEMIC FOOTER ==================== -->
   <footer class="border-t border-neutral-900 bg-black py-12 mt-20 text-xs text-neutral-500">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
       
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         <div class="space-y-3">
-          <div class="text-white font-bold text-sm tracking-tight">Aalto University</div>
-          <p class="leading-relaxed">Department of Computer Science<br>Konemiehentie 2, 02150 Espoo<br>Finland</p>
+          <div class="text-white font-bold text-sm tracking-tight">Sign Language Kinematics</div>
+          <p class="leading-relaxed">Doctoral Research Initiative<br>Department of Computer Science<br>Aalto University &middot; Espoo, Finland</p>
         </div>
         <div class="space-y-3">
-          <div class="text-white font-bold text-sm tracking-tight">Institutional Research</div>
+          <div class="text-white font-bold text-sm tracking-tight">Institutional Affiliations</div>
           <ul class="space-y-1.5">
-            <li><a href="https://www.aalto.fi/en/department-of-computer-science" target="_blank" class="hover:text-white transition">Department of CS</a></li>
+            <li><a href="https://www.aalto.fi/en/department-of-computer-science" target="_blank" class="hover:text-white transition">Department of CS, Aalto</a></li>
             <li><a href="https://ellis.eu/" target="_blank" class="hover:text-white transition">ELLIS Institute Finland</a></li>
             <li><a href="https://www.lumi-supercomputer.eu/" target="_blank" class="hover:text-white transition">EuroHPC LUMI Supercomputer</a></li>
           </ul>
@@ -494,10 +467,10 @@
 
       <div class="pt-8 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
-          &copy; 2026 Doctoral Application Dossier &mdash; Department of Computer Science, Aalto University &middot; ELLIS Institute Finland
+          &copy; 2026 Iniyan Andrews Joseph &middot; Doctoral Application Dossier &middot; Aalto University &amp; ELLIS Finland
         </div>
         <div class="text-neutral-600">
-          Crafted with Scandinavian Modernist Aesthetics &middot; Otaniemi, Espoo
+          Designed with Scandinavian Minimalist Principles &middot; Otaniemi, Espoo
         </div>
       </div>
 
