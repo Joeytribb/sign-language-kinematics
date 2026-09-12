@@ -471,6 +471,21 @@
     renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1;
     container.appendChild(renderer.domElement);
 
+    // Three.js r128 CapsuleGeometry Polyfill
+    if (typeof THREE.CapsuleGeometry === 'undefined') {
+      THREE.CapsuleGeometry = class extends THREE.BufferGeometry {
+        constructor(radius = 1, length = 1, capSegments = 4, radialSegments = 8) {
+          super();
+          const l = Math.max(0.01, length);
+          const path = new THREE.Path();
+          path.absarc(0, -l / 2, radius, -Math.PI / 2, 0, false);
+          path.absarc(0, l / 2, radius, 0, Math.PI / 2, false);
+          const lathe = new THREE.LatheGeometry(path.getPoints(radialSegments || 8), radialSegments || 8);
+          this.copy(lathe);
+        }
+      };
+    }
+
     let camAngleX = 0.0, camAngleY = Math.PI / 2.5; const CAM_RADIUS = 30;
     camera.position.x = CAM_RADIUS * Math.sin(camAngleY) * Math.sin(camAngleX);
     camera.position.z = CAM_RADIUS * Math.sin(camAngleY) * Math.cos(camAngleX);
