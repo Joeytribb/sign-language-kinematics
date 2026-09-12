@@ -7,10 +7,13 @@
 !/LICENSE
 !/index.html
 
-# Whitelist 15-DOF WebGL Kinematics Prototype
+# Whitelist 15-DOF WebGL Kinematics Prototype & Reference Images
 !/04_Procedural_Engine_PoC/
 /04_Procedural_Engine_PoC/*
 !/04_Procedural_Engine_PoC/anatomical_finger.html
+!/04_Procedural_Engine_PoC/ref_images/
+/04_Procedural_Engine_PoC/ref_images/*
+!/04_Procedural_Engine_PoC/ref_images/*.png
 
 # Whitelist publication PDFs (for subsequent commit)
 !/Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf
