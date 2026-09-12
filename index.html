@@ -106,6 +106,11 @@
           <svg class="w-4 h-4 text-sky-400 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
           <span>Proposal PDF</span>
         </a>
+
+        <a href="Motivation_Letter.pdf" target="_blank" class="hidden sm:inline-flex items-center gap-1.5 hover:text-white transition">
+          <svg class="w-4 h-4 text-purple-400 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span>Motivation Letter</span>
+        </a>
         
         <a href="#kinematics-demo" class="inline-flex items-center gap-1.5 hover:text-white transition">
           <svg class="w-4 h-4 text-emerald-400 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
@@ -169,8 +174,8 @@
           <p class="text-base sm:text-lg text-neutral-300 leading-relaxed font-normal">
             Current generative neural avatars rely on unconstrained 2D/3D coordinate regression&mdash;inevitably causing rubbery, physically impossible finger deformations and severe phonological smearing.
           </p>
-          <p class="text-sm sm:text-base text-neutral-400 leading-relaxed">
-            Our framework solves this by decoupling linguistic planning from physical actuation: continuous 15-DOF forward kinematics, a quartic biomechanical strain objective \(P_{\mathrm{strain}}(	heta)\), and manifold residual diffusion \(\Pi_{\mathcal{M}}\) guarantee zero bone stretching and authentic spatial agreement in Finnish and American Sign Language.
+                    <p class="text-sm sm:text-base text-neutral-400 leading-relaxed">
+            Our framework solves this by decoupling linguistic planning from physical actuation: continuous 15-DOF forward kinematics, a quartic biomechanical strain objective <span class="text-sky-300 font-semibold"><i>P</i><sub>strain</sub>(&theta;)</span>, and manifold residual diffusion <span class="text-sky-300 font-semibold">&Pi;<sub>M</sub></span> guarantee zero bone stretching and authentic spatial agreement in Finnish and American Sign Language.
           </p>
         </div>
 
@@ -188,9 +193,9 @@
             </a>
           </div>
           <div>
-            <a href="#community" class="aalto-link text-base sm:text-lg text-neutral-400">
+            <a href="Motivation_Letter.pdf" target="_blank" class="aalto-link text-base sm:text-lg text-purple-300 hover:text-purple-200">
               <span class="text-xl font-bold leading-none">&rarr;</span>
-              <span class="link-text">Explore Kuurojen Liitto ry participatory co-design</span>
+              <span class="link-text border-purple-400">Read Doctoral Motivation Letter (2 Pages PDF)</span>
             </a>
           </div>
         </div>
@@ -247,10 +252,10 @@
             <div class="text-xs uppercase tracking-widest text-sky-400 font-bold">01 / Actuation &bull; 60 Hz</div>
             <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">15-DOF Anatomical Scaffolding</h3>
             <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed">
-              Models 3 distinct rigid phalanges per finger (MCP, PIP, DIP; thumb CMC, MCP, IP) under tendon spring dynamics, soft-body collision repulsion, and quartic strain penalty \(P_{\mathrm{strain}}(	heta)\).
+              Models 3 distinct rigid phalanges per finger (MCP, PIP, DIP; thumb CMC, MCP, IP) under tendon spring dynamics, soft-body collision repulsion, and quartic strain penalty <span class="text-sky-300 font-semibold"><i>P</i><sub>strain</sub>(&theta;)</span>.
             </p>
             <div class="bg-black/60 border border-neutral-800 p-3 font-mono text-[11px] text-sky-300">
-              \(\mathbf{X} = \Pi_{\mathcal{M}}(\mathbf{\hat{P}} + \Delta \mathbf{X})\) &mdash; Zero bone stretch
+              <b>X</b> = &Pi;<sub>M</sub>(<b>P&#770;</b> + &Delta;<b>X</b>) &mdash; Zero bone stretch
             </div>
           </div>
           <div class="pt-4 border-t border-neutral-900">
@@ -267,10 +272,10 @@
             <div class="text-xs uppercase tracking-widest text-emerald-400 font-bold">02 / Linguistic Planning &bull; 1&ndash;2 Hz</div>
             <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Spatial-SignLLM Foundation Bridge</h3>
             <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed">
-              Discourse-level translation tokenized into discrete 3D spatial registers \(\mathcal{V}_{\mathrm{spatial}}\), maintaining a decoupled \(O(1)\) causal spatial memory bank \(\mathcal{M}_t\) with 180&deg; perspective invariance.
+              Discourse-level translation tokenized into discrete 3D spatial registers <span class="text-emerald-300 font-semibold"><i>V</i><sub>spatial</sub></span>, maintaining a decoupled <span class="text-emerald-300 font-semibold"><i>O</i>(1)</span> causal spatial memory bank <span class="text-emerald-300 font-semibold"><i>M</i><sub>t</sub></span> with 180&deg; perspective invariance.
             </p>
             <div class="bg-black/60 border border-neutral-800 p-3 font-mono text-[11px] text-emerald-300">
-              \(\mathcal{V}_{\mathrm{total}} = \mathcal{V}_{\mathrm{text}} \cup \mathcal{V}_{\mathrm{phono}} \cup \mathcal{V}_{\mathrm{spatial}}\)
+              <i>V</i><sub>total</sub> = <i>V</i><sub>text</sub> &cup; <i>V</i><sub>phono</sub> &cup; <i>V</i><sub>spatial</sub>
             </div>
           </div>
           <div class="pt-4 border-t border-neutral-900">
@@ -281,22 +286,22 @@
           </div>
         </div>
 
-        <!-- Card 3: Societal Grounding (Community) -->
+        <!-- Card 3: Societal Grounding & Motivation Letter -->
         <div id="community" class="bg-neutral-950 border border-neutral-900 p-6 sm:p-8 flex flex-col justify-between space-y-6">
           <div class="space-y-4">
-            <div class="text-xs uppercase tracking-widest text-purple-400 font-bold">03 / Ethical &amp; Legal Grounding</div>
-            <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Participatory Co-Design</h3>
+            <div class="text-xs uppercase tracking-widest text-purple-400 font-bold">03 / Ethical &amp; Academic Motivation</div>
+            <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Doctoral Motivation &amp; Co-Design</h3>
             <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed">
-              Full legal compliance with Finland's Sign Language Act (<em>Viittomakielilaki 352/2015</em>) and the WHO Disability Mandate. All evaluation protocols co-designed alongside deaf native signers at <em>Kuurojen Liitto ry</em>.
+              Full legal compliance with Finland's Sign Language Act (<em>Viittomakielilaki 352/2015</em>) and the WHO Disability Mandate. Detailed motivation covering candidate continuous RL background, EuroHPC LUMI compute plan, and participatory co-design with <em>Kuurojen Liitto ry</em>.
             </p>
             <div class="bg-black/60 border border-neutral-800 p-3 font-mono text-[11px] text-purple-300">
-              Kuurojen Liitto ry &bull; Participatory Co-Design
+              Kuurojen Liitto ry &bull; Participatory Co-Design &bull; Aalto CS
             </div>
           </div>
           <div class="pt-4 border-t border-neutral-900">
-            <a href="Motivation_Letter.pdf" target="_blank" class="aalto-link text-xs sm:text-sm">
+            <a href="Motivation_Letter.pdf" target="_blank" class="aalto-link text-xs sm:text-sm text-purple-300 hover:text-purple-200">
               <span class="text-base font-bold">&rarr;</span>
-              <span class="link-text">Read Community Framework</span>
+              <span class="link-text border-purple-400">Read Doctoral Motivation Letter (2 Pages PDF)</span>
             </a>
           </div>
         </div>
