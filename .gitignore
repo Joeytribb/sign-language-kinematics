@@ -1,0 +1,20 @@
+# Ignore everything by default
+/*
+
+# Whitelist root meta files
+!/.gitignore
+!/README.md
+!/LICENSE
+!/index.html
+
+# Whitelist 15-DOF WebGL Kinematics Prototype
+!/04_Procedural_Engine_PoC/
+/04_Procedural_Engine_PoC/*
+!/04_Procedural_Engine_PoC/anatomical_finger.html
+
+# Whitelist publication PDFs (for subsequent commit)
+!/Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf
+!/Research_Statement_Aalto_ELLIS.pdf
+!/Motivation_Letter.pdf
+!/CV_Iniyan-Joseph_Aalto.pdf
+

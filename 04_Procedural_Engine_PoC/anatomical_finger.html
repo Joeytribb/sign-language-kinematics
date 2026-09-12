@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Anatomical IK | ASL Alphabet & Token Engine</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { 
+      /* ACADEMIC (DEFAULT) */
+      --bg-color: #f8fafc; 
+      --panel-bg: rgba(255, 255, 255, 0.9); 
+      --panel-border: rgba(148, 163, 184, 0.3); 
+      --accent: #2563eb; 
+      --accent-glow: rgba(37, 99, 235, 0.15);
+      --text-main: #0f172a; 
+      --text-muted: #64748b; 
+      --error: #ef4444; 
+      --font-body: 'Inter', sans-serif;
+    }
+    .theme-davinci {
+      /* DA VINCI (NOTEBOOK) */
+      --bg-color: #f4ecd8; 
+      --panel-bg: rgba(244, 236, 216, 0.7); 
+      --panel-border: rgba(92, 64, 51, 0.3); 
+      --accent: #5c4033; 
+      --accent-glow: rgba(92, 64, 51, 0.1);
+      --text-main: #3e2723; 
+      --text-muted: #6d4c41; 
+      --error: #b71c1c; 
+      --font-body: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif;
+    }
+    body { 
+      margin: 0; 
+      overflow: hidden; 
+      background-color: var(--bg-color); 
+      color: var(--text-main); 
+      font-family: var(--font-body); 
+      user-select: none; 
+    }
+    #canvas-container { width: 100vw; height: 100vh; position: absolute; top: 0; left: 0; cursor: grab; } 
+    #canvas-container:active { cursor: grabbing; }
+    
+    #app-header { position: absolute; top: 20px; left: 24px; z-index: 10; pointer-events: none; }
+    .app-title { font-size: 15px; font-weight: 700; letter-spacing: 2px; color: var(--text-main); margin: 0; display: flex; align-items: center; gap: 8px; }
+    .app-title span.badge { background: var(--accent); font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 999px; letter-spacing: 1px; color: var(--bg-color); }
+    .app-subtitle { font-size: 11px; font-weight: 400; letter-spacing: 0.5px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; }
+    
+    #ui-panel { 
+      position: absolute; 
+      top: 20px; 
+      right: 20px; 
+      width: 380px; 
+      max-height: calc(100vh - 40px); 
+      overflow-y: auto; 
+      background: var(--panel-bg); 
+      border: 1px solid var(--panel-border); 
+      padding: 20px; 
+      border-radius: 16px; 
+      z-index: 10; 
+      backdrop-filter: blur(16px); 
+      -webkit-backdrop-filter: blur(16px); 
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); 
+    }
+    
+    .section-title { 
+      font-size: 11px; 
+      font-weight: 700; 
+      color: var(--accent); 
+      text-transform: uppercase; 
+      letter-spacing: 1.5px; 
+      margin: 16px 0 10px 0; 
+      color: var(--text-muted); 
+      text-transform: uppercase; 
+      margin-bottom: 12px;
+      margin-top: 24px;
+      border-bottom: 1px solid var(--panel-border);
+      padding-bottom: 6px;
+    }
+    .section-title:first-child { margin-top: 0; }
+
+    /* BUTTON GRID */
+    .alpha-grid { 
+      display: grid; 
+      grid-template-columns: repeat(7, 1fr); 
+      gap: 6px; 
+    }
+    .alpha-btn {
+      background: rgba(128, 128, 128, 0.08);
+      border: 1px solid var(--panel-border);
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 13px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .alpha-btn:hover {
+      background: var(--accent-glow);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+    .alpha-btn.active {
+      background: var(--accent);
+      color: var(--bg-color);
+      border-color: var(--accent);
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    .preset-pill {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .preset-pill:hover, .preset-pill.active {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    
+    .token-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hud-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; font-size: 11px; }
+    .hud-label { color: var(--text-muted); font-weight: 400; }
+    .hud-value { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-align: right; }
+    
+    #gizmo-container { position: absolute; bottom: 20px; left: 24px; width: 70px; height: 70px; z-index: 10; pointer-events: none; }
+    
+    #seq-display {
+      position: absolute;
+      top: 90px;
+      left: 24px;
+      padding: 16px 24px;
+      background: var(--panel-bg);
+      border: 2px solid var(--panel-border);
+      color: var(--text-main);
+      border-radius: 4px;
+      font-family: var(--font-body);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-glow);
+      z-index: 50;
+      min-width: 400px;
+      pointer-events: none;
+    }
+    #seq-display b { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+    
+    select.token-select {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      font-size: 11px;
+      border-radius: 6px;
+      padding: 4px 6px;
+      width: 100%;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    select.token-select:focus { outline: none; border-color: var(--accent); }
+
+    ::-webkit-scrollbar { width: 5px; } 
+    ::-webkit-scrollbar-track { background: transparent; } 
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+  <div id="app-header">
+    <h1 class="app-title">Procedural ASL-LEX Kinematics Engine</h1>
+    <h2 class="app-subtitle" style="display:flex; justify-content:space-between; align-items:center;">
+      <span>Research Proof-of-Concept</span>
+      <button id="btn-theme" style="background:var(--accent); color:var(--bg-color); font-size:10px; font-weight:700; padding:4px 8px; border-radius:4px; border:none; cursor:pointer;">SWITCH TO DA VINCI</button>
+    </h2>
+  </div>
+
+  <div id="seq-display"></div>
+
+  <div id="ui-panel">
+    <!-- ASL ALPHABET (A-Z) -->
+    <div class="section-title" style="display:flex; justify-content:space-between; align-items:center;">
+      <span>ASL Alphabet A-Z</span>
+      <button id="btn-play-all" style="background:#2563eb; color:white; font-size:10px; font-weight:700; padding:4px 8px; border-radius:4px; transition:0.2s; border:none; cursor:pointer;">▶ PLAY SEQUENCE</button>
+    </div>
+    <div style="margin-bottom: 12px; display:flex; align-items:center; gap:10px;">
+        <span style="font-size: 11px;">Speed:</span>
+        <input type="range" id="speed-slider" min="0.1" max="15.0" step="0.1" value="1.0" style="flex:1;">
+        <span id="speed-val" style="font-size: 11px;">1.0x</span>
+    </div>
+    <div class="alpha-grid" id="alphabet-grid"></div>
+
+    <!-- ACTIVE TOKEN INSPECTOR -->
+    <div class="section-title">
+      <span>Linguistic Token Translation</span>
+      <span id="active-sign-badge" style="font-family: monospace; font-size: 10px; text-transform: uppercase;">Sign: Relaxed</span>
+    </div>
+    <div id="token-inspector-wrapper" style="display: flex; gap: 12px; margin-bottom: 12px;">
+      <div id="token-inspector" style="flex: 1; padding: 12px; border: 1px solid var(--panel-border); border-radius: 4px;"></div>
+      <img id="sign-reference-img" src="" style="width: 100px; height: 100px; border: 1px solid var(--panel-border); border-radius: 4px; display: none; object-fit: contain; background: white;" />
+    </div>
+
+    <!-- MANUAL TOKEN OVERRIDE PLAYGROUND -->
+    <div class="section-title">
+      <span>Manual Token Override</span>
+    </div>
+    <div style="display: flex; gap: 8px; margin-bottom: 12px; align-items: center;">
+      <select id="pg-finger" class="token-select" style="flex:1;">
+        <option value="idx">Index</option>
+        <option value="mid">Middle</option>
+        <option value="rng">Ring</option>
+        <option value="pnk">Pinky</option>
+        <option value="thm">Thumb</option>
+      </select>
+      <select id="pg-token" class="token-select" style="flex:2;">
+        <!-- Populated via JS -->
+      </select>
+      <button id="btn-apply-token" style="background:var(--accent); color:var(--bg-color); font-size:10px; font-weight:700; padding:6px 12px; border-radius:4px; border:none; cursor:pointer;">APPLY</button>
+    </div>
+
+    <!-- KINEMATICS HUD -->
+    <div class="section-title"><span>Live Kinematics & Error</span></div>
+    <div id="hud-container"></div>
+  </div>
+
+  <div id="gizmo-container"></div>
+
+  <script>
+    window.onerror = function(message, source, lineno, colno, error) {
+      const errDiv = document.createElement('div');
+      errDiv.style = "position:fixed; top:10px; left:10px; z-index:9999; background:red; color:white; padding:20px; font-family:sans-serif; font-weight:bold;";
+      errDiv.innerText = "CRASH LOG: " + message + " at line " + lineno;
+      document.body.appendChild(errDiv);
+    };
+    const deg2rad = Math.PI / 180, rad2deg = 180 / Math.PI;
+
+    let animSpeed = 1.0;
+    document.getElementById('speed-slider').addEventListener('input', (e) => {
+      animSpeed = parseFloat(e.target.value);
+      document.getElementById('speed-val').innerText = animSpeed.toFixed(1) + 'x';
+    });
+
+    // --- CONFIGURATION ---
+    const FINGERS = [
+      { id: 'idx', name: 'Index', color: 0x38bdf8, base: [-2.4, 5.0, 0], lengths: [4.5, 2.5, 1.5] },
+      { id: 'mid', name: 'Middle', color: 0xa855f7, base: [-0.8, 5.1, 0], lengths: [5.0, 3.0, 1.8] },
+      { id: 'rng', name: 'Ring', color: 0x22c55e, base: [ 0.8, 5.0, 0], lengths: [4.6, 2.7, 1.6] },
+      { id: 'pnk', name: 'Pinky', color: 0xef4444, base: [ 2.4, 4.8, 0], lengths: [3.5, 2.0, 1.2] }
+    ];
+    
+    const LIM_F = {
+      mcp_f: [-10*deg2rad, 90*deg2rad], mcp_a: [-15*deg2rad, 15*deg2rad],
+      pip_f: [  0*deg2rad, 100*deg2rad], dip_f: [  0*deg2rad, 80*deg2rad],
+      rest: { f: 10*deg2rad, a: 0 }
+    };
+
+    // Thumb anatomically shorter & thicker
+    const L_T = [3.8, 2.5, 1.5];
+    const LIM_T = {
+      cmc_f: [-60*deg2rad, 120*deg2rad], cmc_a: [-80*deg2rad, 60*deg2rad],
+      mcp_f: [0*deg2rad, 80*deg2rad], ip_f:  [0*deg2rad, 90*deg2rad],
+      rest: { f: 30*deg2rad, a: 15*deg2rad }
+    };
+    
+    // Accurate Thumb coordinate system (Flexion sweeps across palm, Abduction sweeps outward)
+    const THUMB_BASE_POS = new THREE.Vector3(-3.0, 0.5, 0.5);
+    const THUMB_BASE_EULER = new THREE.Euler(90*deg2rad, 90*deg2rad, 0, 'XYZ');
+    const THUMB_BASE_QUAT = new THREE.Quaternion().setFromEuler(THUMB_BASE_EULER);
+
+    // --- PHONOLOGICAL TOKENS (ASL-LEX & LINGUISTIC PRIMITIVES) ---
+    const FINGER_TOKENS = {
+      EXTENDED: { f1: 0, a1: 0, f2: 0, f3: 0, desc: "Straight extended" },
+      EXTENDED_SPREAD_L: { f1: 0, a1: 12, f2: 0, f3: 0, desc: "Extended abducted left" },
+      EXTENDED_SPREAD_R: { f1: 0, a1: -12, f2: 0, f3: 0, desc: "Extended abducted right" },
+      EXTENDED_FORWARD: { f1: 65, a1: 0, f2: 0, f3: 0, desc: "Pointing forward (MCP 65°)" },
+      POINTING_DOWN: { f1: 90, a1: 0, f2: 90, f3: 0, desc: "Pointing straight down" },
+      CROSSED_R: { f1: 0, a1: -15, f2: 0, f3: 0, desc: "Crossed over neighbor finger" },
+      CLOSED: { f1: 90, a1: 0, f2: 90, f3: 80, desc: "Full fist closed" },
+      CLOSED_OVER_THUMB: { f1: 85, a1: 0, f2: 75, f3: 50, desc: "Closed over tucked thumb" },
+      CURVED: { f1: 45, a1: 0, f2: 45, f3: 45, desc: "C-shape curved arc" },
+      CURVED_O: { f1: 55, a1: 0, f2: 65, f3: 50, desc: "O-shape circle arc" },
+      HALF_BENT: { f1: 85, a1: 0, f2: 10, f3: 0, desc: "L-bend at knuckle (MCP 85°)" },
+      HOOK_BENT: { f1: 25, a1: 0, f2: 85, f3: 50, desc: "Hook / crooked bend" },
+      CLAW_E: { f1: 85, a1: 0, f2: 85, f3: 60, desc: "Tight claw (knuckles flat on thumb)" }
+    };
+
+    const THUMB_TOKENS = {
+      THM_REST_SIDE: { f1: -10, a1: -30, f2: 10, f3: 10, desc: "Resting straight on side of index ('A')" },
+      THM_WRAP_OVER: { f1: -10, a1: -30, f2: 50, f3: 80, desc: "Wrapped over closed fingers" },
+      THM_WRAP_FRONT: { f1: -5, a1: -60, f2: 60, f3: 80, desc: "Tight fist wrap across front ('S')" },
+      THM_FLAT_PALM: { f1: 0, a1: -25, f2: 80, f3: 80, desc: "Flat across lower palm ('B','E')" },
+      THM_OUT: { f1: -45, a1: -30, f2: 0, f3: 0, desc: "Extended 90° outward ('L','G')" },
+      THM_OUT_SPREAD: { f1: -60, a1: -30, f2: 0, f3: 0, desc: "Wide outward spread ('Y')" },
+      THM_TUCK_M: { f1: 0, a1: -75, f2: 75, f3: 80, desc: "Tucked under index, mid, ring ('M')" },
+      THM_TUCK_N: { f1: -15, a1: -55, f2: 75, f3: 80, desc: "Tucked under index, mid ('N')" },
+      THM_TUCK_T: { f1: -35, a1: -35, f2: 75, f3: 80, desc: "Tucked under index ('T')" },
+      THM_PINCH_INDEX: { f1: -40, a1: -30, f2: 60, f3: 80, desc: "Pinching index fingertip ('F')" },
+      THM_PINCH_MID: { f1: -25, a1: -30, f2: 60, f3: 80, desc: "Touching middle fingertip ('D')" },
+      THM_CURVED: { f1: -30, a1: -30, f2: 40, f3: 40, desc: "C-shape opposing curve ('C')" },
+      THM_OPPOSE_O: { f1: -20, a1: -30, f2: 60, f3: 60, desc: "O-shape opposing circle ('O')" },
+      THM_BETWEEN_INDEX_MID: { f1: -30, a1: -30, f2: 50, f3: 80, desc: "Upward between index & mid ('K','P')" },
+      THM_HOLD_PINKY: { f1: 5, a1: -25, f2: 70, f3: 70, desc: "Holding pinky down ('W')" },
+      THM_POINTING_DOWN: { f1: 0, a1: 60, f2: 0, f3: 0, desc: "Pointing down ('Q')" }
+    };
+
+    // --- ASL-LEX LLM TRANSLATOR (JSON SCHEMA TO KINEMATIC TOKENS) ---
+    // Instead of hardcoding math, we define linguistic intents based on ASL-LEX.
+    const LLM_ASL_DICTIONARY = {
+      "A": { selected: [], flexion: "CLOSED", thumb: "REST_SIDE" },
+      "B": { selected: ["idx","mid","rng","pnk"], flexion: "EXTENDED", thumb: "FLAT_PALM" },
+      "C": { selected: ["idx","mid","rng","pnk"], flexion: "CURVED", thumb: "CURVED" },
+      "D": { selected: ["idx"], flexion: "EXTENDED", unselected: "CURVED_O", thumb: "PINCH_MID" },
+      "E": { selected: ["idx","mid","rng","pnk"], flexion: "CLAW_E", thumb: "FLAT_PALM" },
+      "F": { selected: ["mid","rng","pnk"], flexion: "EXTENDED", spread: true, unselected: "CURVED_O", thumb: "PINCH_INDEX" },
+      "G": { selected: ["idx"], flexion: "EXTENDED_FORWARD", thumb: "OUT" },
+      "H": { selected: ["idx","mid"], flexion: "EXTENDED_FORWARD", thumb: "WRAP_OVER" },
+      "I": { selected: ["pnk"], flexion: "EXTENDED", thumb: "WRAP_OVER" },
+      "J": { selected: ["pnk"], flexion: "EXTENDED", thumb: "WRAP_OVER" },
+      "K": { selected: ["idx","mid"], flexion: "EXTENDED", spread: true, thumb: "BETWEEN_INDEX_MID" }, 
+      "L": { selected: ["idx"], flexion: "EXTENDED", thumb: "OUT" },
+      "M": { selected: ["idx","mid","rng"], flexion: "CLOSED_OVER_THUMB", thumb: "TUCKED" },
+      "N": { selected: ["idx","mid"], flexion: "CLOSED_OVER_THUMB", thumb: "TUCKED" },
+      "O": { selected: ["idx","mid","rng","pnk"], flexion: "CURVED_O", thumb: "OPPOSE_O" },
+      "P": { selected: ["idx","mid"], flexion: "POINTING_DOWN", spread: true, thumb: "BETWEEN_INDEX_MID" },
+      "Q": { selected: ["idx"], flexion: "POINTING_DOWN", thumb: "POINTING_DOWN" },
+      "R": { selected: ["idx","mid"], flexion: "CROSSED_R", thumb: "WRAP_OVER" },
+      "S": { selected: [], flexion: "CLOSED", thumb: "WRAP_FRONT" },
+      "T": { selected: ["idx"], flexion: "CLOSED_OVER_THUMB", thumb: "TUCKED" },
+      "U": { selected: ["idx","mid"], flexion: "EXTENDED", spread: false, thumb: "WRAP_OVER" },
+      "V": { selected: ["idx","mid"], flexion: "EXTENDED", spread: true, thumb: "WRAP_OVER" },
+      "W": { selected: ["idx","mid","rng"], flexion: "EXTENDED", spread: true, thumb: "HOLD_PINKY" },
+      "X": { selected: ["idx"], flexion: "HOOK_BENT", thumb: "WRAP_OVER" },
+      "Y": { selected: ["pnk"], flexion: "EXTENDED", spread: true, thumb: "OUT_SPREAD" },
+      "Z": { selected: ["idx"], flexion: "EXTENDED", thumb: "WRAP_OVER" }
+    };
+
+    function compileASLJSON(dict) {
+      const compiled = {};
+      for(let sign in dict) {
+        let s = dict[sign];
+        let c = { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED" };
+        
+        // 1. Assign Unselected Fingers
+        let un = s.unselected || "CLOSED";
+        ['idx','mid','rng','pnk'].forEach(f => c[f] = un);
+
+        // 2. Assign Selected Fingers & Spread Logic
+        (s.selected || []).forEach(f => {
+          let flex = s.flexion;
+          if(s.spread && flex === "EXTENDED") {
+            if(f === "idx") flex = "EXTENDED_SPREAD_L";
+            else if(f === "pnk") flex = "EXTENDED_SPREAD_R";
+            else if(f === "mid" && s.selected.length === 2) flex = "EXTENDED_SPREAD_R"; 
+            else if(f === "rng" && s.selected.length === 3) flex = "EXTENDED_SPREAD_R";
+          }
+          if(flex === "CROSSED_R" && f === "mid") flex = "EXTENDED";
+          c[f] = flex;
+        });
+
+        // 3. Thumb Contextual Inference Engine
+        let t = s.thumb || "REST_SIDE";
+        if (t === "TUCKED") {
+          // Dynamically infer how far to sweep the thumb based on selected fingers!
+          if (s.selected.includes("rng")) t = "TUCK_M";
+          else if (s.selected.includes("mid")) t = "TUCK_N";
+          else if (s.selected.includes("idx")) t = "TUCK_T";
+        }
+        c.thm = "THM_" + t;
+        
+        // 4. Manual edge cases for exact semantic matching
+        if(sign === "K") c.mid = "EXTENDED_FORWARD";
+        if(sign === "P") c.idx = "EXTENDED_FORWARD";
+        
+        // 5. Wrist Orientation (X, Y, Z in radians)
+        c.wrist = [0, 0, 0]; // Default pointing UP (Observer sees fingers UP, palm FACING them)
+        if(sign === "G" || sign === "H") c.wrist = [0, 0, -Math.PI/2]; // Pointing to Observer's RIGHT
+        if(sign === "C" || sign === "O") c.wrist = [0, Math.PI/2.5, 0]; // Palm faces to Observer's RIGHT
+        if(sign === "P" || sign === "Q") c.wrist = [Math.PI/2, Math.PI/2, 0, 'YXZ']; // Index RIGHT, Middle DOWN (Thumb TOWARDS Observer)
+        
+        compiled[sign] = c;
+      }
+      return compiled;
+    }
+
+    // Generate the Kinematic Tokens at Runtime!
+    const ASL_ALPHABET = compileASLJSON(LLM_ASL_DICTIONARY);
+
+    // SPECIAL NOVEL CONCEPTS (Demonstrating LLM procedural generation)
+    const SPECIAL_PRESETS = {
+      "CakePop": { 
+        name: "CakePop (Novel)", 
+        tokens: { idx: "CURVED", mid: "CLOSED", rng: "CLOSED", pnk: "EXTENDED_SPREAD_R", thm: "THM_PINCH_INDEX" },
+        desc: "Pinching stick with Index+Thumb, Pinky extended, others closed"
+      },
+      "Relaxed": { 
+        name: "Relaxed Hand", 
+        tokens: { idx: "CURVED", mid: "CURVED", rng: "CURVED", pnk: "CURVED", thm: "THM_CURVED" },
+        desc: "Natural resting anatomical posture"
+      },
+      "Spread-5": { 
+        name: "Spread 5", 
+        tokens: { idx: "EXTENDED_SPREAD_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "EXTENDED_SPREAD_R", thm: "THM_OUT" },
+        desc: "All 5 digits spread widely"
+      },
+      "Peace": {
+        name: "Peace Sign",
+        tokens: { idx: "EXTENDED_SPREAD_L", mid: "EXTENDED_SPREAD_R", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_OVER" },
+        desc: "V-shape peace sign"
+      }
+    };
+
+    let animationQueue = [];
+    let currentActivePoseName = "Relaxed";
+    let currentActiveTokens = {}; // Track active tokens
+    let targetWristQuat = new THREE.Quaternion();
+    
+    // Path Animation state
+    let handPathCurve = null;
+    let handPathMesh = null;
+    let pathAnimProgress = 0;
+
+    // --- MANUAL PLAYGROUND LOGIC ---
+    const pgFinger = document.getElementById('pg-finger');
+    const pgToken = document.getElementById('pg-token');
+    
+    function populatePlaygroundDropdown() {
+      pgToken.innerHTML = '';
+      const isThumb = pgFinger.value === 'thm';
+      const dict = isThumb ? THUMB_TOKENS : FINGER_TOKENS;
+      for (let k in dict) {
+        let opt = document.createElement('option');
+        opt.value = k;
+        opt.innerText = k;
+        pgToken.appendChild(opt);
+      }
+    }
+    pgFinger.addEventListener('change', populatePlaygroundDropdown);
+    window.addEventListener('DOMContentLoaded', populatePlaygroundDropdown); // Initial population
+
+    document.getElementById('btn-apply-token').addEventListener('click', () => {
+      const fid = pgFinger.value;
+      const tkn = pgToken.value;
+      currentActiveTokens[fid] = tkn;
+      // Also preserve wrist rotation
+      if (!currentActiveTokens.wrist) currentActiveTokens.wrist = [0,0,0];
+      executeProceduralPose(currentActiveTokens, "Custom Override");
+    });
+
+    // --- THREE.JS SETUP ---
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene(); scene.fog = new THREE.FogExp2(0x0b0f17, 0.015);
+    const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 100);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight); renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1;
+    container.appendChild(renderer.domElement);
+
+    let camAngleX = 0.0, camAngleY = Math.PI / 2.5; const CAM_RADIUS = 30;
+    camera.position.x = CAM_RADIUS * Math.sin(camAngleY) * Math.sin(camAngleX);
+    camera.position.z = CAM_RADIUS * Math.sin(camAngleY) * Math.cos(camAngleX);
+    camera.position.y = CAM_RADIUS * Math.cos(camAngleY);
+    camera.lookAt(0, 10, 0);
+
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.target.set(0, 10, 0);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.update();
+
+    // Target Drag Controls
+    let isDraggingTarget = null;
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    const dragPlane = new THREE.Plane();
+
+    window.addEventListener('mousedown', (e) => {
+      if (e.target.closest('#ui-panel')) return;
+
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      raycaster.setFromCamera(mouse, camera);
+
+      const targetMeshes = fingerData.map(f => f.tgt.mesh);
+      const intersects = raycaster.intersectObjects(targetMeshes);
+
+      if (intersects.length > 0) {
+        const hitMesh = intersects[0].object;
+        isDraggingTarget = fingerData.find(f => f.tgt.mesh === hitMesh);
+        
+        // Get absolute world position of the target
+        const worldPos = new THREE.Vector3();
+        isDraggingTarget.tgt.group.getWorldPosition(worldPos);
+        
+        // Setup plane facing the camera for dragging
+        const planeNormal = new THREE.Vector3().copy(camera.position).sub(worldPos).normalize();
+        dragPlane.setFromNormalAndCoplanarPoint(planeNormal, worldPos);
+        
+        // Cancel any running animations to allow manual override
+        animationQueue = []; 
+        document.getElementById("seq-display").style.display = "none";
+        controls.enabled = false;
+        return; // Handled target drag
+      }
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+      if (isDraggingTarget) {
+        raycaster.setFromCamera(mouse, camera);
+        const intersectionPoint = new THREE.Vector3();
+        raycaster.ray.intersectPlane(dragPlane, intersectionPoint);
+        if (intersectionPoint) {
+          // Convert absolute world intersection to rootBase's local coordinate space
+          rootBase.worldToLocal(intersectionPoint);
+          isDraggingTarget.tgt.group.position.copy(intersectionPoint);
+        }
+        return;
+      }
+
+      // Cursor hover effect
+      raycaster.setFromCamera(mouse, camera);
+      const targetMeshes = fingerData.map(f => f.tgt.mesh);
+      const intersects = raycaster.intersectObjects(targetMeshes);
+      document.body.style.cursor = intersects.length > 0 ? 'pointer' : 'default';
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDraggingTarget = null;
+      controls.enabled = true;
+    });
+
+    const gizmoScene = new THREE.Scene();
+    const gizmoCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10); gizmoCamera.position.set(0, 0, 5);
+    const gizmoRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); gizmoRenderer.setSize(70, 70);
+    document.getElementById('gizmo-container').appendChild(gizmoRenderer.domElement);
+    const axesHelper = new THREE.AxesHelper(0.8); gizmoScene.add(axesHelper);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.25)); 
+    scene.add(new THREE.HemisphereLight(0x38bdf8, 0x0b0f17, 0.5));
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.4); dirLight.position.set(10, 18, 12); dirLight.castShadow = true;
+    dirLight.shadow.mapSize.width = 2048; dirLight.shadow.mapSize.height = 2048; scene.add(dirLight);
+    const gridHelper = new THREE.GridHelper(40, 40, 0xcbd5e1, 0xf1f5f9);
+    scene.add(gridHelper);
+
+    // MATERIALS (Starts in Academic Default)
+    const innerBoneMat = new THREE.MeshBasicMaterial({ color: 0x1e293b }); // Slate
+    const fleshMat = new THREE.MeshBasicMaterial({ color: 0x94a3b8, wireframe: false, transparent: true, opacity: 0.35 }); // Smooth gray
+    const arcMat = new THREE.MeshBasicMaterial({ color: 0x64748b, transparent: true, opacity: 0.2, side: THREE.DoubleSide });
+
+    function createBoneGeometry(length, radius) { const geo = new THREE.CapsuleGeometry(radius, length - 2*radius, 8, 12); geo.translate(0, length/2, 0); geo.scale(1, 1, 0.75); return geo; }
+    function createArc(r, lim, axis) { const geo = new THREE.RingGeometry(r*1.1, r*1.2, 32, 1, lim[0], lim[1]-lim[0]); const mesh = new THREE.Mesh(geo, arcMat); if(axis === 'X') mesh.rotation.y = Math.PI/2; return mesh; }
+
+    const rootBase = new THREE.Group(); 
+    rootBase.position.y = 10;
+    scene.add(rootBase);
+
+    // ANATOMICAL PALM CONSTRUCTION (Da Vinci Style)
+    const palmGroup = new THREE.Group();
+    // Metacarpals (4 bones inside palm)
+    const mcX = [-2.4, -0.8, 0.8, 2.4];
+    for (let x of mcX) {
+      const mcGeo = new THREE.CylinderGeometry(0.2, 0.3, 5, 8);
+      mcGeo.translate(x, 2.5, 0);
+      palmGroup.add(new THREE.Mesh(mcGeo, innerBoneMat));
+    }
+    // Thenar Eminence (Thumb base muscle)
+    const thenarGeo = new THREE.SphereGeometry(1.6, 12, 12);
+    thenarGeo.scale(1, 1.2, 0.8);
+    thenarGeo.translate(-1.8, 1.8, 0.5);
+    palmGroup.add(new THREE.Mesh(thenarGeo, fleshMat));
+    
+    // Hypothenar Eminence (Pinky base muscle)
+    const hypoGeo = new THREE.CapsuleGeometry(0.9, 2.5, 8, 12);
+    hypoGeo.translate(2.2, 2.5, 0.5);
+    palmGroup.add(new THREE.Mesh(hypoGeo, fleshMat));
+
+    // Central Palm Pad
+    const padGeo = new THREE.BoxGeometry(4.5, 2.0, 1.0, 4, 4, 1);
+    padGeo.translate(0, 4.0, 0.6);
+    palmGroup.add(new THREE.Mesh(padGeo, new THREE.MeshBasicMaterial({ color: 0x5c4033, wireframe: true, transparent: true, opacity: 0.15 })));
+
+    rootBase.add(palmGroup);
+
+    class IKNode {
+      constructor(length) { this.length = length; this.localRot = new THREE.Euler(0,0,0,'XYZ'); this.worldPos = new THREE.Vector3(); this.worldQuat = new THREE.Quaternion(); this.child = null; this.parent = null; }
+      updateWorld() {
+        if(this.parent) { 
+          this.worldQuat.copy(this.parent.worldQuat).multiply(new THREE.Quaternion().setFromEuler(this.localRot)); 
+          this.worldPos.copy(this.parent.worldPos).add(new THREE.Vector3(0, this.parent.length, 0).applyQuaternion(this.parent.worldQuat));
+        } else { this.worldQuat.setFromEuler(this.localRot); }
+        if(this.child) this.child.updateWorld();
+      }
+      getEffectorPos() {
+        if(this.child) return this.child.getEffectorPos();
+        return this.worldPos.clone().add(new THREE.Vector3(0, this.length, 0).applyQuaternion(this.worldQuat));
+      }
+    }
+
+    const fingerData = [];
+    
+    function createTarget(cHex) {
+      const g = new THREE.Group();
+      const m = new THREE.Mesh(new THREE.SphereGeometry(0.25, 8, 8), new THREE.MeshBasicMaterial({ color: cHex, wireframe: false })); // Red ink wireframe
+      g.add(m); return { group: g, mesh: m };
+    }
+
+    function initFinger(id, name, color, basePos, L, isThumb) {
+      const gBase = new THREE.Group(); gBase.position.fromArray(basePos); rootBase.add(gBase);
+      const ikBase = new IKNode(0); ikBase.worldPos.fromArray(basePos);
+      if(isThumb) { gBase.rotation.copy(THUMB_BASE_EULER); ikBase.localRot.copy(THUMB_BASE_EULER); }
+
+      const r1 = isThumb ? 0.9 : 0.7;
+      const r2 = isThumb ? 0.85 : 0.65;
+      const r3 = isThumb ? 0.8 : 0.6;
+      
+      const g1 = new THREE.Group(); gBase.add(g1);
+      g1.add(new THREE.Mesh(createBoneGeometry(L[0], 0.25), innerBoneMat));
+      g1.add(new THREE.Mesh(createBoneGeometry(L[0], r1), fleshMat));
+      const ik1 = new IKNode(L[0]); ikBase.child = ik1; ik1.parent = ikBase;
+      g1.add(createArc(r1*1.1, isThumb?LIM_T.cmc_f:LIM_F.mcp_f, 'X'));
+      g1.add(createArc(r1*1.2, isThumb?LIM_T.cmc_a:LIM_F.mcp_a, 'Z'));
+      
+      const g2 = new THREE.Group(); g2.position.y = L[0]; g1.add(g2);
+      g2.add(new THREE.Mesh(createBoneGeometry(L[1], 0.22), innerBoneMat));
+      g2.add(new THREE.Mesh(createBoneGeometry(L[1], r2), fleshMat));
+      const ik2 = new IKNode(L[1]); ik1.child = ik2; ik2.parent = ik1;
+      g2.add(createArc(r2*1.1, isThumb?LIM_T.mcp_f:LIM_F.pip_f, 'X'));
+      
+      const g3 = new THREE.Group(); g3.position.y = L[1]; g2.add(g3);
+      g3.add(new THREE.Mesh(createBoneGeometry(L[2], 0.18), innerBoneMat));
+      g3.add(new THREE.Mesh(createBoneGeometry(L[2], r3), fleshMat));
+      const ik3 = new IKNode(L[2]); ik2.child = ik3; ik3.parent = ik2;
+      g3.add(createArc(r3*1.1, isThumb?LIM_T.ip_f:LIM_F.dip_f, 'X'));
+      
+      const gTip = new THREE.Group(); gTip.position.y = L[2]; g3.add(gTip);
+
+      const tgt = createTarget(color); 
+      rootBase.add(tgt.group);
+      
+      // Initialize Target Position to Effector World Position
+      ikBase.updateWorld();
+      const initialEffector = ik3.getEffectorPos();
+      tgt.group.position.copy(initialEffector);
+      const restTarget = initialEffector.clone();
+      
+      const line = new THREE.Line(
+        new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(6), 3)), 
+        new THREE.LineDashedMaterial({ color: color, dashSize: 0.3, gapSize: 0.2, transparent: true, opacity: 0.6 })
+      ); 
+      rootBase.add(line);
+
+      // Add to UI HUD
+      const hc = document.getElementById('hud-container');
+      const cStr = '#' + color.toString(16).padStart(6, '0');
+      let html = `<div class="font-semibold text-[10px] mt-2 mb-1" style="color: ${cStr}">${name.toUpperCase()}</div>`;
+      const lbls = ['Target (XYZ)', 'IK Error', isThumb?'CMC Flex / Abd':'MCP Flex / Abd', isThumb?'MCP Flex':'PIP Flex', isThumb?'IP Flex':'DIP Flex'];
+      const keys = ['target', 'error', 'mcp', 'pip_f', 'dip_f'];
+      lbls.forEach((l,i) => html += `<div class="hud-row"><span class="hud-label">${l}</span><span class="hud-value" style="color: ${cStr}" id="hud-${id}-${keys[i]}">0.00</span></div>`);
+      const div = document.createElement('div'); div.innerHTML = html; hc.appendChild(div);
+      const ui = {}; keys.forEach(k => ui[k] = document.getElementById(`hud-${id}-${k}`));
+
+      fingerData.push({ 
+        id, isThumb, lengths: L, gBase, g1, g2, g3, gTip, 
+        ikNodes: [ikBase, ik1, ik2, ik3], tgt, line, ui, color, 
+        q: {mcp_f:0, mcp_a:0, pip_f:0, dip_f:0}, 
+        q_v: {mcp_f:0, mcp_a:0, pip_f:0, dip_f:0}, 
+        limits: isThumb ? LIM_T : LIM_F,
+        restTarget
+      });
+    }
+
+    FINGERS.forEach(f => initFinger(f.id, f.name, f.color, f.base, f.lengths, false));
+    initFinger('thm', 'Thumb', 0xfb923c, THUMB_BASE_POS.toArray(), L_T, true);
+
+    // --- PROCEDURAL RECEPTIVE POINT CLOUD (VISUALIZING REACHABLE WORKSPACE) ---
+    function buildPointClouds() {
+      for(let f of fingerData) {
+        const pts = [], cols = []; const L = f.isThumb ? L_T : FINGERS.find(x=>x.id===f.id).lengths;
+        const lim = f.limits; const maxD = L[0]+L[1]+L[2];
+        const baseQuat = f.isThumb ? THUMB_BASE_QUAT : new THREE.Quaternion();
+        const bPos = f.ikNodes[0].worldPos;
+        const l_f = f.isThumb ? lim.cmc_f : lim.mcp_f;
+        const l_a = f.isThumb ? lim.cmc_a : lim.mcp_a;
+        const p_f = f.isThumb ? lim.mcp_f : lim.pip_f;
+        const d_f = f.isThumb ? lim.ip_f : lim.dip_f;
+        for(let a=l_f[0]; a<=l_f[1]; a+=(f.isThumb?18:22)*deg2rad) {
+          for(let b=l_a[0]; b<=l_a[1]; b+=(f.isThumb?14:18)*deg2rad) {
+            for(let c=p_f[0]; c<=p_f[1]; c+=35*deg2rad) {
+              for(let d=d_f[0]; d<=d_f[1]; d+=35*deg2rad) {
+                const q1 = baseQuat.clone().multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(a, 0, b, 'XYZ')));
+                const p2 = bPos.clone().add(new THREE.Vector3(0, L[0], 0).applyQuaternion(q1));
+                const q2 = q1.clone().multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(c, 0, 0, 'XYZ')));
+                const p3 = p2.clone().add(new THREE.Vector3(0, L[1], 0).applyQuaternion(q2));
+                const q3 = q2.clone().multiply(new THREE.Quaternion().setFromEuler(new THREE.Euler(d, 0, 0, 'XYZ')));
+                const tip = p3.clone().add(new THREE.Vector3(0, L[2], 0).applyQuaternion(q3));
+                pts.push(tip.x, tip.y, tip.z);
+                const ratio = Math.pow(tip.distanceTo(bPos)/maxD, 2.5);
+                const colBase = new THREE.Color(f.color);
+                cols.push(THREE.MathUtils.lerp(colBase.r, 1.0, ratio), THREE.MathUtils.lerp(colBase.g, 0.2, ratio), THREE.MathUtils.lerp(colBase.b, 0.2, ratio));
+              }
+            }
+          }
+        }
+        const geo = new THREE.BufferGeometry(); 
+        geo.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3)); 
+        geo.setAttribute('color', new THREE.Float32BufferAttribute(cols, 3));
+        scene.add(new THREE.Points(geo, new THREE.PointsMaterial({ vertexColors: true, size: 0.12, transparent: true, opacity: 0.18, blending: THREE.AdditiveBlending, sizeAttenuation: true })));
+      }
+    }
+    // buildPointClouds(); // Disabled for Da Vinci aesthetic
+
+    // --- PROCEDURAL POSE EXECUTION & PRIORITY SCHEDULER ---
+    function executeProceduralPose(poseTokens, poseName = "Custom") {
+      currentActivePoseName = poseName;
+      document.getElementById('active-sign-badge').innerText = `Sign: ${poseName}`;
+      
+      // Save deep copy so manual overrides don't break subsequent clicks
+      currentActiveTokens = JSON.parse(JSON.stringify(poseTokens));
+      
+      let refImg = document.getElementById("sign-reference-img");
+      if (poseName.length === 1 && poseName >= 'A' && poseName <= 'Z') {
+          refImg.style.display = "block";
+          refImg.src = `ref_images/${poseName}.png`;
+      } else {
+          refImg.style.display = "none";
+      }
+
+      // Highlight active button
+      document.querySelectorAll('.alpha-btn').forEach(b => b.classList.toggle('active', b.innerText === poseName));
+      document.querySelectorAll('.preset-pill').forEach(b => b.classList.toggle('active', b.dataset.name === poseName));
+
+      // 0. UPDATE WRIST ROTATION
+      let wAngles = poseTokens.wrist || [0, 0, 0];
+      targetWristQuat.setFromEuler(new THREE.Euler(wAngles[0], wAngles[1], wAngles[2], wAngles[3] || 'XYZ'));
+
+      // 1. UPDATE ACTIVE TOKEN INSPECTOR
+      const insp = document.getElementById('token-inspector');
+      insp.innerHTML = '';
+      for(let fid of ['idx', 'mid', 'rng', 'pnk', 'thm']) {
+        const tokenKey = poseTokens[fid];
+        const tokenMeta = fid === 'thm' ? THUMB_TOKENS[tokenKey] : FINGER_TOKENS[tokenKey];
+        const fObj = fid === 'thm' ? { name: 'Thumb', color: 0xfb923c } : FINGERS.find(x => x.id === fid);
+        const cStr = '#' + fObj.color.toString(16).padStart(6, '0');
+        insp.innerHTML += `
+          <div class="flex items-center justify-between text-[11px]">
+            <span class="font-medium" style="color:${cStr}">${fObj.name}</span>
+            <span class="token-tag text-slate-300">${tokenKey}</span>
+          </div>
+          <div class="text-[9px] text-slate-400 pl-1 pb-0.5">${tokenMeta ? tokenMeta.desc : ''}</div>
+        `;
+      }
+      // Old sprite map logic removed.
+      // Playground selects removed
+
+      // 2. PROCEDURALLY COMPUTE 3D TARGET DESTINATIONS USING FORWARD KINEMATICS
+      const targetDestinations = {};
+      for(let fid in poseTokens) {
+        let f = fingerData.find(x => x.id === fid);
+        let t = poseTokens[fid];
+        let a = fid === 'thm' ? THUMB_TOKENS[t] : FINGER_TOKENS[t];
+        if(a && f) {
+          const s1 = f.ikNodes[1].localRot.clone(); const s2 = f.ikNodes[2].localRot.clone(); const s3 = f.ikNodes[3].localRot.clone();
+          f.ikNodes[1].localRot.set(a.f1*deg2rad, 0, a.a1*deg2rad, 'XYZ');
+          f.ikNodes[2].localRot.set(a.f2*deg2rad, 0, 0, 'XYZ');
+          f.ikNodes[3].localRot.set(a.f3*deg2rad, 0, 0, 'XYZ');
+          f.ikNodes[0].updateWorld();
+          targetDestinations[f.id] = f.ikNodes[3].getEffectorPos().clone();
+          f.restTarget = targetDestinations[f.id].clone(); // Save for muscle physics
+          // Restore
+          f.ikNodes[1].localRot.copy(s1); f.ikNodes[2].localRot.copy(s2); f.ikNodes[3].localRot.copy(s3);
+          f.ikNodes[0].updateWorld();
+        }
+      }
+
+      // 2.5 SEMANTIC TOUCH RESOLVER (Dynamic Thumb Targeting)
+      // Because the thumb base moved, hardcoded angles often miss. We procedurally bind the thumb's target to the exact spatial coordinate of the finger it is pinching.
+      let thmData = fingerData.find(x => x.id === 'thm');
+      if (poseTokens.thm === "THM_PINCH_INDEX") {
+        thmData.restTarget.copy(targetDestinations['idx']);
+        targetDestinations['thm'].copy(targetDestinations['idx']);
+      } else if (poseTokens.thm === "THM_PINCH_MID") {
+        thmData.restTarget.copy(targetDestinations['mid']);
+        targetDestinations['thm'].copy(targetDestinations['mid']);
+      } else if (poseTokens.thm === "THM_OPPOSE_O") {
+        thmData.restTarget.copy(targetDestinations['idx']);
+        thmData.restTarget.y -= 1.0; // Point below the index tip so all fingers meet it
+        targetDestinations['thm'].copy(thmData.restTarget);
+      } else if (poseTokens.thm === "THM_TUCK_M") {
+        thmData.restTarget.set(3.0, 1.5, 1.5); // Pull forcefully far across the palm
+        targetDestinations['thm'].copy(thmData.restTarget);
+      } else if (poseTokens.thm === "THM_TUCK_N") {
+        thmData.restTarget.set(1.0, 1.5, 1.5); // Pull to middle finger
+        targetDestinations['thm'].copy(thmData.restTarget);
+      } else if (poseTokens.thm === "THM_TUCK_T") {
+        thmData.restTarget.set(-1.0, 1.5, 1.5); // Pull to index finger
+        targetDestinations['thm'].copy(thmData.restTarget);
+      }
+
+      // 3. DEDUCE PROCEDURAL PRIORITY PHASES (TEMPORAL COLLISION AVOIDANCE)
+      let p0 = [], p1 = [], p2 = [], p3 = [];
+      const thmToken = poseTokens.thm;
+      
+      // Tucked thumb signs (M, N, T): Pinky/Ring/Mid close -> Thumb tucks -> Covering fingers fold
+      if (thmToken === "THM_TUCK_M") {
+        p0 = ['pnk'];
+        p1 = ['thm'];
+        p2 = ['idx', 'mid', 'rng'];
+      } else if (thmToken === "THM_TUCK_N") {
+        p0 = ['pnk', 'rng'];
+        p1 = ['thm'];
+        p2 = ['idx', 'mid'];
+      } else if (thmToken === "THM_TUCK_T") {
+        p0 = ['mid', 'rng', 'pnk'];
+        p1 = ['thm'];
+        p2 = ['idx'];
+      } else if (thmToken === "THM_HOLD_PINKY") {
+        p0 = ['pnk'];
+        p1 = ['thm'];
+        p2 = ['idx', 'mid', 'rng'];
+      } else if (poseTokens.idx === "CROSSED_R") {
+        // Crossed 'R': Fingers close -> Mid extends -> Index crosses over
+        p0 = ['rng', 'pnk', 'thm'];
+        p1 = ['mid'];
+        p2 = ['idx'];
+      } else if (thmToken === "THM_WRAP_OVER" || thmToken === "THM_WRAP_FRONT" || thmToken === "THM_REST_SIDE" || thmToken === "THM_PINCH_INDEX" || thmToken === "THM_PINCH_MID") {
+        // Wrapped thumb / pinch: All normal fingers curl/extend first -> Thumb sweeps over
+        p0 = ['idx', 'mid', 'rng', 'pnk'];
+        p1 = ['thm'];
+      } else {
+        // Open/curved postures: All digits move parallel
+        p0 = ['idx', 'mid', 'rng', 'pnk', 'thm'];
+      }
+
+      // 4. LOAD QUEUE WITH PRESENTATION METADATA
+      function getPhaseDesc(fingersArray) {
+        return fingersArray.map(f => {
+          let fObj = f === 'thm' ? { name: 'Thumb', color: 0xfb923c } : FINGERS.find(x => x.id === f);
+          let cStr = '#' + fObj.color.toString(16).padStart(6, '0');
+          return `<b style="color:${cStr}; display:inline-block; width:65px;">${f.toUpperCase()}</b> <span style="color:var(--text-muted)">→</span> <span style="color:var(--accent)">${poseTokens[f]}</span>`;
+        }).join("<br/>");
+      }
+
+      animationQueue = [];
+      let stepNum = 1;
+      let totalSteps = (p0.length>0?1:0) + (p1.length>0?1:0) + (p2.length>0?1:0) + (p3.length>0?1:0);
+      
+      if(p0.length) animationQueue.push({ fingers: p0, targets: targetDestinations, step: stepNum++, total: totalSteps, desc: getPhaseDesc(p0) });
+      if(p1.length) animationQueue.push({ fingers: p1, targets: targetDestinations, step: stepNum++, total: totalSteps, desc: getPhaseDesc(p1) });
+      if(p2.length) animationQueue.push({ fingers: p2, targets: targetDestinations, step: stepNum++, total: totalSteps, desc: getPhaseDesc(p2) });
+      if(p3.length) animationQueue.push({ fingers: p3, targets: targetDestinations, step: stepNum++, total: totalSteps, desc: getPhaseDesc(p3) });
+
+      // Path Movement Logic
+      if (handPathMesh) {
+        scene.remove(handPathMesh);
+        handPathMesh.geometry.dispose();
+        handPathMesh.material.dispose();
+        handPathMesh = null;
+      }
+      handPathCurve = null;
+      pathAnimProgress = 0;
+      rootBase.position.set(0, 10, 0); // Reset position
+
+      let points = [];
+      if (poseName === "J") {
+        points = [
+          new THREE.Vector3(0, 10, 0),
+          new THREE.Vector3(0, 6, 0),
+          new THREE.Vector3(-1.5, 5, 0),
+          new THREE.Vector3(-2.5, 6, 0)
+        ];
+      } else if (poseName === "Z") {
+        points = [
+          new THREE.Vector3(-3, 10, 0),
+          new THREE.Vector3(3, 10, 0),
+          new THREE.Vector3(-3, 4, 0),
+          new THREE.Vector3(3, 4, 0)
+        ];
+      }
+
+      if (points.length > 0) {
+        handPathCurve = new THREE.CatmullRomCurve3(points, false, poseName === "Z" ? "chordal" : "centripetal");
+        if (poseName === "Z") { 
+            // Make Z sharper
+            handPathCurve.tension = 0; 
+        }
+        
+        const tubeGeo = new THREE.TubeGeometry(handPathCurve, 64, 0.2, 8, false);
+        const tubeMat = new THREE.MeshBasicMaterial({ color: 0xffd700, transparent: true, opacity: 0.5 });
+        handPathMesh = new THREE.Mesh(tubeGeo, tubeMat);
+        scene.add(handPathMesh);
+        
+        // Push a special animation step to indicate hand movement
+        animationQueue.push({
+            isPathAnim: true,
+            fingers: [], targets: {}, step: stepNum++, total: totalSteps + 1,
+            desc: `Trace the letter '${poseName}' in the air.`
+        });
+      }
+    }
+
+    // --- BUILD UI CONTROLS ---
+    // 1. Alphabet Grid A-Z
+    const alphaContainer = document.getElementById('alphabet-grid');
+    for(let letter in ASL_ALPHABET) {
+      const btn = document.createElement('button');
+      btn.className = 'alpha-btn';
+      btn.innerText = letter;
+      btn.onclick = () => executeProceduralPose(ASL_ALPHABET[letter], letter);
+      alphaContainer.appendChild(btn);
+    }
+    
+    // Play Sequence Auto-Runner
+    let isPlayingSequence = false;
+    document.getElementById('btn-play-all').onclick = async () => {
+      if (isPlayingSequence) return;
+      isPlayingSequence = true;
+      const btn = document.getElementById('btn-play-all');
+      btn.innerText = "■ PLAYING...";
+      btn.style.background = "var(--error)";
+      
+      const letters = Object.keys(ASL_ALPHABET);
+      for (let letter of letters) {
+        if (!isPlayingSequence) break;
+        executeProceduralPose(ASL_ALPHABET[letter], letter);
+        // Wait for the procedural queue to completely finish before advancing
+        await new Promise(resolve => {
+          const check = setInterval(() => {
+            if (animationQueue.length === 0) {
+              clearInterval(check);
+              setTimeout(resolve, 1500 / animSpeed); // pause scaled by speed
+            }
+          }, 200 / animSpeed);
+        });
+      }
+      isPlayingSequence = false;
+      btn.innerText = "▶ PLAY SEQUENCE";
+      btn.style.background = "#2563eb";
+    };
+
+    // Keyboard trigger (Type any letter 'A'-'Z' to test!)
+
+    // Keyboard trigger (Type any letter 'A'-'Z' to test!)
+    window.addEventListener('keydown', (e) => {
+      const key = e.key.toUpperCase();
+      if(ASL_ALPHABET[key]) {
+        executeProceduralPose(ASL_ALPHABET[key], key);
+      }
+    });
+
+    // --- CCD INVERSE KINEMATICS SOLVER ---
+    function ccdStep(node, targetPos, limits, restPose, isHinge) {
+      let chainRoot = node; while(chainRoot.parent) chainRoot = chainRoot.parent;
+      const effector = chainRoot.getEffectorPos();
+      const e = effector.clone().sub(node.worldPos); const t = targetPos.clone().sub(node.worldPos);
+      if(e.lengthSq() < 1e-4 || t.lengthSq() < 1e-4) return;
+      e.normalize(); t.normalize();
+      
+      let deltaQ = new THREE.Quaternion().setFromUnitVectors(e, t);
+      let pInv = node.parent ? node.parent.worldQuat.clone().invert() : new THREE.Quaternion();
+      let curLocalQ = node.localQuat ? node.localQuat.clone() : new THREE.Quaternion().setFromEuler(node.localRot);
+      let newLocalQ = pInv.clone().multiply(deltaQ).multiply(node.worldQuat);
+      let targetEuler = new THREE.Euler().setFromQuaternion(newLocalQ, 'XYZ');
+      
+      if(isHinge) {
+        let f = THREE.MathUtils.clamp(targetEuler.x, limits.f[0], limits.f[1]);
+        node.localRot.set(f, 0, 0, 'XYZ');
+      } else {
+        let f = THREE.MathUtils.clamp(targetEuler.x, limits.f[0], limits.f[1]);
+        let a = THREE.MathUtils.clamp(targetEuler.z, limits.a[0], limits.a[1]);
+        node.localRot.set(f, 0, a, 'XYZ');
+      }
+      
+      // Muscle/Tendon Spring bias toward rest pose
+      const restBias = 0.01;
+      node.localRot.x += (restPose.f - node.localRot.x) * restBias;
+      if(!isHinge && restPose.a !== undefined) node.localRot.z += (restPose.a - node.localRot.z) * restBias;
+    }
+
+    // --- MAIN ANIMATION & IK LOOP ---
+    const seqDisplay = document.getElementById("seq-display");
+
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      
+      // 1. Process Procedural Target Animations (Gliding Target Spheres through Sequence)
+      if (animationQueue.length > 0) {
+        seqDisplay.style.display = "block";
+        let step = animationQueue[0];
+        seqDisplay.innerHTML = `
+          <div style="font-size:10px; font-weight:800; color:#475569; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px; border-bottom:1px solid #1e293b; padding-bottom:6px;">
+            ASL-LEX INSTRUCTION PIPELINE: STEP ${step.step} OF ${step.total}
+          </div>
+          <div style="font-size:14px; line-height:1.8;">${step.desc}</div>
+        `;
+        
+        let allReached = true;
+        if (step.isPathAnim && handPathCurve) {
+          pathAnimProgress += 0.01 * animSpeed;
+          if (pathAnimProgress >= 1) pathAnimProgress = 1;
+          
+          const pt = handPathCurve.getPointAt(pathAnimProgress);
+          rootBase.position.copy(pt);
+          
+          if (pathAnimProgress === 1) allReached = true;
+          else allReached = false;
+        } else {
+          for(let fid of step.fingers) {
+            let f = fingerData.find(x => x.id === fid);
+            let dest = step.targets[fid];
+            if(f && dest) {
+              f.tgt.group.position.lerp(dest, 0.005 * animSpeed); 
+              if (f.tgt.group.position.distanceToSquared(dest) > 0.05) {
+                allReached = false;
+              }
+            }
+          }
+        }
+        
+        if (allReached) { 
+          animationQueue.shift(); 
+          if(animationQueue.length === 0) seqDisplay.style.display = "none"; 
+        }
+      } else {
+        // 1.1 Muscle Tension Spring
+        // When not actively animating, targets should constantly try to pull back to their intended linguistic pose
+        for (let f of fingerData) {
+          if (isDraggingTarget === f || !f.restTarget) continue;
+          // Apply a gentle spring force towards the linguistic rest target
+          f.tgt.group.position.lerp(f.restTarget, 0.005 * animSpeed); // scaled by speed
+        }
+      }
+      
+      // 1.2 Wrist Rotation Smooth Transition
+      rootBase.quaternion.slerp(targetWristQuat, 0.05 * animSpeed);
+
+      // 1.5 Soft-body Collision Repulsion
+      for (let i = 0; i < fingerData.length; i++) {
+        for (let j = i + 1; j < fingerData.length; j++) {
+          let fA = fingerData[i];
+          let fB = fingerData[j];
+          let radA = fA.isThumb ? 0.9 : 0.7;
+          let radB = fB.isThumb ? 0.9 : 0.7;
+          let minSafeDist = radA + radB;
+
+          let getColPoints = (f) => {
+            let pts = [];
+            let p0 = f.ikNodes[1].worldPos.clone(); // MCP
+            let p1 = f.ikNodes[2].worldPos.clone(); // PIP
+            let p2 = f.ikNodes[3].worldPos.clone(); // DIP
+            let p3 = f.ikNodes[3].getEffectorPos(); // TIP
+            
+            pts.push(p0, p1, p2, p3);
+            pts.push(new THREE.Vector3().lerpVectors(p0, p1, 0.5));
+            pts.push(new THREE.Vector3().lerpVectors(p1, p2, 0.5));
+            pts.push(new THREE.Vector3().lerpVectors(p2, p3, 0.5));
+            return pts;
+          };
+
+          let ptsA = getColPoints(fA);
+          let ptsB = getColPoints(fB);
+
+          for (let pA of ptsA) {
+            for (let pB of ptsB) {
+              let dist = pA.distanceTo(pB);
+              if (dist < minSafeDist && dist > 0.001) {
+                let pen = minSafeDist - dist;
+                let pushDir = new THREE.Vector3().subVectors(pA, pB).normalize();
+                
+                // Fade out force if target is already far from actual finger (IK is maxed out)
+                let errA = fA.tgt.group.position.distanceTo(ptsA[3]); // ptsA[3] is TIP
+                let errB = fB.tgt.group.position.distanceTo(ptsB[3]);
+                let dampA = Math.max(0, 1.0 - errA / 3.0);
+                let dampB = Math.max(0, 1.0 - errB / 3.0);
+
+                let forceA = pushDir.clone().multiplyScalar(pen * 0.12 * dampA);
+                let forceB = pushDir.clone().multiplyScalar(pen * 0.12 * dampB);
+                
+                if (isDraggingTarget !== fA && dampA > 0) fA.tgt.group.position.add(forceA);
+                if (isDraggingTarget !== fB && dampB > 0) fB.tgt.group.position.sub(forceB);
+              }
+            }
+          }
+        }
+      }
+
+      // 1.6 Hard clamp targets to max reach to prevent runaway
+      for (let f of fingerData) {
+        if (isDraggingTarget === f) continue;
+        let basePos = f.ikNodes[0].worldPos;
+        let maxReach = f.lengths.reduce((a,b)=>a+b, 0) + 1.5; 
+        if (f.tgt.group.position.distanceTo(basePos) > maxReach) {
+           let dir = new THREE.Vector3().subVectors(f.tgt.group.position, basePos).normalize();
+           f.tgt.group.position.copy(basePos).add(dir.multiplyScalar(maxReach));
+        }
+      }
+
+      // 2. Run CCD IK Solver on all Fingers
+      for(let f of fingerData) {
+        f.ikNodes[1].localRot.set(f.q.mcp_f, 0, f.q.mcp_a, 'XYZ'); 
+        f.ikNodes[2].localRot.set(f.q.pip_f, 0, 0, 'XYZ'); 
+        f.ikNodes[3].localRot.set(f.q.dip_f, 0, 0, 'XYZ');
+        f.ikNodes[0].updateWorld();
+
+        for(let iter=0; iter<3; iter++) {
+          ccdStep(f.ikNodes[3], f.tgt.group.position, {f: f.isThumb?f.limits.ip_f:f.limits.dip_f}, f.limits.rest, true); f.ikNodes[0].updateWorld();
+          ccdStep(f.ikNodes[2], f.tgt.group.position, {f: f.isThumb?f.limits.mcp_f:f.limits.pip_f}, f.limits.rest, true); f.ikNodes[0].updateWorld();
+          ccdStep(f.ikNodes[1], f.tgt.group.position, {f: f.isThumb?f.limits.cmc_f:f.limits.mcp_f, a: f.isThumb?f.limits.cmc_a:f.limits.mcp_a}, f.limits.rest, false); f.ikNodes[0].updateWorld();
+        }
+        f.q.mcp_f = f.ikNodes[1].localRot.x; f.q.mcp_a = f.ikNodes[1].localRot.z; 
+        f.q.pip_f = f.ikNodes[2].localRot.x; f.q.dip_f = f.ikNodes[3].localRot.x;
+        
+        // Biological Tendon / Smoothing Velocity
+        const dt = 0.12;
+        f.q_v.mcp_f += (f.q.mcp_f - f.q_v.mcp_f)*dt; f.q_v.mcp_a += (f.q.mcp_a - f.q_v.mcp_a)*dt;
+        f.q_v.pip_f += (f.q.pip_f - f.q_v.pip_f)*dt; f.q_v.dip_f += (f.q.dip_f - f.q_v.dip_f)*dt;
+        
+        f.g1.rotation.set(f.q_v.mcp_f, 0, f.q_v.mcp_a, 'XYZ'); 
+        f.g2.rotation.x = f.q_v.pip_f; 
+        f.g3.rotation.x = f.q_v.dip_f;
+        f.g1.updateMatrixWorld();
+        
+        // 3. Update Visual Feedback Lines & HUD
+        const tipWorld = new THREE.Vector3(); f.gTip.getWorldPosition(tipWorld);
+        const pos = f.line.geometry.attributes.position.array;
+        pos[0] = f.tgt.group.position.x; pos[1] = f.tgt.group.position.y; pos[2] = f.tgt.group.position.z;
+        pos[3] = tipWorld.x; pos[4] = tipWorld.y; pos[5] = tipWorld.z;
+        f.line.geometry.attributes.position.needsUpdate = true; f.line.computeLineDistances();
+        
+        const err = tipWorld.distanceTo(f.tgt.group.position);
+        if(err > 0.5) f.line.material.color.setHex(0xf87171); else f.line.material.color.setHex(f.color);
+        
+        const formatF = v => v.toFixed(2).padStart(5, ' ');
+        f.ui.target.innerText = `${formatF(f.tgt.group.position.x)}, ${formatF(f.tgt.group.position.y)}, ${formatF(f.tgt.group.position.z)}`;
+        f.ui.error.innerText = `${err.toFixed(2)} cm`; 
+        f.ui.error.style.color = err > 0.5 ? 'var(--error)' : '#' + f.color.toString(16).padStart(6,'0');
+        f.ui.mcp.innerText = `${formatF(f.q_v.mcp_f * rad2deg)}° / ${formatF(f.q_v.mcp_a * rad2deg)}°`;
+        f.ui.pip_f.innerText = `${formatF(f.q_v.pip_f * rad2deg)}°`; 
+        f.ui.dip_f.innerText = `${formatF(f.q_v.dip_f * rad2deg)}°`;
+      }
+
+      // Render Scene & Gizmo
+      gizmoCamera.position.copy(camera.position).normalize().multiplyScalar(5); 
+      gizmoCamera.lookAt(0,0,0); 
+      gizmoCamera.quaternion.copy(camera.quaternion);
+      renderer.render(scene, camera); 
+      gizmoRenderer.render(gizmoScene, gizmoCamera);
+    }
+
+    document.getElementById('btn-theme').addEventListener('click', () => {
+      const isDaVinci = document.body.classList.toggle('theme-davinci');
+      document.getElementById('btn-theme').innerText = isDaVinci ? "SWITCH TO ACADEMIC" : "SWITCH TO DA VINCI";
+      
+      if (isDaVinci) {
+        innerBoneMat.color.setHex(0x3e2723);
+        fleshMat.color.setHex(0x5c4033);
+        fleshMat.wireframe = true;
+        arcMat.color.setHex(0x8d6e63);
+        gridHelper.material.color.setHex(0x8d6e63);
+        
+        fingerData.forEach(f => {
+          f.line.material.color.setHex(0x3e2723);
+          f.tgt.mesh.material.color.setHex(0xb71c1c);
+          f.tgt.mesh.material.wireframe = true;
+        });
+      } else {
+        innerBoneMat.color.setHex(0x1e293b); 
+        fleshMat.color.setHex(0x94a3b8); 
+        fleshMat.wireframe = false;
+        arcMat.color.setHex(0x64748b);
+        gridHelper.material.color.setHex(0xcbd5e1); 
+        
+        fingerData.forEach(f => {
+          f.line.material.color.setHex(f.color);
+          f.tgt.mesh.material.color.setHex(f.color);
+          f.tgt.mesh.material.wireframe = false;
+        });
+      }
+    });
+
+    // Start in 'A' Pose
+    executeProceduralPose(ASL_ALPHABET['A'], "A");
+    animate();
+
+    window.addEventListener('resize', () => { 
+      camera.aspect = window.innerWidth/window.innerHeight; 
+      camera.updateProjectionMatrix(); 
+      renderer.setSize(window.innerWidth, window.innerHeight); 
+    });
+  </script>
+</body>
+</html>
