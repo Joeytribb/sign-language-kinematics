@@ -184,15 +184,42 @@
   <div id="canvas-container"></div>
   <div id="app-header">
     <h1 class="app-title">Procedural ASL-LEX Kinematics Engine</h1>
-    <h2 class="app-subtitle" style="display:flex; justify-content:space-between; align-items:center;">
-      <span>Research Proof-of-Concept</span>
-      <button id="btn-theme" style="background:var(--accent); color:var(--bg-color); font-size:10px; font-weight:700; padding:4px 8px; border-radius:4px; border:none; cursor:pointer;">SWITCH TO DA VINCI</button>
+    <h2 class="app-subtitle" style="display:flex; justify-content:space-between; align-items:center; gap: 12px; pointer-events: auto;">
+      <span>Research Proof-of-Concept &middot; Aalto / ELLIS Finland</span>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <a href="../Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf" target="_blank" style="background: #2563eb; color: white; font-size: 10px; font-weight: 700; padding: 5px 10px; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); transition: transform 0.1s;">
+          <svg style="width: 12px; height: 12px; fill: currentColor;" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L11 13.17V7h2v6.17l2.59-2.58L17 12l-5 5z"/></svg>
+          <span>READ PROPOSAL (14p PDF)</span>
+        </a>
+        <button id="btn-theme" style="background:var(--accent); color:var(--bg-color); font-size:10px; font-weight:700; padding:5px 8px; border-radius:6px; border:none; cursor:pointer;">SWITCH TO DA VINCI</button>
+      </div>
     </h2>
   </div>
 
   <div id="seq-display"></div>
 
   <div id="ui-panel">
+    <!-- APPLICATION DOSSIER DOCUMENTS -->
+    <div class="section-title"><span>Application Dossier Documents</span></div>
+    <div style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px;">
+      <a href="../Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf" target="_blank" style="background: rgba(37, 99, 235, 0.12); border: 1px solid rgba(37, 99, 235, 0.35); color: var(--text-main); font-size: 11px; padding: 7px 10px; border-radius: 6px; text-decoration: none; display: flex; justify-content: space-between; align-items: center; font-weight: 500;">
+        <span>📄 Full Proposal (14p PDF)</span>
+        <span style="color: #2563eb; font-weight: 700; font-size: 10px;">READ &rarr;</span>
+      </a>
+      <a href="../Research_Statement_Aalto_ELLIS.pdf" target="_blank" style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35); color: var(--text-main); font-size: 11px; padding: 7px 10px; border-radius: 6px; text-decoration: none; display: flex; justify-content: space-between; align-items: center; font-weight: 500;">
+        <span>📋 Research Statement (3p PDF)</span>
+        <span style="color: #10b981; font-weight: 700; font-size: 10px;">READ &rarr;</span>
+      </a>
+      <a href="../Motivation_Letter.pdf" target="_blank" style="background: rgba(168, 85, 247, 0.12); border: 1px solid rgba(168, 85, 247, 0.35); color: var(--text-main); font-size: 11px; padding: 7px 10px; border-radius: 6px; text-decoration: none; display: flex; justify-content: space-between; align-items: center; font-weight: 500;">
+        <span>✉️ Motivation Letter (2p PDF)</span>
+        <span style="color: #a855f7; font-weight: 700; font-size: 10px;">READ &rarr;</span>
+      </a>
+      <a href="../CV_Iniyan-Joseph_Aalto.pdf" target="_blank" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); color: var(--text-main); font-size: 11px; padding: 7px 10px; border-radius: 6px; text-decoration: none; display: flex; justify-content: space-between; align-items: center; font-weight: 500;">
+        <span>🎓 Curriculum Vitae (2p PDF)</span>
+        <span style="color: #f59e0b; font-weight: 700; font-size: 10px;">READ &rarr;</span>
+      </a>
+    </div>
+
     <!-- ASL ALPHABET (A-Z) -->
     <div class="section-title" style="display:flex; justify-content:space-between; align-items:center;">
       <span>ASL Alphabet A-Z</span>

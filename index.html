@@ -3,32 +3,198 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>15-DOF Kinematics Engine | ASL Procedural Synthesis</title>
-  <meta http-equiv="refresh" content="0; url=04_Procedural_Engine_PoC/anatomical_finger.html">
-  <script>window.location.replace("04_Procedural_Engine_PoC/anatomical_finger.html");</script>
+  <title>A Bidirectional Neuro-Symbolic Foundation Pipeline for Continuous Sign Language AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      background: #0f172a;
-      color: #94a3b8;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      text-align: center;
-    }
-    a { color: #38bdf8; text-decoration: none; font-weight: 600; }
-    a:hover { text-decoration: underline; }
+    body { font-family: 'Inter', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
   </style>
 </head>
-<body>
-  <div>
-    <h2 style="color: #f8fafc; margin-bottom: 8px;">15-DOF Anatomical Hand Engine</h2>
-    <p>Redirecting to the interactive WebGL prototype...</p>
-    <p style="margin-top: 16px; font-size: 14px;">
-      If you are not redirected automatically, <a href="04_Procedural_Engine_PoC/anatomical_finger.html">click here to launch</a>.
-    </p>
-  </div>
+<body class="bg-slate-900 text-slate-100 min-h-screen antialiased selection:bg-sky-500 selection:text-white">
+
+  <!-- Navigation Header -->
+  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20">Aalto University / ELLIS Finland</span>
+        <span class="text-xs text-slate-400 hidden sm:inline">Autumn 2026 Doctoral Dossier</span>
+      </div>
+      <div class="flex items-center gap-4 text-sm">
+        <a href="Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf" target="_blank" class="text-sky-400 hover:text-sky-300 font-medium transition flex items-center gap-1.5">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L11 13.17V7h2v6.17l2.59-2.58L17 12l-5 5z"/></svg>
+          <span>Proposal PDF</span>
+        </a>
+        <a href="https://github.com/Joeytribb/sign-language-kinematics" target="_blank" class="text-slate-400 hover:text-white transition flex items-center gap-1.5">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-12 space-y-16">
+
+    <!-- Title / Hero Section -->
+    <section class="space-y-6 text-center max-w-4xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        Interactive 15-DOF Kinematics Engine Ready
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+        A Bidirectional Neuro-Symbolic Foundation Pipeline for Continuous Sign Language AI
+      </h1>
+      <p class="text-lg text-slate-400 leading-relaxed">
+        Closed-Loop Spatial Scaffolding, Causal Memory, and Manifold-Projected Anatomy-Aware Diffusion.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4 pt-2 text-sm text-slate-300">
+        <div class="flex items-center gap-1.5 bg-slate-800/80 px-3.5 py-1.5 rounded-lg border border-slate-700">
+          <span class="text-slate-400">Applicant:</span>
+          <span class="font-semibold text-white">Iniyan Andrews Joseph</span>
+        </div>
+        <div class="flex items-center gap-1.5 bg-slate-800/80 px-3.5 py-1.5 rounded-lg border border-slate-700">
+          <span class="text-slate-400">Supervisor:</span>
+          <span class="font-semibold text-sky-400">Dr. Azade Farshad</span>
+        </div>
+        <div class="flex items-center gap-1.5 bg-slate-800/80 px-3.5 py-1.5 rounded-lg border border-slate-700">
+          <span class="text-slate-400">Institution:</span>
+          <span class="font-semibold text-white">Aalto University / ELLIS Finland</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap justify-center gap-4 pt-4">
+        <a href="04_Procedural_Engine_PoC/anatomical_finger.html" class="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg shadow-sky-500/20 transition transform hover:-translate-y-0.5">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <span>Launch 15-DOF 3D Hand Engine</span>
+        </a>
+        <a href="Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf" target="_blank" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white font-semibold px-6 py-3.5 rounded-xl border border-slate-700 transition">
+          <svg class="w-5 h-5 text-sky-400 fill-current" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L11 13.17V7h2v6.17l2.59-2.58L17 12l-5 5z"/></svg>
+          <span>Read &amp; Download Proposal PDF (14 Pages)</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Key Principles Grid -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-slate-800/50 border border-slate-800 p-6 rounded-2xl space-y-3">
+        <div class="w-10 h-10 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center font-bold text-lg">1</div>
+        <h3 class="text-lg font-bold text-white">The "Brain vs. Muscles" Principle</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">
+          High-level linguistic discourse is planned at 1–2 Hz by Spatial-SignLLM, while continuous musculoskeletal execution is handled by deterministic 15-DOF IK and manifold residual diffusion at 60 Hz.
+        </p>
+      </div>
+      <div class="bg-slate-800/50 border border-slate-800 p-6 rounded-2xl space-y-3">
+        <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-lg">2</div>
+        <h3 class="text-lg font-bold text-white">Manifold-Projected Diffusion</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">
+          Residual noise diffusion operates on rigid kinematic scaffolds with holonomic SHAKE/RATTLE projections, mathematically guaranteeing zero bone stretching.
+        </p>
+      </div>
+      <div class="bg-slate-800/50 border border-slate-800 p-6 rounded-2xl space-y-3">
+        <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold text-lg">3</div>
+        <h3 class="text-lg font-bold text-white">Decoupled Causal Spatial Memory</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">
+          An external O(1) stateful register tracks active 3D referent loci across unlimited turns, applying deictic parity for 180° perspective invariance.
+        </p>
+      </div>
+    </section>
+
+    <!-- Interactive Kinematics Engine Embed -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-xl font-bold text-white">Live Interactive Kinematics Demo</h2>
+          <p class="text-sm text-slate-400">15-DOF Anatomical Hand Solver &amp; ASL-LEX Phonological Compiler (Three.js WebGL)</p>
+        </div>
+        <a href="04_Procedural_Engine_PoC/anatomical_finger.html" class="text-sm text-sky-400 hover:text-sky-300 font-semibold flex items-center gap-1">
+          Open Fullscreen &nearr;
+        </a>
+      </div>
+      
+      <div class="w-full aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-950">
+        <iframe src="04_Procedural_Engine_PoC/anatomical_finger.html" class="w-full h-full border-0" title="15-DOF WebGL Kinematics Engine"></iframe>
+      </div>
+    </section>
+
+    <!-- Application Dossier Download Cards -->
+    <section class="space-y-6 pt-6 border-t border-slate-800">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div>
+          <h2 class="text-2xl font-bold text-white">Doctoral Application Dossier</h2>
+          <p class="text-sm text-slate-400">Download and review the complete, peer-reviewed application documents.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- Proposal Card -->
+        <div class="bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-xl space-y-3 transition flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="text-xs font-semibold text-sky-400 uppercase tracking-wider">Research Proposal</div>
+            <h4 class="font-bold text-white text-base">Full Technical Proposal</h4>
+            <p class="text-xs text-slate-400">14 pages detailing the complete closed-loop bidirectional foundation pipeline, WP1–WP6, and 45 verified citations.</p>
+          </div>
+          <div class="pt-2">
+            <a href="Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf" target="_blank" class="w-full text-center bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 font-semibold text-xs py-2 px-3 rounded-lg border border-sky-500/30 transition block">
+              Read &amp; Download PDF (14p) &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Research Statement Card -->
+        <div class="bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-xl space-y-3 transition flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Research Vision</div>
+            <h4 class="font-bold text-white text-base">Doctoral Research Statement</h4>
+            <p class="text-xs text-slate-400">3-page concise doctoral statement outlining the scientific vision, 4-year roadmap strip, and target lab synergy.</p>
+          </div>
+          <div class="pt-2">
+            <a href="Research_Statement_Aalto_ELLIS.pdf" target="_blank" class="w-full text-center bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 font-semibold text-xs py-2 px-3 rounded-lg border border-emerald-500/30 transition block">
+              Read &amp; Download PDF (3p) &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Motivation Letter Card -->
+        <div class="bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-xl space-y-3 transition flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="text-xs font-semibold text-purple-400 uppercase tracking-wider">Academic Motivation</div>
+            <h4 class="font-bold text-white text-base">Doctoral Motivation Letter</h4>
+            <p class="text-xs text-slate-400">2-page formal motivation covering candidate role fit, bithax RL foundations, and Kuurojen Liitto ry co-design.</p>
+          </div>
+          <div class="pt-2">
+            <a href="Motivation_Letter.pdf" target="_blank" class="w-full text-center bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 font-semibold text-xs py-2 px-3 rounded-lg border border-purple-500/30 transition block">
+              Read &amp; Download PDF (2p) &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- CV Card -->
+        <div class="bg-slate-800/40 border border-slate-800 hover:border-slate-700 p-5 rounded-xl space-y-3 transition flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="text-xs font-semibold text-amber-400 uppercase tracking-wider">Curriculum Vitae</div>
+            <h4 class="font-bold text-white text-base">Academic Curriculum Vitae</h4>
+            <p class="text-xs text-slate-400">2-page academic CV detailing education, verified codebases, research mentorship with Dr. Marco Marini, and awards.</p>
+          </div>
+          <div class="pt-2">
+            <a href="CV_Iniyan-Joseph_Aalto.pdf" target="_blank" class="w-full text-center bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 font-semibold text-xs py-2 px-3 rounded-lg border border-amber-500/30 transition block">
+              Read &amp; Download PDF (2p) &rarr;
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="pt-8 border-t border-slate-800 text-center text-xs text-slate-500 space-y-2">
+      <p>Doctoral Application Dossier &mdash; Department of Computer Science, Aalto University &middot; ELLIS Institute Finland</p>
+      <p>Candidate: Iniyan Andrews Joseph &middot; Proposed Supervisor: Dr. Azade Farshad</p>
+    </footer>
+
+  </main>
+
 </body>
 </html>
