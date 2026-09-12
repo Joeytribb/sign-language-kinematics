@@ -483,69 +483,6 @@
     controls.dampingFactor = 0.05;
     controls.update();
 
-    // Target Drag Controls
-    let isDraggingTarget = null;
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
-    const dragPlane = new THREE.Plane();
-
-    window.addEventListener('mousedown', (e) => {
-      if (e.target.closest('#ui-panel')) return;
-
-      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-      raycaster.setFromCamera(mouse, camera);
-
-      const targetMeshes = fingerData.map(f => f.tgt.mesh);
-      const intersects = raycaster.intersectObjects(targetMeshes);
-
-      if (intersects.length > 0) {
-        const hitMesh = intersects[0].object;
-        isDraggingTarget = fingerData.find(f => f.tgt.mesh === hitMesh);
-        
-        // Get absolute world position of the target
-        const worldPos = new THREE.Vector3();
-        isDraggingTarget.tgt.group.getWorldPosition(worldPos);
-        
-        // Setup plane facing the camera for dragging
-        const planeNormal = new THREE.Vector3().copy(camera.position).sub(worldPos).normalize();
-        dragPlane.setFromNormalAndCoplanarPoint(planeNormal, worldPos);
-        
-        // Cancel any running animations to allow manual override
-        animationQueue = []; 
-        document.getElementById("seq-display").style.display = "none";
-        controls.enabled = false;
-        return; // Handled target drag
-      }
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-
-      if (isDraggingTarget) {
-        raycaster.setFromCamera(mouse, camera);
-        const intersectionPoint = new THREE.Vector3();
-        raycaster.ray.intersectPlane(dragPlane, intersectionPoint);
-        if (intersectionPoint) {
-          // Convert absolute world intersection to rootBase's local coordinate space
-          rootBase.worldToLocal(intersectionPoint);
-          isDraggingTarget.tgt.group.position.copy(intersectionPoint);
-        }
-        return;
-      }
-
-      // Cursor hover effect
-      raycaster.setFromCamera(mouse, camera);
-      const targetMeshes = fingerData.map(f => f.tgt.mesh);
-      const intersects = raycaster.intersectObjects(targetMeshes);
-      document.body.style.cursor = intersects.length > 0 ? 'pointer' : 'default';
-    });
-
-    window.addEventListener('mouseup', () => {
-      isDraggingTarget = null;
-      controls.enabled = true;
-    });
 
     const gizmoScene = new THREE.Scene();
     const gizmoCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10); gizmoCamera.position.set(0, 0, 5);
@@ -690,6 +627,74 @@
     FINGERS.forEach(f => initFinger(f.id, f.name, f.color, f.base, f.lengths, false));
     initFinger('thm', 'Thumb', 0xfb923c, THUMB_BASE_POS.toArray(), L_T, true);
 
+    // Target Drag Controls & Interaction Listeners (Safely Attached After Finger Initialization)
+    let isDraggingTarget = null;
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    const dragPlane = new THREE.Plane();
+
+    window.addEventListener('mousedown', (e) => {
+      if (e.target.closest('#ui-panel')) return;
+      if (!fingerData || fingerData.length === 0) return;
+
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      raycaster.setFromCamera(mouse, camera);
+
+      const targetMeshes = fingerData.map(f => (f.tgt ? f.tgt.mesh : null)).filter(Boolean);
+      const intersects = raycaster.intersectObjects(targetMeshes);
+
+      if (intersects.length > 0) {
+        const hitMesh = intersects[0].object;
+        isDraggingTarget = fingerData.find(f => f.tgt && f.tgt.mesh === hitMesh);
+        if (!isDraggingTarget) return;
+
+        // Get absolute world position of the target
+        const worldPos = new THREE.Vector3();
+        isDraggingTarget.tgt.group.getWorldPosition(worldPos);
+
+        // Setup plane facing the camera for dragging
+        const planeNormal = new THREE.Vector3().copy(camera.position).sub(worldPos).normalize();
+        dragPlane.setFromNormalAndCoplanarPoint(planeNormal, worldPos);
+
+        // Cancel any running animations to allow manual override
+        animationQueue = [];
+        const seqDisp = document.getElementById("seq-display");
+        if (seqDisp) seqDisp.style.display = "none";
+        controls.enabled = false;
+      }
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!fingerData || fingerData.length === 0) return;
+
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+      if (isDraggingTarget) {
+        raycaster.setFromCamera(mouse, camera);
+        const intersectionPoint = new THREE.Vector3();
+        raycaster.ray.intersectPlane(dragPlane, intersectionPoint);
+        if (intersectionPoint) {
+          // Convert absolute world intersection to rootBase's local coordinate space
+          rootBase.worldToLocal(intersectionPoint);
+          isDraggingTarget.tgt.group.position.copy(intersectionPoint);
+        }
+        return;
+      }
+
+      // Cursor hover effect
+      raycaster.setFromCamera(mouse, camera);
+      const targetMeshes = fingerData.map(f => (f.tgt ? f.tgt.mesh : null)).filter(Boolean);
+      const intersects = raycaster.intersectObjects(targetMeshes);
+      document.body.style.cursor = intersects.length > 0 ? 'pointer' : 'default';
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDraggingTarget = null;
+      controls.enabled = true;
+    });
+
     // --- PROCEDURAL RECEPTIVE POINT CLOUD (VISUALIZING REACHABLE WORKSPACE) ---
     function buildPointClouds() {
       for(let f of fingerData) {
@@ -736,11 +741,14 @@
       currentActiveTokens = JSON.parse(JSON.stringify(poseTokens));
       
       let refImg = document.getElementById("sign-reference-img");
-      if (poseName.length === 1 && poseName >= 'A' && poseName <= 'Z') {
-          refImg.style.display = "block";
-          refImg.src = `ref_images/${poseName}.png`;
-      } else {
-          refImg.style.display = "none";
+      if (refImg) {
+        refImg.onerror = () => { refImg.style.display = "none"; };
+        if (poseName.length === 1 && poseName >= 'A' && poseName <= 'Z') {
+            refImg.style.display = "block";
+            refImg.src = `ref_images/${poseName}.png`;
+        } else {
+            refImg.style.display = "none";
+        }
       }
 
       // Highlight active button
