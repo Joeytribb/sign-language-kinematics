@@ -1,5 +1,6 @@
 # A Bidirectional Neuro-Symbolic Foundation Pipeline for Continuous Sign Language AI
 
+[![Full Application Dossier](https://img.shields.io/badge/Application%20Dossier-Full%20Research%20Portal-10B981.svg)](https://joeytribb.github.io/sign-language-kinematics/)
 [![Live 3D Demo: Three.js WebGL](https://img.shields.io/badge/Live%20Demo-Three.js%2015--DOF%20IK-059669.svg)](https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/anatomical_hand.html)
 [![Full Proposal: 14 Pages PDF](https://img.shields.io/badge/Proposal%20PDF-14%20Pages%20Verified-0284C7.svg)](https://joeytribb.github.io/sign-language-kinematics/Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf)
 [![Doctoral Application: Aalto / ELLIS Finland](https://img.shields.io/badge/Application-Aalto%20%2F%20ELLIS%20Finland-0E3A5D.svg)](https://www.aalto.fi/en/department-of-computer-science)
@@ -9,6 +10,7 @@
 
 > **Doctoral Research Dossier & Open-Source 15-DOF Biomechanical Kinematics Engine**  
 > **Applicant:** Iniyan Andrews Joseph  
+> **Full Research Dossier Portal:** [joeytribb.github.io/sign-language-kinematics](https://joeytribb.github.io/sign-language-kinematics/)  
 > **LinkedIn:** [linkedin.com/in/iniyandrews](https://www.linkedin.com/in/iniyandrews)  
 > **Department:** Department of Computer Science, School of Science, Aalto University  
 > **Affiliated Research Unit:** European Laboratory for Learning and Intelligent Systems (ELLIS) Institute Finland  
