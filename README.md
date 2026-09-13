@@ -1,13 +1,15 @@
-﻿# A Bidirectional Neuro-Symbolic Foundation Pipeline for Continuous Sign Language AI
+# A Bidirectional Neuro-Symbolic Foundation Pipeline for Continuous Sign Language AI
 
-[![Live 3D Demo: Three.js WebGL](https://img.shields.io/badge/Live%20Demo-Three.js%2015--DOF%20IK-059669.svg)](https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/anatomical_finger.html)
+[![Live 3D Demo: Three.js WebGL](https://img.shields.io/badge/Live%20Demo-Three.js%2015--DOF%20IK-059669.svg)](https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/anatomical_hand.html)
 [![Full Proposal: 14 Pages PDF](https://img.shields.io/badge/Proposal%20PDF-14%20Pages%20Verified-0284C7.svg)](https://joeytribb.github.io/sign-language-kinematics/Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf)
 [![Doctoral Application: Aalto / ELLIS Finland](https://img.shields.io/badge/Application-Aalto%20%2F%20ELLIS%20Finland-0E3A5D.svg)](https://www.aalto.fi/en/department-of-computer-science)
 [![Supervisor: Dr. Azade Farshad](https://img.shields.io/badge/Supervisor-Dr.%20Azade%20Farshad-7C3AED.svg)](https://research.aalto.fi/en/persons/azade-farshad)
+[![LinkedIn Profile](https://img.shields.io/badge/LinkedIn-iniyandrews-0A66C2.svg)](https://www.linkedin.com/in/iniyandrews)
 [![License: MIT](https://img.shields.io/badge/License-MIT-gray.svg)](LICENSE)
 
 > **Doctoral Research Dossier & Open-Source 15-DOF Biomechanical Kinematics Engine**  
 > **Applicant:** Iniyan Andrews Joseph  
+> **LinkedIn:** [linkedin.com/in/iniyandrews](https://www.linkedin.com/in/iniyandrews)  
 > **Department:** Department of Computer Science, School of Science, Aalto University  
 > **Affiliated Research Unit:** European Laboratory for Learning and Intelligent Systems (ELLIS) Institute Finland  
 > **Proposed Primary Supervisor:** [Dr. Azade Farshad](https://research.aalto.fi/en/persons/azade-farshad) (Assistant Professor, Aalto University / PI, ELLIS Finland)
@@ -30,7 +32,7 @@ All application documents have been compiled and verified adhering strictly to A
 
 To empirically de-risk the research methodology and prove that physiological constraints eliminate neural hallucinations, we have developed and deployed an interactive 15-DOF WebGL kinematics engine:
 
-👉 **[Launch Interactive 15-DOF 3D Hand Engine](https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/anatomical_finger.html)**
+👉 **[Launch Interactive 15-DOF 3D Hand Engine](https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/anatomical_hand.html)**
 
 * **15-DOF True 3-Phalanx Hand Anatomy:** Metacarpophalangeal (MCP flex/abd), Proximal Interphalangeal (PIP), and Distal Interphalangeal (DIP) joints with thenar/hypothenar muscular pads.
 * **Closed-Form Analytical IK in $\mathcal{O}(1)$ Time:** Compiles symbolic phonemes into deterministic 3D hand postures without numerical drift.
@@ -88,7 +90,7 @@ python -m http.server 8000
 ```
 Then open in browser:
 ```text
-http://localhost:8000/04_Procedural_Engine_PoC/anatomical_finger.html
+http://localhost:8000/04_Procedural_Engine_PoC/anatomical_hand.html
 ```
 
 ---
