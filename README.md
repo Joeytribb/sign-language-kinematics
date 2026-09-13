@@ -1,14 +1,14 @@
 # A Bidirectional Neuro-Symbolic Foundation Pipeline for Continuous Sign Language AI
 
 [![Full Application Dossier](https://img.shields.io/badge/Application%20Dossier-Full%20Research%20Portal-10B981.svg)](https://joeytribb.github.io/sign-language-kinematics/)
-[![Live 3D Demo: Three.js WebGL](https://img.shields.io/badge/Live%20Demo-Three.js%2015--DOF%20IK-059669.svg)](https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/anatomical_hand.html)
+[![Live 3D Demo: Three.js WebGL](https://img.shields.io/badge/Live%20Demo-Three.js%2020--DOF%20IK-059669.svg)](https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/anatomical_hand.html)
 [![Full Proposal: 14 Pages PDF](https://img.shields.io/badge/Proposal%20PDF-14%20Pages%20Verified-0284C7.svg)](https://joeytribb.github.io/sign-language-kinematics/Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf)
 [![Doctoral Application: Aalto / ELLIS Finland](https://img.shields.io/badge/Application-Aalto%20%2F%20ELLIS%20Finland-0E3A5D.svg)](https://www.aalto.fi/en/department-of-computer-science)
 [![Supervisor: Dr. Azade Farshad](https://img.shields.io/badge/Supervisor-Dr.%20Azade%20Farshad-7C3AED.svg)](https://research.aalto.fi/en/persons/azade-farshad)
 [![LinkedIn Profile](https://img.shields.io/badge/LinkedIn-iniyandrews-0A66C2.svg)](https://www.linkedin.com/in/iniyandrews)
 [![License: MIT](https://img.shields.io/badge/License-MIT-gray.svg)](LICENSE)
 
-> **Doctoral Research Dossier & Open-Source 15-DOF Biomechanical Kinematics Engine**  
+> **Doctoral Research Dossier & Open-Source 20-DOF Biomechanical Kinematics Engine (15 Articulated Joints)**  
 > **Applicant:** Iniyan Andrews Joseph  
 > **Full Research Dossier Portal:** [joeytribb.github.io/sign-language-kinematics](https://joeytribb.github.io/sign-language-kinematics/)  
 > **LinkedIn:** [linkedin.com/in/iniyandrews](https://www.linkedin.com/in/iniyandrews)  
@@ -30,13 +30,13 @@ All application documents have been compiled and verified adhering strictly to A
 
 ---
 
-## 🎮 Interactive 15-DOF Kinematics Engine (Live WebGL Prototype)
+## 🎮 Interactive 20-DOF Kinematics Engine (15 Articulated Joints — Live WebGL Prototype)
 
-To empirically de-risk the research methodology and prove that physiological constraints eliminate neural hallucinations, we have developed and deployed an interactive 15-DOF WebGL kinematics engine:
+To empirically de-risk the research methodology and prove that physiological constraints eliminate neural hallucinations, we have developed and deployed an interactive 20-DOF WebGL kinematics engine (15 articulated phalangeal joints):
 
-👉 **[Launch Interactive 15-DOF 3D Hand Engine](https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/anatomical_hand.html)**
+👉 **[Launch Interactive 20-DOF 3D Hand Engine](https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/anatomical_hand.html)**
 
-* **15-DOF True 3-Phalanx Hand Anatomy:** Metacarpophalangeal (MCP flex/abd), Proximal Interphalangeal (PIP), and Distal Interphalangeal (DIP) joints with thenar/hypothenar muscular pads.
+* **20-DOF True 3-Phalanx Hand Anatomy (15 Joints):** 16 finger DOFs + 4 thumb DOFs — Metacarpophalangeal (MCP flex/abd), Proximal Interphalangeal (PIP), and Distal Interphalangeal (DIP) joints with thenar/hypothenar muscular pads.
 * **Closed-Form Analytical IK in $\mathcal{O}(1)$ Time:** Compiles symbolic phonemes into deterministic 3D hand postures without numerical drift.
 * **ASL Alphabet Playground (A–Z) with Ground-Truth Reference Photos:** Click any letter in the UI to see real-time side-by-side verification between the biological human sign photo and the 3D procedural kinematics solver.
 * **Biomechanical Strain/Pain Optimization:** Quartic penalty objective $P_{\text{strain}}(\boldsymbol{\theta})$ ensuring least physical resistance and preventing joint hyperextensions.
@@ -56,21 +56,21 @@ Existing black-box neural approaches fail because:
 
 ```
 [FORWARD PRODUCTION PASS: Text-to-Sign (SLP)]
-Spoken Text ──► [Spatial-SignLLM @ 1-2 Hz] ──► [15-DOF Biomechanical IK] ──► [Manifold Residual Diffusion] ──► 3D Avatar
-                     (The Brain)                    (The Skeleton)                    (The Muscles)
-                     Emits JSON plan                Closed-form math O(1)             Pi_M(P_hat + DeltaX)
-                     & 3D spatial loci              Law of Cosines arm IK             Zero bone-stretching
+Spoken Text ──► [BiSign-LLM @ 1-2 Hz] ──► [20-DOF Biomechanical IK] ──► [Manifold Residual Diffusion] ──► 3D Avatar
+                     (The Brain)                   (The Skeleton)                    (The Muscles)
+                     Emits JSON plan               Closed-form math O(1)             Pi_M(P_hat + DeltaX)
+                     & 3D spatial loci             Law of Cosines arm IK             Zero bone-stretching
 
 [BACKWARD TRANSLATION PASS: Sign-to-Text (SLT)]
-Signing Video ──► [15-DOF Tracking (HaMeR)] ──► [Raycasting & Memory M_t] ──► [Spatial-SignLLM Translation] ──► Spoken Text
+Signing Video ──► [20-DOF Tracking (HaMeR)] ──► [Raycasting & Memory M_t] ──► [BiSign-LLM Translation] ──► Spoken Text
                      Hand/Gaze Articulators         O(1) External Register            Decodes text via
-                     Sternum Normalized             Deictic Parity P_deictic          Thematic theta-roles
+                     Sternum Normalized             R_y(pi) = diag(-1,1,-1)           Thematic theta-roles
 ```
 
-1. **The Brain (Spatial-SignLLM @ 1--2 Hz):** An autoregressive multimodal foundation model operating on a unified vocabulary $\mathcal{V}_{\text{total}} = \mathcal{V}_{\text{text}} \cup \mathcal{V}_{\text{phono}} \cup \mathcal{V}_{\text{spatial}}$.
-2. **The Skeleton (Stage 2 Kinematics @ 60 Hz):** Analytical 2-bone arm IK with circular humeral swivel orbits and 15-DOF hand kinematics running deterministically in $\mathcal{O}(1)$ time ($<0.5$\,ms).
+1. **The Brain (BiSign-LLM @ 1--2 Hz):** An autoregressive multimodal foundation model operating on a unified vocabulary $\mathcal{V}_{\text{total}} = \mathcal{V}_{\text{text}} \cup \mathcal{V}_{\text{phono}} \cup \mathcal{V}_{\text{spatial}}$.
+2. **The Skeleton (Stage 2 Kinematics @ 60 Hz):** Analytical 2-bone arm IK with circular humeral swivel orbits and 20-DOF hand kinematics (15 articulated phalangeal joints) running deterministically in $\mathcal{O}(1)$ time ($<0.5$\,ms).
 3. **The Muscles (Stage 3 Manifold Diffusion @ 60 Hz):** Lightweight residual diffusion synthesizing biological momentum and micro-coarticulation atop the rigid scaffold: $\mathbf{X}_{\text{final}} = \Pi_{\mathcal{M}}(\mathbf{\hat{P}} + \Delta\mathbf{X}_\theta)$.
-4. **Decoupled Causal Spatial Memory ($M_t$):** An external $\mathcal{O}(1)$ stateful register decoupled from the LLM context window, maintaining active referents and applying the **Deictic Perspective Parity Operator** ($\mathbf{P}_{\text{deictic}} = \text{diag}(-1, 1, 1)$) to resolve 180° face-to-face mirror orientation.
+4. **Decoupled Causal Spatial Memory ($M_t$):** An external $\mathcal{O}(1)$ stateful register decoupled from the LLM context window, maintaining active referents and applying the **Deictic Perspective Rotation** ($\mathbf{R}_y(\pi) = \text{diag}(-1, 1, -1)$, $\det = +1$) to resolve 180° face-to-face mirror orientation.
 
 ---
 
