@@ -6,12 +6,15 @@
 !/README.md
 !/LICENSE
 !/index.html
+!/visitor-telemetry.js
 
-# Whitelist 15-DOF WebGL Kinematics Prototype & Reference Images
+# Whitelist 40-DOF Dual-Hand WebGL Kinematics Prototype & Reference Images
 !/04_Procedural_Engine_PoC/
 /04_Procedural_Engine_PoC/*
 !/04_Procedural_Engine_PoC/anatomical_finger.html
 !/04_Procedural_Engine_PoC/anatomical_hand.html
+!/04_Procedural_Engine_PoC/anatomical_hand_single_hand_v1_backup.html
+!/04_Procedural_Engine_PoC/visitor-telemetry.js
 !/04_Procedural_Engine_PoC/ref_images/
 /04_Procedural_Engine_PoC/ref_images/*
 !/04_Procedural_Engine_PoC/ref_images/*.png
@@ -20,4 +23,5 @@
 !/Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf
 !/Motivation_Letter.pdf
 !/CV_Iniyan-Joseph_Aalto.pdf
+!/Research_Statement_Aalto_ELLIS.pdf
 
