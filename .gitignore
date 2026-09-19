@@ -8,7 +8,7 @@
 !/index.html
 !/visitor-telemetry.js
 
-# Whitelist 40-DOF Dual-Hand WebGL Kinematics Prototype & Reference Images
+# Whitelist Kinematic Synthesizer WebGL Prototype & Reference Images
 !/04_Procedural_Engine_PoC/
 /04_Procedural_Engine_PoC/*
 !/04_Procedural_Engine_PoC/anatomical_finger.html

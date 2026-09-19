@@ -8,7 +8,7 @@
 [![LinkedIn Profile](https://img.shields.io/badge/LinkedIn-iniyandrews-0A66C2.svg)](https://www.linkedin.com/in/iniyandrews)
 [![License: MIT](https://img.shields.io/badge/License-MIT-gray.svg)](LICENSE)
 
-> **Doctoral Research Dossier & Open-Source 40-DOF Dual-Hand Biomechanical Kinematics Engine (30 Articulated Joints)**  
+> **Doctoral Research Dossier & Open-Source Kinematic Synthesizer (30 Articulated Joints)**  
 > **Applicant:** Iniyan Andrews Joseph  
 > **Full Research Dossier Portal:** [joeytribb.github.io/sign-language-kinematics](https://joeytribb.github.io/sign-language-kinematics/)  
 > **LinkedIn:** [linkedin.com/in/iniyandrews](https://www.linkedin.com/in/iniyandrews)  
@@ -30,13 +30,13 @@ All application documents have been compiled and verified adhering strictly to A
 
 ---
 
-## 🎮 Interactive 40-DOF Dual-Hand Kinematics Engine (Live WebGL Prototype)
+## 🎮 Interactive Kinematic Synthesizer (Live WebGL Prototype)
 
-To empirically de-risk the research methodology and prove that physiological constraints eliminate neural hallucinations, we have developed and deployed an interactive 40-DOF Dual-Hand WebGL kinematics engine (30 articulated phalangeal joints across both hands):
+To empirically de-risk the research methodology and prove that physiological constraints eliminate neural hallucinations, we have developed and deployed an interactive Kinematic Synthesizer in WebGL (30 articulated phalangeal joints):
 
-👉 **[Launch Interactive 40-DOF Dual-Hand 3D Engine](https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/anatomical_hand.html)**
+👉 **[Launch Interactive Kinematic Synthesizer](https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/anatomical_hand.html)**
 
-* **40-DOF Dual-Hand Anatomy across 30 Articulated Phalangeal Joints:** 15 rigid biological joints per hand (MCP flex/abd, PIP, DIP per finger; thumb CMC, MCP, IP) obeying physiological limits and Battison's phonological Symmetry and Dominance Conditions.
+* **Kinematic Synthesizer across 30 Articulated Phalangeal Joints:** 15 rigid biological joints per hand (MCP flex/abd, PIP, DIP per finger; thumb CMC, MCP, IP) obeying physiological limits and Battison's phonological Symmetry and Dominance Conditions.
 * **5 Foundational Parametric Lexicons (`PARAMETRIC_LEXICONS`):** Complete sub-lexical decomposition into 5 orthogonal phonetic spaces:
   * **41 Handshapes:** Standard Stokoe/ASL-LEX inventory with 15-DOF biological joint limits.
   * **24 Spatial Loci:** 3D anatomical reference anchors ($R$-loci) from neutral space to head and torso landmarks.
@@ -44,9 +44,9 @@ To empirically de-risk the research methodology and prove that physiological con
   * **16 Dynamic Movement Primitives:** Parametric linear, arc, circular, alternating, oscillatory, and tapping trajectories.
   * **4 Bilateral Interaction Modes:** Unilateral, Symmetrical (Battison Type I), Alternating (Type II), and Dominant-Base Contact (Type III).
 * **Universal Sign Generator (`⚡ Generator` Tab):** A combinatorial parameter space of $41 \times 24 \times 10 \times 16 \times 4 = 629,760$ discrete phonetic configurations, capable of synthesizing any sign across the 2,723-sign ASL-LEX 2.0 dataset without per-sign manual rigging.
-* **Zero Inter-Finger Self-Collision Kinematics (100% Audit PASS):** Built-in 7-point phalanx-to-phalanx soft-body repulsion barrier, multi-pass joint-space anti-penetration solver, crossed-finger dorsal elevation offsets, and dorsal resting clamps. Validated via automated headless test suites:
+* **Minimal Inter-Finger Collisions (Audit PASS):** Built-in 7-point phalanx-to-phalanx soft-body repulsion barrier, multi-pass joint-space anti-penetration solver, crossed-finger dorsal elevation offsets, and dorsal resting clamps. Validated via automated headless test suites:
   * **26/26 Alphabet Letters:** 0 inter-finger self-collisions across all closed and crossed poses (`A`, `E`, `M`, `N`, `R`, `S`, `T`).
-  * **50/50 ASL-LEX Vocabulary:** 100% PASS across forward kinematics, anatomical limits, and trajectory smoothness.
+  * **50/50 ASL-LEX Vocabulary:** Verified minimal finger collisions across forward kinematics, anatomical limits, and trajectory smoothness.
 * **Interactive Index Fingertip Master Drag Handle:** Real-time 3D target manipulator driving analytical 2-bone arm IK with continuous volumetric torso/head obstacle avoidance and humeral orbit swivel.
 * **Biomechanical Strain/Pain Optimization:** Real-time quartic strain penalty objective $P_{\text{strain}}(\boldsymbol{\theta}) = \sum [(\theta - \theta_{\text{rest}})/\Delta\theta]^4$ guaranteeing minimal metabolic strain and preventing non-physiological joint hyperextension.
 * **Cookieless Academic Telemetry:** Integrated non-blocking, GDPR-compliant academic visitor telemetry (`visitor-telemetry.js`) logging real-time institutional page access and geographical insights (e.g. `Europe/Helsinki`).
@@ -59,7 +59,7 @@ To empirically de-risk the research methodology and prove that physiological con
 
 In critical societal environments—such as emergency clinical consultations, administrative hearings, and educational lectures—unimpeded cross-modal dialogue between Deaf signers and hearing professionals remains fundamentally constrained by the systemic scarcity of on-demand qualified human interpreters. Under the World Health Organization (WHO) mandate defining health as complete physical, mental, and social well-being, this persistent communication barrier creates severe healthcare vulnerabilities and profound social exclusion.
 
-Our doctoral mission is to engineer an **autonomous, real-time bidirectional communication digital twin** ($<100$ ms latency). In an emergency clinic, the system translates spoken discourse from medical staff into fluent, culturally authentic Finnish Sign Language (*Suomalainen viittomakieli*, SVK) rendered on an interactive 3D digital human; when the Deaf patient responds, the system tracks their dual-hand articulation, facial grammar, and 3D spatial references, translating their discourse into spoken Finnish for medical staff.
+Our doctoral mission is to engineer an **autonomous, real-time bidirectional communication digital twin** ($<100$ ms latency). In an emergency clinic, the system translates spoken discourse from medical staff into fluent, culturally authentic Finnish Sign Language (*Suomalainen viittomakieli*, SVK) rendered on an interactive 3D digital human; when the Deaf patient responds, the system tracks their articulated hand kinematics, facial grammar, and 3D spatial references, translating their discourse into spoken Finnish for medical staff.
 
 ### Core Representational Bottlenecks in Contemporary Sign AI
 
@@ -80,14 +80,14 @@ Input (Tokens S_t or Text W_t) ────► [Continual Pre-Training on LUMI] 
                                       Decoupled Causal Memory Bank M_t
 
 [CHANNEL 2: EMBODIED BIOMECHANICAL ACTUATION (Tokens -> 3D Sign @ 60 Hz)]
-Sign Tokens S_t ──► [40-DOF Dual-Hand Engine] ──► [Manifold Residual Diffusion] ──► 3D Avatar
+Sign Tokens S_t ──► [Kinematic Synthesizer] ──► [Manifold Residual Diffusion] ──► 3D Avatar
                      30 Articulated Joints             Pi_M(P_hat + DeltaX)
                      Battison Phonology & Arm IK       Anatomical Invariance
 ```
 
-1. **Articulatory Perception Channel (Perceptual Tokenizer):** Ingests in-the-wild signing video at scale, recovering 40-DOF dual-hand kinematics (30 articulated joints), 50 FLAME blendshapes, and 3D gaze rays into an external $\mathcal{O}(1)$ Causal Spatial Memory Bank ($M_t$), converting continuous video into discrete linguistic token sequences $\mathcal{S} \in \mathcal{V}_{\text{sign}}$.
+1. **Articulatory Perception Channel (Perceptual Tokenizer):** Ingests in-the-wild signing video at scale, recovering articulated hand kinematics (30 articulated joints), 50 FLAME blendshapes, and 3D gaze rays into an external $\mathcal{O}(1)$ Causal Spatial Memory Bank ($M_t$), converting continuous video into discrete linguistic token sequences $\mathcal{S} \in \mathcal{V}_{\text{sign}}$.
 2. **Multimodal Foundation Reasoning Core (BiSign-LLM):** Rather than training a Transformer from scratch without world priors, we adapt a pre-trained open-weight frontier model (e.g., Llama 3.1 8B / Mistral NeMo 12B) via **Vocabulary Expansion** ($\mathcal{V}_{\text{extended}} = \mathcal{V}_{\text{base}} \cup \mathcal{V}_{\text{sign}}$), continually pre-trained on EuroHPC LUMI to internalize 3D spatial grammar and cross-modal dialogue.
-3. **Embodied Biomechanical Actuator (40-DOF Dual-Hand Kinematics @ 60 Hz):** Closed-form 2-bone arm IK and 40-DOF dual-hand kinematics (30 articulated phalangeal joints) compiling from 5 foundational parametric lexicons (41 handshapes, 24 loci, 10 orientations, 16 movements, 4 bilateral modes; 629,760 combinations covering all 2,723 ASL-LEX signs) with 100% collision-free phalanx anti-penetration barriers, Battison symmetry/dominance laws, and quartic strain minimization $P_{\text{strain}}(\boldsymbol{\theta})$ in $\mathcal{O}(1)$ time ($<0.5$\,ms).
+3. **Embodied Biomechanical Actuator (Kinematic Synthesizer @ 60 Hz):** Closed-form 2-bone arm IK and articulated hand kinematics (30 articulated phalangeal joints) compiling from 5 foundational parametric lexicons (41 handshapes, 24 loci, 10 orientations, 16 movements, 4 bilateral modes; 629,760 combinations covering all 2,723 ASL-LEX signs) with minimal finger collisions, phalanx anti-penetration barriers, Battison symmetry/dominance laws, and quartic strain minimization $P_{\text{strain}}(\boldsymbol{\theta})$ in $\mathcal{O}(1)$ time ($<0.5$\,ms).
 4. **Physiological Manifold Residual Diffusion (@ 60 Hz):** Lightweight residual diffusion synthesizing biological momentum and micro-coarticulation atop the rigid procedural scaffold: $\mathbf{X}_{\text{final}} = \Pi_{\mathcal{M}}(\mathbf{\hat{P}} + \Delta\mathbf{X}_\theta)$.
 5. **Decoupled Causal Spatial Memory ($M_t$):** An external $\mathcal{O}(1)$ stateful register decoupled from the LLM context window, maintaining active referents and applying a rigid $SO(3)$ **Deictic Perspective Rotation** ($\mathbf{R}_y(\pi) = \text{diag}(-1, 1, -1)$ with translation $\mathbf{t}_{\text{conv}}$) to resolve 180° face-to-face conversational orientation without inverting chirality.
 
