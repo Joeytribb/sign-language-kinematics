@@ -397,22 +397,8 @@
       <span>Kinematic Synthesizer</span>
       <span class="badge" id="header-badge">REAL-TIME ASL-LEX SYNTHESIS</span>
     </h1>
-    <h2 class="app-subtitle" style="display:flex; justify-content:space-between; align-items:center; gap: 12px; pointer-events: auto;">
+    <h2 class="app-subtitle" style="pointer-events: auto;">
       <span>Research Proof-of-Concept &middot; 15-DOF Kinematics &middot; Client-Side WebGL &middot; <a href="https://www.linkedin.com/in/iniyandrews" target="_blank" rel="noopener noreferrer" style="color:var(--accent); text-decoration:underline;">LinkedIn</a></span>
-      <div style="display: flex; gap: 8px; align-items: center;">
-        <a href="https://joeytribb.github.io/sign-language-kinematics/" target="_blank" rel="noopener noreferrer" style="background: #10b981; color: white; font-size: 10px; font-weight: 700; padding: 5px 10px; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-          <svg style="width: 12px; height: 12px; fill: currentColor;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-          <span>FULL DOSSIER</span>
-        </a>
-        <a href="../Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf" target="_blank" rel="noopener noreferrer" style="background: #2563eb; color: white; font-size: 10px; font-weight: 700; padding: 5px 10px; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-          <svg style="width: 12px; height: 12px; fill: currentColor;" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L11 13.17V7h2v6.17l2.59-2.58L17 12l-5 5z"/></svg>
-          <span>READ PROPOSAL (14p PDF)</span>
-        </a>
-        <button id="btn-open-audit-modal" style="background:#059669; color:white; font-size:10px; font-weight:700; padding:5px 10px; border-radius:6px; border:none; cursor:pointer; display:inline-flex; align-items:center; gap:4px; box-shadow:0 2px 5px rgba(0,0,0,0.2);">
-          <span>📋</span><span>LEXICON HEALTH (50/50 PASS)</span>
-        </button>
-        <button id="btn-theme" style="background:var(--accent); color:var(--bg-color); font-size:10px; font-weight:700; padding:5px 8px; border-radius:6px; border:none; cursor:pointer;">SWITCH TO DA VINCI</button>
-      </div>
     </h2>
   </div>
 
@@ -435,9 +421,9 @@
       </button>
     </div>
 
-    <!-- APPLICATION DOSSIER DOCUMENTS -->
+    <!-- APPLICATION DOSSIER DOCUMENTS & AUDIT CONTROLS -->
     <div class="section-title"><span>Application Dossier Documents</span></div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 10px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 6px;">
       <a href="https://joeytribb.github.io/sign-language-kinematics/" target="_blank" rel="noopener noreferrer" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--text-main); font-size: 10px; padding: 5px 8px; border-radius: 6px; text-decoration: none; font-weight: 600;">
         <span>🌐 Dossier Portal &rarr;</span>
       </a>
@@ -450,6 +436,12 @@
       <a href="../CV_Iniyan-Joseph_Aalto.pdf" target="_blank" rel="noopener noreferrer" style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); color: var(--text-main); font-size: 10px; padding: 5px 8px; border-radius: 6px; text-decoration: none; font-weight: 600;">
         <span>🎓 CV (2p PDF) &rarr;</span>
       </a>
+    </div>
+    <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 4px; margin-bottom: 10px;">
+      <button id="btn-open-audit-modal" style="background: rgba(16, 185, 129, 0.12); color: #059669; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 10px; font-weight: 700; padding: 5px 8px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
+        <span>📋</span><span>Health (50/50 Pass)</span>
+      </button>
+      <button id="btn-theme" style="background: rgba(128, 128, 128, 0.08); color: var(--text-muted); border: 1px solid var(--panel-border); font-size: 10px; font-weight: 600; padding: 5px 8px; border-radius: 6px; cursor: pointer;">Theme</button>
     </div>
 
     <!-- ================= SECTION A: WORD LEXICON VIEW ================= -->
@@ -1500,30 +1492,30 @@
 
       // 2. 3D ANATOMICAL BODY & SPATIAL LOCI (24 Calibrated Target Anchor Points)
       locations: {
-        "crown": { name: "Crown (Top of Head)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.0, 24.0, 5.5), desc: "Apex of the cranial vault" },
-        "forehead": { name: "Forehead (Frontal Bone)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.5, 19.5, 7.0), desc: "Center frontal bone (e.g. Father)" },
-        "temple": { name: "Temple (Parietal-Temporal)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 6.5, 18.5, 6.5), desc: "Lateral temple (e.g. Hello, Salute)" },
-        "eyes": { name: "Eyes (Periorbital)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 4.0, 16.5, 7.5), desc: "Eye level (e.g. See)" },
-        "nose": { name: "Nose (Nasion)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.0, 15.0, 7.8), desc: "Nasal bridge and cartilage" },
-        "cheek": { name: "Cheek (Zygomatic Arch)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 5.0, 13.5, 6.2), desc: "Lateral cheekbone (e.g. Tomorrow, Deaf)" },
-        "ear": { name: "Ear (Auricle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 6.2, 16.0, 4.0), desc: "Lateral auricle" },
-        "mouth": { name: "Mouth (Lips / Labial)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.0, 11.5, 7.8), desc: "Lips and perioral region (e.g. Eat)" },
-        "chin": { name: "Chin (Mandible / Mental)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.8, 8.0, 7.2), desc: "Anterior chin point (e.g. Water, Mother)" },
-        "jaw": { name: "Jaw (Mandibular Angle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 4.0, 9.5, 6.0), desc: "Lateral mandibular jawline" },
-        "throat": { name: "Throat (Larynx / Trachea)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.0, 8.5, 7.0), desc: "Anterior neck / larynx" },
-        "clavicle": { name: "Clavicle (Collarbone)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 4.5, 7.0, 7.0), desc: "Collarbone / upper chest" },
-        "sternum": { name: "Sternum (Chest Center)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 5.0, 5.5, 11.5), desc: "Mid-chest sternum (e.g. Me)" },
-        "heart": { name: "Heart (Left Upper Chest)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * -3.5, 6.0, 7.2), desc: "Contralateral left thorax" },
-        "stomach": { name: "Stomach (Mid Abdomen)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.0, 2.0, 7.5), desc: "Umbilical abdominal area" },
-        "shoulder": { name: "Shoulder (Acromion)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 11.0, 7.5, 3.5), desc: "Acromioclavicular shoulder point" },
-        "passive_forearm": { name: "Passive Forearm Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-3.5, 5.5, 11.5) : new THREE.Vector3(-3.5, 8.2, 11.5), desc: "Horizontal non-dominant forearm (e.g. Night)" },
-        "passive_wrist": { name: "Passive Wrist Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-4.0, 5.5, 12.0) : new THREE.Vector3(-3.5, 8.2, 12.0), desc: "Non-dominant dorsal wrist joint (e.g. Work, Time)" },
-        "passive_palm": { name: "Passive Palm Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-4.0, 5.5, 12.0) : new THREE.Vector3(-3.5, 8.2, 12.0), desc: "Flat upward/forward non-dominant palm (e.g. Read, Paper)" },
-        "neutral_high": { name: "Neutral Space (High)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 7.5, 14.0, 13.5), desc: "Eye level in forward conversational space" },
-        "neutral_mid": { name: "Neutral Space (Mid / Chest)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 6.5, 6.5, 13.5), desc: "Chest height in comfortable forward space" },
-        "neutral_low": { name: "Neutral Space (Low / Waist)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 6.5, 1.5, 13.5), desc: "Waist level forward conversational space" },
-        "neutral_far": { name: "Neutral Space (Far / Deictic)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 4.5, 7.5, 15.0), desc: "Extended forward reach (e.g. You, That)" },
-        "neutral_center": { name: "Neutral Midline Center", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(0.0, 6.5, 13.0), desc: "Direct sagittal midline in conversational space" }
+        "crown": { name: "Crown (Top of Head)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.0, 21.8, 0.5), desc: "Apex of the head circle" },
+        "forehead": { name: "Forehead (Frontal Bone)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.2, 19.8, 0.8), desc: "Upper cranial circle (e.g. Father)" },
+        "temple": { name: "Temple (Parietal-Temporal)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 3.8, 18.5, 0.5), desc: "Lateral head circle (e.g. Hello, Salute)" },
+        "eyes": { name: "Eyes (Periorbital)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.8, 18.0, 0.8), desc: "Eye level (e.g. See)" },
+        "nose": { name: "Nose (Nasion)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 16.5, 0.8), desc: "Mid head region" },
+        "cheek": { name: "Cheek (Zygomatic Arch)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 3.2, 16.2, 0.8), desc: "Lateral mid-face (e.g. Tomorrow, Deaf)" },
+        "ear": { name: "Ear (Auricle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 4.0, 18.0, 0.0), desc: "Lateral head perimeter" },
+        "mouth": { name: "Mouth (Lips / Labial)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 15.2, 0.8), desc: "Lower head circle (e.g. Eat)" },
+        "chin": { name: "Chin (Mandible / Mental)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 14.2, 0.8), desc: "Base of head circle / chin (e.g. Water, Mother)" },
+        "jaw": { name: "Jaw (Mandibular Angle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 2.8, 13.5, 0.5), desc: "Lateral jaw transition" },
+        "throat": { name: "Throat (Larynx / Trachea)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 11.5, 0.5), desc: "Anterior neck stick" },
+        "clavicle": { name: "Clavicle (Collarbone)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 5.0, 9.5, 0.5), desc: "Shoulder bar / clavicle" },
+        "sternum": { name: "Sternum (Chest Center)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.2, 5.0, 0.8), desc: "Upper spine stick (e.g. Me)" },
+        "heart": { name: "Heart (Left Upper Chest)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * -3.5, 6.0, 0.8), desc: "Contralateral chest" },
+        "stomach": { name: "Stomach (Mid Abdomen)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, -2.5, 0.8), desc: "Mid torso stick" },
+        "shoulder": { name: "Shoulder (Acromion)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 15.0, 9.5, 0.5), desc: "Shoulder joint pivot" },
+        "passive_forearm": { name: "Passive Forearm Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-3.5, 5.5, 9.5) : new THREE.Vector3(-3.5, 8.0, 9.5), desc: "Horizontal non-dominant forearm (e.g. Night)" },
+        "passive_wrist": { name: "Passive Wrist Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-4.0, 5.5, 10.0) : new THREE.Vector3(-3.5, 8.0, 10.0), desc: "Non-dominant dorsal wrist joint (e.g. Work, Time)" },
+        "passive_palm": { name: "Passive Palm Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-4.0, 5.5, 10.0) : new THREE.Vector3(-3.5, 8.0, 10.0), desc: "Flat upward/forward non-dominant palm (e.g. Read, Paper)" },
+        "neutral_high": { name: "Neutral Space (High)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 7.5, 14.0, 14.0), desc: "Eye level in forward conversational space" },
+        "neutral_mid": { name: "Neutral Space (Mid / Chest)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 7.5, 6.5, 14.0), desc: "Chest height in comfortable forward space" },
+        "neutral_low": { name: "Neutral Space (Low / Waist)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 7.5, 1.5, 14.0), desc: "Waist level forward conversational space" },
+        "neutral_far": { name: "Neutral Space (Far / Deictic)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 5.0, 7.5, 17.0), desc: "Extended forward reach (e.g. You, That)" },
+        "neutral_center": { name: "Neutral Midline Center", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(0.0, 6.5, 13.5), desc: "Direct sagittal midline in conversational space" }
       },
 
       // 3. CANONICAL SPATIAL ORIENTATIONS (10 Biomechanically Feasible Wrist Attitudes)
@@ -1656,29 +1648,30 @@
           ringMesh.rotation.x = Math.PI * 0.5;
           locusNode.add(ringMesh);
 
-          // 3D Canvas Billboard Text Label (Clean, high-DPI, hidden by default)
+          // 3D Canvas Billboard Text Label (Crisp, high-contrast floating badge)
+          // 3D Canvas Billboard Text Label (Crisp, high-contrast floating badge)
           const canvas = document.createElement('canvas');
-          canvas.width = 256; canvas.height = 64;
+          canvas.width = 384; canvas.height = 64;
           const ctx = canvas.getContext('2d');
-          ctx.fillStyle = 'rgba(15, 23, 42, 0.88)';
-          if (ctx.roundRect) ctx.roundRect(4, 4, 248, 56, 10);
-          else ctx.rect(4, 4, 248, 56);
+          ctx.fillStyle = 'rgba(15, 23, 42, 0.94)';
+          if (ctx.roundRect) ctx.roundRect(4, 4, 376, 56, 12);
+          else ctx.rect(4, 4, 376, 56);
           ctx.fill();
-          ctx.strokeStyle = 'rgba(56, 189, 248, 0.5)';
-          ctx.lineWidth = 2;
+          ctx.strokeStyle = '#10b981';
+          ctx.lineWidth = 3;
           ctx.stroke();
-          ctx.fillStyle = '#f8fafc';
-          ctx.font = 'bold 22px Inter, sans-serif';
+          ctx.fillStyle = '#ffffff';
+          ctx.font = 'bold 20px Inter, sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           const cleanName = (locDef.name || key).split('(')[0].trim().toUpperCase();
-          ctx.fillText(cleanName, 128, 32);
+          ctx.fillText(cleanName, 192, 32);
 
           const texture = new THREE.CanvasTexture(canvas);
           const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true, opacity: 0.0, depthWrite: false });
           const sprite = new THREE.Sprite(spriteMat);
-          sprite.scale.set(2.4, 0.6, 1.0);
-          sprite.position.set(0, 0.75, 0);
+          sprite.scale.set(3.8, 0.65, 1.0);
+          sprite.position.set(0, 1.35, 0);
           locusNode.add(sprite);
 
           this.group.add(locusNode);
@@ -1714,9 +1707,9 @@
             item.sprite.material.opacity = 1.0;
             item.sphereMat.color.setHex(0x10b981);
             item.sphereMat.emissive.setHex(0x059669);
-            item.sphereMat.emissiveIntensity = 0.95;
+            item.sphereMat.emissiveIntensity = 1.1;
             item.sphereMat.opacity = 1.0;
-            item.ringMat.opacity = 0.85;
+            item.ringMat.opacity = 0.95;
             item.node.scale.set(1.4, 1.4, 1.4);
           } else {
             item.sprite.material.opacity = 0.0;
@@ -1730,56 +1723,62 @@
         }
       },
 
-      update(time, handPosR, handPosL) {
+      update(time, effR, wristR, effL, wristL) {
         if (!this.group || !this.visible) return;
 
-        // Interactive dynamic proximity detection: find nearest locus to the active moving hand
+        // Multi-point proximity detection: checks both fingertips and wrists of both hands
         let nearestKey = null;
         let nearestDist = 999;
         
         for (let key in this.spheres) {
           const item = this.spheres[key];
-          const dR = handPosR ? handPosR.distanceTo(item.basePos) : 999;
-          const dL = handPosL ? handPosL.distanceTo(item.basePos) : 999;
-          const d = Math.min(dR, dL);
-          if (d < nearestDist) {
-            nearestDist = d;
+          let dMin = 999;
+          if (effR) dMin = Math.min(dMin, effR.distanceTo(item.basePos));
+          if (wristR) dMin = Math.min(dMin, wristR.distanceTo(item.basePos));
+          if (effL) dMin = Math.min(dMin, effL.distanceTo(item.basePos));
+          if (wristL) dMin = Math.min(dMin, wristL.distanceTo(item.basePos));
+
+          if (dMin < nearestDist) {
+            nearestDist = dMin;
             nearestKey = key;
           }
         }
 
-        // Highlight threshold: if hand is within 6.5 cm proximity of any locus, OR if actively targeted during sign stroke
-        const proximityThreshold = 6.5;
+        // Highlight threshold: if hand is within 6.8 cm proximity of any locus, OR if actively targeted during sign stroke
+        const proximityThreshold = 6.8;
         const isNear = (nearestDist < proximityThreshold);
-        // Prioritize actively targeted word locus during playback, or proximity when moving
-        const activeKey = (isPlayingSignMotion && this.activeLocusKey) ? this.activeLocusKey : (isNear ? nearestKey : null);
+        const activeTarget = (typeof UniversalSignCompiler !== 'undefined' && UniversalSignCompiler.activeRecipe)
+          ? (UniversalSignCompiler.activeRecipe.location || "").toLowerCase()
+          : null;
+        const activeKey = (isPlayingSignMotion && activeTarget && isNear) ? activeTarget : (isNear ? nearestKey : null);
 
         for (let key in this.spheres) {
           const item = this.spheres[key];
           const isHighlighted = (key === activeKey);
 
           if (isHighlighted) {
-            const d = (key === nearestKey) ? nearestDist : 2.5;
+            const d = (key === nearestKey) ? nearestDist : 2.0;
             const proximityFactor = Math.max(0, 1.0 - (d / proximityThreshold));
-            const pulse = 1.35 + Math.sin(time * 8.0) * 0.18 * (1.0 + proximityFactor);
+            const pulse = 1.42 + Math.sin(time * 8.0) * 0.18;
             item.node.scale.set(pulse, pulse, pulse);
             
             // Radiant glowing emerald beacon
             item.sphereMat.color.setHex(0x10b981);
             item.sphereMat.emissive.setHex(0x059669);
-            item.sphereMat.emissiveIntensity = 0.85 + proximityFactor * 0.9;
+            item.sphereMat.emissiveIntensity = 1.2;
             item.sphereMat.opacity = 1.0;
-            item.ringMat.opacity = 0.85;
+            item.ringMat.opacity = 0.95;
             
-            // Dynamically reveal billboard label when hand moves there
-            item.sprite.material.opacity = Math.min(1.0, 0.45 + proximityFactor * 0.8);
+            // Prominently reveal floating name label badge
+            item.sprite.material.opacity = 1.0;
+            item.sprite.position.y = 1.35 + Math.sin(time * 4.0) * 0.08;
           } else {
             // Ambient quiet starry locus node (zero billboard clutter)
             item.node.scale.set(0.5, 0.5, 0.5);
             item.sphereMat.color.setHex(item.baseColor);
             item.sphereMat.emissive.setHex(item.baseColor);
             item.sphereMat.emissiveIntensity = 0.04;
-            item.sphereMat.opacity = 0.12;
+            item.sphereMat.opacity = 0.15;
             item.ringMat.opacity = 0.0;
             item.sprite.material.opacity = 0.0;
           }
@@ -2446,11 +2445,11 @@
       };
     }
 
-    camera.position.set(6.5, 8.5, 54.0);
-    camera.lookAt(6.5, 5.5, 5.0);
+    camera.position.set(5.5, 5.0, 68.0);
+    camera.lookAt(5.5, 5.0, 0.0);
 
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.target.set(6.5, 5.5, 5.0);
+    controls.target.set(5.5, 5.0, 0.0);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.maxDistance = 500;
@@ -2459,11 +2458,11 @@
     if (camParams.has('camX')) {
       camera.position.set(
         parseFloat(camParams.get('camX')),
-        parseFloat(camParams.get('camY') || 8.5),
-        parseFloat(camParams.get('camZ') || 54.0)
+        parseFloat(camParams.get('camY') || 5.0),
+        parseFloat(camParams.get('camZ') || 68.0)
       );
-      camera.lookAt(6.5, 5.5, 5.0);
-      controls.target.set(6.5, 5.5, 5.0);
+      camera.lookAt(5.5, 5.0, 0.0);
+      controls.target.set(5.5, 5.0, 0.0);
     }
     controls.update();
 
@@ -2514,51 +2513,74 @@
       opacity: 0.22 
     });
     
-    // 1. Cranium & Facial Form (Graceful stylized anatomical head)
-    const headGeo = new THREE.SphereGeometry(5.8, 32, 24);
-    headGeo.scale(1.0, 1.28, 1.10);
-    const headMesh = new THREE.Mesh(headGeo, fleshMat);
-    headMesh.position.set(0, 22.0, -8.0);
-    silhouetteGroup.add(headMesh);
+    // ------------------------------------------------------------------------
+    // MINIMALIST BIOMECHANICAL STICK FIGURE (Hands & Arms Kept Authentic As-Is)
+    // ------------------------------------------------------------------------
+    const stickMat = new THREE.MeshStandardMaterial({
+      color: 0x64748b, // Clean neutral slate stick rod
+      roughness: 0.35,
+      metalness: 0.15
+    });
+    const stickJointMat = new THREE.MeshStandardMaterial({
+      color: 0x475569, // Joint pivot sphere
+      roughness: 0.30,
+      metalness: 0.20
+    });
 
-    // Anatomical Chin & Mandible Contour
-    const chinGeo = new THREE.SphereGeometry(3.6, 24, 18);
-    chinGeo.scale(0.85, 1.10, 0.90);
-    const chinMesh = new THREE.Mesh(chinGeo, fleshMat);
-    chinMesh.position.set(0, 18.2, -5.8);
-    silhouetteGroup.add(chinMesh);
+    // Helper: Create stick segment between two points
+    function createStick(p1, p2, radius = 0.30) {
+      const v = new THREE.Vector3().subVectors(p2, p1);
+      const len = v.length();
+      const geo = new THREE.CylinderGeometry(radius, radius, len, 16);
+      const mesh = new THREE.Mesh(geo, stickMat);
+      mesh.position.addVectors(p1, p2).multiplyScalar(0.5);
+      mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), v.normalize());
+      mesh.castShadow = true;
+      return mesh;
+    }
 
-    // 2. Neck: Smooth Anatomical Column
-    const neckMuscle = new THREE.Mesh(new THREE.CylinderGeometry(3.2, 4.2, 5.2, 24), fleshMat);
-    neckMuscle.position.set(0, 12.4, -8.0);
-    silhouetteGroup.add(neckMuscle);
+    // Helper: Create joint node sphere
+    function createJointNode(pos, radius = 0.65) {
+      const geo = new THREE.SphereGeometry(radius, 16, 16);
+      const mesh = new THREE.Mesh(geo, stickJointMat);
+      mesh.position.copy(pos);
+      mesh.castShadow = true;
+      return mesh;
+    }
 
-    // 3. Torso & Shoulder Girdle: Seamless Sculpted Anatomical Bust
-    // Smooth Thoracic Volume
-    const torsoGeo = new THREE.CylinderGeometry(13.8, 10.5, 26.0, 32);
-    torsoGeo.scale(1.06, 1.0, 0.54);
-    const torsoMesh = new THREE.Mesh(torsoGeo, fleshMat);
-    torsoMesh.position.set(0, -3.5, -8.0);
-    silhouetteGroup.add(torsoMesh);
+    // 1. Head: Classic Stick Figure Circular Ring
+    const headCenter = new THREE.Vector3(0, 18.0, 0);
+    const headRadius = 3.8;
+    const headRingGeo = new THREE.TorusGeometry(headRadius, 0.28, 16, 48);
+    const headRing = new THREE.Mesh(headRingGeo, stickMat);
+    headRing.position.copy(headCenter);
+    headRing.castShadow = true;
+    silhouetteGroup.add(headRing);
 
-    // Smooth Shoulder Transition Shoulders & Deltoid Contours (Anchors for Arm Limbs)
-    const shoulderDeltoidGeo = new THREE.SphereGeometry(2.4, 20, 20);
-    shoulderDeltoidGeo.scale(1.15, 0.90, 1.10);
+    // 2. Neck Stick: From bottom of head ring (0, 14.2, 0) to shoulder center (0, 9.5, 0)
+    const neckTop = new THREE.Vector3(0, headCenter.y - headRadius, 0);
+    const shoulderCenter = new THREE.Vector3(0, 9.5, 0);
+    silhouetteGroup.add(createStick(neckTop, shoulderCenter, 0.32));
+    silhouetteGroup.add(createJointNode(shoulderCenter, 0.70));
 
-    const deltoidR = new THREE.Mesh(shoulderDeltoidGeo, fleshMat);
-    deltoidR.position.set(16.0, 9.5, -8.0);
-    silhouetteGroup.add(deltoidR);
+    // 3. Shoulder Bar: From Left Shoulder (-15.5, 9.5, 0) to Right Shoulder (15.5, 9.5, 0)
+    const shoulderR = new THREE.Vector3(15.5, 9.5, 0);
+    const shoulderL = new THREE.Vector3(-15.5, 9.5, 0);
+    silhouetteGroup.add(createStick(shoulderL, shoulderR, 0.35));
+    silhouetteGroup.add(createJointNode(shoulderR, 0.90));
+    silhouetteGroup.add(createJointNode(shoulderL, 0.90));
 
-    const deltoidL = new THREE.Mesh(shoulderDeltoidGeo, fleshMat);
-    deltoidL.position.set(-16.0, 9.5, -8.0);
-    silhouetteGroup.add(deltoidL);
+    // 4. Spine / Torso Stick: From Shoulder Center (0, 9.5, 0) to Pelvis Center (0, -14.0, 0)
+    const pelvisCenter = new THREE.Vector3(0, -14.0, 0);
+    silhouetteGroup.add(createStick(shoulderCenter, pelvisCenter, 0.38));
+    silhouetteGroup.add(createJointNode(pelvisCenter, 0.75));
 
-    // Upper Shoulder Slope Trapezius Band
-    const trapGeo = new THREE.CylinderGeometry(10.0, 15.5, 4.0, 24);
-    trapGeo.scale(1.05, 1.0, 0.52);
-    const trapMesh = new THREE.Mesh(trapGeo, fleshMat);
-    trapMesh.position.set(0, 9.8, -8.0);
-    silhouetteGroup.add(trapMesh);
+    // 5. Pelvis / Hip Bar: Horizontal baseline bar
+    const hipR = new THREE.Vector3(8.0, -14.0, 0);
+    const hipL = new THREE.Vector3(-8.0, -14.0, 0);
+    silhouetteGroup.add(createStick(hipL, hipR, 0.32));
+    silhouetteGroup.add(createJointNode(hipR, 0.60));
+    silhouetteGroup.add(createJointNode(hipL, 0.60));
 
     class ArmLimb {
       constructor(isLeft, shoulderPos) {
@@ -2675,7 +2697,7 @@
           .addVectors(S, n.clone().multiplyScalar(dMid))
           .addScaledVector(ortho, h);
 
-        const minRibX = sign * 13.5;
+        const minRibX = sign * 12.0;
         if (this.isLeft) {
           if (E.x > minRibX && E.y > -14.0 && E.y < 9.0) E.x = minRibX;
         } else {
@@ -2718,8 +2740,8 @@
       }
     }
 
-    const armR = new ArmLimb(false, new THREE.Vector3(16.0, 9.5, -8.0));
-    const armL = new ArmLimb(true, new THREE.Vector3(-16.0, 9.5, -8.0));
+    const armR = new ArmLimb(false, new THREE.Vector3(15.5, 9.5, 0.0));
+    const armL = new ArmLimb(true, new THREE.Vector3(-15.5, 9.5, 0.0));
 
     // 5. Universal Physiological Wrist Biomechanics & ROM Enforcer
     // Formulated from functional anatomy & clinical kinesiology (Kapandji 1982, Ryu et al. 1991)
@@ -2828,21 +2850,11 @@
         return { dist: p.distanceTo(closest), closest };
       },
 
-      // Apply Body Barrier (Torso & Head Surface Non-Penetration Clamping)
+      // Apply Body Barrier (Stick Figure Plane Non-Penetration)
       applyBodyBarrier(target) {
-        // Torso Surface Clamping (y between -18.5 and 9.5)
-        if (target.y <= 9.5 && target.y >= -18.5) {
-          const xNorm = Math.min(1.0, Math.abs(target.x) / 14.5);
-          const maxChestZ = 7.5 * Math.sqrt(Math.max(0, 1 - xNorm * xNorm)) + 1.2;
-          if (target.z < maxChestZ) target.z = maxChestZ;
-        }
-        // Head Surface Clamping (y > 9.5)
-        if (target.y > 9.5) {
-          const term = 1.0 - (target.x * target.x) / (6.5 * 6.5) - ((target.y - 22.5) * (target.y - 22.5)) / (8.8 * 8.8);
-          if (term > 0) {
-            const minHeadZ = 7.4 * Math.sqrt(term) + 0.8;
-            if (target.z < minHeadZ) target.z = minHeadZ;
-          }
+        // Prevent hand from folding backwards behind the coronal stick figure plane (Z < 0.5)
+        if (target.y < 24.0 && target.y > -18.0 && Math.abs(target.x) < 16.0) {
+          if (target.z < 0.5) target.z = 0.5;
         }
       },
 
@@ -4143,26 +4155,38 @@
       if (secAlpha) secAlpha.style.display = tab === 'alphabet' ? 'block' : 'none';
 
       const badge = document.getElementById('header-badge');
+      const motionBtn = document.getElementById('btn-toggle-motion');
+
       if (tab === 'generator') {
         if (badge) badge.innerText = "⚡ UNIVERSAL SIGN GENERATOR";
         silhouetteGroup.visible = document.getElementById("toggle-body") ? document.getElementById("toggle-body").checked : true;
         triggerUniversalSynthesize();
+        isPlayingSignMotion = true;
+        if (motionBtn) { motionBtn.innerHTML = "<span>⏸ PAUSE</span>"; motionBtn.style.background = "#2563eb"; }
       } else if (tab === 'lexicons') {
         if (badge) badge.innerText = "📚 PARAMETRIC LEXICON STUDIO";
         silhouetteGroup.visible = document.getElementById("toggle-body") ? document.getElementById("toggle-body").checked : true;
+        UniversalSignCompiler.synthesize(UniversalSignCompiler.activeRecipe, true);
         switchLexiconSubtab(currentLexiconSubtab);
+        isPlayingSignMotion = true;
+        if (motionBtn) { motionBtn.innerHTML = "<span>⏸ PAUSE</span>"; motionBtn.style.background = "#2563eb"; }
       } else if (tab === 'words') {
-        if (badge) badge.innerText = "REAL-TIME ASL-LEX SYNTHESIS";
+        if (badge) badge.innerText = "📖 REAL-TIME ASL-LEX SYNTHESIS";
         silhouetteGroup.visible = document.getElementById("toggle-body") ? document.getElementById("toggle-body").checked : true;
-        // Maintain current pose or neutral rest until user clicks a word
+        const foundWord = TOP50_ASLLEX.find(x => (x.lemma || x.l || "").toLowerCase() === (currentActiveWord || "water").toLowerCase()) || TOP50_ASLLEX[0];
+        executeProceduralWord(foundWord, true);
+        isPlayingSignMotion = true;
+        if (motionBtn) { motionBtn.innerHTML = "<span>⏸ PAUSE</span>"; motionBtn.style.background = "#2563eb"; }
       } else {
-        if (badge) badge.innerText = "BILATERAL MIRRORED (ALPHABET)";
+        if (badge) badge.innerText = "🔤 BILATERAL MIRRORED (ALPHABET)";
         silhouetteGroup.visible = false;
         if (activeTrajectoryMesh) {
           scene.remove(activeTrajectoryMesh);
           activeTrajectoryMesh = null;
         }
         setHandMode(handMode);
+        isPlayingSignMotion = false;
+        if (motionBtn) { motionBtn.innerHTML = "<span>▶ PLAY</span>"; motionBtn.style.background = "#16a34a"; }
       }
     }
 
@@ -4328,11 +4352,23 @@
       container.innerHTML = '';
 
       let items = [];
-      if (currentLexiconSubtab === 'hs') items = Object.keys(PARAMETRIC_LEXICONS.handshapes).map(k => ({ key: k, ...PARAMETRIC_LEXICONS.handshapes[k] }));
-      else if (currentLexiconSubtab === 'loc') items = Object.keys(PARAMETRIC_LEXICONS.locations).map(k => ({ key: k, ...PARAMETRIC_LEXICONS.locations[k] }));
-      else if (currentLexiconSubtab === 'ori') items = Object.keys(PARAMETRIC_LEXICONS.orientations).map(k => ({ key: k, ...PARAMETRIC_LEXICONS.orientations[k] }));
-      else if (currentLexiconSubtab === 'mov') items = Object.keys(PARAMETRIC_LEXICONS.movements).map(k => ({ key: k, ...PARAMETRIC_LEXICONS.movements[k] }));
-      else if (currentLexiconSubtab === 'bil') items = Object.keys(PARAMETRIC_LEXICONS.bilateral).map(k => ({ key: k, ...PARAMETRIC_LEXICONS.bilateral[k] }));
+      let activeVal = "";
+      if (currentLexiconSubtab === 'hs') {
+        items = Object.keys(PARAMETRIC_LEXICONS.handshapes).map(k => ({ key: k, ...PARAMETRIC_LEXICONS.handshapes[k] }));
+        activeVal = UniversalSignCompiler.activeRecipe.handshape;
+      } else if (currentLexiconSubtab === 'loc') {
+        items = Object.keys(PARAMETRIC_LEXICONS.locations).map(k => ({ key: k, ...PARAMETRIC_LEXICONS.locations[k] }));
+        activeVal = UniversalSignCompiler.activeRecipe.location;
+      } else if (currentLexiconSubtab === 'ori') {
+        items = Object.keys(PARAMETRIC_LEXICONS.orientations).map(k => ({ key: k, ...PARAMETRIC_LEXICONS.orientations[k] }));
+        activeVal = UniversalSignCompiler.activeRecipe.orientation;
+      } else if (currentLexiconSubtab === 'mov') {
+        items = Object.keys(PARAMETRIC_LEXICONS.movements).map(k => ({ key: k, ...PARAMETRIC_LEXICONS.movements[k] }));
+        activeVal = UniversalSignCompiler.activeRecipe.movement;
+      } else if (currentLexiconSubtab === 'bil') {
+        items = Object.keys(PARAMETRIC_LEXICONS.bilateral).map(k => ({ key: k, ...PARAMETRIC_LEXICONS.bilateral[k] }));
+        activeVal = UniversalSignCompiler.activeRecipe.bilateral;
+      }
 
       if (badge) badge.innerText = `${items.length} Items`;
 
@@ -4341,6 +4377,9 @@
       filtered.forEach(it => {
         const btn = document.createElement('button');
         btn.className = 'lexicon-card-btn';
+        if (it.key.toLowerCase() === (activeVal || "").toLowerCase()) {
+          btn.classList.add('active');
+        }
         btn.innerHTML = `<span style="font-size:11px; font-weight:700; color:var(--accent);">${it.key.toUpperCase()}</span><span style="font-size:9px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%;">${it.name || it.key}</span>`;
         btn.onclick = () => testLexiconPrimitive(currentLexiconSubtab, it.key, it);
         container.appendChild(btn);
@@ -4353,7 +4392,8 @@
 
     function testLexiconPrimitive(subtab, key, itemData) {
       document.querySelectorAll('.lexicon-card-btn').forEach(b => {
-        b.classList.toggle('active', b.innerText.includes(key.toUpperCase()));
+        const s = b.querySelector('span');
+        b.classList.toggle('active', s && s.innerText.trim() === key.toUpperCase());
       });
 
       const diagTitle = document.getElementById('diag-title');
@@ -4369,40 +4409,31 @@
       if (subtab === 'hs') {
         const hsDef = PARAMETRIC_LEXICONS.handshapes[key];
         if (diagDetails) diagDetails.innerHTML = `<strong>Handshape:</strong> ${hsDef.name}<br/><strong>Description:</strong> ${hsDef.desc}<br/><strong>Tendon Springs:</strong> Balanced (0 Self-Penetration)`;
-        handR.executePose(hsDef.tokens, key, false);
+        UniversalSignCompiler.synthesize({ handshape: key }, false);
       } else if (subtab === 'loc') {
         const locDef = PARAMETRIC_LEXICONS.locations[key];
         const target = locDef.coords(false, 1.0);
         if (diagDetails) diagDetails.innerHTML = `<strong>Locus:</strong> ${locDef.name} (${locDef.category})<br/><strong>Coordinates:</strong> [${target.x.toFixed(1)}, ${target.y.toFixed(1)}, ${target.z.toFixed(1)}]<br/><strong>Arm IK Reach:</strong> ${armR.reachPct}% (Elbow: ${armR.elbowAngleDeg}°)`;
-        handR.targetRootPos.copy(target);
-        handR.root.position.copy(target);
-        armR.update(target, true);
+        UniversalSignCompiler.synthesize({ location: key }, false);
       } else if (subtab === 'ori') {
         const oriDef = PARAMETRIC_LEXICONS.orientations[key];
         const euler = oriDef.euler(false);
         if (diagDetails) diagDetails.innerHTML = `<strong>Orientation:</strong> ${oriDef.name}<br/><strong>Euler Angles:</strong> [${euler[0].toFixed(2)}, ${euler[1].toFixed(2)}, ${euler[2].toFixed(2)}]<br/><strong>Wrist ROM:</strong> Satisfies Kapandji ROM ≤ 75°`;
-        handR.targetWristQuat.setFromEuler(new THREE.Euler(...euler));
+        UniversalSignCompiler.synthesize({ orientation: key }, false);
       } else if (subtab === 'mov') {
         const movDef = PARAMETRIC_LEXICONS.movements[key];
         if (diagDetails) diagDetails.innerHTML = `<strong>Movement:</strong> ${movDef.name}<br/><strong>Kinematic Class:</strong> ${movDef.class}<br/><strong>Trajectory Geometry:</strong> ${movDef.ribbon || "Spatial Path"}`;
-        UniversalSignCompiler.synthesize({
-          handshape: "1",
-          location: "neutral_mid",
-          orientation: "PALM_ANTERIOR",
-          movement: key,
-          bilateral: "UNILATERAL"
-        }, false);
+        UniversalSignCompiler.synthesize({ movement: key }, false);
+        isPlayingSignMotion = true;
+        const motionBtn = document.getElementById('btn-toggle-motion');
+        if (motionBtn) {
+          motionBtn.innerHTML = "<span>⏸ PAUSE</span>";
+          motionBtn.style.background = "#2563eb";
+        }
       } else if (subtab === 'bil') {
         const bilDef = PARAMETRIC_LEXICONS.bilateral[key];
         if (diagDetails) diagDetails.innerHTML = `<strong>Bilateral Mode:</strong> ${bilDef.name}<br/><strong>Description:</strong> ${bilDef.desc}<br/><strong>Collision Status:</strong> Active Volumetric Barrier (Zero Tunneling)`;
-        UniversalSignCompiler.synthesize({
-          handshape: "open_b",
-          location: "neutral_mid",
-          orientation: "PALM_ANTERIOR",
-          movement: "LINEAR_FORWARD",
-          bilateral: key,
-          baseHandshape: "flat_b"
-        }, false);
+        UniversalSignCompiler.synthesize({ bilateral: key }, false);
       }
     }
 
@@ -4929,17 +4960,17 @@
       const dt = 0.016;
 
       // Advance Continuous Signing Phase Clock
-      if (isPlayingSignMotion && (currentMainTab === 'generator' || currentMainTab === 'words')) {
+      if (isPlayingSignMotion && (currentMainTab === 'generator' || currentMainTab === 'words' || currentMainTab === 'lexicons')) {
         signMotionClock += dt * animSpeed;
       }
       const phi = (signMotionClock * 3.2) % (Math.PI * 2.0);
 
       // Evaluate Dynamic Targets from Base Target Positions
-      if (currentMainTab === 'generator' || currentMainTab === 'words') {
+      if (currentMainTab === 'generator' || currentMainTab === 'words' || currentMainTab === 'lexicons') {
         let targetR = handR.targetRootPos.clone();
         let targetL = handL.targetRootPos.clone();
         let rec;
-        if (currentMainTab === 'generator') {
+        if (currentMainTab === 'generator' || currentMainTab === 'lexicons') {
           rec = UniversalSignCompiler.activeRecipe;
         } else {
           const lem = (currentActiveWord || "").toLowerCase();
@@ -4951,17 +4982,6 @@
           KinematicMovementSolver.evaluate(rec, phi, targetR, targetL, handR, handL);
         } else {
           KinematicMovementSolver.updateTelemetry(rec, KinematicMovementSolver.computeWaypoints(rec, handR.targetRootPos, handL.targetRootPos), 0.0, false);
-        }
-
-        if (typeof LociVisualizationEngine !== 'undefined') {
-          // Pass index fingertip / hand effector positions for dynamic interactive proximity highlighting
-          const effR = (handR.fingerData && handR.fingerData[0] && handR.fingerData[0].ikNodes[3])
-            ? handR.fingerData[0].ikNodes[3].getEffectorPos()
-            : handR.root.position;
-          const effL = (handL.root.visible && handL.fingerData && handL.fingerData[0] && handL.fingerData[0].ikNodes[3])
-            ? handL.fingerData[0].ikNodes[3].getEffectorPos()
-            : (handL.root.visible ? handL.root.position : null);
-          LociVisualizationEngine.update(signMotionClock, effR, effL);
         }
 
         // Apply Closed-Form Non-Accumulative Collisions & Clearances
@@ -4984,6 +5004,19 @@
         if (handL.root.visible && !(isDraggingMasterIndex && draggingHand === handL)) {
           handL.root.position.lerp(targetL, isPlayingSignMotion ? 0.12 : 0.25);
         }
+      }
+
+      // Continuous Multi-Point Proximity Detection & Locus Highlight (Always active)
+      if (typeof LociVisualizationEngine !== 'undefined') {
+        const effR = (handR.fingerData && handR.fingerData[0] && handR.fingerData[0].ikNodes[3])
+          ? handR.fingerData[0].ikNodes[3].getEffectorPos()
+          : handR.root.position;
+        const wristR = handR.root.position;
+        const effL = (handL.root.visible && handL.fingerData && handL.fingerData[0] && handL.fingerData[0].ikNodes[3])
+          ? handL.fingerData[0].ikNodes[3].getEffectorPos()
+          : (handL.root.visible ? handL.root.position : null);
+        const wristL = handL.root.visible ? handL.root.position : null;
+        LociVisualizationEngine.update(signMotionClock, effR, wristR, effL, wristL);
       }
 
       // Enforce Continuous Volumetric Anti-Penetration on actual hand positions
@@ -5042,8 +5075,11 @@
       handL.setTheme(isDaVinci);
     });
 
-    // --- INITIALIZATION VIA URL PARAMS ---
+    // --- INITIALIZATION VIA URL PARAMS & ENGINE WIRING ---
     initGeneratorUI();
+    KinematicMovementSolver.initVisuals(scene);
+    LociVisualizationEngine.init(scene);
+    LociVisualizationEngine.clearActiveLocus();
 
     const urlParams = new URLSearchParams(window.location.search);
     const initTab = urlParams.get('tab') || 'generator';
@@ -5054,21 +5090,6 @@
       document.getElementById('btn-theme').click();
     }
 
-    if (initTab === 'alphabet') {
-      switchMainTab('alphabet');
-      if (ASL_ALPHABET[initPose]) executeProceduralPose(ASL_ALPHABET[initPose], initPose, true);
-    } else if (initTab === 'words') {
-      switchMainTab('words');
-      const foundWord = TOP50_ASLLEX.find(x => x.lemma === initWord) || TOP50_ASLLEX[0];
-      executeProceduralWord(foundWord, true);
-    } else if (initTab === 'lexicons') {
-      switchMainTab('lexicons');
-    } else {
-      // Initialized to words tab
-      loadUniversalPreset('water');
-    }
-
-        
     // --- FLOATING MOTION CONTROL DECK & LOCI EVENT WIRING ---
     const motionBtn = document.getElementById('btn-toggle-motion');
     if (motionBtn) {
@@ -5126,8 +5147,7 @@
       });
     }
 
-    // Initialize Kinematic 3D Waypoint Visuals & Loci Spheres Engine
-        // Wire Doctoral Admissions Modal
+    // Wire Doctoral Admissions Modal
     const modalOverlay = document.getElementById('admissions-modal-overlay');
     const btnCloseModal = document.getElementById('btn-close-admissions-modal');
     if (btnCloseModal && modalOverlay) {
@@ -5138,7 +5158,7 @@
       });
     }
 
-        // Toggle Body Figure Visibility
+    // Toggle Body Figure Visibility
     const toggleBody = document.getElementById('toggle-body');
     if (toggleBody) {
       toggleBody.addEventListener('change', (e) => {
@@ -5147,52 +5167,28 @@
         }
       });
     }
-    KinematicMovementSolver.initVisuals(scene);
-    LociVisualizationEngine.init(scene);
-    LociVisualizationEngine.clearActiveLocus(); // Ensure zero billboard text clutter on load!
 
-    // Initial landing: Start in natural neutral resting position
-    switchMainTab('words');
-    isPlayingSignMotion = new URLSearchParams(window.location.search).has('play');
-    const motionBtnInit = document.getElementById('btn-toggle-motion');
-    if (motionBtnInit) {
-      motionBtnInit.innerHTML = isPlayingSignMotion ? "<span>⏸ PAUSE</span>" : "<span>▶ PLAY</span>";
-      motionBtnInit.style.background = isPlayingSignMotion ? "#2563eb" : "#16a34a";
+    // Clean Landing: Switch to initial tab and synthesize starting sign
+    switchMainTab(initTab);
+    if (initTab === 'generator') {
+      loadUniversalPreset(initWord);
+    } else if (initTab === 'words') {
+      const foundWord = TOP50_ASLLEX.find(x => (x.lemma || x.l || "").toLowerCase() === initWord.toLowerCase()) || TOP50_ASLLEX[0];
+      executeProceduralWord(foundWord, true);
+    } else if (initTab === 'lexicons') {
+      UniversalSignCompiler.synthesize(UniversalSignCompiler.activeRecipe, true);
+      switchLexiconSubtab(currentLexiconSubtab);
+    } else if (initTab === 'alphabet') {
+      if (ASL_ALPHABET[initPose]) executeProceduralPose(ASL_ALPHABET[initPose], initPose, true);
     }
 
-    // Set right hand to natural resting pose forward in neutral conversational space (well clear of the chest/body)
-    handR.targetRootPos.set(6.5, 2.2, 16.0);
-    handR.root.position.set(6.5, 2.2, 16.0);
-    handR.targetWristQuat.setFromEuler(new THREE.Euler(0.35, -1.15, -0.20));
-    
-    // Natural loose cascade resting hand
-    const restTokens = {
-      idx: "NATURAL_REST_IDX",
-      mid: "NATURAL_REST_MID",
-      rng: "NATURAL_REST_RNG",
-      pnk: "NATURAL_REST_PNK",
-      thm: "THM_NATURAL_REST"
-    };
-    handR.executePose(restTokens, "Neutral Rest", true);
-
-    armR.update(handR.root.position, true);
-    armL.update(handL.root.position, false);
-
-    // Initial Telemetry setup
-    const initialWp = {
-      pPrep: new THREE.Vector3(7.5, 3.5, 18.0),
-      pContact: new THREE.Vector3(7.5, 2.0, 16.5),
-      distanceCm: 0.0
-    };
-    KinematicMovementSolver.activeWaypoints = initialWp;
-    KinematicMovementSolver.updateTelemetry({ name: "Neutral Rest" }, initialWp, 0.0, false);
-    const initBadge = document.getElementById('contact-status-badge');
-    if (initBadge) {
-      initBadge.innerText = "READY (Neutral)";
-      initBadge.style.background = "rgba(56, 189, 248, 0.2)";
-      initBadge.style.color = "#38bdf8";
+    if (urlParams.has('pause')) {
+      isPlayingSignMotion = false;
+      if (motionBtn) {
+        motionBtn.innerHTML = "<span>▶ PLAY</span>";
+        motionBtn.style.background = "#16a34a";
+      }
     }
-
 
     animate();
 
