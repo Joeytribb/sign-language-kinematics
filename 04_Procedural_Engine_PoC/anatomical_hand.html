@@ -455,7 +455,7 @@
       <!-- Quick 1-Click Presets -->
       <div style="margin-bottom:10px;">
         <div style="font-size:9px; font-weight:700; color:var(--text-muted); margin-bottom:4px; text-transform:uppercase;">1-Click Canonical Sign Presets:</div>
-        <div style="display:flex; flex-wrap:wrap; gap:4px;">
+          <button class="preset-pill" onclick="loadUniversalPreset('thankyou')">🙏 Thank You</button>
           <button class="preset-pill" onclick="loadUniversalPreset('water')">💧 Water</button>
           <button class="preset-pill" onclick="loadUniversalPreset('book')">📖 Book</button>
           <button class="preset-pill" onclick="loadUniversalPreset('work')">🔨 Work</button>
@@ -787,9 +787,9 @@
       THM_FLAT_PALM: { f1: 0, a1: -28, f2: 65, f3: 60, desc: "Flat across lower palm" },
       THM_OUT: { f1: -45, a1: -30, f2: 0, f3: 0, desc: "Extended 90° outward" },
       THM_OUT_SPREAD: { f1: -60, a1: -30, f2: 0, f3: 0, desc: "Wide outward spread" },
-      THM_TUCK_M: { f1: -12, a1: -65, f2: 70, f3: 80, desc: "Tucked under index, mid, ring" },
-      THM_TUCK_N: { f1: -14, a1: -56, f2: 70, f3: 80, desc: "Tucked under index, mid" },
-      THM_TUCK_T: { f1: -28, a1: -30, f2: 70, f3: 75, desc: "Tucked under index" },
+      THM_TUCK_M: { f1: 25, a1: -10, f2: 70, f3: 65, desc: "Tucked inside palm, poked between ring and pinky" },
+      THM_TUCK_N: { f1: 5, a1: -20, f2: 75, f3: 75, desc: "Tucked inside palm, poked between middle and ring" },
+      THM_TUCK_T: { f1: -25, a1: -30, f2: 75, f3: 70, desc: "Tucked inside palm, poked between index and middle" },
       THM_PINCH_INDEX: { f1: -40, a1: -30, f2: 60, f3: 80, desc: "Pinching index fingertip" },
       THM_PINCH_MID: { f1: -25, a1: -30, f2: 60, f3: 80, desc: "Touching middle fingertip" },
       THM_CURVED: { f1: -30, a1: -30, f2: 40, f3: 40, desc: "C-shape opposing curve" },
@@ -1454,8 +1454,8 @@
         "a": { name: "A-Handshape", category: "Fist / Alphabetic", tokens: { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_REST_SIDE" }, desc: "Closed fist with thumb resting vertically against index lateral side" },
         "s": { name: "S-Handshape", category: "Fist / Alphabetic", tokens: { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Tight fist with thumb firmly wrapped across anterior index/middle" },
         "t": { name: "T-Handshape", category: "Fist / Alphabetic", tokens: { idx: "CLOSED_OVER_THUMB", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_TUCK_T" }, desc: "Fist with thumb tucked between index and middle fingers" },
-        "m": { name: "M-Handshape", category: "Fist / Alphabetic", tokens: { idx: "CLOSED_OVER_THUMB", mid: "CLOSED_OVER_THUMB", rng: "CLOSED_OVER_THUMB", pnk: "CLOSED", thm: "THM_TUCK_T" }, desc: "Thumb tucked under 3 fingers (index, middle, ring)" },
-        "n": { name: "N-Handshape", category: "Fist / Alphabetic", tokens: { idx: "CLOSED_OVER_THUMB", mid: "CLOSED_OVER_THUMB", rng: "CLOSED", pnk: "CLOSED", thm: "THM_TUCK_T" }, desc: "Thumb tucked under 2 fingers (index and middle)" },
+        "m": { name: "M-Handshape", category: "Fist / Alphabetic", tokens: { idx: "CLOSED_OVER_THUMB", mid: "CLOSED_OVER_THUMB", rng: "CLOSED_OVER_THUMB", pnk: "CLOSED", thm: "THM_TUCK_M" }, desc: "Thumb tucked under 3 fingers (index, middle, ring)" },
+        "n": { name: "N-Handshape", category: "Fist / Alphabetic", tokens: { idx: "CLOSED_OVER_THUMB", mid: "CLOSED_OVER_THUMB", rng: "CLOSED", pnk: "CLOSED", thm: "THM_TUCK_N" }, desc: "Thumb tucked under 2 fingers (index and middle)" },
         "open_b": { name: "Open B", category: "Flat Palm", tokens: { idx: "EXTENDED", mid: "EXTENDED", rng: "EXTENDED", pnk: "EXTENDED", thm: "THM_REST_SIDE" }, desc: "4 fingers extended adducted side-by-side, thumb relaxed at side" },
         "flat_b": { name: "Flat B / B", category: "Flat Palm", tokens: { idx: "EXTENDED", mid: "EXTENDED", rng: "EXTENDED", pnk: "EXTENDED", thm: "THM_FLAT_PALM" }, desc: "4 fingers extended flat together, thumb crossed over palm base" },
         "bent_b": { name: "Bent B", category: "Modified Flat", tokens: { idx: "HALF_BENT", mid: "HALF_BENT", rng: "HALF_BENT", pnk: "HALF_BENT", thm: "THM_FLAT_PALM" }, desc: "4 fingers together bent 90° at MCP joint; PIP/DIP straight" },
@@ -1614,8 +1614,8 @@
         this.group = new THREE.Group();
         this.group.name = "spatialLociGroup";
 
-        const sphereGeo = new THREE.SphereGeometry(0.22, 16, 16);
-        const ringGeo = new THREE.RingGeometry(0.35, 0.50, 24);
+        const sphereGeo = new THREE.SphereGeometry(0.42, 16, 16);
+        const ringGeo = new THREE.RingGeometry(0.55, 0.70, 24);
 
         for (let key in PARAMETRIC_LEXICONS.locations) {
           const locDef = PARAMETRIC_LEXICONS.locations[key];
@@ -1629,27 +1629,26 @@
           const sphereMat = new THREE.MeshStandardMaterial({
             color: colorHex,
             emissive: colorHex,
-            emissiveIntensity: 0.05,
-            roughness: 0.35,
+            emissiveIntensity: 0.35,
+            roughness: 0.25,
             metalness: 0.1,
             transparent: true,
-            opacity: 0.18
+            opacity: 0.65
           });
           const sphereMesh = new THREE.Mesh(sphereGeo, sphereMat);
           locusNode.add(sphereMesh);
 
           const ringMat = new THREE.MeshBasicMaterial({
-            color: 0x10b981,
+            color: colorHex,
             side: THREE.DoubleSide,
             transparent: true,
-            opacity: 0.0
+            opacity: 0.35
           });
           const ringMesh = new THREE.Mesh(ringGeo, ringMat);
           ringMesh.rotation.x = Math.PI * 0.5;
           locusNode.add(ringMesh);
 
-          // 3D Canvas Billboard Text Label (Crisp, high-contrast floating badge)
-          // 3D Canvas Billboard Text Label (Crisp, high-contrast floating badge)
+          // 3D Canvas Billboard Text Label (Strictly hidden until hand moves into proximity)
           const canvas = document.createElement('canvas');
           canvas.width = 384; canvas.height = 64;
           const ctx = canvas.getContext('2d');
@@ -1688,10 +1687,11 @@
           item.sprite.material.opacity = 0.0;
           item.sphereMat.color.setHex(item.baseColor);
           item.sphereMat.emissive.setHex(item.baseColor);
-          item.sphereMat.emissiveIntensity = 0.05;
-          item.sphereMat.opacity = 0.16;
-          item.ringMat.opacity = 0.0;
-          item.node.scale.set(0.6, 0.6, 0.6);
+          item.sphereMat.emissiveIntensity = 0.35;
+          item.sphereMat.opacity = 0.65;
+          item.ringMat.color.setHex(item.baseColor);
+          item.ringMat.opacity = 0.35;
+          item.node.scale.set(1.0, 1.0, 1.0);
         }
       },
 
@@ -1707,18 +1707,20 @@
             item.sprite.material.opacity = 1.0;
             item.sphereMat.color.setHex(0x10b981);
             item.sphereMat.emissive.setHex(0x059669);
-            item.sphereMat.emissiveIntensity = 1.1;
+            item.sphereMat.emissiveIntensity = 1.4;
             item.sphereMat.opacity = 1.0;
-            item.ringMat.opacity = 0.95;
-            item.node.scale.set(1.4, 1.4, 1.4);
+            item.ringMat.color.setHex(0x10b981);
+            item.ringMat.opacity = 1.0;
+            item.node.scale.set(1.45, 1.45, 1.45);
           } else {
             item.sprite.material.opacity = 0.0;
             item.sphereMat.color.setHex(item.baseColor);
             item.sphereMat.emissive.setHex(item.baseColor);
-            item.sphereMat.emissiveIntensity = 0.05;
-            item.sphereMat.opacity = 0.12;
-            item.ringMat.opacity = 0.0;
-            item.node.scale.set(0.5, 0.5, 0.5);
+            item.sphereMat.emissiveIntensity = 0.35;
+            item.sphereMat.opacity = 0.65;
+            item.ringMat.color.setHex(item.baseColor);
+            item.ringMat.opacity = 0.35;
+            item.node.scale.set(1.0, 1.0, 1.0);
           }
         }
       },
@@ -1758,29 +1760,30 @@
 
           if (isHighlighted) {
             const d = (key === nearestKey) ? nearestDist : 2.0;
-            const proximityFactor = Math.max(0, 1.0 - (d / proximityThreshold));
-            const pulse = 1.42 + Math.sin(time * 8.0) * 0.18;
+            const pulse = 1.40 + Math.sin(time * 6.0) * 0.15;
             item.node.scale.set(pulse, pulse, pulse);
             
             // Radiant glowing emerald beacon
             item.sphereMat.color.setHex(0x10b981);
             item.sphereMat.emissive.setHex(0x059669);
-            item.sphereMat.emissiveIntensity = 1.2;
+            item.sphereMat.emissiveIntensity = 1.4;
             item.sphereMat.opacity = 1.0;
-            item.ringMat.opacity = 0.95;
+            item.ringMat.color.setHex(0x10b981);
+            item.ringMat.opacity = 1.0;
             
-            // Prominently reveal floating name label badge
+            // Prominently reveal floating name label badge ONLY when hand moves there
             item.sprite.material.opacity = 1.0;
             item.sprite.position.y = 1.35 + Math.sin(time * 4.0) * 0.08;
           } else {
-            // Ambient quiet starry locus node (zero billboard clutter)
-            item.node.scale.set(0.5, 0.5, 0.5);
+            // Clearly visible floating spatial anchor, but billboard label strictly hidden
+            item.node.scale.set(1.0, 1.0, 1.0);
             item.sphereMat.color.setHex(item.baseColor);
             item.sphereMat.emissive.setHex(item.baseColor);
-            item.sphereMat.emissiveIntensity = 0.04;
-            item.sphereMat.opacity = 0.15;
-            item.ringMat.opacity = 0.0;
-            item.sprite.material.opacity = 0.0;
+            item.sphereMat.emissiveIntensity = 0.35;
+            item.sphereMat.opacity = 0.65;
+            item.ringMat.color.setHex(item.baseColor);
+            item.ringMat.opacity = 0.35;
+            item.sprite.material.opacity = 0.0; // STRICTLY HIDDEN
           }
         }
       }
@@ -1867,34 +1870,56 @@
       },
 
       computeWaypoints(recipe, basePosR, basePosL) {
-        const pContact = basePosR ? basePosR.clone() : new THREE.Vector3(1.5, 7.5, 11.5);
-        let nApproach = new THREE.Vector3(0, 0.2, 1.0).normalize();
-        let dApproach = 3.6;
-
         const loc = (recipe.location || "neutral_mid").toLowerCase();
         const mov = (recipe.movement || "STATIC_HOLD").toUpperCase();
+        const lem = (recipe.name || "").toLowerCase();
+
+        // SPECIAL SIGN: THANK YOU (Starts at chin/lips, travels forward-down into neutral space far)
+        if (lem === "thankyou" || lem === "thank you" || lem === "thank_you" || (loc === "chin" && mov === "LINEAR_FORWARD" && (recipe.handshape === "open_b" || recipe.handshape === "5"))) {
+          const pPrep = new THREE.Vector3(0.4, 14.2, 2.0); // Chin / lips landmark
+          const pContact = new THREE.Vector3(2.0, 7.5, 17.5); // Forward neutral space far
+          const nApproach = new THREE.Vector3().subVectors(pContact, pPrep).normalize();
+          return {
+            pContact: pContact,
+            pPrep: pPrep,
+            nApproach: nApproach,
+            dApproach: pPrep.distanceTo(pContact),
+            distanceCm: pPrep.distanceTo(pContact)
+          };
+        }
+
+        const pContact = basePosR ? basePosR.clone() : new THREE.Vector3(1.5, 7.5, 11.5);
+        let nApproach = new THREE.Vector3(0, 0.2, 1.0).normalize();
+        let dApproach = 8.5; // Significantly enlarged base stroke
 
         if (loc === "chin" || loc === "mouth" || loc === "nose" || loc === "forehead" || loc === "eyes" || loc === "temple") {
           nApproach.set(0.0, 0.15, 1.0).normalize();
-          dApproach = 3.8;
+          dApproach = 8.5;
         } else if (loc === "sternum" || loc === "clavicle" || loc === "stomach") {
           nApproach.set(0.2, 0.1, 1.0).normalize();
-          dApproach = 3.6;
+          dApproach = 8.0;
         } else if (loc.includes("passive")) {
           nApproach.set(0.0, 1.0, 0.0);
-          dApproach = 4.2;
+          dApproach = 7.5;
         } else if (mov === "LINEAR_FORWARD") {
           nApproach.set(0.0, -0.15, -1.0).normalize();
-          dApproach = 6.5;
+          dApproach = 16.0; // Prominent 16 cm stroke
         } else if (mov === "LINEAR_BACKWARD") {
           nApproach.set(0.0, 0.15, 1.0).normalize();
-          dApproach = 4.5;
+          dApproach = 14.0; // Prominent 14 cm stroke
         } else if (mov === "ARC_SAGITTAL") {
-          nApproach.set(0.0, 0.8, -0.6).normalize();
-          dApproach = 4.0;
+          nApproach.set(0.0, 0.6, -0.8).normalize();
+          dApproach = 14.0; // Prominent 14 cm stroke
+        } else if (mov === "CIRCULAR_TRANSVERSE") {
+          nApproach.set(1.0, 0.0, 0.0).normalize();
+          dApproach = 11.0;
         } else if (mov === "WRIST_NOD") {
           nApproach.set(0.0, 0.5, 0.2).normalize();
-          dApproach = 1.8;
+          dApproach = 3.5;
+        } else if (mov === "TAP_2X") {
+          dApproach = 6.0;
+        } else if (mov === "TAP_1X") {
+          dApproach = 6.5;
         }
 
         const pPrep = pContact.clone().addScaledVector(nApproach, dApproach);
@@ -1908,7 +1933,7 @@
         };
       },
 
-      evaluate(recipe, phi, targetR, targetL, handR, handL) {
+      evaluate(recipe, phi, targetR, targetL, handR, handL, strokeProgress = 0.0) {
         if (!this.activeWaypoints || this.currentRecipe !== recipe) {
           this.activeWaypoints = this.computeWaypoints(recipe, handR.targetRootPos, handL.targetRootPos);
           this.currentRecipe = recipe;
@@ -1920,96 +1945,113 @@
         const mov = (recipe.movement || "STATIC_HOLD").toUpperCase();
         const lem = (recipe.name || "").toLowerCase();
 
-        let strokeProgress = 0;
+        let currentPhase = strokeProgress;
         let isContactInstant = false;
+        const u = Math.min(1.0, Math.max(0.0, strokeProgress));
+
+        // Smooth cubic ease-in-out
+        const easeInOut = u < 0.5 ? 2.0 * u * u : -1.0 + (4.0 - 2.0 * u) * u;
 
         // Custom signature words
-        if (lem === "car") {
-          targetR.y = 8.0 + Math.sin(phi) * 1.8;
-          targetL.y = 8.0 - Math.sin(phi) * 1.8;
-          handR.targetWristQuat.setFromEuler(new THREE.Euler(0.20 + Math.sin(phi) * 0.25, -1.30, -0.20));
-          handL.targetWristQuat.setFromEuler(new THREE.Euler(0.20 - Math.sin(phi) * 0.25, 1.30, 0.20));
-          strokeProgress = (Math.sin(phi) + 1.0) * 0.5;
+        if (lem === "thankyou" || lem === "thank you" || lem === "thank_you" || (recipe.location === "chin" && mov === "LINEAR_FORWARD" && (recipe.handshape === "open_b" || recipe.handshape === "5"))) {
+          // ONE-SHOT "THANK YOU": Hand starts at chin/lips, travels smoothly forward-down into neutral space far
+          targetR.lerpVectors(wp.pPrep, wp.pContact, easeInOut);
+          // Palm dynamic pitch: starts tilted backward toward chin, rotates smoothly to face upward/forward
+          const qStart = new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.45, 0.15, -0.20));
+          const qEnd = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.85, 0.05, 0.00));
+          handR.targetWristQuat.slerpQuaternions(qStart, qEnd, easeInOut);
+          currentPhase = easeInOut;
+          if (u >= 0.90) isContactInstant = true;
+        } else if (lem === "car") {
+          // Steering wheel single cycle
+          const steer = Math.sin(u * Math.PI * 2.0);
+          targetR.y = wp.pContact.y + steer * 2.5;
+          targetL.y = wp.pContact.y - steer * 2.5;
+          handR.targetWristQuat.setFromEuler(new THREE.Euler(0.20 + steer * 0.35, -1.30, -0.20));
+          handL.targetWristQuat.setFromEuler(new THREE.Euler(0.20 - steer * 0.35, 1.30, 0.20));
+          currentPhase = u;
         } else if (lem === "what_1") {
-          targetR.x = 8.0 + Math.sin(phi) * 1.4;
-          targetL.x = -8.0 - Math.sin(phi) * 1.4;
-          handR.targetWristQuat.setFromEuler(new THREE.Euler(1.35, Math.PI, Math.cos(phi) * 0.18));
-          handL.targetWristQuat.setFromEuler(new THREE.Euler(1.35, -Math.PI, -Math.cos(phi) * 0.18));
-          strokeProgress = (Math.sin(phi) + 1.0) * 0.5;
+          // Outward shrug single cycle
+          const shrug = Math.sin(u * Math.PI);
+          targetR.x = wp.pContact.x + shrug * 3.5;
+          targetL.x = -(wp.pContact.x + shrug * 3.5);
+          handR.targetWristQuat.setFromEuler(new THREE.Euler(1.35, Math.PI, shrug * 0.25));
+          handL.targetWristQuat.setFromEuler(new THREE.Euler(1.35, -Math.PI, -shrug * 0.25));
+          currentPhase = u;
         } else if (lem === "book") {
-          const openAmt = Math.sin(phi) * 0.5 + 0.5;
-          targetR.x = 2.5 + openAmt * 1.8;
-          targetL.x = -2.5 - openAmt * 1.8;
-          handR.targetWristQuat.setFromEuler(new THREE.Euler(1.35, Math.PI - openAmt * 0.35, 0.0));
-          handL.targetWristQuat.setFromEuler(new THREE.Euler(1.35, -Math.PI + openAmt * 0.35, 0.0));
-          strokeProgress = openAmt;
+          // Book opening single cycle
+          targetR.x = 2.5 + easeInOut * 3.0;
+          targetL.x = -(2.5 + easeInOut * 3.0);
+          handR.targetWristQuat.setFromEuler(new THREE.Euler(1.35, Math.PI - easeInOut * 0.45, 0.0));
+          handL.targetWristQuat.setFromEuler(new THREE.Euler(1.35, -Math.PI + easeInOut * 0.45, 0.0));
+          currentPhase = easeInOut;
         } else if (mov === "TAP_2X") {
-          // Double-Tap Cycle: Two impacts per 2*pi period
-          const cycleLocal = (phi % Math.PI) / Math.PI;
-          if (cycleLocal < 0.55) {
-            const u = cycleLocal / 0.55;
-            const easeIn = u * u;
-            targetR.lerpVectors(wp.pPrep, wp.pContact, easeIn);
-            strokeProgress = easeIn;
-          } else if (cycleLocal < 0.75) {
+          // One-shot double-tap: Approach -> Tap 1 -> Rebound -> Tap 2 -> Hold
+          const pRebound = wp.pContact.clone().addScaledVector(wp.nApproach, 3.0);
+          if (u < 0.35) {
+            const t = u / 0.35;
+            targetR.lerpVectors(wp.pPrep, wp.pContact, t * t);
+            currentPhase = t * 0.5;
+          } else if (u < 0.48) {
             targetR.copy(wp.pContact);
-            strokeProgress = 1.0;
             isContactInstant = true;
+            currentPhase = 0.5;
+          } else if (u < 0.68) {
+            const t = (u - 0.48) / 0.20;
+            const ease = Math.sin(t * Math.PI * 0.5);
+            targetR.lerpVectors(wp.pContact, pRebound, ease);
+            currentPhase = 0.5 + ease * 0.25;
+          } else if (u < 0.85) {
+            const t = (u - 0.68) / 0.17;
+            targetR.lerpVectors(pRebound, wp.pContact, t * t);
+            currentPhase = 0.75 + t * 0.25;
           } else {
-            const u = (cycleLocal - 0.75) / 0.25;
-            const easeOut = Math.sin(u * Math.PI * 0.5);
-            targetR.lerpVectors(wp.pContact, wp.pPrep, easeOut);
-            strokeProgress = 1.0 - easeOut;
+            targetR.copy(wp.pContact);
+            isContactInstant = true;
+            currentPhase = 1.0;
           }
         } else if (mov === "TAP_1X") {
-          const tau = phi / (Math.PI * 2.0);
-          if (tau < 0.45) {
-            const u = tau / 0.45;
-            const easeIn = u * u;
-            targetR.lerpVectors(wp.pPrep, wp.pContact, easeIn);
-            strokeProgress = easeIn;
-          } else if (tau < 0.65) {
-            targetR.copy(wp.pContact);
-            strokeProgress = 1.0;
-            isContactInstant = true;
+          // One-shot single tap: Approach -> Tap 1 -> Hold
+          if (u < 0.55) {
+            const t = u / 0.55;
+            targetR.lerpVectors(wp.pPrep, wp.pContact, t * t);
+            currentPhase = t;
           } else {
-            const u = (tau - 0.65) / 0.35;
-            const easeOut = Math.sin(u * Math.PI * 0.5);
-            targetR.lerpVectors(wp.pContact, wp.pPrep, easeOut);
-            strokeProgress = 1.0 - easeOut;
+            targetR.copy(wp.pContact);
+            isContactInstant = true;
+            currentPhase = 1.0;
           }
         } else if (mov === "WRIST_NOD") {
           targetR.copy(wp.pContact);
-          const nod = Math.sin(phi * 2.0) * 0.35;
-          targetR.y += nod * 0.5;
-          strokeProgress = (Math.sin(phi * 2.0) + 1.0) * 0.5;
+          const nod = Math.sin(u * Math.PI * 2.0);
+          targetR.y += nod * 2.5;
+          currentPhase = u;
         } else if (mov === "FOREARM_TWIST") {
           targetR.copy(wp.pContact);
-          strokeProgress = (Math.sin(phi * 2.0) + 1.0) * 0.5;
-        } else if (mov === "LINEAR_FORWARD") {
-          const osc = (Math.sin(phi) + 1.0) * 0.5;
-          targetR.lerpVectors(wp.pPrep, wp.pContact, osc);
-          strokeProgress = osc;
-        } else if (mov === "LINEAR_BACKWARD") {
-          const osc = (Math.sin(phi) + 1.0) * 0.5;
-          targetR.lerpVectors(wp.pPrep, wp.pContact, osc);
-          strokeProgress = osc;
+          const twist = Math.sin(u * Math.PI) * 1.6;
+          handR.targetWristQuat.setFromEuler(new THREE.Euler(1.2 + twist * 0.5, 0, twist));
+          currentPhase = u;
+        } else if (mov === "LINEAR_FORWARD" || mov === "LINEAR_BACKWARD") {
+          targetR.lerpVectors(wp.pPrep, wp.pContact, easeInOut);
+          currentPhase = easeInOut;
+          if (u >= 0.90) isContactInstant = true;
         } else if (mov === "ARC_SAGITTAL") {
-          const s = (Math.sin(phi) + 1.0) * 0.5;
-          targetR.lerpVectors(wp.pPrep, wp.pContact, s);
-          targetR.y += Math.sin(s * Math.PI) * 1.5;
-          strokeProgress = s;
+          targetR.lerpVectors(wp.pPrep, wp.pContact, easeInOut);
+          targetR.y += Math.sin(u * Math.PI) * 4.5; // High prominent arch
+          currentPhase = easeInOut;
+          if (u >= 0.90) isContactInstant = true;
         } else if (mov === "CIRCULAR_TRANSVERSE") {
-          const r = wp.dApproach * 0.5;
+          const theta = u * Math.PI * 2.0;
+          const r = 5.5; // 5.5 cm radius circle
           targetR.set(
-            wp.pContact.x + Math.cos(phi) * r,
+            wp.pContact.x + Math.cos(theta) * r,
             wp.pContact.y,
-            wp.pContact.z + Math.sin(phi) * r
+            wp.pContact.z + Math.sin(theta) * r
           );
-          strokeProgress = (Math.sin(phi) + 1.0) * 0.5;
+          currentPhase = u;
         } else {
           targetR.copy(wp.pContact);
-          strokeProgress = 0.0;
+          currentPhase = 0.0;
         }
 
         if (recipe.bilateral === "BILATERAL_SYMMETRIC" && handL.root.visible && !["book", "what_1", "car"].includes(lem)) {
@@ -2018,11 +2060,11 @@
           targetL.set(-targetR.x, wp.pContact.y - (targetR.y - wp.pContact.y), targetR.z);
         }
 
-        this.currentStrokePhase = strokeProgress;
+        this.currentStrokePhase = currentPhase;
         this.isContacting = isContactInstant;
 
         this.updateVisuals(wp, targetR, isContactInstant);
-        this.updateTelemetry(recipe, wp, strokeProgress, isContactInstant);
+        this.updateTelemetry(recipe, wp, currentPhase, isContactInstant);
 
         return { targetR, targetL, isContacting: isContactInstant };
       },
@@ -2248,7 +2290,7 @@
         let loc = "neutral_mid";
         const maj = (entry.majorLocation || "").toLowerCase();
         const minr = (entry.minorLocation || "").toLowerCase();
-        if (lem === "water" || minr.includes("chin")) loc = "chin";
+        if (lem === "water" || lem === "thank_you" || lem === "thankyou" || minr.includes("chin")) loc = "chin";
         else if (lem === "mother" || lem === "eat" || minr.includes("mouth")) loc = "mouth";
         else if (lem === "father" || minr.includes("forehead")) loc = "forehead";
         else if (lem === "me" || minr.includes("sternum") || minr.includes("torso")) loc = "sternum";
@@ -2262,14 +2304,16 @@
         else if (maj === "hand" || maj === "arm") loc = "passive_wrist";
 
         let ori = "PALM_ANTERIOR";
-        if (lem === "water" || lem === "mother" || lem === "father") ori = "PALM_CONTRALATERAL";
+        if (lem === "thank_you" || lem === "thankyou") ori = "PALM_POSTERIOR";
+        else if (lem === "water" || lem === "mother" || lem === "father") ori = "PALM_CONTRALATERAL";
         else if (lem === "me") ori = "FINGERS_POSTERIOR";
         else if (lem === "you") ori = "FINGERS_ANTERIOR";
         else if (lem === "book" || lem === "what_1") ori = "PALM_SUPINE";
         else if (lem === "work" || lem === "night" || lem === "read") ori = "PALM_PRONE";
 
         let mov = "TAP_2X";
-        if (lem === "water" || lem === "work" || lem === "coffee") mov = "TAP_2X";
+        if (lem === "thank_you" || lem === "thankyou") mov = "LINEAR_FORWARD";
+        else if (lem === "water" || lem === "work" || lem === "coffee") mov = "TAP_2X";
         else if (lem === "mother" || lem === "father") mov = "TAP_1X";
         else if (lem === "you") mov = "LINEAR_FORWARD";
         else if (lem === "me") mov = "LINEAR_BACKWARD";
@@ -2411,6 +2455,8 @@
 
     let currentMainTab = 'words'; // 'words' | 'alphabet'
     let signMotionClock = 0;
+    let strokeClock = 0;
+    const STROKE_DURATION = 1.35; // One-shot gesture duration in seconds
     let isPlayingSignMotion = true;
     let currentActiveWord = "water";
     let currentActivePoseName = "A";
@@ -2461,8 +2507,16 @@
         parseFloat(camParams.get('camY') || 5.0),
         parseFloat(camParams.get('camZ') || 68.0)
       );
-      camera.lookAt(5.5, 5.0, 0.0);
-      controls.target.set(5.5, 5.0, 0.0);
+    }
+    if (camParams.has('targetX')) {
+      controls.target.set(
+        parseFloat(camParams.get('targetX')),
+        parseFloat(camParams.get('targetY') || 5.0),
+        parseFloat(camParams.get('targetZ') || 0.0)
+      );
+      camera.lookAt(controls.target);
+    } else {
+      camera.lookAt(controls.target);
     }
     controls.update();
 
@@ -2514,81 +2568,20 @@
     });
     
     // ------------------------------------------------------------------------
-    // MINIMALIST BIOMECHANICAL STICK FIGURE (Hands & Arms Kept Authentic As-Is)
+    // PURE ISOLATED ANATOMICAL LIMB RIG (Body Completely Removed)
     // ------------------------------------------------------------------------
-    const stickMat = new THREE.MeshStandardMaterial({
-      color: 0x64748b, // Clean neutral slate stick rod
-      roughness: 0.35,
-      metalness: 0.15
-    });
-    const stickJointMat = new THREE.MeshStandardMaterial({
-      color: 0x475569, // Joint pivot sphere
-      roughness: 0.30,
-      metalness: 0.20
-    });
-
-    // Helper: Create stick segment between two points
-    function createStick(p1, p2, radius = 0.30) {
-      const v = new THREE.Vector3().subVectors(p2, p1);
-      const len = v.length();
-      const geo = new THREE.CylinderGeometry(radius, radius, len, 16);
-      const mesh = new THREE.Mesh(geo, stickMat);
-      mesh.position.addVectors(p1, p2).multiplyScalar(0.5);
-      mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), v.normalize());
-      mesh.castShadow = true;
-      return mesh;
-    }
-
-    // Helper: Create joint node sphere
-    function createJointNode(pos, radius = 0.65) {
-      const geo = new THREE.SphereGeometry(radius, 16, 16);
-      const mesh = new THREE.Mesh(geo, stickJointMat);
-      mesh.position.copy(pos);
-      mesh.castShadow = true;
-      return mesh;
-    }
-
-    // 1. Head: Classic Stick Figure Circular Ring
-    const headCenter = new THREE.Vector3(0, 18.0, 0);
-    const headRadius = 3.8;
-    const headRingGeo = new THREE.TorusGeometry(headRadius, 0.28, 16, 48);
-    const headRing = new THREE.Mesh(headRingGeo, stickMat);
-    headRing.position.copy(headCenter);
-    headRing.castShadow = true;
-    silhouetteGroup.add(headRing);
-
-    // 2. Neck Stick: From bottom of head ring (0, 14.2, 0) to shoulder center (0, 9.5, 0)
-    const neckTop = new THREE.Vector3(0, headCenter.y - headRadius, 0);
-    const shoulderCenter = new THREE.Vector3(0, 9.5, 0);
-    silhouetteGroup.add(createStick(neckTop, shoulderCenter, 0.32));
-    silhouetteGroup.add(createJointNode(shoulderCenter, 0.70));
-
-    // 3. Shoulder Bar: From Left Shoulder (-15.5, 9.5, 0) to Right Shoulder (15.5, 9.5, 0)
-    const shoulderR = new THREE.Vector3(15.5, 9.5, 0);
-    const shoulderL = new THREE.Vector3(-15.5, 9.5, 0);
-    silhouetteGroup.add(createStick(shoulderL, shoulderR, 0.35));
-    silhouetteGroup.add(createJointNode(shoulderR, 0.90));
-    silhouetteGroup.add(createJointNode(shoulderL, 0.90));
-
-    // 4. Spine / Torso Stick: From Shoulder Center (0, 9.5, 0) to Pelvis Center (0, -14.0, 0)
-    const pelvisCenter = new THREE.Vector3(0, -14.0, 0);
-    silhouetteGroup.add(createStick(shoulderCenter, pelvisCenter, 0.38));
-    silhouetteGroup.add(createJointNode(pelvisCenter, 0.75));
-
-    // 5. Pelvis / Hip Bar: Horizontal baseline bar
-    const hipR = new THREE.Vector3(8.0, -14.0, 0);
-    const hipL = new THREE.Vector3(-8.0, -14.0, 0);
-    silhouetteGroup.add(createStick(hipL, hipR, 0.32));
-    silhouetteGroup.add(createJointNode(hipR, 0.60));
-    silhouetteGroup.add(createJointNode(hipL, 0.60));
-
     class ArmLimb {
       constructor(isLeft, shoulderPos) {
         this.isLeft = isLeft;
         this.shoulder = shoulderPos;
         this.group = new THREE.Group();
         this.group.visible = false;
-        scene.add(this.group); // Attached directly to scene so body can be hidden independently
+        scene.add(this.group); // Attached directly to scene in pure isolation
+
+        // Glenohumeral Articulation Socket (Shoulder Condyle Pivot)
+        const socketMesh = new THREE.Mesh(new THREE.SphereGeometry(1.35, 16, 16), jointMat);
+        socketMesh.position.copy(this.shoulder);
+        this.group.add(socketMesh);
 
         // Anthropometric Arm Lengths: Humerus L1=16.5, Forearm L2=13.5 (Total reach 30.0 units)
         this.L1 = 16.5;
@@ -3356,6 +3349,7 @@
       }
 
       executePose(poseTokens, poseName = "Custom", immediate = false) {
+        this.activePoseTokens = poseTokens;
         const sign = this.isLeft ? -1 : 1;
 
         // Wrist Rotation (Euler Angles are applied directly without double inversion)
@@ -3409,13 +3403,13 @@
           thmData.restTarget.y -= 1.0;
           targetDestinations['thm'].copy(thmData.restTarget);
         } else if (poseTokens.thm === "THM_TUCK_M") {
-          thmData.restTarget.set(sign * 3.0, 1.5, 1.5);
+          thmData.restTarget.set(sign * 1.55, 2.35, 2.45);
           targetDestinations['thm'].copy(thmData.restTarget);
         } else if (poseTokens.thm === "THM_TUCK_N") {
-          thmData.restTarget.set(sign * 1.0, 1.5, 1.5);
+          thmData.restTarget.set(sign * 0.0, 2.35, 2.45);
           targetDestinations['thm'].copy(thmData.restTarget);
         } else if (poseTokens.thm === "THM_TUCK_T") {
-          thmData.restTarget.set(sign * -1.0, 1.5, 1.5);
+          thmData.restTarget.set(sign * -1.55, 2.35, 2.45);
           targetDestinations['thm'].copy(thmData.restTarget);
         } else if (poseTokens.thm === "THM_REST_SIDE") {
           thmData.restTarget.set(sign * -3.6, 3.8, 0.2);
@@ -3632,6 +3626,7 @@
 
       resolveInterFingerCollisions() {
         const sign = this.isLeft ? -1 : 1;
+        const poseTokens = this.activePoseTokens || (typeof currentActiveTokens !== 'undefined' ? currentActiveTokens : {});
         const thm = this.fingerData.find(f => f.id === 'thm');
         const idx = this.fingerData.find(f => f.id === 'idx');
         const mid = this.fingerData.find(f => f.id === 'mid');
@@ -3701,6 +3696,71 @@
                 if (isThumbPair) {
                   const thumb = fA.isThumb ? fA : fB;
                   const finger = fA.isThumb ? fB : fA;
+
+                  // CASE 2A: ANATOMICAL THUMB TUCK & GAP PROTRUSION (M, T, N)
+                  const isTuckPose = poseTokens.thm === "THM_TUCK_T" || poseTokens.thm === "THM_TUCK_N" || poseTokens.thm === "THM_TUCK_M";
+                  if (isTuckPose) {
+                    let isGapL = false, isGapR = false, isCovering = false;
+                    if (poseTokens.thm === "THM_TUCK_T") {
+                      if (finger.id === 'idx') { isGapL = true; isCovering = true; }
+                      if (finger.id === 'mid') { isGapR = true; }
+                    } else if (poseTokens.thm === "THM_TUCK_N") {
+                      if (finger.id === 'idx' || finger.id === 'mid') isCovering = true;
+                      if (finger.id === 'mid') isGapL = true;
+                      if (finger.id === 'rng') isGapR = true;
+                    } else if (poseTokens.thm === "THM_TUCK_M") {
+                      if (finger.id === 'idx' || finger.id === 'mid' || finger.id === 'rng') isCovering = true;
+                      if (finger.id === 'rng') isGapL = true;
+                      if (finger.id === 'pnk') isGapR = true;
+                    }
+
+                    // 1. Covering fingers: rest on top of thumb shaft in depth (Z)
+                    if (isCovering) {
+                      const thumbShaftZ = thumb.ikNodes[2].worldPos.z;
+                      const fingerMidZ = finger.ikNodes[2].worldPos.z;
+                      if (fingerMidZ < thumbShaftZ + 0.35) {
+                        finger.q.pip_f = Math.max(0.1, finger.q.pip_f - 0.04);
+                        finger.q.dip_f = Math.max(0.1, finger.q.dip_f - 0.04);
+                      }
+                    }
+
+                    // 2. High-force penetration through the inter-finger gap
+                    if (isGapL || isGapR) {
+                      const thumbTip = thumb.ikNodes[3].getEffectorPos();
+                      const fingerTip = finger.ikNodes[3].getEffectorPos();
+                      const lateralDist = Math.abs(fingerTip.x - thumbTip.x);
+                      const minLateralClearance = 0.72; // thumb radius (0.42) + finger radius (0.30)
+                      
+                      if (lateralDist < minLateralClearance) {
+                        const penetration = minLateralClearance - lateralDist;
+                        // Thumb exerts highest force to push through the finger gap
+                        const pushForce = penetration * 0.65;
+                        // Fingers apply smaller restoring force to hold fist position
+                        const restoringForce = 0.22;
+                        const netDelta = pushForce * (1.0 - restoringForce);
+
+                        if (isGapL) {
+                          // Push left finger radially
+                          finger.q.mcp_a += sign * (-netDelta);
+                        } else if (isGapR) {
+                          // Push right finger ulnarly
+                          finger.q.mcp_a += sign * (netDelta);
+                        }
+                        // Clamp finger abduction to avoid over-splaying (gap clamped to max 1.45 cm)
+                        finger.q.mcp_a = Math.max(-0.25, Math.min(0.25, finger.q.mcp_a));
+                      }
+
+                      // Thumb distal phalanx hooks forward (+Z) between the gap fingers
+                      if (thumbTip.z < fingerTip.z + 0.25) {
+                        thumb.q.pip_f = Math.max(0.2, thumb.q.pip_f - 0.03);
+                        thumb.q.dip_f = Math.max(0.1, thumb.q.dip_f - 0.02);
+                      }
+                    }
+
+                    updateNodes(thumb);
+                    updateNodes(finger);
+                    continue;
+                  }
 
                   const thumbTip = thumb.ikNodes[3].getEffectorPos();
                   const thumbMid = thumb.ikNodes[2].worldPos;
@@ -3872,7 +3932,8 @@
       }
 
       // 5. Render 3D Trajectory Ribbon
-            const recWord = UniversalSignCompiler.compileRecipeFromASLLEX(entry);
+      const recWord = UniversalSignCompiler.compileRecipeFromASLLEX(entry);
+      UniversalSignCompiler.activeRecipe = recWord;
       KinematicMovementSolver.setSign(recWord, locusR, locusL);
       renderTrajectoryRibbon(entry, locusR);
 
@@ -3883,6 +3944,14 @@
       document.querySelectorAll('.word-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lemma === entry.lemma);
       });
+
+      strokeClock = 0;
+      isPlayingSignMotion = true;
+      const motionBtn = document.getElementById('btn-toggle-motion');
+      if (motionBtn) {
+        motionBtn.innerHTML = "<span>⏸ PAUSE</span>";
+        motionBtn.style.background = "#2563eb";
+      }
     }
 
     function renderTrajectoryRibbon(entry, targetLocus) {
@@ -4161,6 +4230,7 @@
         if (badge) badge.innerText = "⚡ UNIVERSAL SIGN GENERATOR";
         silhouetteGroup.visible = document.getElementById("toggle-body") ? document.getElementById("toggle-body").checked : true;
         triggerUniversalSynthesize();
+        strokeClock = 0;
         isPlayingSignMotion = true;
         if (motionBtn) { motionBtn.innerHTML = "<span>⏸ PAUSE</span>"; motionBtn.style.background = "#2563eb"; }
       } else if (tab === 'lexicons') {
@@ -4168,6 +4238,7 @@
         silhouetteGroup.visible = document.getElementById("toggle-body") ? document.getElementById("toggle-body").checked : true;
         UniversalSignCompiler.synthesize(UniversalSignCompiler.activeRecipe, true);
         switchLexiconSubtab(currentLexiconSubtab);
+        strokeClock = 0;
         isPlayingSignMotion = true;
         if (motionBtn) { motionBtn.innerHTML = "<span>⏸ PAUSE</span>"; motionBtn.style.background = "#2563eb"; }
       } else if (tab === 'words') {
@@ -4175,6 +4246,7 @@
         silhouetteGroup.visible = document.getElementById("toggle-body") ? document.getElementById("toggle-body").checked : true;
         const foundWord = TOP50_ASLLEX.find(x => (x.lemma || x.l || "").toLowerCase() === (currentActiveWord || "water").toLowerCase()) || TOP50_ASLLEX[0];
         executeProceduralWord(foundWord, true);
+        strokeClock = 0;
         isPlayingSignMotion = true;
         if (motionBtn) { motionBtn.innerHTML = "<span>⏸ PAUSE</span>"; motionBtn.style.background = "#2563eb"; }
       } else {
@@ -4278,9 +4350,17 @@
 
     function triggerUniversalSynthesize() {
       onGeneratorParamChanged();
+      strokeClock = 0;
+      isPlayingSignMotion = true;
+      const motionBtn = document.getElementById('btn-toggle-motion');
+      if (motionBtn) {
+        motionBtn.innerHTML = "<span>⏸ PAUSE</span>";
+        motionBtn.style.background = "#2563eb";
+      }
     }
 
     const CANONICAL_PRESETS = {
+      thankyou: { handshape: "open_b", location: "chin", orientation: "PALM_POSTERIOR", movement: "LINEAR_FORWARD", bilateral: "UNILATERAL" },
       water: { handshape: "w", location: "chin", orientation: "PALM_CONTRALATERAL", movement: "TAP_2X", bilateral: "UNILATERAL" },
       book: { handshape: "open_b", location: "neutral_center", orientation: "PALM_SUPINE", movement: "ARC_SAGITTAL", bilateral: "BILATERAL_SYMMETRIC" },
       work: { handshape: "s", location: "passive_wrist", orientation: "PALM_PRONE", movement: "TAP_2X", bilateral: "ASYMMETRIC_BASE", baseHandshape: "s" },
@@ -4314,6 +4394,14 @@
         name: name.toUpperCase(),
         ...p
       }, true);
+
+      strokeClock = 0;
+      isPlayingSignMotion = true;
+      const motionBtn = document.getElementById('btn-toggle-motion');
+      if (motionBtn) {
+        motionBtn.innerHTML = "<span>⏸ PAUSE</span>";
+        motionBtn.style.background = "#2563eb";
+      }
     }
 
     function copyRecipeToken() {
@@ -4424,6 +4512,7 @@
         const movDef = PARAMETRIC_LEXICONS.movements[key];
         if (diagDetails) diagDetails.innerHTML = `<strong>Movement:</strong> ${movDef.name}<br/><strong>Kinematic Class:</strong> ${movDef.class}<br/><strong>Trajectory Geometry:</strong> ${movDef.ribbon || "Spatial Path"}`;
         UniversalSignCompiler.synthesize({ movement: key }, false);
+        strokeClock = 0;
         isPlayingSignMotion = true;
         const motionBtn = document.getElementById('btn-toggle-motion');
         if (motionBtn) {
@@ -4959,27 +5048,43 @@
 
       const dt = 0.016;
 
-      // Advance Continuous Signing Phase Clock
+      // Advance Single-Shot Signing Stroke Clock (Moves only once per click)
       if (isPlayingSignMotion && (currentMainTab === 'generator' || currentMainTab === 'words' || currentMainTab === 'lexicons')) {
-        signMotionClock += dt * animSpeed;
+        strokeClock += dt * animSpeed;
+        if (strokeClock >= STROKE_DURATION) {
+          strokeClock = STROKE_DURATION;
+          isPlayingSignMotion = false;
+          const motionBtn = document.getElementById('btn-toggle-motion');
+          if (motionBtn) {
+            motionBtn.innerHTML = "<span>↻ REPLAY</span>";
+            motionBtn.style.background = "#2563eb";
+          }
+        }
       }
-      const phi = (signMotionClock * 3.2) % (Math.PI * 2.0);
+      const strokeProgress = Math.min(1.0, strokeClock / STROKE_DURATION);
+      const phi = strokeProgress * Math.PI * 2.0;
+
+      // Update Phase Scrubber HUD
+      const phasePct = Math.round(strokeProgress * 100);
+      const scrubber = document.getElementById('motion-phase-scrubber');
+      const phaseLabel = document.getElementById('motion-phase-label');
+      if (scrubber && !scrubber.matches(':active')) scrubber.value = phasePct;
+      if (phaseLabel) phaseLabel.innerText = `${phasePct}%`;
 
       // Evaluate Dynamic Targets from Base Target Positions
       if (currentMainTab === 'generator' || currentMainTab === 'words' || currentMainTab === 'lexicons') {
         let targetR = handR.targetRootPos.clone();
         let targetL = handL.targetRootPos.clone();
-        let rec;
-        if (currentMainTab === 'generator' || currentMainTab === 'lexicons') {
-          rec = UniversalSignCompiler.activeRecipe;
-        } else {
+        let rec = UniversalSignCompiler.activeRecipe;
+        if (!rec) {
           const lem = (currentActiveWord || "").toLowerCase();
           const currentEntry = TOP50_ASLLEX.find(x => (x.lemma || x.l || "").toLowerCase() === lem) || TOP50_ASLLEX[0];
           rec = UniversalSignCompiler.compileRecipeFromASLLEX(currentEntry);
+          UniversalSignCompiler.activeRecipe = rec;
         }
 
-        if (isPlayingSignMotion) {
-          KinematicMovementSolver.evaluate(rec, phi, targetR, targetL, handR, handL);
+        if (isPlayingSignMotion || strokeProgress > 0) {
+          KinematicMovementSolver.evaluate(rec, phi, targetR, targetL, handR, handL, strokeProgress);
         } else {
           KinematicMovementSolver.updateTelemetry(rec, KinematicMovementSolver.computeWaypoints(rec, handR.targetRootPos, handL.targetRootPos), 0.0, false);
         }
@@ -5085,6 +5190,9 @@
     const initTab = urlParams.get('tab') || 'generator';
     const initWord = urlParams.get('word') || 'water';
     const initPose = (urlParams.get('pose') || 'A').toUpperCase();
+    if (urlParams.get('hand')) {
+      setHandMode(urlParams.get('hand'));
+    }
 
     if (urlParams.get('theme') === 'davinci') {
       document.getElementById('btn-theme').click();
@@ -5094,9 +5202,19 @@
     const motionBtn = document.getElementById('btn-toggle-motion');
     if (motionBtn) {
       motionBtn.addEventListener('click', () => {
-        isPlayingSignMotion = !isPlayingSignMotion;
-        motionBtn.innerHTML = isPlayingSignMotion ? "<span>⏸ PAUSE</span>" : "<span>▶ PLAY</span>";
-        motionBtn.style.background = isPlayingSignMotion ? "#2563eb" : "#16a34a";
+        if (isPlayingSignMotion) {
+          isPlayingSignMotion = false;
+          motionBtn.innerHTML = "<span>▶ RESUME</span>";
+          motionBtn.style.background = "#16a34a";
+        } else {
+          // If gesture reached end, restart single-shot stroke from beginning
+          if (strokeClock >= STROKE_DURATION) {
+            strokeClock = 0.0;
+          }
+          isPlayingSignMotion = true;
+          motionBtn.innerHTML = "<span>⏸ PAUSE</span>";
+          motionBtn.style.background = "#2563eb";
+        }
       });
     }
 
@@ -5127,7 +5245,7 @@
           motionBtn.style.background = "#16a34a";
         }
         const pct = parseFloat(e.target.value) / 100.0;
-        signMotionClock = (pct * Math.PI * 2.0) / 3.2;
+        strokeClock = pct * STROKE_DURATION;
       });
     }
 
@@ -5155,16 +5273,6 @@
         modalOverlay.style.opacity = '0';
         modalOverlay.style.transition = 'opacity 0.25s ease';
         setTimeout(() => { modalOverlay.style.display = 'none'; }, 250);
-      });
-    }
-
-    // Toggle Body Figure Visibility
-    const toggleBody = document.getElementById('toggle-body');
-    if (toggleBody) {
-      toggleBody.addEventListener('change', (e) => {
-        if (typeof silhouetteGroup !== 'undefined') {
-          silhouetteGroup.visible = e.target.checked;
-        }
       });
     }
 
@@ -5248,12 +5356,6 @@
         <span id="motion-phase-label" style="font-size: 10px; font-family: 'JetBrains Mono', monospace; color: #38bdf8; min-width: 32px; font-weight: 700;">0%</span>
       </div>
 
-      <!-- Body Figure Toggle (Hide/Show Body) -->
-      <div style="display: flex; align-items: center; gap: 6px; border-left: 1px solid rgba(148, 163, 184, 0.25); padding-left: 10px;">
-        <input type="checkbox" id="toggle-body" checked onchange="if(typeof silhouetteGroup !== 'undefined') silhouetteGroup.visible = this.checked;" style="accent-color: #38bdf8; cursor: pointer; width: 14px; height: 14px;" />
-        <label for="toggle-body" style="font-size: 10px; color: #cbd5e1; cursor: pointer; white-space: nowrap; font-weight: 500;">Body Figure</label>
-      </div>
-
       <!-- 3D Spatial Loci Spheres Toggle -->
       <div style="display: flex; align-items: center; gap: 6px; border-left: 1px solid rgba(148, 163, 184, 0.25); padding-left: 10px;">
         <input type="checkbox" id="toggle-loci" checked onchange="if(typeof LociVisualizationEngine !== 'undefined') LociVisualizationEngine.setVisible(this.checked);" style="accent-color: #10b981; cursor: pointer; width: 14px; height: 14px;" />
@@ -5301,8 +5403,8 @@
         </div>
         <ul style="margin: 0; padding-left: 18px; font-size: 12px; color: #475569; line-height: 1.65;">
           <li><strong>Select &amp; Synthesize Signs:</strong> Click any word in the right sidebar (e.g., <em>WATER</em>, <em>YES</em>, <em>DEAF</em>, <em>MOTHER</em>) to synthesize the sign and observe the 2-point approach and impact kinematics.</li>
-          <li><strong>Explore 3D Spatial Loci:</strong> The 24 floating spheres represent anatomical landmarks and conversational signing spaces. Click and drag the master waypoint or hand to evaluate real-time inverse kinematics and humeral swivel!</li>
-          <li><strong>Isolate Hand &amp; Arms:</strong> Use the floating bottom deck to toggle the <strong>Body Figure</strong> off if you want to inspect the articulated skeleton hand and arms in complete isolation.</li>
+          <li><strong>Explore 3D Spatial Loci:</strong> Floating spheres represent anatomical landmarks and conversational signing spaces with proximity-triggered identification. Click and drag the master waypoint or hand to evaluate real-time inverse kinematics and humeral swivel!</li>
+          <li><strong>Pure Isolated Osteology:</strong> Real-time articulated hand and arm skeleton floating in space with shoulder articulation sockets.</li>
           <li><strong>Live Kinematic Telemetry:</strong> Observe real-time approach vs contact waypoint coordinates (Approach P1 &rarr; Target P2), stroke distance, and impact dwell phases.</li>
           <li><strong>One-Hand Focus:</strong> <em>Active signs currently feature 1-handed articulation. Full two-handed bilateral coordination support will be enabled in the upcoming update.</em></li>
         </ul>
