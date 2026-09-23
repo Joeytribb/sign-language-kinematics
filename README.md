@@ -4,7 +4,7 @@
 [![Live 3D Demo: Three.js WebGL](https://img.shields.io/badge/Live%20Demo-Three.js%2040--DOF%20Dual--Hand-059669.svg)](https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/anatomical_hand.html)
 [![Full Proposal: 14 Pages PDF](https://img.shields.io/badge/Proposal%20PDF-14%20Pages%20Verified-0284C7.svg)](https://joeytribb.github.io/sign-language-kinematics/Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf)
 [![Doctoral Application: Aalto / ELLIS Finland](https://img.shields.io/badge/Application-Aalto%20%2F%20ELLIS%20Finland-0E3A5D.svg)](https://www.aalto.fi/en/department-of-computer-science)
-[![Supervisor: Dr. Azade Farshad](https://img.shields.io/badge/Supervisor-Dr.%20Azade%20Farshad-7C3AED.svg)](https://research.aalto.fi/en/persons/azade-farshad)
+[![Prospective PI: Dr. Azade Farshad](https://img.shields.io/badge/Prospective%20PI-Dr.%20Azade%20Farshad-7C3AED.svg)](https://joeytribb.github.io/sign-language-kinematics/)
 [![LinkedIn Profile](https://img.shields.io/badge/LinkedIn-iniyandrews-0A66C2.svg)](https://www.linkedin.com/in/iniyandrews)
 [![License: MIT](https://img.shields.io/badge/License-MIT-gray.svg)](LICENSE)
 
@@ -14,7 +14,7 @@
 > **LinkedIn:** [linkedin.com/in/iniyandrews](https://www.linkedin.com/in/iniyandrews)  
 > **Department:** Department of Computer Science, School of Science, Aalto University  
 > **Affiliated Research Unit:** European Laboratory for Learning and Intelligent Systems (ELLIS) Institute Finland  
-> **Proposed Primary Supervisor:** [Dr. Azade Farshad](https://research.aalto.fi/en/persons/azade-farshad) (Assistant Professor, Aalto University / PI, ELLIS Finland)
+> **Prospective PI & Academic Host:** Dr. Azade Farshad (Assistant Professor, Aalto University / PI, ELLIS Finland)
 
 ---
 

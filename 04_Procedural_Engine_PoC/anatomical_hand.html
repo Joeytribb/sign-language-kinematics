@@ -423,30 +423,45 @@
 
     <!-- APPLICATION DOSSIER DOCUMENTS & AUDIT CONTROLS -->
     <div class="section-title"><span>Application Dossier Documents</span></div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 6px;">
-      <a href="https://joeytribb.github.io/sign-language-kinematics/" target="_blank" rel="noopener noreferrer" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--text-main); font-size: 10px; padding: 5px 8px; border-radius: 6px; text-decoration: none; font-weight: 600;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 12px;">
+      <a href="https://joeytribb.github.io/sign-language-kinematics/" target="_blank" rel="noopener noreferrer" style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--text-main); font-size: 10px; padding: 6px 8px; border-radius: 6px; text-decoration: none; font-weight: 600; text-align: center;">
         <span>🌐 Dossier Portal &rarr;</span>
       </a>
-      <a href="../Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf" target="_blank" rel="noopener noreferrer" style="background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.3); color: var(--text-main); font-size: 10px; padding: 5px 8px; border-radius: 6px; text-decoration: none; font-weight: 600;">
+      <a href="../Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf" target="_blank" rel="noopener noreferrer" style="background: rgba(37, 99, 235, 0.08); border: 1px solid rgba(37, 99, 235, 0.3); color: var(--text-main); font-size: 10px; padding: 6px 8px; border-radius: 6px; text-decoration: none; font-weight: 600; text-align: center;">
         <span>📄 Proposal (14p) &rarr;</span>
       </a>
-      <a href="../Motivation_Letter.pdf" target="_blank" rel="noopener noreferrer" style="background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); color: var(--text-main); font-size: 10px; padding: 5px 8px; border-radius: 6px; text-decoration: none; font-weight: 600;">
+      <a href="../Motivation_Letter.pdf" target="_blank" rel="noopener noreferrer" style="background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.3); color: var(--text-main); font-size: 10px; padding: 6px 8px; border-radius: 6px; text-decoration: none; font-weight: 600; text-align: center;">
         <span>✉️ Motivation (2p) &rarr;</span>
       </a>
-      <a href="../CV_Iniyan-Joseph_Aalto.pdf" target="_blank" rel="noopener noreferrer" style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); color: var(--text-main); font-size: 10px; padding: 5px 8px; border-radius: 6px; text-decoration: none; font-weight: 600;">
+      <a href="../CV_Iniyan-Joseph_Aalto.pdf" target="_blank" rel="noopener noreferrer" style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.3); color: var(--text-main); font-size: 10px; padding: 6px 8px; border-radius: 6px; text-decoration: none; font-weight: 600; text-align: center;">
         <span>🎓 CV (2p PDF) &rarr;</span>
       </a>
-    </div>
-    <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 4px; margin-bottom: 10px;">
-      <button id="btn-open-audit-modal" style="background: rgba(16, 185, 129, 0.12); color: #059669; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 10px; font-weight: 700; padding: 5px 8px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
-        <span>📋</span><span>Health (50/50 Pass)</span>
-      </button>
-      <button id="btn-theme" style="background: rgba(128, 128, 128, 0.08); color: var(--text-muted); border: 1px solid var(--panel-border); font-size: 10px; font-weight: 600; padding: 5px 8px; border-radius: 6px; cursor: pointer;">Theme</button>
     </div>
 
     <!-- ================= SECTION A: WORD LEXICON VIEW ================= -->
     <!-- ================= SECTION G: UNIVERSAL SIGN GENERATOR ================= -->
     <div id="section-generator-view">
+      <!-- Scientific Paradigm Ablation Card in Sidebar -->
+      <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 8px; padding: 9px; margin-bottom: 12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <span style="font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted);">Scientific Paradigm:</span>
+          <span id="ablation-sidebar-pill" style="font-size:9px; font-weight:800; padding:2px 6px; border-radius:4px; background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.4);">
+            Δ ≡ 0.000 RIGID
+          </span>
+        </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+          <button id="btn-sidebar-ours" onclick="setAblationMode(false)" style="background:rgba(16,185,129,0.2); color:#10b981; border:1px solid rgba(16,185,129,0.4); font-size:10px; font-weight:700; padding:5px 6px; border-radius:5px; cursor:pointer;">
+            ⚡ Twin (Ours)
+          </button>
+          <button id="btn-sidebar-ablation" onclick="setAblationMode(true)" style="background:transparent; color:var(--text-muted); border:1px solid var(--panel-border); font-size:10px; font-weight:600; padding:5px 6px; border-radius:5px; cursor:pointer;">
+            ⚠️ Baseline
+          </button>
+        </div>
+        <div id="ablation-banner" style="display:none; margin-top:6px; font-size:10px; line-height:1.3; color:#f87171; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); padding:6px; border-radius:4px; font-family:monospace;">
+          ⚠️ ABLATION ACTIVE: Simulating unconstrained deep learning (rubber-band bone deformation, joint dislocation, minimal-pair collapse).
+        </div>
+      </div>
+
       <div class="section-title" style="display:flex; justify-content:space-between; align-items:center;">
         <span>⚡ Universal Parametric Sign Synthesizer</span>
         <button id="btn-synthesize-now" onclick="triggerUniversalSynthesize()" style="background:#2563eb; color:white; font-size:10px; font-weight:700; padding:4px 10px; border-radius:5px; border:none; cursor:pointer; box-shadow:0 2px 4px rgba(37,99,235,0.3);">⚡ SYNTHESIZE</button>
@@ -1492,35 +1507,35 @@
 
       // 2. 3D ANATOMICAL BODY & SPATIAL LOCI (24 Calibrated Target Anchor Points)
       locations: {
-        "crown": { name: "Crown (Top of Head)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.0, 21.8, 0.5), desc: "Apex of the head circle" },
-        "forehead": { name: "Forehead (Frontal Bone)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.2, 19.8, 0.8), desc: "Upper cranial circle (e.g. Father)" },
-        "temple": { name: "Temple (Parietal-Temporal)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 3.8, 18.5, 0.5), desc: "Lateral head circle (e.g. Hello, Salute)" },
-        "eyes": { name: "Eyes (Periorbital)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.8, 18.0, 0.8), desc: "Eye level (e.g. See)" },
-        "nose": { name: "Nose (Nasion)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 16.5, 0.8), desc: "Mid head region" },
-        "cheek": { name: "Cheek (Zygomatic Arch)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 3.2, 16.2, 0.8), desc: "Lateral mid-face (e.g. Tomorrow, Deaf)" },
-        "ear": { name: "Ear (Auricle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 4.0, 18.0, 0.0), desc: "Lateral head perimeter" },
-        "mouth": { name: "Mouth (Lips / Labial)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 15.2, 0.8), desc: "Lower head circle (e.g. Eat)" },
-        "chin": { name: "Chin (Mandible / Mental)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 14.2, 0.8), desc: "Base of head circle / chin (e.g. Water, Mother)" },
-        "jaw": { name: "Jaw (Mandibular Angle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 2.8, 13.5, 0.5), desc: "Lateral jaw transition" },
-        "throat": { name: "Throat (Larynx / Trachea)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 11.5, 0.5), desc: "Anterior neck stick" },
-        "clavicle": { name: "Clavicle (Collarbone)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 5.0, 9.5, 0.5), desc: "Shoulder bar / clavicle" },
-        "sternum": { name: "Sternum (Chest Center)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.2, 5.0, 0.8), desc: "Upper spine stick (e.g. Me)" },
-        "heart": { name: "Heart (Left Upper Chest)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * -3.5, 6.0, 0.8), desc: "Contralateral chest" },
-        "stomach": { name: "Stomach (Mid Abdomen)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, -2.5, 0.8), desc: "Mid torso stick" },
-        "shoulder": { name: "Shoulder (Acromion)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 15.0, 9.5, 0.5), desc: "Shoulder joint pivot" },
-        "passive_forearm": { name: "Passive Forearm Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-3.5, 5.5, 9.5) : new THREE.Vector3(-3.5, 8.0, 9.5), desc: "Horizontal non-dominant forearm (e.g. Night)" },
-        "passive_wrist": { name: "Passive Wrist Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-4.0, 5.5, 10.0) : new THREE.Vector3(-3.5, 8.0, 10.0), desc: "Non-dominant dorsal wrist joint (e.g. Work, Time)" },
-        "passive_palm": { name: "Passive Palm Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-4.0, 5.5, 10.0) : new THREE.Vector3(-3.5, 8.0, 10.0), desc: "Flat upward/forward non-dominant palm (e.g. Read, Paper)" },
-        "neutral_high": { name: "Neutral Space (High)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 7.5, 14.0, 14.0), desc: "Eye level in forward conversational space" },
-        "neutral_mid": { name: "Neutral Space (Mid / Chest)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 7.5, 6.5, 14.0), desc: "Chest height in comfortable forward space" },
-        "neutral_low": { name: "Neutral Space (Low / Waist)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 7.5, 1.5, 14.0), desc: "Waist level forward conversational space" },
-        "neutral_far": { name: "Neutral Space (Far / Deictic)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 5.0, 7.5, 17.0), desc: "Extended forward reach (e.g. You, That)" },
-        "neutral_center": { name: "Neutral Midline Center", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(0.0, 6.5, 13.5), desc: "Direct sagittal midline in conversational space" }
+        "crown": { name: "Crown (Top of Head)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.0, 24.0, 3.5), desc: "Apex of the head, clear of cranium" },
+        "forehead": { name: "Forehead (Frontal Bone)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.2, 19.8, 6.5), desc: "Upper cranial locus, in front of forehead (e.g. Father)" },
+        "temple": { name: "Temple (Parietal-Temporal)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 4.8, 18.5, 4.5), desc: "Lateral upper head locus (e.g. Hello, Salute)" },
+        "eyes": { name: "Eyes (Periorbital)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.8, 18.0, 6.8), desc: "Eye level forward signing locus (e.g. See)" },
+        "nose": { name: "Nose (Nasion)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 16.5, 7.2), desc: "Mid-facial locus, forward of nasal bridge" },
+        "cheek": { name: "Cheek (Zygomatic Arch)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 4.2, 16.2, 6.0), desc: "Lateral cheek locus, clear of cheekbone (e.g. Tomorrow, Deaf)" },
+        "ear": { name: "Ear (Auricle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 5.5, 18.0, 2.0), desc: "Lateral auricle locus, clear of ear" },
+        "mouth": { name: "Mouth (Lips / Labial)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 15.2, 6.8), desc: "Oral locus, in front of lips (e.g. Eat)" },
+        "chin": { name: "Chin (Mandible / Mental)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 14.2, 6.2), desc: "Base of jaw / chin locus (e.g. Water, Mother, Thank You)" },
+        "jaw": { name: "Jaw (Mandibular Angle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 3.8, 13.5, 5.2), desc: "Lateral lower mandibular angle locus" },
+        "throat": { name: "Throat (Larynx / Trachea)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 11.5, 5.5), desc: "Anterior laryngeal locus, forward of neck" },
+        "clavicle": { name: "Clavicle (Collarbone)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 5.2, 9.8, 6.5), desc: "Subclavicular locus, forward of collarbone" },
+        "sternum": { name: "Sternum (Chest Center)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.2, 5.0, 7.8), desc: "Chest center locus, in front of sternum (e.g. Me)" },
+        "heart": { name: "Heart (Left Upper Chest)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * -3.8, 6.0, 7.6), desc: "Precordial chest locus, in front of pectoralis" },
+        "stomach": { name: "Stomach (Mid Abdomen)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, -2.5, 7.2), desc: "Epigastric abdominal locus, in front of torso" },
+        "shoulder": { name: "Shoulder (Acromion)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 17.0, 10.0, 4.0), desc: "Acromial shoulder locus, lateral to glenoid" },
+        "passive_forearm": { name: "Passive Forearm Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-4.5, 6.0, 15.5) : new THREE.Vector3(-4.0, 8.5, 15.5), desc: "Horizontal non-dominant forearm shelf in open conversational space (e.g. Night)" },
+        "passive_wrist": { name: "Passive Wrist Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-5.0, 6.0, 16.0) : new THREE.Vector3(-4.5, 8.5, 16.0), desc: "Non-dominant dorsal wrist joint shelf in open conversational space (e.g. Work, Time)" },
+        "passive_palm": { name: "Passive Palm Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-5.0, 6.0, 16.0) : new THREE.Vector3(-4.5, 8.5, 16.0), desc: "Flat upward/forward non-dominant palm shelf in open conversational space (e.g. Read, Paper)" },
+        "neutral_high": { name: "Neutral Space (High)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 15.0, 19.5, 22.5), desc: "High open conversational space (expanded arm reach)" },
+        "neutral_mid": { name: "Neutral Space (Mid / Chest)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 16.5, 8.0, 24.0), desc: "Wide open chest-level conversational space (expanded arm reach)" },
+        "neutral_low": { name: "Neutral Space (Low / Waist)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 15.0, -2.5, 23.0), desc: "Low open waist-level conversational space (expanded arm reach)" },
+        "neutral_far": { name: "Neutral Space (Far / Deictic)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 8.5, 9.5, 27.5), desc: "Full extended forward deictic reach (e.g. You, That)" },
+        "neutral_center": { name: "Neutral Midline Center", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(0.0, 8.5, 23.0), desc: "Forward open sagittal midline in conversational space" }
       },
 
       // 3. CANONICAL SPATIAL ORIENTATIONS (10 Biomechanically Feasible Wrist Attitudes)
       orientations: {
-        "PALM_POSTERIOR": { name: "Palm Posterior (Facing Inward)", desc: "Palm faces back toward signer chest; fingers cranial/contralateral", euler: (isLeft) => [-0.30, isLeft ? -2.80 : 2.80, 0.0] },
+        "PALM_POSTERIOR": { name: "Palm Posterior (Facing Inward)", desc: "Palm faces back toward signer chest; fingers cranial/contralateral", euler: (isLeft) => [-0.25, isLeft ? -2.85 : 2.85, isLeft ? 0.15 : -0.15] },
         "PALM_ANTERIOR": { name: "Palm Anterior (Facing Viewer)", desc: "Palm faces straight forward at interlocutor", euler: (isLeft) => [0.0, 0.0, 0.0] },
         "PALM_PRONE": { name: "Palm Prone (Facing Down)", desc: "Palm faces ground; wrist pronated (e.g. Work, Night, Read)", euler: (isLeft) => [1.40, 0.0, 0.0] },
         "PALM_SUPINE": { name: "Palm Supine (Facing Up)", desc: "Palm faces ceiling; wrist fully supinated (e.g. Book, What, Want)", euler: (isLeft) => [1.35, Math.PI, 0.0] },
@@ -1670,7 +1685,7 @@
           const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true, opacity: 0.0, depthWrite: false });
           const sprite = new THREE.Sprite(spriteMat);
           sprite.scale.set(3.8, 0.65, 1.0);
-          sprite.position.set(0, 1.35, 0);
+          sprite.position.set(0, 1.85, 0);
           locusNode.add(sprite);
 
           this.group.add(locusNode);
@@ -1773,7 +1788,7 @@
             
             // Prominently reveal floating name label badge ONLY when hand moves there
             item.sprite.material.opacity = 1.0;
-            item.sprite.position.y = 1.35 + Math.sin(time * 4.0) * 0.08;
+            item.sprite.position.y = 1.85 + Math.sin(time * 4.0) * 0.08;
           } else {
             // Clearly visible floating spatial anchor, but billboard label strictly hidden
             item.node.scale.set(1.0, 1.0, 1.0);
@@ -1876,8 +1891,14 @@
 
         // SPECIAL SIGN: THANK YOU (Starts at chin/lips, travels forward-down into neutral space far)
         if (lem === "thankyou" || lem === "thank you" || lem === "thank_you" || (loc === "chin" && mov === "LINEAR_FORWARD" && (recipe.handshape === "open_b" || recipe.handshape === "5"))) {
-          const pPrep = new THREE.Vector3(0.4, 14.2, 2.0); // Chin / lips landmark
-          const pContact = new THREE.Vector3(2.0, 7.5, 17.5); // Forward neutral space far
+          // Authentic ASL "THANK YOU":
+          // Hand starts with flat open-B fingertips gently touching chin locus (5-10cm out),
+          // palm facing inward toward face (Euler: -0.25, 2.85, -0.15)
+          const qStart = new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.25, 2.85, -0.15));
+          const effOffset = new THREE.Vector3(0, 11.5, 0.2).applyQuaternion(qStart);
+          const chinLocus = PARAMETRIC_LEXICONS.locations["chin"].coords(false, 1.0);
+          const pPrep = chinLocus.clone().sub(effOffset); // Wrist position at chin touch
+          const pContact = new THREE.Vector3(3.5, 6.5, 19.5); // Forward conversational neutral space
           const nApproach = new THREE.Vector3().subVectors(pContact, pPrep).normalize();
           return {
             pContact: pContact,
@@ -1956,9 +1977,9 @@
         if (lem === "thankyou" || lem === "thank you" || lem === "thank_you" || (recipe.location === "chin" && mov === "LINEAR_FORWARD" && (recipe.handshape === "open_b" || recipe.handshape === "5"))) {
           // ONE-SHOT "THANK YOU": Hand starts at chin/lips, travels smoothly forward-down into neutral space far
           targetR.lerpVectors(wp.pPrep, wp.pContact, easeInOut);
-          // Palm dynamic pitch: starts tilted backward toward chin, rotates smoothly to face upward/forward
-          const qStart = new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.45, 0.15, -0.20));
-          const qEnd = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.85, 0.05, 0.00));
+          // Authentic ASL: Palm starts tilted backward toward chin (palm inward), rotates smoothly to face upward/forward (PALM_SUPINE)
+          const qStart = new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.25, 2.85, -0.15));
+          const qEnd = new THREE.Quaternion().setFromEuler(new THREE.Euler(1.20, 2.85, -0.15));
           handR.targetWristQuat.slerpQuaternions(qStart, qEnd, easeInOut);
           currentPhase = easeInOut;
           if (u >= 0.90) isContactInstant = true;
@@ -2145,6 +2166,52 @@
         baseHandshape: "flat_b"
       },
 
+      // Compute Anatomical Contact Effector Local Offset:
+      // Translates target wrist position so that the actual contact effector
+      // (fingertips, thumb tip, or palm) makes contact at designated body/spatial loci
+      computeEffectorOffset(recipe, isLeft = false) {
+        const loc = (recipe.location || "neutral_mid").toLowerCase();
+        const hs = (recipe.handshape || "1").toLowerCase();
+        const lem = (recipe.name || "").toLowerCase();
+        const sign = isLeft ? -1 : 1;
+
+        // 1. Passive base shelf signs (e.g. Work, Coffee, Night, Read):
+        if (loc.includes("passive")) {
+          if (hs === "s" || hs === "a") {
+            return new THREE.Vector3(sign * 0.5, 1.2, 0.4); // Fist heel
+          } else if (hs === "v") {
+            return new THREE.Vector3(0, 11.2, 0.0); // V fingertips
+          }
+          return new THREE.Vector3(0, 2.5, 0.4);
+        }
+
+        // 2. Cranial & Facial landmarks (Chin, Mouth, Nose, Forehead, Temple, Cheek, Eyes, Crown, Ear, Jaw):
+        if (loc === "chin" || loc === "mouth" || loc === "nose" || loc === "forehead" || 
+            loc === "temple" || loc === "cheek" || loc === "eyes" || loc === "crown" || 
+            loc === "ear" || loc === "jaw") {
+          // Thumb contact (Mother, Father, Open 5 / 3 at chin/forehead)
+          if ((lem.includes("mother") || lem.includes("father") || hs === "5") && (loc === "chin" || loc === "forehead")) {
+            return new THREE.Vector3(sign * -4.2, 4.2, 0.8);
+          }
+          if (hs === "s" || hs === "a") {
+            return new THREE.Vector3(0, 4.5, 0.5); // Knuckles / fist
+          }
+          // Extended fingertips reach landmark (Thank You, Water, Eat, Hello, etc.)
+          return new THREE.Vector3(0, 11.5, 0.2);
+        }
+
+        // 3. Torso landmarks (Sternum, Clavicle, Stomach, Heart):
+        if (loc === "sternum" || loc === "clavicle" || loc === "stomach" || loc === "heart") {
+          if (hs === "1" || hs === "curved_1" || lem.includes("me")) {
+            return new THREE.Vector3(0, 11.5, 0.0); // Index fingertip
+          }
+          return new THREE.Vector3(0, 4.0, 0.5); // Palm center on chest
+        }
+
+        // 4. Conversational Neutral Space:
+        return new THREE.Vector3(0, 3.5, 0.0);
+      },
+
       // Universal Synthesize function: compiles ANY sign from 5 lexicons
       synthesize(recipe, immediate = false) {
         this.activeRecipe = { ...this.activeRecipe, ...recipe };
@@ -2160,15 +2227,21 @@
         const wristL = oriDef.euler(true);
         hsTokens.wrist = wristR;
 
-        // 3. Resolve Spatial Loci
+        // 3. Resolve Spatial Loci & Effector-to-Locus Contact Kinematics
         const locDef = PARAMETRIC_LEXICONS.locations[rec.location] || PARAMETRIC_LEXICONS.locations["neutral_mid"];
-        const locusR = locDef.coords(false, 1.0);
+        const rawLocusR = locDef.coords(false, 1.0);
+        const qWristR = new THREE.Quaternion().setFromEuler(new THREE.Euler(...wristR));
+        const effOffsetR = this.computeEffectorOffset(rec, false).applyQuaternion(qWristR);
+        const locusR = rawLocusR.clone().sub(effOffsetR);
+
         let locusL = new THREE.Vector3(-8.0, 4.0, 2.0); // Default relaxed
 
         // 4. Resolve Bilateral Mode
         const bilMode = rec.bilateral || "UNILATERAL";
         if (bilMode === "BILATERAL_SYMMETRIC") {
-          locusL = locDef.coords(true, -1.0);
+          const qWristL = new THREE.Quaternion().setFromEuler(new THREE.Euler(...wristL));
+          const effOffsetL = this.computeEffectorOffset(rec, true).applyQuaternion(qWristL);
+          locusL = locDef.coords(true, -1.0).sub(effOffsetL);
           handL.setVisible(true);
           handR.setVisible(true);
 
@@ -2176,7 +2249,9 @@
           hsTokensL.wrist = wristL;
           handL.executePose(hsTokensL, rec.name || "Custom", immediate);
         } else if (bilMode === "BILATERAL_RECIPROCAL") {
-          locusL = locDef.coords(true, -1.0);
+          const qWristL = new THREE.Quaternion().setFromEuler(new THREE.Euler(...wristL));
+          const effOffsetL = this.computeEffectorOffset(rec, true).applyQuaternion(qWristL);
+          locusL = locDef.coords(true, -1.0).sub(effOffsetL);
           handL.setVisible(true);
           handR.setVisible(true);
 
@@ -2347,7 +2422,12 @@
       resolveSpatialLocus(entry, isLeft, isBase = false) {
         const rec = UniversalSignCompiler.compileRecipeFromASLLEX(entry);
         const locDef = PARAMETRIC_LEXICONS.locations[rec.location] || PARAMETRIC_LEXICONS.locations["neutral_mid"];
-        return locDef.coords(isLeft, isLeft ? -1.0 : 1.0);
+        const rawCoords = locDef.coords(isLeft, isLeft ? -1.0 : 1.0);
+        if (isBase) return rawCoords;
+        const euler = this.resolveWristOrientation(entry, isLeft);
+        const qWrist = new THREE.Quaternion().setFromEuler(new THREE.Euler(...euler));
+        const effOffset = UniversalSignCompiler.computeEffectorOffset(rec, isLeft).applyQuaternion(qWrist);
+        return rawCoords.sub(effOffset);
       },
       resolveWristOrientation(entry, isLeft) {
         const rec = UniversalSignCompiler.compileRecipeFromASLLEX(entry);
@@ -2560,15 +2640,60 @@
       opacity: 0.20 
     });
     const muscleMat = new THREE.MeshStandardMaterial({ 
-      color: 0x64748b, 
+      color: 0x38bdf8, // Ethereal translucent cyan / soft digital twin tissue
       roughness: 0.35, 
-      metalness: 0.10, 
+      metalness: 0.05, 
       transparent: true, 
-      opacity: 0.22 
+      opacity: 0.22,
+      depthWrite: false
     });
+
+    // --- SIMPLE CHARACTER SILHOUETTE (Establishes Signer vs User Perspective) ---
+    const silhouetteMat = new THREE.MeshStandardMaterial({
+      color: 0x94a3b8, // Clean slate
+      roughness: 0.50,
+      metalness: 0.05,
+      transparent: true,
+      opacity: 0.14,
+      depthWrite: false
+    });
+
+    function buildSignerSilhouette(group) {
+      // 1. Basic Head (cranium & jaw)
+      const headGeo = new THREE.SphereGeometry(3.6, 20, 16);
+      headGeo.scale(1.0, 1.25, 1.05);
+      const headMesh = new THREE.Mesh(headGeo, silhouetteMat);
+      headMesh.position.set(0.4, 18.0, 0.0);
+      headMesh.raycast = () => {};
+      group.add(headMesh);
+
+      // 2. Basic Neck
+      const neckGeo = new THREE.CylinderGeometry(1.6, 1.9, 4.0, 14);
+      const neckMesh = new THREE.Mesh(neckGeo, silhouetteMat);
+      neckMesh.position.set(0.4, 12.0, 0.0);
+      neckMesh.raycast = () => {};
+      group.add(neckMesh);
+
+      // 3. Clavicle / Shoulder bar (connecting both shoulders at y=9.5)
+      const shoulderBarGeo = new THREE.CylinderGeometry(1.2, 1.2, 31.0, 14);
+      const shoulderBar = new THREE.Mesh(shoulderBarGeo, silhouetteMat);
+      shoulderBar.rotation.z = Math.PI / 2;
+      shoulderBar.position.set(0.0, 9.5, 0.0);
+      shoulderBar.raycast = () => {};
+      group.add(shoulderBar);
+
+      // 4. Basic Upper Torso / Bust
+      const torsoGeo = new THREE.CylinderGeometry(12.0, 9.0, 17.5, 18);
+      torsoGeo.scale(1.0, 1.0, 0.45);
+      const torsoMesh = new THREE.Mesh(torsoGeo, silhouetteMat);
+      torsoMesh.position.set(0.0, 0.75, -1.0);
+      torsoMesh.raycast = () => {};
+      group.add(torsoMesh);
+    }
+    buildSignerSilhouette(silhouetteGroup);
     
     // ------------------------------------------------------------------------
-    // PURE ISOLATED ANATOMICAL LIMB RIG (Body Completely Removed)
+    // ANATOMICAL LIMB RIG & RIGID 2-BONE KINEMATICS WITH TRANSLUCENT MUSCLE
     // ------------------------------------------------------------------------
     class ArmLimb {
       constructor(isLeft, shoulderPos) {
@@ -2589,21 +2714,27 @@
         this.elbowAngleDeg = 90;
         this.reachPct = 50;
 
-        // --- UPPER ARM: ANATOMICAL HUMERUS SKELETON ---
+        // --- UPPER ARM: ANATOMICAL HUMERUS SKELETON + TRANSLUCENT MUSCLE ---
         this.humerusBone = new THREE.Mesh(createAnatomicalLimbBoneGeometry(this.L1, 0.72, 1.40, 1.45), innerBoneMat);
         this.humerusBone.castShadow = true;
         // Proximal Humeral Head (Glenohumeral Articulation Sphere)
         const humeralHead = new THREE.Mesh(new THREE.SphereGeometry(1.20, 16, 16), jointMat);
         humeralHead.position.y = this.L1 / 2;
         this.humerusBone.add(humeralHead);
-        // Distal Medial & Lateral Epicondyles & Trochlea spool
-        const epicondyleMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.85, 0.85, 2.4, 16), jointMat);
-        epicondyleMesh.rotation.z = Math.PI / 2;
-        epicondyleMesh.position.y = -this.L1 / 2;
-        this.humerusBone.add(epicondyleMesh);
+
+        // Translucent See-Through Upper Arm Musculature (Biceps / Triceps / Brachialis)
+        const humerusMuscleGeo = new THREE.CylinderGeometry(1.65, 1.85, this.L1 * 0.94, 16);
+        humerusMuscleGeo.scale(1.15, 1.0, 1.05);
+        this.humerusMuscle = new THREE.Mesh(humerusMuscleGeo, muscleMat);
+        this.humerusMuscle.raycast = () => {};
+        this.humerusBone.add(this.humerusMuscle);
 
         // --- ELBOW ARTICULATION JOINT COMPLEX ---
         this.elbowGroup = new THREE.Group();
+        // Distal Medial & Lateral Epicondyles & Trochlea spool (aligned along elbow hinge axis X)
+        const epicondyleMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.85, 0.85, 2.4, 16), jointMat);
+        epicondyleMesh.rotation.z = Math.PI / 2;
+        this.elbowGroup.add(epicondyleMesh);
         // Olecranon Process of Ulna (posterior bony prominence of the elbow)
         const olecranonMesh = new THREE.Mesh(new THREE.SphereGeometry(0.88, 14, 14), innerBoneMat);
         olecranonMesh.scale.set(0.9, 1.1, 1.3);
@@ -2613,7 +2744,7 @@
         const trochleaMesh = new THREE.Mesh(new THREE.SphereGeometry(0.80, 14, 14), jointMat);
         this.elbowGroup.add(trochleaMesh);
 
-        // --- FOREARM: DUAL BONES (RADIUS & ULNA) ---
+        // --- FOREARM: DUAL BONES (RADIUS & ULNA) + TRANSLUCENT MUSCLE ---
         // 1. Radius (Lateral / Thumb side - slender at elbow, expands broadly at wrist)
         this.radiusBone = new THREE.Mesh(createAnatomicalLimbBoneGeometry(this.L2, 0.42, 1.65, 1.15), innerBoneMat);
         this.radiusBone.castShadow = true;
@@ -2627,6 +2758,13 @@
         const ulnarStyloid = new THREE.Mesh(new THREE.ConeGeometry(0.28, 0.6, 8), jointMat);
         ulnarStyloid.position.set(0, -this.L2 / 2, 0);
         this.ulnaBone.add(ulnarStyloid);
+
+        // Translucent See-Through Forearm Musculature (Brachioradialis / Flexors / Extensors)
+        const forearmMuscleGeo = new THREE.CylinderGeometry(1.30, 2.05, this.L2 * 0.94, 16);
+        forearmMuscleGeo.scale(1.20, 1.0, 0.95);
+        this.forearmMuscle = new THREE.Mesh(forearmMuscleGeo, muscleMat);
+        this.forearmMuscle.raycast = () => {};
+        this.group.add(this.forearmMuscle);
 
         this.group.add(this.humerusBone);
         this.group.add(this.elbowGroup);
@@ -2642,94 +2780,192 @@
         this.forearmBone = this.radiusBone;
       }
 
-      update(wristPos, isVisible) {
+      update(wristPos, isVisible, wristQuat) {
         this.group.visible = isVisible;
         if (!isVisible) return;
 
         const S = this.shoulder;
         const W = wristPos;
         const L1 = this.L1, L2 = this.L2;
+        const sign = this.isLeft ? -1 : 1;
 
+        // 1. Strict Euclidean Reach Clamping
+        // Guarantees that target W is strictly reachable and the triangle is non-degenerate
         const dx = W.x - S.x, dy = W.y - S.y, dz = W.z - S.z;
         let d = Math.sqrt(dx*dx + dy*dy + dz*dz);
+        if (d < 1e-4) d = 1e-4;
+        
+        const dMin = 6.0; // Minimum anatomical elbow flexion (prevents arm self-collapse)
+        const dMax = 0.998 * (L1 + L2); // 29.94 units
+        const dClamped = Math.max(dMin, Math.min(d, dMax));
 
-        const minInteriorAngle = 38.0 * deg2rad;
-        const dMin = Math.sqrt(Math.max(0.1, L1*L1 + L2*L2 - 2.0 * L1 * L2 * Math.cos(minInteriorAngle)));
-        const dMax = 0.995 * (L1 + L2);
-        d = Math.max(dMin, Math.min(d, dMax));
+        this.elbowAngleDeg = Math.round(180 - Math.acos(THREE.MathUtils.clamp((L1*L1 + L2*L2 - dClamped*dClamped) / (2.0 * L1 * L2), -1, 1)) * rad2deg);
+        this.reachPct = Math.round((dClamped / (L1 + L2)) * 100);
 
-        const cosAlpha = (L1*L1 + d*d - L2*L2) / (2.0 * L1 * d);
-        const alpha = Math.acos(Math.max(-1.0, Math.min(1.0, cosAlpha)));
-
-        const cosElbow = (L1*L1 + L2*L2 - d*d) / (2.0 * L1 * L2);
-        this.elbowAngleDeg = Math.round(180 - Math.acos(THREE.MathUtils.clamp(cosElbow, -1, 1)) * rad2deg);
-        this.reachPct = Math.round((d / (L1 + L2)) * 100);
-
+        // Reach ray unit vector from shoulder towards target
         const nx = dx / d, ny = dy / d, nz = dz / d;
         const n = new THREE.Vector3(nx, ny, nz);
-        const dMid = L1 * cosAlpha;
-        const h = L1 * Math.sin(alpha);
 
-        const sign = this.isLeft ? -1 : 1;
-        let rx = sign * 0.85, ry = -0.30, rz = 0.05;
-        if (W.z < 14.0 && Math.abs(W.x) < 12.0) {
-          rx = sign * 0.85; ry = -0.32; rz = -0.10;
-        }
+        // Effective wrist reach anchor (guarantees exact triangle lengths)
+        const Weff = new THREE.Vector3().addVectors(S, n.clone().multiplyScalar(dClamped));
+
+        // 2. Exact Triangle Geometry: Altitude (h) and Midpoint Distance (dMid)
+        // dMid^2 + h^2 = L1^2  and  (dClamped - dMid)^2 + h^2 = L2^2 identically
+        const dMid = (L1*L1 - L2*L2 + dClamped*dClamped) / (2.0 * dClamped);
+        const h = Math.sqrt(Math.max(0, L1*L1 - dMid*dMid));
+        const C = new THREE.Vector3().addVectors(S, n.clone().multiplyScalar(dMid));
+
+        // 3. Orthonormal Swivel Circle Basis (u, v) in Plane Perpendicular to n
+        let rx = sign * 0.85, ry = -0.45, rz = 0.20;
+        if (W.z > 5.0) rz = Math.max(rz, (W.z - 5.0) * 0.04);
         const rlen = Math.sqrt(rx*rx + ry*ry + rz*rz);
         const refDir = new THREE.Vector3(rx / rlen, ry / rlen, rz / rlen);
 
         const dot = refDir.dot(n);
-        let ortho = new THREE.Vector3().subVectors(refDir, n.clone().multiplyScalar(dot));
-        if (ortho.lengthSq() < 1e-4) {
-          ortho.set(sign, 0, 0);
-        } else {
-          ortho.normalize();
+        let u = new THREE.Vector3().subVectors(refDir, n.clone().multiplyScalar(dot));
+        if (u.lengthSq() < 1e-4) {
+          u.set(sign, 0, 0);
+          const dot2 = u.dot(n);
+          u.sub(n.clone().multiplyScalar(dot2));
+        }
+        u.normalize();
+
+        // v = n x u (completes right-handed orthonormal basis on circle plane)
+        const v = new THREE.Vector3().crossVectors(n, u).normalize();
+
+        // 4. Optimal Swivel Angle (psi) on Circle:
+        // Evaluates 17 discrete candidates on [-PI/2, PI/2] to keep elbow in front of coronal plane
+        // and clear of ribcage, WITHOUT ever modifying Cartesian coordinates or breaking bone lengths!
+        let bestPsi = 0;
+        let bestScore = -9999;
+        for (let step = -8; step <= 8; step++) {
+          const psi = step * (Math.PI / 16);
+          const cosP = Math.cos(psi), sinP = Math.sin(psi);
+          const tEx = C.x + h * (cosP * u.x + sinP * v.x);
+          const tEy = C.y + h * (cosP * u.y + sinP * v.y);
+          const tEz = C.z + h * (cosP * u.z + sinP * v.z);
+
+          let score = -Math.abs(psi) * 2.0; // Bias toward natural resting carrying angle
+          if (tEz < -0.5) score -= (-0.5 - tEz) * 30.0; // Strong penalty for poking behind back
+          const minLateral = sign * 4.0;
+          if (this.isLeft ? tEx > minLateral : tEx < minLateral) {
+            score -= (Math.abs(minLateral - tEx)) * 20.0; // Penalty for penetrating ribs
+          }
+          if (score > bestScore) {
+            bestScore = score;
+            bestPsi = psi;
+          }
         }
 
-        const E = new THREE.Vector3()
-          .addVectors(S, n.clone().multiplyScalar(dMid))
-          .addScaledVector(ortho, h);
+        const cosPsi = Math.cos(bestPsi), sinPsi = Math.sin(bestPsi);
+        const E = new THREE.Vector3().addVectors(
+          C,
+          u.clone().multiplyScalar(h * cosPsi).add(v.clone().multiplyScalar(h * sinPsi))
+        );
 
-        const minRibX = sign * 12.0;
-        if (this.isLeft) {
-          if (E.x > minRibX && E.y > -14.0 && E.y < 9.0) E.x = minRibX;
-        } else {
-          if (E.x < minRibX && E.y > -14.0 && E.y < 9.0) E.x = minRibX;
+        // Position Elbow Articulation Group
+        if (window.isAblationActive) {
+          // ABLATION MODE: Simulate unconstrained black-box neural network predictions
+          const tNow = Date.now() * 0.0035;
+          const dislocOffset = new THREE.Vector3(sign * Math.sin(tNow * 1.5) * 3.2, Math.cos(tNow) * 2.5, -Math.abs(Math.sin(tNow * 0.9)) * 3.8);
+          E.add(dislocOffset);
+          this.elbowGroup.position.copy(E);
+
+          const upperDist = S.distanceTo(E);
+          const upperScaleY = upperDist / L1;
+          const upperDir = new THREE.Vector3().subVectors(E, S).normalize();
+          const upperMid = new THREE.Vector3().addVectors(S, E).multiplyScalar(0.5);
+          const upperQuat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, -1, 0), upperDir);
+
+          this.humerusBone.position.copy(upperMid);
+          this.humerusBone.quaternion.copy(upperQuat);
+          this.humerusBone.scale.set(1.0, upperScaleY, 1.0);
+          if (this.humerusMuscle) this.humerusMuscle.scale.set(1.0, upperScaleY, 1.0);
+
+          const foreDist = E.distanceTo(W);
+          const foreScaleY = foreDist / L2;
+          const foreDir = new THREE.Vector3().subVectors(W, E).normalize();
+          const foreQuat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, -1, 0), foreDir);
+          const foreMid = new THREE.Vector3().addVectors(E, W).multiplyScalar(0.5);
+
+          this.radiusBone.position.copy(foreMid);
+          this.radiusBone.quaternion.copy(foreQuat);
+          this.radiusBone.scale.set(1.0, foreScaleY, 1.0);
+
+          this.ulnaBone.position.copy(foreMid);
+          this.ulnaBone.quaternion.copy(foreQuat);
+          this.ulnaBone.scale.set(1.0, foreScaleY, 1.0);
+
+          if (this.forearmMuscle) {
+            this.forearmMuscle.position.copy(foreMid);
+            this.forearmMuscle.quaternion.copy(foreQuat);
+            this.forearmMuscle.scale.set(1.0, foreScaleY, 1.0);
+          }
+          return;
         }
-        if (E.y < -12.0) E.y = -12.0;
 
-        // Position Elbow
         this.elbowGroup.position.copy(E);
 
-        // Humerus from S to E
-        const upperMid = new THREE.Vector3().addVectors(S, E).multiplyScalar(0.5);
+        // 5. Upper Arm: Humerus (S to E) - 100% Rigid Length Invariance L1
         const upperDir = new THREE.Vector3().subVectors(E, S).normalize();
+        const upperMid = new THREE.Vector3().addVectors(S, E).multiplyScalar(0.5);
         const upperQuat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, -1, 0), upperDir);
-        const upperDist = E.distanceTo(S);
 
         this.humerusBone.position.copy(upperMid);
         this.humerusBone.quaternion.copy(upperQuat);
-        this.humerusBone.scale.set(1, upperDist / this.L1, 1);
+        this.humerusBone.scale.set(1, 1, 1); // STRICT RIGID BONE - NO SCALE DISTORTION
 
-        // Dual Forearm Bones (Radius and Ulna from E to W)
-        const foreMid = new THREE.Vector3().addVectors(E, W).multiplyScalar(0.5);
-        const foreDir = new THREE.Vector3().subVectors(W, E).normalize();
+        // 6. Forearm: Radius & Ulna (E to Weff) - 100% Rigid Length Invariance L2
+        const foreDir = new THREE.Vector3().subVectors(Weff, E).normalize();
         const foreQuat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, -1, 0), foreDir);
-        const foreDist = W.distanceTo(E);
 
-        // Lateral axis perpendicular to forearm direction for radius/ulna separation
-        const lateralAxis = new THREE.Vector3(sign, 0, 0).applyQuaternion(foreQuat).normalize();
-        const sep = 0.72; // Interosseous separation
-        const rPos = foreMid.clone().addScaledVector(lateralAxis, sep);
-        const uPos = foreMid.clone().addScaledVector(lateralAxis, -sep);
+        // Proximal Articular Anchors at Elbow Epicondyles:
+        let elbowLat = new THREE.Vector3().crossVectors(upperDir, foreDir);
+        if (elbowLat.lengthSq() < 1e-4) {
+          elbowLat.set(sign, 0, 0);
+        } else {
+          elbowLat.normalize();
+          if (elbowLat.dot(new THREE.Vector3(sign, 0, 0)) < 0) elbowLat.negate();
+        }
+        this.elbowGroup.quaternion.setFromUnitVectors(new THREE.Vector3(1, 0, 0), elbowLat);
 
-        this.radiusBone.position.copy(rPos);
-        this.radiusBone.quaternion.copy(foreQuat);
-        this.radiusBone.scale.set(1, foreDist / this.L2, 1);
+        const epSep = 0.65;
+        const pRadiusHead = E.clone().addScaledVector(elbowLat, epSep);  // Lateral capitulum
+        const pUlnaHead = E.clone().addScaledVector(elbowLat, -epSep);    // Medial trochlea
 
-        this.ulnaBone.position.copy(uPos);
-        this.ulnaBone.quaternion.copy(foreQuat);
-        this.ulnaBone.scale.set(1, foreDist / this.L2, 1);
+        // Distal Articular Anchors at Wrist Carpal Base:
+        const effWristQuat = wristQuat || foreQuat;
+        // In local hand space, [-sign, 0, 0] is radial (thumb), [+sign, 0, 0] is ulnar (pinky)
+        const vWristRad = new THREE.Vector3(-sign, 0, 0).applyQuaternion(effWristQuat).normalize();
+        const vWristUln = new THREE.Vector3(sign, 0, 0).applyQuaternion(effWristQuat).normalize();
+        const carpalSep = 0.68;
+        // Joint line sits at carpal base
+        const carpalBase = Weff.clone().add(new THREE.Vector3(0, -0.35, 0).applyQuaternion(effWristQuat));
+        const dRadiusStyloid = carpalBase.clone().addScaledVector(vWristRad, carpalSep);
+        const dUlnaStyloid = carpalBase.clone().addScaledVector(vWristUln, carpalSep);
+
+        // Ulna Bone (Proximal Medial E -> Distal Medial/Pinky W)
+        const uMid = new THREE.Vector3().addVectors(pUlnaHead, dUlnaStyloid).multiplyScalar(0.5);
+        const uDir = new THREE.Vector3().subVectors(dUlnaStyloid, pUlnaHead).normalize();
+        const uQuat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, -1, 0), uDir);
+        this.ulnaBone.position.copy(uMid);
+        this.ulnaBone.quaternion.copy(uQuat);
+        this.ulnaBone.scale.set(1, 1, 1); // STRICT RIGID BONE - NO SCALE DISTORTION
+
+        // Radius Bone (Proximal Lateral E -> Distal Lateral/Thumb W)
+        // Naturally crosses over the anterior surface of the ulna during pronation
+        const rMid = new THREE.Vector3().addVectors(pRadiusHead, dRadiusStyloid).multiplyScalar(0.5);
+        const rDir = new THREE.Vector3().subVectors(dRadiusStyloid, pRadiusHead).normalize();
+        const rQuat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, -1, 0), rDir);
+        this.radiusBone.position.copy(rMid);
+        this.radiusBone.quaternion.copy(rQuat);
+        this.radiusBone.scale.set(1, 1, 1); // STRICT RIGID BONE - NO SCALE DISTORTION
+
+        // Position & Orient Translucent Forearm Muscle Envelope
+        const foreMid = new THREE.Vector3().addVectors(E, Weff).multiplyScalar(0.5);
+        this.forearmMuscle.position.copy(foreMid);
+        this.forearmMuscle.quaternion.copy(foreQuat);
+        this.forearmMuscle.scale.set(1, 1, 1);
       }
     }
 
@@ -2748,10 +2984,10 @@
       },
 
       enforce(hand, arm, isBodyContact = false) {
-        if (!hand || !arm || !hand.root || !arm.elbow) return;
+        if (!hand || !arm || !hand.root || !arm.elbowGroup) return;
 
         const W = hand.root.position;
-        const E = arm.elbow.position;
+        const E = arm.elbowGroup.position;
 
         // Forearm longitudinal unit vector (Elbow -> Wrist)
         const u_forearm = new THREE.Vector3().subVectors(W, E);
@@ -2760,27 +2996,14 @@
         u_forearm.multiplyScalar(1.0 / flen);
 
         // Hand longitudinal unit vector in world coordinates (middle metacarpal axis)
-        const u_hand = new THREE.Vector3(0, 1, 0).applyQuaternion(hand.targetWristQuat);
+        const u_hand = new THREE.Vector3(0, 1, 0).applyQuaternion(hand.root.quaternion);
 
-        // Guard 1: Anterior Conversational Half-Space
-        // Unless explicitly contacting the body (e.g. 'me', 'eat'),
-        // conversational signing cannot fold backwards into the chest (Z < -0.15)
-        if (!isBodyContact && u_hand.z < -0.15) {
-          const euler = new THREE.Euler().setFromQuaternion(hand.targetWristQuat, 'XYZ');
-          euler.x = Math.abs(euler.x);
-          euler.y = Math.PI;
-          euler.z = 0.0;
-          hand.targetWristQuat.setFromEuler(euler);
-          u_hand.set(0, 1, 0).applyQuaternion(hand.targetWristQuat);
-        }
-
-        // Guard 2: Forearm-Relative Conical ROM Clamp
-        // Clamps deviation angle to maximum physiological threshold (75 deg)
+        // Forearm-Relative Conical ROM Clamp (Max 75 deg deviation from forearm axis)
         const cosTheta = THREE.MathUtils.clamp(u_hand.dot(u_forearm), -1.0, 1.0);
         const theta = Math.acos(cosTheta);
 
         if (theta > this.ROM.maxForearmAngle) {
-          const ortho = new THREE.Vector3().subVectors(u_hand, u_forearm.clone().multiplyScalar(cosTheta));
+          let ortho = new THREE.Vector3().subVectors(u_hand, u_forearm.clone().multiplyScalar(cosTheta));
           if (ortho.lengthSq() < 1e-6) {
             ortho.set(0, 0, 1).cross(u_forearm);
             if (ortho.lengthSq() < 1e-6) ortho.set(1, 0, 0);
@@ -2793,7 +3016,7 @@
             .normalize();
 
           const q_corr = new THREE.Quaternion().setFromUnitVectors(u_hand, u_clamped);
-          hand.targetWristQuat.premultiply(q_corr);
+          hand.root.quaternion.premultiply(q_corr);
         }
       }
     };
@@ -3220,6 +3443,20 @@
           palmGroup.add(condyle);
         });
 
+        // Translucent See-Through Palmar Soft Tissue & Thenar Eminence
+        const palmMuscleGeo = new THREE.BoxGeometry(4.8, 4.8, 1.25);
+        const palmMuscle = new THREE.Mesh(palmMuscleGeo, muscleMat);
+        palmMuscle.position.set(0.0, 2.5, 0.1);
+        palmMuscle.raycast = () => {};
+        palmGroup.add(palmMuscle);
+
+        const thenarGeo = new THREE.SphereGeometry(1.25, 12, 12);
+        thenarGeo.scale(1.1, 1.45, 0.95);
+        const thenarMesh = new THREE.Mesh(thenarGeo, muscleMat);
+        thenarMesh.position.set(sign * -2.1, 1.1, 0.45);
+        thenarMesh.raycast = () => {};
+        palmGroup.add(thenarMesh);
+
         this.root.add(palmGroup);
 
         // 4 Fingers (attaching directly to MC II-V knuckle heads)
@@ -3255,6 +3492,9 @@
         const p1Mesh = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[0], isThumb ? 0.46 : 0.38, false), innerBoneMat);
         p1Mesh.castShadow = true;
         g1.add(p1Mesh);
+        const p1Muscle = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[0], (isThumb ? 0.46 : 0.38) * 1.35, false), muscleMat);
+        p1Muscle.raycast = () => {};
+        g1.add(p1Muscle);
         const ik1 = new IKNode(L[0]); ikBase.child = ik1; ik1.parent = ikBase;
         
         // Middle Phalanx (or Interphalangeal for thumb)
@@ -3262,6 +3502,9 @@
         const p2Mesh = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[1], isThumb ? 0.40 : 0.32, false), innerBoneMat);
         p2Mesh.castShadow = true;
         g2.add(p2Mesh);
+        const p2Muscle = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[1], (isThumb ? 0.40 : 0.32) * 1.35, false), muscleMat);
+        p2Muscle.raycast = () => {};
+        g2.add(p2Muscle);
         const ik2 = new IKNode(L[1]); ik1.child = ik2; ik2.parent = ik1;
         
         // Distal Phalanx with Spatulate Apical Tuft
@@ -3269,6 +3512,9 @@
         const p3Mesh = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[2], isThumb ? 0.34 : 0.28, true), innerBoneMat);
         p3Mesh.castShadow = true;
         g3.add(p3Mesh);
+        const p3Muscle = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[2], (isThumb ? 0.34 : 0.28) * 1.38, true), muscleMat);
+        p3Muscle.raycast = () => {};
+        g3.add(p3Muscle);
         const ik3 = new IKNode(L[2]); ik2.child = ik3; ik3.parent = ik2;
         
         const gTip = new THREE.Group(); gTip.position.y = L[2]; g3.add(gTip);
@@ -3478,9 +3724,9 @@
       }
 
       update(dt, isDraggingTarget) {
-        // Root translation interpolation to spatial locus (skipped during active master drag)
-        if (!(isDraggingMasterIndex && draggingHand === this)) {
-          this.root.position.lerp(this.targetRootPos, 0.05 * animSpeed);
+        // Root translation interpolation to spatial locus (only in stationary/alphabet mode; in signing modes animate() handles dynamic stroke trajectory)
+        if (!(isDraggingMasterIndex && draggingHand === this) && (typeof currentMainTab !== 'undefined' && currentMainTab === 'alphabet')) {
+          this.root.position.lerp(this.targetRootPos, 0.08 * animSpeed);
         }
         
         // Halo visual pulse & subtle rotation
@@ -3521,8 +3767,9 @@
           }
         }
 
-        // Wrist Rotation
-        this.root.quaternion.slerp(this.targetWristQuat, 0.05 * animSpeed);
+        // Responsive Wrist Rotation Slerp
+        const slerpFactor = (typeof isPlayingSignMotion !== 'undefined' && isPlayingSignMotion) ? 0.22 : 0.12;
+        this.root.quaternion.slerp(this.targetWristQuat, slerpFactor * animSpeed);
 
         // Soft-body Collision Repulsion (7 sample points per digit from original anatomical engine)
         for (let i = 0; i < this.fingerData.length; i++) {
@@ -3568,23 +3815,40 @@
 
           if (isDraggingTarget === f) {
             for(let iter=0; iter<3; iter++) {
-              ccdStep(f.ikNodes[3], f.tgt.group.position, {f: f.isThumb ? f.limits.ip_f : f.limits.dip_f}, f.limits.rest, true); 
+              ccdStep(f.ikNodes[3], f.tgt.group.position, {f: f.isThumb ? f.limits.ip_f : f.limits.dip_f}, f.limits.rest, true, f.isThumb); 
               f.ikNodes[0].updateWorld();
-              ccdStep(f.ikNodes[2], f.tgt.group.position, {f: f.isThumb ? f.limits.mcp_f : f.limits.pip_f}, f.limits.rest, true); 
+              ccdStep(f.ikNodes[2], f.tgt.group.position, {f: f.isThumb ? f.limits.mcp_f : f.limits.pip_f}, f.limits.rest, true, f.isThumb); 
               f.ikNodes[0].updateWorld();
-              ccdStep(f.ikNodes[1], f.tgt.group.position, {f: f.isThumb ? f.limits.cmc_f : f.limits.mcp_f, a: f.isThumb ? f.limits.cmc_a : f.limits.mcp_a}, f.limits.rest, false); 
+              ccdStep(f.ikNodes[1], f.tgt.group.position, {f: f.isThumb ? f.limits.cmc_f : f.limits.mcp_f, a: f.isThumb ? f.limits.cmc_a : f.limits.mcp_a}, f.limits.rest, false, f.isThumb); 
               f.ikNodes[0].updateWorld();
             }
             f.q.mcp_f = f.ikNodes[1].localRot.x; 
             f.q.mcp_a = f.ikNodes[1].localRot.z; 
             f.q.pip_f = f.ikNodes[2].localRot.x; 
             f.q.dip_f = f.ikNodes[3].localRot.x;
+
+            // Biomechanical Landsmeer Tendon Coupling & Volar Plate Protection for Fingers II-V:
+            // Oblique retinacular ligament couples DIP flexion to PIP flexion (~0.67 ratio)
+            // Volar plate strictly prevents PIP hyperextension (pip_f >= 0)
+            if (!f.isThumb) {
+              f.q.pip_f = Math.max(0.0, f.q.pip_f);
+              const coupledDip = f.q.pip_f * 0.67;
+              f.q.dip_f = THREE.MathUtils.clamp(f.q.dip_f, Math.max(0.0, coupledDip - 10 * deg2rad), coupledDip + 10 * deg2rad);
+              f.q.dip_f = Math.max(0.0, Math.min(80 * deg2rad, f.q.dip_f));
+              f.ikNodes[2].localRot.x = f.q.pip_f;
+              f.ikNodes[3].localRot.x = f.q.dip_f;
+              f.ikNodes[0].updateWorld();
+            }
           } else if (f.target_q) {
             const tSpeed = 0.12 * animSpeed;
             f.q.mcp_f += (f.target_q.mcp_f - f.q.mcp_f) * tSpeed;
             f.q.mcp_a += (f.target_q.mcp_a - f.q.mcp_a) * tSpeed;
             f.q.pip_f += (f.target_q.pip_f - f.q.pip_f) * tSpeed;
             f.q.dip_f += (f.target_q.dip_f - f.q.dip_f) * tSpeed;
+
+            if (!f.isThumb) {
+              f.q.pip_f = Math.max(0.0, f.q.pip_f); // Volar plate lockout
+            }
 
             f.ikNodes[1].localRot.set(f.q.mcp_f, 0, f.q.mcp_a, 'XYZ'); 
             f.ikNodes[2].localRot.set(f.q.pip_f, 0, 0, 'XYZ'); 
@@ -3795,13 +4059,30 @@
                   continue;
                 }
 
-                // CASE 3: ADJACENT FINGERS (Lateral Abduction Separation)
+                // CASE 3: ADJACENT FINGERS (Lateral Abduction Separation with MCP Cam Lockout)
                 let fLeft = fA, fRight = fB;
                 if (fA.ikNodes[0].worldPos.x > fB.ikNodes[0].worldPos.x) {
                   fLeft = fB; fRight = fA;
                 }
-                fLeft.q.mcp_a += 0.03 * sign;
-                fRight.q.mcp_a -= 0.03 * sign;
+                // Dynamic Collateral Ligament Cam Factor (Kapandji 1982)
+                const camL = Math.max(0.08, 1.0 - 0.88 * Math.min(1.0, Math.max(0, fLeft.q.mcp_f) / (90 * deg2rad)));
+                const camR = Math.max(0.08, 1.0 - 0.88 * Math.min(1.0, Math.max(0, fRight.q.mcp_f) / (90 * deg2rad)));
+
+                fLeft.q.mcp_a += 0.03 * sign * camL;
+                fRight.q.mcp_a -= 0.03 * sign * camR;
+
+                // When fingers are flexed into a fist and collateral ligaments lock abduction,
+                // achieve clearance through subtle depth offset rather than lateral splay
+                if (camL < 0.40 && camR < 0.40) {
+                  if (fLeft.q.pip_f < fRight.q.pip_f) {
+                    fLeft.q.pip_f = Math.max(0.1, fLeft.q.pip_f - 0.02);
+                  } else {
+                    fRight.q.pip_f = Math.max(0.1, fRight.q.pip_f - 0.02);
+                  }
+                }
+
+                fLeft.q.mcp_a = Math.max(-15 * deg2rad * camL, Math.min(15 * deg2rad * camL, fLeft.q.mcp_a));
+                fRight.q.mcp_a = Math.max(-15 * deg2rad * camR, Math.min(15 * deg2rad * camR, fRight.q.mcp_a));
 
                 updateNodes(fLeft);
                 updateNodes(fRight);
@@ -3836,7 +4117,7 @@
     const handL = new AnatomicalHand(true, -6.5);
 
     // --- CCD IK SOLVER FUNCTION ---
-    function ccdStep(node, targetPos, limits, restPose, isHinge) {
+    function ccdStep(node, targetPos, limits, restPose, isHinge, isThumb = false) {
       let chainRoot = node; while(chainRoot.parent) chainRoot = chainRoot.parent;
       const effector = chainRoot.getEffectorPos();
       const e = effector.clone().sub(node.worldPos); const t = targetPos.clone().sub(node.worldPos);
@@ -3853,7 +4134,17 @@
         node.localRot.set(f, 0, 0, 'XYZ');
       } else {
         let f = THREE.MathUtils.clamp(targetEuler.x, limits.f[0], limits.f[1]);
-        let a = THREE.MathUtils.clamp(targetEuler.z, limits.a[0], limits.a[1]);
+        // Physiological Collateral Ligament Cam Effect (Kapandji 1982, Brand 1999):
+        // As MCP flexes toward 90°, collateral ligaments tighten over the widening metacarpal condyles,
+        // mechanically locking out abduction/adduction to < 3°.
+        let camFactor = 1.0;
+        if (!isThumb && limits.a) {
+          const flexRatio = Math.max(0, f) / (90 * deg2rad);
+          camFactor = Math.max(0.08, 1.0 - 0.88 * Math.min(1.0, flexRatio));
+        }
+        let aMin = limits.a[0] * camFactor;
+        let aMax = limits.a[1] * camFactor;
+        let a = THREE.MathUtils.clamp(targetEuler.z, aMin, aMax);
         node.localRot.set(f, 0, a, 'XYZ');
       }
       
@@ -5136,18 +5427,18 @@
         );
       }
 
-      // Update 2-Bone Arm Kinematics (computes elbow positions)
-      armR.update(handR.root.position, handR.root.visible);
-      armL.update(handL.root.position, handL.root.visible);
+      // 1. Update Hand Internal Joint FK, Position & Wrist Slerp
+      if (handR.root.visible) handR.update(dt, isDraggingTarget);
+      if (handL.root.visible) handL.update(dt, isDraggingTarget);
 
-      // Enforce Universal Physiological Wrist ROM Limits
+      // 2. Enforce Universal Physiological Wrist ROM Limits
       const isBodyContact = ["me", "eat", "drink", "sleep", "tired"].includes(currentActiveWord ? currentActiveWord.toLowerCase() : "");
       if (handR.root.visible) PhysiologicalWristEngine.enforce(handR, armR, isBodyContact);
       if (handL.root.visible) PhysiologicalWristEngine.enforce(handL, armL, isBodyContact);
 
-      // Update Hand Internal Joint FK & Collision Repulsion
-      if (handR.root.visible) handR.update(dt, isDraggingTarget);
-      if (handL.root.visible) handL.update(dt, isDraggingTarget);
+      // 3. Update 2-Bone Arm Kinematics (computes rigid elbow positions & dynamic forearm bone crossing)
+      armR.update(handR.root.position, handR.root.visible, handR.root.quaternion);
+      armL.update(handL.root.position, handL.root.visible, handL.root.quaternion);
 
       updateHudMetrics();
 
@@ -5159,26 +5450,29 @@
     }
 
     // --- THEME SWITCH ---
-    document.getElementById('btn-theme').addEventListener('click', () => {
-      const isDaVinci = document.body.classList.toggle('theme-davinci');
-      document.getElementById('btn-theme').innerText = isDaVinci ? "SWITCH TO ACADEMIC" : "SWITCH TO DA VINCI";
-      
-      if (isDaVinci) {
-        innerBoneMat.color.setHex(0x3e2723);
-        fleshMat.color.setHex(0x8d6e63);
-        muscleMat.color.setHex(0xb71c1c);
-        arcMat.color.setHex(0x8d6e63);
-        gridHelper.material.color.setHex(0x8d6e63);
-      } else {
-        innerBoneMat.color.setHex(0x1e293b); 
-        fleshMat.color.setHex(0x94a3b8); 
-        muscleMat.color.setHex(0x64748b);
-        arcMat.color.setHex(0x64748b);
-        gridHelper.material.color.setHex(0xcbd5e1); 
-      }
-      handR.setTheme(isDaVinci);
-      handL.setTheme(isDaVinci);
-    });
+    const btnThemeEl = document.getElementById('btn-theme');
+    if (btnThemeEl) {
+      btnThemeEl.addEventListener('click', () => {
+        const isDaVinci = document.body.classList.toggle('theme-davinci');
+        btnThemeEl.innerText = isDaVinci ? "SWITCH TO ACADEMIC" : "SWITCH TO DA VINCI";
+        
+        if (isDaVinci) {
+          innerBoneMat.color.setHex(0x3e2723);
+          fleshMat.color.setHex(0x8d6e63);
+          muscleMat.color.setHex(0xb71c1c);
+          arcMat.color.setHex(0x8d6e63);
+          gridHelper.material.color.setHex(0x8d6e63);
+        } else {
+          innerBoneMat.color.setHex(0xeee7db); 
+          fleshMat.color.setHex(0x94a3b8); 
+          muscleMat.color.setHex(0x38bdf8);
+          arcMat.color.setHex(0x64748b);
+          gridHelper.material.color.setHex(0xcbd5e1); 
+        }
+        handR.setTheme(isDaVinci);
+        handL.setTheme(isDaVinci);
+      });
+    }
 
     // --- INITIALIZATION VIA URL PARAMS & ENGINE WIRING ---
     initGeneratorUI();
@@ -5195,7 +5489,8 @@
     }
 
     if (urlParams.get('theme') === 'davinci') {
-      document.getElementById('btn-theme').click();
+      if (btnThemeEl) btnThemeEl.click();
+      else document.body.classList.add('theme-davinci');
     }
 
     // --- FLOATING MOTION CONTROL DECK & LOCI EVENT WIRING ---
@@ -5276,6 +5571,69 @@
       });
     }
 
+    // Wire Scientific Paradigm Ablation Mode
+    window.isAblationActive = false;
+    window.setAblationMode = function(enabled) {
+      window.isAblationActive = !!enabled;
+      const btnOurs = document.getElementById('btn-paradigm-ours');
+      const btnAblation = document.getElementById('btn-paradigm-ablation');
+      const badge = document.getElementById('paradigm-metric-badge');
+      const sidePill = document.getElementById('ablation-sidebar-pill');
+      const sideOurs = document.getElementById('btn-sidebar-ours');
+      const sideAblation = document.getElementById('btn-sidebar-ablation');
+      const banner = document.getElementById('ablation-banner');
+
+      if (window.isAblationActive) {
+        if (btnOurs) { btnOurs.style.background = 'rgba(30, 41, 59, 0.8)'; btnOurs.style.color = '#cbd5e1'; btnOurs.style.borderColor = 'rgba(148, 163, 184, 0.3)'; }
+        if (btnAblation) { btnAblation.style.background = '#ef4444'; btnAblation.style.color = '#ffffff'; btnAblation.style.borderColor = '#f87171'; }
+        if (sideOurs) { sideOurs.style.background = 'transparent'; sideOurs.style.color = 'var(--text-muted)'; sideOurs.style.borderColor = 'var(--panel-border)'; }
+        if (sideAblation) { sideAblation.style.background = '#ef4444'; sideAblation.style.color = '#ffffff'; sideAblation.style.borderColor = '#f87171'; }
+        if (badge) {
+          badge.innerText = '⚠️ ABLATION: ±24.8% ERROR';
+          badge.style.background = 'rgba(239, 68, 68, 0.2)';
+          badge.style.color = '#f87171';
+          badge.style.borderColor = 'rgba(239, 68, 68, 0.5)';
+        }
+        if (sidePill) {
+          sidePill.innerText = '⚠️ ±24.8% ERROR';
+          sidePill.style.background = 'rgba(239, 68, 68, 0.2)';
+          sidePill.style.color = '#f87171';
+          sidePill.style.borderColor = 'rgba(239, 68, 68, 0.5)';
+        }
+        if (banner) banner.style.display = 'block';
+      } else {
+        if (btnOurs) { btnOurs.style.background = '#10b981'; btnOurs.style.color = '#042f2e'; btnOurs.style.borderColor = '#34d399'; }
+        if (btnAblation) { btnAblation.style.background = 'rgba(30, 41, 59, 0.8)'; btnAblation.style.color = '#cbd5e1'; btnAblation.style.borderColor = 'rgba(148, 163, 184, 0.3)'; }
+        if (sideOurs) { sideOurs.style.background = 'rgba(16, 185, 129, 0.2)'; sideOurs.style.color = '#10b981'; sideOurs.style.borderColor = 'rgba(16, 185, 129, 0.4)'; }
+        if (sideAblation) { sideAblation.style.background = 'transparent'; sideAblation.style.color = 'var(--text-muted)'; sideAblation.style.borderColor = 'var(--panel-border)'; }
+        if (badge) {
+          badge.innerText = '⚡ Δ ≡ 0.000 RIGID';
+          badge.style.background = 'rgba(16, 185, 129, 0.15)';
+          badge.style.color = '#10b981';
+          badge.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+        }
+        if (sidePill) {
+          sidePill.innerText = 'Δ ≡ 0.000 RIGID';
+          sidePill.style.background = 'rgba(16, 185, 129, 0.15)';
+          sidePill.style.color = '#10b981';
+          sidePill.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+        }
+        if (banner) banner.style.display = 'none';
+        if (typeof armR !== 'undefined' && armR) {
+          armR.humerusBone.scale.set(1, 1, 1);
+          armR.radiusBone.scale.set(1, 1, 1);
+          armR.ulnaBone.scale.set(1, 1, 1);
+          if (armR.forearmMuscle) armR.forearmMuscle.scale.set(1, 1, 1);
+        }
+        if (typeof armL !== 'undefined' && armL) {
+          armL.humerusBone.scale.set(1, 1, 1);
+          armL.radiusBone.scale.set(1, 1, 1);
+          armL.ulnaBone.scale.set(1, 1, 1);
+          if (armL.forearmMuscle) armL.forearmMuscle.scale.set(1, 1, 1);
+        }
+      }
+    };
+
     // Clean Landing: Switch to initial tab and synthesize starting sign
     switchMainTab(initTab);
     if (initTab === 'generator') {
@@ -5310,6 +5668,20 @@
   </div>
   </div>
 
+
+  <!-- TOP-LEFT FLOATING PARADIGM ABLATION CONTROLLER (3D VIEWPORT) -->
+  <div id="paradigm-controller" style="position: absolute; top: 16px; left: 16px; z-index: 45; display: flex; align-items: center; gap: 8px; background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(56, 189, 248, 0.35); box-shadow: 0 4px 20px rgba(0,0,0,0.5); border-radius: 10px; padding: 5px 12px; font-family: 'Inter', sans-serif;">
+    <span style="font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px;">Scientific Paradigm:</span>
+    <button id="btn-paradigm-ours" onclick="setAblationMode(false)" style="background: #10b981; color: #042f2e; font-weight: 800; font-size: 10px; padding: 4px 10px; border-radius: 6px; border: 1px solid #34d399; cursor: pointer; transition: all 0.2s;">
+      ⚡ Biomechanical Twin (Ours)
+    </button>
+    <button id="btn-paradigm-ablation" onclick="setAblationMode(true)" style="background: rgba(30, 41, 59, 0.8); color: #cbd5e1; font-weight: 600; font-size: 10px; padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(148, 163, 184, 0.3); cursor: pointer; transition: all 0.2s;">
+      ⚠️ Unconstrained Baseline
+    </button>
+    <div id="paradigm-metric-badge" style="font-size: 9px; font-weight: 700; font-family: 'JetBrains Mono', monospace; padding: 3px 8px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4);">
+      Δ ≡ 0.000 RIGID
+    </div>
+  </div>
 
   <!-- FLOATING MOTION CONTROL DECK & KINEMATIC TELEMETRY HUD -->
   <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 40; display: flex; flex-direction: column; align-items: center; gap: 8px; font-family: 'Inter', sans-serif;">
@@ -5369,6 +5741,72 @@
       </div>
     </div>
   </div>
+
+  <!-- Wire deck controls AFTER they exist in the DOM -->
+  <script>
+  (function() {
+    const motionBtn = document.getElementById('btn-toggle-motion');
+    if (motionBtn) {
+      motionBtn.addEventListener('click', () => {
+        if (isPlayingSignMotion) {
+          isPlayingSignMotion = false;
+          motionBtn.innerHTML = "<span>▶ RESUME</span>";
+          motionBtn.style.background = "#16a34a";
+        } else {
+          if (strokeClock >= STROKE_DURATION) {
+            strokeClock = 0.0;
+          }
+          isPlayingSignMotion = true;
+          motionBtn.innerHTML = "<span>⏸ PAUSE</span>";
+          motionBtn.style.background = "#2563eb";
+        }
+      });
+    }
+
+    document.querySelectorAll('.deck-speed-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.deck-speed-btn').forEach(b => {
+          b.classList.remove('active');
+          b.style.background = 'rgba(30, 41, 59, 0.8)';
+          b.style.color = '#cbd5e1';
+          b.style.border = '1px solid rgba(148, 163, 184, 0.3)';
+        });
+        btn.classList.add('active');
+        btn.style.background = '#2563eb';
+        btn.style.color = '#ffffff';
+        btn.style.border = '1px solid #3b82f6';
+        animSpeed = parseFloat(btn.dataset.speed) || 1.0;
+      });
+    });
+
+    const phaseScrubber = document.getElementById('motion-phase-scrubber');
+    if (phaseScrubber) {
+      phaseScrubber.addEventListener('input', (e) => {
+        isPlayingSignMotion = false;
+        if (motionBtn) {
+          motionBtn.innerHTML = "<span>▶ PLAY</span>";
+          motionBtn.style.background = "#16a34a";
+        }
+        const pct = parseFloat(e.target.value) / 100.0;
+        strokeClock = pct * STROKE_DURATION;
+      });
+    }
+
+    const toggleWaypoints = document.getElementById('toggle-waypoints');
+    if (toggleWaypoints) {
+      toggleWaypoints.addEventListener('change', (e) => {
+        KinematicMovementSolver.visuals.visible = e.target.checked;
+      });
+    }
+
+    const toggleLoci = document.getElementById('toggle-loci');
+    if (toggleLoci) {
+      toggleLoci.addEventListener('change', (e) => {
+        LociVisualizationEngine.setVisible(e.target.checked);
+      });
+    }
+  })();
+  </script>
 
   <div id="admissions-modal-overlay" onclick="if(event.target===this) window.dismissWelcomeModal()" style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; font-family: 'Inter', sans-serif;">
   <script>if (new URLSearchParams(window.location.search).has('nomodal')) document.getElementById('admissions-modal-overlay').style.display = 'none';</script>

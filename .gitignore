@@ -25,3 +25,11 @@
 !/CV_Iniyan-Joseph_Aalto.pdf
 !/Research_Statement_Aalto_ELLIS.pdf
 
+# Whitelist Proposal figures and memorandum for GitHub Pages
+!/01_PhD_Proposals/
+/01_PhD_Proposals/*
+!/01_PhD_Proposals/figures/
+/01_PhD_Proposals/figures/*
+!/01_PhD_Proposals/figures/*.*
+!/01_PhD_Proposals/Executive_Research_Memorandum_Farshad.md
+
