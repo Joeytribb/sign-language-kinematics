@@ -938,25 +938,30 @@
               METHODOLOGICAL FIT &bull; DR. AZADE FARSHAD
             </div>
             <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
-              Scene-Graph Conditioning &amp; Topologically Constrained Diffusion
+              Scene-Graph Guidance, Topological Invariants &amp; Hierarchical Diffusion
             </h3>
             <p class="text-sm text-neutral-300 leading-relaxed">
-              Dr. Azade Farshad's lab pioneered generative models with <b>explicit semantic scene graphs and topological inductive biases</b>. Our framework directly extends her methodologies into visual-gestural communication:
+              Dr. Azade Farshad's lab pioneered generative models with <b>explicit semantic scene graphs, topological inductive biases, and hierarchical diffusion</b>. Our framework directly extends her methodologies into visual-gestural communication:
             </p>
             <ul class="space-y-2.5 text-xs text-neutral-300 leading-relaxed">
               <li class="flex items-start gap-2">
                 <span class="text-sky-400 font-bold">&bull;</span>
-                <span><b>Extending <i>SceneGenie</i> (CVPR 2024):</b> Dr. Farshad proved that conditioning diffusion on structured scene graphs guarantees visual coherence. Sign language discourse syntax operates <em>precisely</em> as a 3D spatial scene graph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$, where coordinate loci ($L_1, L_{3a}, L_{3b}$) are entity nodes and agreement verbs are directed edges.</span>
+                <span><b>Extending <i>SceneGenie</i> (ICCV 2023):</b> Dr. Farshad pioneered training-free diffusion guidance using structured scene graphs $\mathcal{G} = (\mathcal{O}, \mathcal{E})$ and augmented bounding gradients ($\nabla \mathcal{L}_{\text{aug,boxg}}$). Sign discourse syntax operates <em>precisely</em> as a 3D scene graph where coordinate loci ($L_1, L_{3a}, L_{3b}$) are entity nodes and agreement verbs are directed edges. Her spatial bounding guidance directly steers hand effectors toward 3D anatomical contact loci without spatial drift.</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="text-sky-400 font-bold">&bull;</span>
-                <span><b>Extending <i>SCOPE</i> (MICCAI 2024) &amp; <i>HieraSurg</i> (2025):</b> In surgical computer vision, Dr. Farshad proved that biological structures require explicit graph-based continuity regularizers. High-DOF articulated hands exhibit identical topological vulnerabilities during neural diffusion, which her graph regularizers mathematically resolve.</span>
+                <span><b>Extending <i>SCOPE</i> (MICCAI 2023):</b> Dr. Farshad demonstrated that biological structures require explicit graph-based topological continuity constraints (clDice, Betti numbers) to prevent disconnected vessels. High-DOF articulated hand skeletons exhibit identical topological vulnerabilities during neural diffusion, which her graph continuity regularizers ($\mathcal{L}_{\text{graph}}$) mathematically resolve to guarantee rigid bone-length invariance.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-sky-400 font-bold">&bull;</span>
+                <span><b>Extending <i>HieraSurg</i> (2025):</b> Dr. Farshad formulated a two-stage hierarchical diffusion framework where high-level procedural states (phases/triplets) synthesize coarse structural maps that condition fine-grained continuous video synthesis. Our Dual-Rate Streaming Architecture translates this paradigm directly: discrete phonological macro-tokens generate coarse kinematic scaffolds that condition continuous 60 Hz motion diffusion.</span>
               </li>
             </ul>
           </div>
           <div class="pt-4 border-t border-neutral-800 text-xs font-mono text-neutral-400 flex items-center justify-between">
-            <span class="text-sky-400 font-semibold">&bull; SceneGenie (CVPR 2024)</span>
-            <span class="text-sky-400 font-semibold">&bull; SCOPE (MICCAI 2024)</span>
+            <span class="text-sky-400 font-semibold">&bull; SceneGenie (ICCV 2023)</span>
+            <span class="text-sky-400 font-semibold">&bull; SCOPE (MICCAI 2023)</span>
+            <span class="text-sky-400 font-semibold">&bull; HieraSurg (2025)</span>
           </div>
         </div>
 

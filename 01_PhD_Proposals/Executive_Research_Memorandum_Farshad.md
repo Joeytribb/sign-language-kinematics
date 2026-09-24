@@ -29,12 +29,13 @@ To eliminate this failure mode, we have formulated and open-sourced an embodied 
 ---
 
 ### 3. Direct Alignment with Your Research Agenda at Aalto & ELLIS
-Your recent work on **topologically constrained computer vision, semantic scene graphs, and medical digital twins** underscores that unconstrained black-box deep learning cannot achieve safety or physical authenticity without structured topological priors. 
+Your recent work on **topological continuity preservation, inference-time scene-graph guidance, and hierarchy-aware diffusion** underscores that unconstrained black-box deep learning cannot achieve safety or physical authenticity without structured inductive biases. 
 
-Our Sign Language Kinematics framework extends your core paradigm into embodied communication:
-- **Topological Priors for Generative Diffusion:** We propose integrating our analytical kinematic manifold as a strict geometric projection layer inside the reverse diffusion sampling process, guaranteeing that synthesized motion never violates anatomical manifold bounds.
-- **Semantic Spatial Graphs:** Integrating dynamic 3D discourse referents as semantic scene graphs with persistent causal memory ($M_t$), preventing sliding-window attention collapse in continuous dialogue.
-- **AI for Health & Accessibility:** Framing sign language generation not as mere animation, but as an essential assistive digital twin bridging 70 million Deaf individuals with healthcare and civic institutions.
+Our Sign Language Kinematics framework extends your core paradigms into embodied communication:
+- **Topological Continuity Preservation (Extending *SCOPE*, MICCAI 2023):** Just as SCOPE enforces topological and centerline continuity in biological branching structures, we enforce exact skeletal graph connectivity ($\mathcal{L}_{\text{graph}}$) and physiological strain compliance on 30-joint articulated hands, eliminating severed phalanges and rubber-finger artifacts.
+- **Inference-Time Scene Graph & Bounding Guidance (Extending *SceneGenie*, ICCV 2023):** Sign discourse syntax operates as an evolving 3D scene graph $\mathcal{G} = (\mathcal{V}_{\text{loci}}, \mathcal{E}_{\text{predicates}})$. We adapt SceneGenie's training-free augmented bounding guidance ($\nabla \mathcal{L}_{\text{aug,boxg}}$) to steer hand effectors toward 3D anatomical contact loci ($R$-loci) during reverse diffusion sampling, while grounding physical room objects in deictic pointing.
+- **Hierarchy-Aware Multimodal Diffusion (Extending *HieraSurg*, 2025):** We translate HieraSurg's two-stage hierarchical paradigm (coarse structural maps from high-level procedural states $\to$ continuous fine-grained video) into our Dual-Rate Streaming Architecture: discrete phonological macro-tokens $\mathcal{S}$ at 1–2 Hz establish coarse kinematic targets, which condition 60 Hz continuous residual motion diffusion.
+- **AI for Health & Assistive Digital Twins (ELLIS Finland Priority):** Framing sign language generation not as mere animation, but as an essential assistive digital twin bridging 70 million Deaf individuals with healthcare and civic institutions under WHO guidelines.
 
 ---
 
