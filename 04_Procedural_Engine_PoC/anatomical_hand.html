@@ -3851,13 +3851,13 @@
         }
 
         // Direct property overrides (from LexiconStudio overrides or programmatic specs)
-        if (entry.location) loc = entry.location;
-        if (entry.endLocation) endLoc = entry.endLocation;
-        if (entry.orientation) ori = entry.orientation;
-        if (entry.endOrientation) endOri = entry.endOrientation;
-        if (entry.handshape) hs = entry.handshape;
-        if (entry.endHandshape) endHs = entry.endHandshape;
-        if (entry.movement) mov = entry.movement;
+        if (entry.location && PARAMETRIC_LEXICONS.locations[entry.location]) loc = entry.location;
+        if (entry.endLocation && (PARAMETRIC_LEXICONS.locations[entry.endLocation] || entry.endLocation === 'none')) endLoc = entry.endLocation;
+        if (entry.orientation && PARAMETRIC_LEXICONS.orientations[entry.orientation]) ori = entry.orientation;
+        if (entry.endOrientation && (PARAMETRIC_LEXICONS.orientations[entry.endOrientation] || entry.endOrientation === 'none')) endOri = entry.endOrientation;
+        if (entry.handshape && PARAMETRIC_LEXICONS.handshapes[entry.handshape.toLowerCase()]) hs = entry.handshape.toLowerCase();
+        if (entry.endHandshape && (PARAMETRIC_LEXICONS.handshapes[entry.endHandshape.toLowerCase()] || entry.endHandshape === 'none')) endHs = entry.endHandshape.toLowerCase();
+        if (entry.movement && PARAMETRIC_LEXICONS.movements[entry.movement]) mov = entry.movement;
         if (entry.bilateral) bil = entry.bilateral;
         if (entry.contactEffector) eff = entry.contactEffector;
 
@@ -6935,9 +6935,10 @@
           movement: baseRec.movement,
           bilateral: baseRec.bilateral,
           baseHandshape: baseRec.baseHandshape || "flat_b",
-          contactEffector: "AUTO",
-          endHandshape: "none",
-          endLocation: "none",
+          contactEffector: baseRec.contactEffector || "AUTO",
+          endHandshape: baseRec.endHandshape || "none",
+          endLocation: baseRec.endLocation || "none",
+          endOrientation: baseRec.endOrientation || "none",
           fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
         };
 
@@ -6952,6 +6953,7 @@
           if (ov.contactEffector) cleanRecipe.contactEffector = ov.contactEffector;
           if (ov.endHandshape) cleanRecipe.endHandshape = ov.endHandshape;
           if (ov.endLocation) cleanRecipe.endLocation = ov.endLocation;
+          if (ov.endOrientation) cleanRecipe.endOrientation = ov.endOrientation;
           if (ov.fineTune) cleanRecipe.fineTune = { ...ov.fineTune };
         }
         this.activeWorkingRecipe = cleanRecipe;
@@ -6965,7 +6967,7 @@
           if (lbl) lbl.innerText = p.startsWith('r') ? `${ft[p] || 0}°` : `${(ft[p] || 0).toFixed(1)} cm`;
         });
 
-        UniversalSignCompiler.synthesize(this.activeWorkingRecipe, true);
+        UniversalSignCompiler.synthesize(this.activeWorkingRecipe, false);
         strokeClock = 0;
         isPlayingSignMotion = true;
         const playBtn = document.getElementById('btn-transport-play');
@@ -7658,6 +7660,11 @@
       nextItem() {
         if (this.currentIndex < this.items.length - 1) this.selectItem(this.currentIndex + 1);
         else this.selectItem(0);
+      },
+
+      stepItem(delta) {
+        if (delta < 0) this.prevItem();
+        else this.nextItem();
       },
 
       togglePlayPause() {
