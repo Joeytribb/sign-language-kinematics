@@ -2486,8 +2486,9 @@
         this.group = new THREE.Group();
         this.group.name = "spatialLociGroup";
 
-        const sphereGeo = new THREE.SphereGeometry(0.42, 16, 16);
-        const ringGeo = new THREE.RingGeometry(0.55, 0.70, 24);
+        // High-precision surgical micro-fiducials: unobtrusive, clinical, non-cartoony
+        const sphereGeo = new THREE.SphereGeometry(0.16, 12, 12);
+        const ringGeo = new THREE.RingGeometry(0.40, 0.52, 32);
 
         for (let key in PARAMETRIC_LEXICONS.locations) {
           const locDef = PARAMETRIC_LEXICONS.locations[key];
@@ -2498,23 +2499,25 @@
           locusNode.position.copy(pos);
           locusNode.name = "locus_" + key;
 
+          // Inactive state: subtle, low-opacity titanium/slate micro-pin (no toy candy glow)
           const sphereMat = new THREE.MeshStandardMaterial({
-            color: colorHex,
-            emissive: colorHex,
-            emissiveIntensity: 0.35,
-            roughness: 0.25,
-            metalness: 0.1,
+            color: 0x475569,
+            emissive: 0x0f172a,
+            emissiveIntensity: 0.0,
+            roughness: 0.65,
+            metalness: 0.25,
             transparent: true,
-            opacity: 0.65
+            opacity: 0.22
           });
           const sphereMesh = new THREE.Mesh(sphereGeo, sphereMat);
           locusNode.add(sphereMesh);
 
+          // Precision crosshair target ring: strictly invisible until actively targeted
           const ringMat = new THREE.MeshBasicMaterial({
-            color: colorHex,
+            color: 0x38bdf8,
             side: THREE.DoubleSide,
             transparent: true,
-            opacity: 0.35
+            opacity: 0.0
           });
           const ringMesh = new THREE.Mesh(ringGeo, ringMat);
           ringMesh.rotation.x = Math.PI * 0.5;
@@ -2631,31 +2634,28 @@
           const isHighlighted = (key === activeKey);
 
           if (isHighlighted) {
-            const d = (key === nearestKey) ? nearestDist : 2.0;
-            const pulse = 1.40 + Math.sin(time * 6.0) * 0.15;
+            // Active target locus: illuminates with high-precision surgical cyan beacon
+            const pulse = 1.25 + Math.sin(time * 5.0) * 0.10;
             item.node.scale.set(pulse, pulse, pulse);
             
-            // Radiant glowing emerald beacon
-            item.sphereMat.color.setHex(0x10b981);
-            item.sphereMat.emissive.setHex(0x059669);
-            item.sphereMat.emissiveIntensity = 1.4;
-            item.sphereMat.opacity = 1.0;
-            item.ringMat.color.setHex(0x10b981);
-            item.ringMat.opacity = 1.0;
+            item.sphereMat.color.setHex(0x38bdf8);
+            item.sphereMat.emissive.setHex(0x0284c7);
+            item.sphereMat.emissiveIntensity = 0.95;
+            item.sphereMat.opacity = 0.95;
+            item.ringMat.color.setHex(0x38bdf8);
+            item.ringMat.opacity = 0.85;
             
-            // Prominently reveal floating name label badge ONLY when hand moves there
-            item.sprite.material.opacity = 1.0;
-            item.sprite.position.y = 1.85 + Math.sin(time * 4.0) * 0.08;
+            item.sprite.material.opacity = 0.90;
+            item.sprite.position.y = 1.40;
           } else {
-            // Clearly visible floating spatial anchor, but billboard label strictly hidden
+            // Inactive loci: subtle, non-intrusive micro-fiducials (0.18 opacity, no clutter rings)
             item.node.scale.set(1.0, 1.0, 1.0);
-            item.sphereMat.color.setHex(item.baseColor);
-            item.sphereMat.emissive.setHex(item.baseColor);
-            item.sphereMat.emissiveIntensity = 0.35;
-            item.sphereMat.opacity = 0.65;
-            item.ringMat.color.setHex(item.baseColor);
-            item.ringMat.opacity = 0.35;
-            item.sprite.material.opacity = 0.0; // STRICTLY HIDDEN
+            item.sphereMat.color.setHex(0x475569);
+            item.sphereMat.emissive.setHex(0x0f172a);
+            item.sphereMat.emissiveIntensity = 0.0;
+            item.sphereMat.opacity = 0.18;
+            item.ringMat.opacity = 0.0;
+            item.sprite.material.opacity = 0.0;
           }
         }
       }
@@ -3805,14 +3805,19 @@
     document.getElementById('gizmo-container').appendChild(gizmoRenderer.domElement);
     const axesHelper = new THREE.AxesHelper(0.8); gizmoScene.add(axesHelper);
 
-    // Warm, pristine medical-grade studio illumination
-    scene.add(new THREE.AmbientLight(0xffffff, 0.55)); 
-    const dirLight = new THREE.DirectionalLight(0xfffaed, 1.25); dirLight.position.set(15, 25, 25); dirLight.castShadow = true;
+    // Clinical 3-Point Surgical Studio Illumination with Precision Rim Backlighting
+    scene.add(new THREE.AmbientLight(0x0f172a, 0.45)); // Deep slate ambient fill
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.20); dirLight.position.set(18, 28, 22); dirLight.castShadow = true;
     dirLight.shadow.mapSize.width = 2048; dirLight.shadow.mapSize.height = 2048; scene.add(dirLight);
-    const fillLight = new THREE.DirectionalLight(0xe0f2fe, 0.45); fillLight.position.set(-15, 10, -10); scene.add(fillLight);
-    const gridHelper = new THREE.GridHelper(60, 60, 0xcbd5e1, 0xf1f5f9);
-    gridHelper.position.y = -18.5;
-    // scene.add(gridHelper); // Hidden for pristine aesthetic
+    const fillLight = new THREE.DirectionalLight(0x94a3b8, 0.35); fillLight.position.set(-18, 12, 10); scene.add(fillLight);
+    
+    // Cool Cyan Surgical Rim Backlight: casts razor-sharp edge contours along phalanx bones and joints
+    const rimLight = new THREE.DirectionalLight(0x38bdf8, 0.60); rimLight.position.set(0, 16, -26); scene.add(rimLight);
+
+    // Precision Engineering Metric Ground Plane (CAD / Vicon Motion Capture Stage Grid)
+    const gridHelper = new THREE.GridHelper(70, 70, 0x1e293b, 0x0f172a);
+    gridHelper.position.y = -19.0;
+    scene.add(gridHelper);
 
     // ------------------------------------------------------------------------
     // ANATOMICAL MUSCULOSKELETAL AVATAR RIG & 2-BONE ARM LIMBS (NO WIREFRAME)
@@ -3857,37 +3862,79 @@
       depthWrite: false
     });
 
-    function buildSignerSilhouette(group) {
-      // 1. Basic Head (cranium & jaw)
-      const headGeo = new THREE.SphereGeometry(3.6, 20, 16);
-      headGeo.scale(1.0, 1.25, 1.05);
-      const headMesh = new THREE.Mesh(headGeo, silhouetteMat);
-      headMesh.position.set(0.4, 18.0, 0.0);
-      headMesh.raycast = () => {};
-      group.add(headMesh);
+    // Professional Anatomical Digital Twin Armature Material (Dark Slate / Titanium Stealth)
+    const silhouetteMat = new THREE.MeshStandardMaterial({
+      color: 0x1e293b, // Deep titanium slate
+      roughness: 0.65,
+      metalness: 0.20,
+      transparent: true,
+      opacity: 0.35,
+      depthWrite: false
+    });
 
-      // 2. Basic Neck
-      const neckGeo = new THREE.CylinderGeometry(1.6, 1.9, 4.0, 14);
+    const silhouetteBoneMat = new THREE.MeshStandardMaterial({
+      color: 0x334155, // Architectural structural bone slate
+      roughness: 0.55,
+      metalness: 0.15,
+      transparent: true,
+      opacity: 0.45
+    });
+
+    function buildSignerSilhouette(group) {
+      // 1. Anatomical Cranium (Upper Skull Ellipsoid)
+      const craniumGeo = new THREE.SphereGeometry(3.3, 24, 20);
+      craniumGeo.scale(0.96, 1.15, 1.06);
+      const craniumMesh = new THREE.Mesh(craniumGeo, silhouetteMat);
+      craniumMesh.position.set(0.2, 18.8, -0.4);
+      craniumMesh.raycast = () => {};
+      group.add(craniumMesh);
+
+      // 2. Anatomical Mandible & Facial Contour (Tapers down to Chin Landmark at y=14.2)
+      const mandibleGeo = new THREE.CylinderGeometry(1.3, 2.7, 3.2, 16);
+      mandibleGeo.scale(0.90, 1.0, 1.15);
+      const mandibleMesh = new THREE.Mesh(mandibleGeo, silhouetteMat);
+      mandibleMesh.position.set(0.3, 15.6, 0.5);
+      mandibleMesh.rotation.x = -0.18;
+      mandibleMesh.raycast = () => {};
+      group.add(mandibleMesh);
+
+      // 3. Cervical Spine & Neck Column (Anatomical Lordosis)
+      const neckGeo = new THREE.CylinderGeometry(1.35, 1.70, 3.8, 16);
+      neckGeo.scale(0.95, 1.0, 0.90);
       const neckMesh = new THREE.Mesh(neckGeo, silhouetteMat);
-      neckMesh.position.set(0.4, 12.0, 0.0);
+      neckMesh.position.set(0.2, 12.5, -0.4);
       neckMesh.raycast = () => {};
       group.add(neckMesh);
 
-      // 3. Clavicle / Shoulder bar (connecting both shoulders at y=9.5)
-      const shoulderBarGeo = new THREE.CylinderGeometry(1.2, 1.2, 31.0, 14);
-      const shoulderBar = new THREE.Mesh(shoulderBarGeo, silhouetteMat);
-      shoulderBar.rotation.z = Math.PI / 2;
-      shoulderBar.position.set(0.0, 9.5, 0.0);
-      shoulderBar.raycast = () => {};
-      group.add(shoulderBar);
+      // 4. Anatomical S-Curve Clavicle Girdle (Replaces the crude horizontal pipe)
+      // Connects from Sternal Notch (0.2, 10.2, 0.8) to Left/Right Acromion Shoulders (±15.0, 9.5, 0.5)
+      [-1, 1].forEach(side => {
+        const clavicleCurve = new THREE.CatmullRomCurve3([
+          new THREE.Vector3(side * 0.8, 10.2, 0.8),
+          new THREE.Vector3(side * 7.5, 10.5, 0.6),
+          new THREE.Vector3(side * 15.0, 9.5, 0.4)
+        ]);
+        const clavicleGeo = new THREE.TubeGeometry(clavicleCurve, 16, 0.55, 12, false);
+        const clavicleMesh = new THREE.Mesh(clavicleGeo, silhouetteBoneMat);
+        clavicleMesh.raycast = () => {};
+        group.add(clavicleMesh);
+      });
 
-      // 4. Basic Upper Torso / Bust
-      const torsoGeo = new THREE.CylinderGeometry(12.0, 9.0, 17.5, 18);
-      torsoGeo.scale(1.0, 1.0, 0.45);
-      const torsoMesh = new THREE.Mesh(torsoGeo, silhouetteMat);
-      torsoMesh.position.set(0.0, 0.75, -1.0);
-      torsoMesh.raycast = () => {};
-      group.add(torsoMesh);
+      // 5. Sternum Breastbone Plate (Midline landmark for Torso / Heart signs)
+      const sternumGeo = new THREE.CylinderGeometry(0.85, 0.50, 7.5, 12);
+      sternumGeo.scale(1.3, 1.0, 0.4);
+      const sternumMesh = new THREE.Mesh(sternumGeo, silhouetteBoneMat);
+      sternumMesh.position.set(0.2, 6.2, 0.9);
+      sternumMesh.raycast = () => {};
+      group.add(sternumMesh);
+
+      // 6. Anatomical Thoracic Cage / Ribcage Contour (Clean CAD Digital Twin Volume)
+      const thoraxGeo = new THREE.CylinderGeometry(11.2, 8.5, 16.5, 24);
+      thoraxGeo.scale(1.0, 1.0, 0.42);
+      const thoraxMesh = new THREE.Mesh(thoraxGeo, silhouetteMat);
+      thoraxMesh.position.set(0.0, 1.0, -0.8);
+      thoraxMesh.raycast = () => {};
+      group.add(thoraxMesh);
     }
     buildSignerSilhouette(silhouetteGroup);
     
@@ -3926,6 +3973,7 @@
         humerusMuscleGeo.scale(1.15, 1.0, 1.05);
         this.humerusMuscle = new THREE.Mesh(humerusMuscleGeo, muscleMat);
         this.humerusMuscle.raycast = () => {};
+        this.humerusMuscle.visible = false; // Hidden to expose authentic anatomical humerus osteology
         this.humerusBone.add(this.humerusMuscle);
 
         // --- ELBOW ARTICULATION JOINT COMPLEX ---
@@ -3963,6 +4011,7 @@
         forearmMuscleGeo.scale(1.20, 1.0, 0.95);
         this.forearmMuscle = new THREE.Mesh(forearmMuscleGeo, muscleMat);
         this.forearmMuscle.raycast = () => {};
+        this.forearmMuscle.visible = false; // Hidden to expose authentic dual-bone radius & ulna kinematics
         this.group.add(this.forearmMuscle);
 
         this.group.add(this.humerusBone);
