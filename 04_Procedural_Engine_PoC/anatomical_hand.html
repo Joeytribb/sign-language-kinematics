@@ -2306,11 +2306,36 @@ const AIRPORT_LEXICON_30 = [
         this.visuals.shockwaveMesh = shockMesh;
       },
 
+      // 3D Direction Vector Resolver: converts arbitrary [dx, dy, dz] or semantic names to unit vectors
+      resolveDirectionVector(dir, latSign = 1.0) {
+        if (!dir) return null;
+        if (Array.isArray(dir) && dir.length >= 3) {
+          const v = new THREE.Vector3(dir[0], dir[1], dir[2]);
+          return v.lengthSq() > 1e-4 ? v.normalize() : new THREE.Vector3(0, 0, 1);
+        }
+        if (typeof dir === 'object' && typeof dir.x === 'number') {
+          const v = new THREE.Vector3(dir.x, dir.y, dir.z);
+          return v.lengthSq() > 1e-4 ? v.normalize() : new THREE.Vector3(0, 0, 1);
+        }
+        if (typeof dir === 'string') {
+          const d = dir.toUpperCase();
+          if (d.includes("FORWARD_UP")) return new THREE.Vector3(0.0, 0.707, 0.707).normalize();
+          if (d.includes("FORWARD_DOWN")) return new THREE.Vector3(0.0, -0.707, 0.707).normalize();
+          if (d.includes("FORWARD")) return new THREE.Vector3(0.0, 0.0, 1.0);
+          if (d.includes("BACKWARD")) return new THREE.Vector3(0.0, 0.0, -1.0);
+          if (d.includes("UP")) return new THREE.Vector3(0.0, 1.0, 0.0);
+          if (d.includes("DOWN")) return new THREE.Vector3(0.0, -1.0, 0.0);
+          if (d.includes("LATERAL_OUT") || d.includes("LATERAL")) return new THREE.Vector3(latSign, 0.0, 0.0);
+          if (d.includes("MEDIAL_IN") || d.includes("MEDIAL")) return new THREE.Vector3(-latSign, 0.0, 0.0);
+        }
+        return null;
+      },
+
       setSign(recipe, locusR, locusL, endLocusR, endLocusL) {
         this.currentRecipe = recipe;
         this.canonicalLoci = {
-          locusR: locusR ? locusR.clone() : new THREE.Vector3(-8.5, 8.5, 16.0),
-          locusL: locusL ? locusL.clone() : new THREE.Vector3(8.5, 6.0, 14.0),
+          locusR: locusR ? locusR.clone() : new THREE.Vector3(8.5, 8.5, 16.0),
+          locusL: locusL ? locusL.clone() : new THREE.Vector3(-8.5, 6.0, 14.0),
           endLocusR: endLocusR ? endLocusR.clone() : null,
           endLocusL: endLocusL ? endLocusL.clone() : null
         };
@@ -2321,10 +2346,66 @@ const AIRPORT_LEXICON_30 = [
       },
 
       computeWaypoints(recipe, basePosR, basePosL, endPosR, endPosL) {
-        const loc = (recipe.location || "neutral_mid").toLowerCase();
-        const endLoc = (recipe.endLocation && recipe.endLocation !== 'none') ? recipe.endLocation.toLowerCase() : null;
+        const loc = ((recipe.startLocation || recipe.location) || "neutral_mid").toLowerCase();
+        const endLoc = (recipe.stopLocation || (recipe.endLocation && recipe.endLocation !== 'none')) ? (recipe.stopLocation || recipe.endLocation).toLowerCase() : null;
         const mov = (recipe.movement || "STATIC_HOLD").toUpperCase();
         const lem = (recipe.name || "").toLowerCase();
+        const dir = recipe.direction || recipe.movementDirection;
+
+        // Non-dominant Hand Waypoint Resolution (when non-dominant hand has its own movement sequence):
+        let wpL = null;
+        if (recipe.nonDominant) {
+          const nd = recipe.nonDominant;
+          const pStartL = basePosL ? basePosL.clone() : new THREE.Vector3(-8.5, 6.0, 14.0);
+          const vDirL = this.resolveDirectionVector(nd.direction || nd.movementDirection, -1.0);
+          if (vDirL) {
+            const distL = nd.distance || nd.distanceCm || 10.0;
+            const pEndL = pStartL.clone().addScaledVector(vDirL, distL);
+            wpL = {
+              pPrep: pStartL,
+              pContact: pEndL,
+              nApproach: vDirL,
+              dApproach: distL,
+              distanceCm: distL,
+              movement: nd.movement || "LINEAR_FORWARD"
+            };
+          } else if (endPosL) {
+            wpL = {
+              pPrep: pStartL,
+              pContact: endPosL.clone(),
+              nApproach: new THREE.Vector3().subVectors(endPosL, pStartL).normalize(),
+              dApproach: pStartL.distanceTo(endPosL),
+              distanceCm: pStartL.distanceTo(endPosL),
+              movement: nd.movement || "LINEAR_FORWARD"
+            };
+          } else {
+            wpL = {
+              pPrep: pStartL,
+              pContact: pStartL.clone(),
+              nApproach: new THREE.Vector3(0, 0, 1),
+              dApproach: 0,
+              distanceCm: 0,
+              movement: nd.movement || "STATIC_HOLD"
+            };
+          }
+        }
+
+        // 3D Directional Movement Override: explicit direction vector in 3D space
+        const vDir = this.resolveDirectionVector(dir, 1.0);
+        if (vDir) {
+          const dist = recipe.distance || recipe.distanceCm || 12.0;
+          const pStart = basePosR ? basePosR.clone() : new THREE.Vector3(8.5, 8.5, 16.0);
+          const pEnd = pStart.clone().addScaledVector(vDir, dist);
+          return {
+            pPrep: pStart,
+            pContact: pEnd,
+            nApproach: vDir.clone(),
+            dApproach: dist,
+            distanceCm: dist,
+            isDirectional: true,
+            wpL: wpL
+          };
+        }
 
         // SPECIAL SIGN: THANK YOU (Starts at chin/lips, travels forward-down into neutral space far)
         if (lem === "thankyou" || lem === "thank you" || lem === "thank_you" || (loc === "chin" && mov === "LINEAR_FORWARD" && (recipe.handshape === "open_b" || recipe.handshape === "5") && !endLoc)) {
@@ -2553,7 +2634,43 @@ const AIRPORT_LEXICON_30 = [
           }
         }
 
-        // Custom signature words
+        // Multi-Movement Sequence Evaluator (compound / multi-phase stroke sequences)
+        if (recipe.sequence && Array.isArray(recipe.sequence) && recipe.sequence.length > 0) {
+          const seq = recipe.sequence;
+          const nSeq = seq.length;
+          // Calculate phase boundaries
+          const rawDurs = seq.map(s => s.duration || (1.0 / nSeq));
+          const totalDur = rawDurs.reduce((a, b) => a + b, 0);
+          const normDurs = rawDurs.map(d => d / totalDur);
+          let cum = 0;
+          const bounds = [0];
+          for (let d of normDurs) { cum += d; bounds.push(cum); }
+          bounds[bounds.length - 1] = 1.0001;
+
+          let segIdx = 0;
+          for (let i = 0; i < nSeq; i++) {
+            if (u >= bounds[i] && u < bounds[i+1]) { segIdx = i; break; }
+          }
+          const activeSeg = seq[segIdx];
+          const segProgress = THREE.MathUtils.clamp((u - bounds[segIdx]) / normDurs[segIdx], 0.0, 1.0);
+          const segEase = segProgress < 0.5 ? 2.0 * segProgress * segProgress : -1.0 + (4.0 - 2.0 * segProgress) * segProgress;
+
+          // Evaluate active segment waypoints
+          const segWp = this.computeWaypoints(activeSeg, wp.pPrep, null, null, null);
+          targetR.lerpVectors(segWp.pPrep, segWp.pContact, segEase);
+
+          if (activeSeg.orientation && PARAMETRIC_LEXICONS.orientations[activeSeg.orientation]) {
+            const qSeg = new THREE.Quaternion().setFromEuler(new THREE.Euler(...PARAMETRIC_LEXICONS.orientations[activeSeg.orientation].euler(false)));
+            handR.targetWristQuat.slerp(qSeg, 0.25);
+          }
+
+          if (segProgress >= 0.85) isContactInstant = true;
+          currentPhase = u;
+        } else if (wp.isDirectional) {
+          targetR.lerpVectors(wp.pPrep, wp.pContact, easeInOut);
+          currentPhase = easeInOut;
+          if (u >= 0.90) isContactInstant = true;
+        } else // Custom signature words
         if (lem === "thankyou" || lem === "thank you" || lem === "thank_you" || (recipe.location === "chin" && mov === "LINEAR_FORWARD" && (recipe.handshape === "open_b" || recipe.handshape === "5") && !endLoc)) {
           // ONE-SHOT "THANK YOU": Hand starts at chin/lips, travels smoothly forward-down into neutral space far
           targetR.lerpVectors(wp.pPrep, wp.pContact, easeInOut);
@@ -2698,7 +2815,24 @@ const AIRPORT_LEXICON_30 = [
           if (u >= 0.90) isContactInstant = true;
         }
 
-        if (recipe.bilateral === "BILATERAL_SYMMETRIC" && handL.root.visible && !["book", "what_1", "car"].includes(lem)) {
+        if (wp.wpL && handL.root.visible) {
+          // Independent Non-Dominant Hand Movement Sequence Execution
+          const wpL = wp.wpL;
+          const movL = wpL.movement || "STATIC_HOLD";
+          if (movL === "STATIC_HOLD") {
+            targetL.copy(wpL.pContact);
+          } else if (movL === "TAP_1X" || movL === "TAP_2X") {
+            if (u < 0.5) targetL.lerpVectors(wpL.pPrep, wpL.pContact, u * 2.0);
+            else targetL.copy(wpL.pContact);
+          } else {
+            targetL.lerpVectors(wpL.pPrep, wpL.pContact, easeInOut);
+          }
+
+          // Morph non-dominant handshape if independent endHandshape is configured
+          if (recipe._tokensStartL && recipe._tokensEndL) {
+            handL.morphPose(recipe._tokensStartL, recipe._tokensEndL, strokeProgress);
+          }
+        } else if (recipe.bilateral === "BILATERAL_SYMMETRIC" && handL.root.visible && !["book", "what_1", "car"].includes(lem)) {
           targetL.set(-targetR.x, targetR.y, targetR.z);
         } else if (recipe.bilateral === "BILATERAL_RECIPROCAL" && handL.root.visible && lem !== "car") {
           targetL.set(-targetR.x, wp.pContact.y - (targetR.y - wp.pContact.y), targetR.z);
@@ -2795,15 +2929,13 @@ const AIRPORT_LEXICON_30 = [
         baseHandshape: "flat_b"
       },
 
-      // Compute Anatomical Contact Effector Local Offset:
-      // Translates target wrist position so that the actual contact effector
-      // (fingertips, thumb tip, or palm) makes contact at designated body/spatial loci
+      // 1. Part-to-Part Contact Effector Local Offset on Dominant Hand (Hand R):
       computeEffectorOffset(recipe, isLeft = false) {
-        const loc = (recipe && recipe.location ? recipe.location : "neutral_mid").toLowerCase();
+        const loc = (recipe && (recipe.location || recipe.startLocation) ? (recipe.location || recipe.startLocation) : "neutral_mid").toLowerCase();
         const hs = (recipe && recipe.handshape ? recipe.handshape : "1").toLowerCase();
         const lem = (recipe && recipe.name ? recipe.name : "").toLowerCase();
         const sign = isLeft ? -1 : 1;
-        const eff = (recipe && recipe.contactEffector ? recipe.contactEffector : "AUTO").toUpperCase();
+        const eff = (recipe && (recipe.contactEffector || recipe.dominantContactPart) ? (recipe.contactEffector || recipe.dominantContactPart) : "AUTO").toUpperCase();
 
         if (eff === "NONE") return new THREE.Vector3(0, 0, 0);
         if (eff === "INDEX_TIP") return new THREE.Vector3(sign * 2.1, 9.4, 0.2);
@@ -2811,6 +2943,9 @@ const AIRPORT_LEXICON_30 = [
         if (eff === "FINGERTIPS") return new THREE.Vector3(sign * 0.7, 9.8, 0.2);
         if (eff === "PALM") return new THREE.Vector3(0.0, 2.8, 0.5);
         if (eff === "FIST_HEEL") return new THREE.Vector3(sign * -1.0, 0.5, 0.4);
+        if (eff === "BLADE" || eff === "ULNAR_EDGE") return new THREE.Vector3(sign * -2.0, 3.0, 0.0);
+        if (eff === "RADIAL_EDGE") return new THREE.Vector3(sign * 2.4, 3.5, 0.2);
+        if (eff === "KNUCKLES") return new THREE.Vector3(0.0, 4.9, 0.2);
 
         // AUTO Heuristic Resolution:
         // 1. Passive base shelf signs (e.g. Work, Coffee, Night, Read):
@@ -2952,20 +3087,74 @@ const AIRPORT_LEXICON_30 = [
           hsTokensL.wrist = wristL;
           handL.executePose(hsTokensL, rec.name || "Custom", immediate);
         } else if (bilMode === "ASYMMETRIC_BASE") {
-          // Left hand is stationary base shelf
+          // Left hand is base shelf with explicit part-to-part contact alignment
           const baseLoc = PARAMETRIC_LEXICONS.locations[rec.location] || PARAMETRIC_LEXICONS.locations["passive_wrist"];
           locusL = baseLoc.coords(true, -1.0);
           handL.setVisible(true);
           handR.setVisible(true);
           handL.root.position.copy(locusL);
           handL.targetRootPos.copy(locusL);
-          armL.update(locusL, true);
 
-          const baseHsKey = rec.baseHandshape || "flat_b";
+          const baseHsKey = (rec.nonDominant && rec.nonDominant.handshape) || rec.baseHandshape || "flat_b";
           const baseHsDef = PARAMETRIC_LEXICONS.handshapes[baseHsKey] || PARAMETRIC_LEXICONS.handshapes["flat_b"];
           const baseTokens = JSON.parse(JSON.stringify(baseHsDef.tokens));
-          baseTokens.wrist = [1.40, 0.0, 0.0]; // Pronated shelf
+          const baseOriKey = (rec.nonDominant && rec.nonDominant.orientation) || "PALM_PRONE";
+          const baseOriDef = PARAMETRIC_LEXICONS.orientations[baseOriKey];
+          baseTokens.wrist = baseOriDef ? baseOriDef.euler(true) : [1.40, 0.0, 0.0];
           handL.executePose(baseTokens, "Base", immediate);
+
+          const qWristL = new THREE.Quaternion().setFromEuler(new THREE.Euler(...baseTokens.wrist));
+          handL.targetWristQuat.copy(qWristL);
+          armL.update(locusL, true, qWristL);
+
+          // Part-to-Part Touch Resolution:
+          // Computes exact world coordinate of designated target part on Hand L,
+          // then aligns Hand R's designated contact effector directly onto it!
+          const targetPartKey = (rec.nonDominant && (rec.nonDominant.contactPart || rec.nonDominant.targetPart)) || rec.baseContactPart || rec.targetContactPart || "AUTO";
+          const basePartOffset = this.computeBaseContactPartOffset(targetPartKey, baseHsKey).applyQuaternion(qWristL);
+          const pContactWorld = locusL.clone().add(basePartOffset);
+
+          // Place Hand R so that its contact effector lands exactly on pContactWorld:
+          locusR = pContactWorld.clone().sub(effOffsetR);
+          locusR.x += (ft.ox || 0);
+          locusR.y += (ft.oy || 0);
+          locusR.z += (ft.oz || 0);
+        } else if (bilMode === "INDEPENDENT_DUAL" || rec.nonDominant) {
+          // Independent Dual-Hand Mode: Non-dominant hand has its own movement sequence and instructions!
+          handL.setVisible(true);
+          handR.setVisible(true);
+          const nd = rec.nonDominant || {};
+          const ndHsKey = nd.handshape || "flat_b";
+          const ndHsDef = PARAMETRIC_LEXICONS.handshapes[ndHsKey] || PARAMETRIC_LEXICONS.handshapes["flat_b"];
+          const ndLocKey = nd.location || nd.startLocation || "passive_palm";
+          const ndLocDef = PARAMETRIC_LEXICONS.locations[ndLocKey] || PARAMETRIC_LEXICONS.locations["passive_palm"];
+          const ndOriKey = nd.orientation || "PALM_SUPINE";
+          const ndOriDef = PARAMETRIC_LEXICONS.orientations[ndOriKey] || PARAMETRIC_LEXICONS.orientations["PALM_ANTERIOR"];
+
+          const qWristL = new THREE.Quaternion().setFromEuler(new THREE.Euler(...ndOriDef.euler(true)));
+          const effOffsetL = this.computeEffectorOffset({ ...nd, location: ndLocKey, handshape: ndHsKey }, true).applyQuaternion(qWristL);
+          locusL = ndLocDef.coords(true, -1.0).sub(effOffsetL);
+
+          if (nd.endLocation && nd.endLocation !== 'none' && PARAMETRIC_LEXICONS.locations[nd.endLocation]) {
+            const endLocDef = PARAMETRIC_LEXICONS.locations[nd.endLocation];
+            endLocusL = endLocDef.coords(true, -1.0).sub(effOffsetL);
+          }
+
+          const hsTokensL = JSON.parse(JSON.stringify(ndHsDef.tokens));
+          hsTokensL.wrist = ndOriDef.euler(true);
+          rec._tokensStartL = JSON.parse(JSON.stringify(hsTokensL));
+
+          if (nd.endHandshape && nd.endHandshape !== 'none' && PARAMETRIC_LEXICONS.handshapes[nd.endHandshape]) {
+            const endHsDef = PARAMETRIC_LEXICONS.handshapes[nd.endHandshape];
+            rec._tokensEndL = JSON.parse(JSON.stringify(endHsDef.tokens));
+            rec._tokensEndL.wrist = hsTokensL.wrist;
+          } else {
+            rec._tokensEndL = null;
+          }
+
+          handL.executePose(hsTokensL, "NonDominant", immediate);
+          handL.targetWristQuat.copy(qWristL);
+          armL.update(locusL, true, qWristL);
         } else {
           // UNILATERAL
           handL.setVisible(false);
@@ -3089,9 +3278,17 @@ const AIRPORT_LEXICON_30 = [
             bilateral: entry.recipe.bilateral || "UNILATERAL",
             baseHandshape: entry.recipe.baseHandshape || "flat_b",
             contactEffector: entry.recipe.contactEffector || "AUTO",
+            baseContactPart: entry.recipe.baseContactPart || entry.recipe.targetContactPart || "AUTO",
+            movementDirection: entry.recipe.movementDirection || entry.recipe.direction || "AUTO",
+            direction: entry.recipe.direction || null,
+            distance: entry.recipe.distance || null,
             endHandshape: entry.recipe.endHandshape || "none",
             endLocation: entry.recipe.endLocation || "none",
+            startLocation: entry.recipe.startLocation || entry.recipe.location || "neutral_mid",
+            stopLocation: entry.recipe.stopLocation || entry.recipe.endLocation || "none",
             endOrientation: entry.recipe.endOrientation || "none",
+            nonDominant: entry.recipe.nonDominant || null,
+            sequence: entry.recipe.sequence || null,
             fineTune: entry.recipe.fineTune || { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
           };
         }
@@ -3624,6 +3821,8 @@ const AIRPORT_LEXICON_30 = [
         this.L2 = 13.5;
         this.elbowAngleDeg = 90;
         this.reachPct = 50;
+        this.currentPsi = 0.65;
+        this.currentE = null;
 
         // --- UPPER ARM: ANATOMICAL HUMERUS SKELETON + TRANSLUCENT MUSCLE ---
         this.humerusBone = new THREE.Mesh(createAnatomicalLimbBoneGeometry(this.L1, 0.72, 1.40, 1.45), innerBoneMat);
@@ -3730,23 +3929,24 @@ const AIRPORT_LEXICON_30 = [
         const h = Math.sqrt(Math.max(0, L1*L1 - dMid*dMid));
         const C = new THREE.Vector3().addVectors(S, n.clone().multiplyScalar(dMid));
 
-        // 3. Orthonormal Swivel Circle Basis (u, v) in Plane Perpendicular to n:
-        // u is the pure lateral vector in the circle plane (pointing outward from body)
-        const latTarget = new THREE.Vector3(latSign, 0, 0);
-        let u = new THREE.Vector3().subVectors(latTarget, n.clone().multiplyScalar(latTarget.dot(n)));
-        if (u.lengthSq() < 1e-4) {
-          const downTarget = new THREE.Vector3(0, -1, 0);
-          u = new THREE.Vector3().subVectors(downTarget, n.clone().multiplyScalar(downTarget.dot(n)));
+        // 3. Continuous Orthonormal Swivel Basis (u, v) in Plane Perpendicular to n:
+        // Guaranteed strictly continuous across the entire reach hemisphere (no sign flips when n.z crosses 0)
+        const refDown = new THREE.Vector3(0, -1, 0);
+        let v_proj = refDown.clone().sub(n.clone().multiplyScalar(refDown.dot(n)));
+        if (v_proj.lengthSq() < 1e-4) {
+          const refAnt = new THREE.Vector3(0, 0, 1);
+          v_proj = refAnt.clone().sub(n.clone().multiplyScalar(refAnt.dot(n)));
         }
-        u.normalize();
+        const v = v_proj.normalize(); // Continuous downward reference vector
 
-        // v is the inferior / downward vector in the circle plane
-        let v = new THREE.Vector3().crossVectors(n, u).normalize();
-        if (v.y > 0) v.negate(); // Ensure v points downwards
+        let u = new THREE.Vector3().crossVectors(n, v).normalize();
+        if (u.dot(new THREE.Vector3(latSign, 0, 0)) < 0) {
+          u.negate();
+        } // Continuous outward lateral reference vector
 
         // 4. Anatomical Swivel Angle (psi) Optimization:
         // Strictly prevents inward elbow bends, ribcage penetrations, and unnatural chicken-wing flare
-        let bestPsi = 0;
+        let bestPsi = (typeof this.currentPsi === 'number') ? this.currentPsi : 0.65;
         let bestScore = -999999;
         for (let step = -16; step <= 16; step++) {
           const psi = step * (Math.PI / 16);
@@ -3760,7 +3960,6 @@ const AIRPORT_LEXICON_30 = [
           let score = 0;
 
           // Hard Anatomical Constraint 1: Ribcage Clearance & Zero Inward Elbow Bending
-          // Elbow must remain strictly lateral to the ribcage margin
           const latDist = latSign * tE.x;
           if (latDist < 9.0) {
             score -= (9.0 - latDist) * 80.0 + 500.0; // STRICTLY FORBID INWARD ELBOW BENDS
@@ -3777,13 +3976,11 @@ const AIRPORT_LEXICON_30 = [
           const upperVec = new THREE.Vector3().subVectors(tE, S).normalize();
           const foreVec = new THREE.Vector3().subVectors(Weff, tE).normalize();
           const armNormal = new THREE.Vector3().crossVectors(upperVec, foreVec);
-          // In natural human flexion, arm normal Y component prevents hyperextended/inverted hinge
           if (latSign * armNormal.y < -0.15) {
             score -= 600.0;
           }
 
           // Soft Anatomical Constraint 1: Gravity Hanging Angle
-          // If hand is below shoulder level, elbow hangs below shoulder
           if (W.y < S.y + 4.0) {
             if (tE.y > S.y + 1.0) {
               score -= (tE.y - (S.y + 1.0)) * 30.0; // Strongly penalize chicken-wing flare
@@ -3796,19 +3993,34 @@ const AIRPORT_LEXICON_30 = [
           const targetPsi = 0.65;
           score -= Math.abs(psi - targetPsi) * 6.0;
 
+          // Temporal Continuity Invariant: Prevent sudden teleportation between competing minima
+          if (typeof this.currentPsi === 'number') {
+            const dAngle = Math.atan2(Math.sin(psi - this.currentPsi), Math.cos(psi - this.currentPsi));
+            score -= Math.abs(dAngle) * 22.0;
+          }
+
           if (score > bestScore) {
             bestScore = score;
             bestPsi = psi;
           }
         }
 
-        const cosPsi = Math.cos(bestPsi), sinPsi = Math.sin(bestPsi);
+        if (typeof this.currentPsi !== 'number') this.currentPsi = bestPsi;
+        else {
+          const dBest = Math.atan2(Math.sin(bestPsi - this.currentPsi), Math.cos(bestPsi - this.currentPsi));
+          this.currentPsi += dBest * 0.35;
+        }
+
+        const cosPsi = Math.cos(this.currentPsi), sinPsi = Math.sin(this.currentPsi);
         const E = new THREE.Vector3().addVectors(
           C,
           u.clone().multiplyScalar(h * cosPsi).add(v.clone().multiplyScalar(h * sinPsi))
         );
 
-        // Position Elbow Articulation Group
+        // Position Elbow Articulation Group with Exponential Damping to Eliminate Sudden Snapping
+        if (!this.currentE) this.currentE = E.clone();
+        else this.currentE.lerp(E, 0.40);
+
         if (window.isAblationActive) {
           // ABLATION MODE: Simulate unconstrained black-box neural network predictions
           const tNow = Date.now() * 0.0035;
@@ -3849,19 +4061,20 @@ const AIRPORT_LEXICON_30 = [
           return;
         }
 
-        this.elbowGroup.position.copy(E);
+        const effElbowPos = this.currentE;
+        this.elbowGroup.position.copy(effElbowPos);
 
-        // 5. Upper Arm: Humerus (S to E) - 100% Rigid Length Invariance L1
-        const upperDir = new THREE.Vector3().subVectors(E, S).normalize();
-        const upperMid = new THREE.Vector3().addVectors(S, E).multiplyScalar(0.5);
+        // 5. Upper Arm: Humerus (S to effElbowPos) - 100% Rigid Length Invariance L1
+        const upperDir = new THREE.Vector3().subVectors(effElbowPos, S).normalize();
+        const upperMid = new THREE.Vector3().addVectors(S, effElbowPos).multiplyScalar(0.5);
         const upperQuat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, -1, 0), upperDir);
 
         this.humerusBone.position.copy(upperMid);
         this.humerusBone.quaternion.copy(upperQuat);
         this.humerusBone.scale.set(1, 1, 1); // STRICT RIGID BONE - NO SCALE DISTORTION
 
-        // 6. Forearm: Radius & Ulna (E to Weff) - 100% Rigid Length Invariance L2
-        const foreDir = new THREE.Vector3().subVectors(Weff, E).normalize();
+        // 6. Forearm: Radius & Ulna (effElbowPos to Weff) - 100% Rigid Length Invariance L2
+        const foreDir = new THREE.Vector3().subVectors(Weff, effElbowPos).normalize();
         const foreQuat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, -1, 0), foreDir);
 
         // Proximal Articular Anchors at Elbow Epicondyles:
@@ -3875,8 +4088,8 @@ const AIRPORT_LEXICON_30 = [
         this.elbowGroup.quaternion.setFromUnitVectors(new THREE.Vector3(1, 0, 0), elbowLat);
 
         const epSep = 0.65;
-        const pRadiusHead = E.clone().addScaledVector(elbowLat, epSep);  // Lateral capitulum
-        const pUlnaHead = E.clone().addScaledVector(elbowLat, -epSep);    // Medial trochlea
+        const pRadiusHead = effElbowPos.clone().addScaledVector(elbowLat, epSep);  // Lateral capitulum
+        const pUlnaHead = effElbowPos.clone().addScaledVector(elbowLat, -epSep);    // Medial trochlea
 
         // Distal Articular Anchors at Wrist Carpal Base:
         const effWristQuat = wristQuat || foreQuat;
@@ -6336,14 +6549,22 @@ const AIRPORT_LEXICON_30 = [
           name: baseRec.name,
           handshape: baseRec.handshape,
           location: baseRec.location,
+          startLocation: baseRec.startLocation || baseRec.location,
           orientation: baseRec.orientation,
           movement: baseRec.movement,
+          movementDirection: baseRec.movementDirection || baseRec.direction || "AUTO",
+          direction: baseRec.direction || null,
+          distance: baseRec.distance || null,
           bilateral: baseRec.bilateral,
           baseHandshape: baseRec.baseHandshape || "flat_b",
           contactEffector: baseRec.contactEffector || "AUTO",
+          baseContactPart: baseRec.baseContactPart || baseRec.targetContactPart || "AUTO",
           endHandshape: baseRec.endHandshape || "none",
           endLocation: baseRec.endLocation || "none",
+          stopLocation: baseRec.stopLocation || baseRec.endLocation || "none",
           endOrientation: baseRec.endOrientation || "none",
+          nonDominant: baseRec.nonDominant || null,
+          sequence: baseRec.sequence || null,
           fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
         };
 
@@ -6359,7 +6580,14 @@ const AIRPORT_LEXICON_30 = [
           if (ov.contactEffector) cleanRecipe.contactEffector = ov.contactEffector;
           if (ov.endHandshape) cleanRecipe.endHandshape = ov.endHandshape;
           if (ov.endLocation) cleanRecipe.endLocation = ov.endLocation;
+          if (ov.stopLocation) cleanRecipe.stopLocation = ov.stopLocation;
           if (ov.endOrientation) cleanRecipe.endOrientation = ov.endOrientation;
+          if (ov.baseContactPart) cleanRecipe.baseContactPart = ov.baseContactPart;
+          if (ov.movementDirection) cleanRecipe.movementDirection = ov.movementDirection;
+          if (ov.direction) cleanRecipe.direction = ov.direction;
+          if (ov.distance) cleanRecipe.distance = ov.distance;
+          if (ov.nonDominant) cleanRecipe.nonDominant = { ...ov.nonDominant };
+          if (ov.sequence) cleanRecipe.sequence = [...ov.sequence];
           if (ov.fineTune) cleanRecipe.fineTune = { ...ov.fineTune };
         }
         this.activeWorkingRecipe = cleanRecipe;
@@ -6444,24 +6672,71 @@ const AIRPORT_LEXICON_30 = [
             <span class="param-field-label">5. Bilateral Mode (B):</span>
             <div class="param-field-control">
               <select class="param-select" onchange="LexiconWorkbench.onSignParamChange('bilateral', this.value)">
-                <option value="UNILATERAL" ${r.bilateral === 'UNILATERAL' ? 'selected' : ''}>UNILATERAL (1 Hand)</option>
-                <option value="BILATERAL_SYMMETRIC" ${r.bilateral === 'BILATERAL_SYMMETRIC' ? 'selected' : ''}>BILATERAL_SYMMETRIC</option>
-                <option value="ASYMMETRIC_BASE" ${r.bilateral === 'ASYMMETRIC_BASE' ? 'selected' : ''}>ASYMMETRIC_BASE (Shelf)</option>
+                <option value="UNILATERAL" ${r.bilateral === 'UNILATERAL' ? 'selected' : ''}>UNILATERAL (Dominant Only)</option>
+                <option value="BILATERAL_SYMMETRIC" ${r.bilateral === 'BILATERAL_SYMMETRIC' ? 'selected' : ''}>BILATERAL_SYMMETRIC (Mirror)</option>
+                <option value="ASYMMETRIC_BASE" ${r.bilateral === 'ASYMMETRIC_BASE' ? 'selected' : ''}>ASYMMETRIC_BASE (Part-to-Part Touch)</option>
+                <option value="INDEPENDENT_DUAL" ${r.bilateral === 'INDEPENDENT_DUAL' ? 'selected' : ''}>INDEPENDENT_DUAL (Dual-Hand Sequences)</option>
               </select>
             </div>
           </div>
 
           <div class="param-field">
-            <span class="param-field-label">6. Contact Effector:</span>
+            <span class="param-field-label">6. Dominant Contact Part:</span>
             <div class="param-field-control">
               <select class="param-select" onchange="LexiconWorkbench.onSignParamChange('contactEffector', this.value)">
                 <option value="AUTO" ${(!r.contactEffector || r.contactEffector === 'AUTO') ? 'selected' : ''}>AUTO (Heuristic)</option>
                 <option value="NONE" ${r.contactEffector === 'NONE' ? 'selected' : ''}>NONE (Wrist Direct)</option>
-                <option value="THUMB_TIP" ${r.contactEffector === 'THUMB_TIP' ? 'selected' : ''}>THUMB_TIP (Mother/Father)</option>
-                <option value="INDEX_TIP" ${r.contactEffector === 'INDEX_TIP' ? 'selected' : ''}>INDEX_TIP (Water/Candy)</option>
-                <option value="FINGERTIPS" ${r.contactEffector === 'FINGERTIPS' ? 'selected' : ''}>FINGERTIPS (Thank You/Eat)</option>
-                <option value="PALM" ${r.contactEffector === 'PALM' ? 'selected' : ''}>PALM (Chest/Heart)</option>
-                <option value="FIST_HEEL" ${r.contactEffector === 'FIST_HEEL' ? 'selected' : ''}>FIST_HEEL (Work/Doctor)</option>
+                <option value="INDEX_TIP" ${r.contactEffector === 'INDEX_TIP' ? 'selected' : ''}>INDEX_TIP (Finger Pad / Tip)</option>
+                <option value="THUMB_TIP" ${r.contactEffector === 'THUMB_TIP' ? 'selected' : ''}>THUMB_TIP (Thumb Contact)</option>
+                <option value="FINGERTIPS" ${r.contactEffector === 'FINGERTIPS' ? 'selected' : ''}>FINGERTIPS (4-Digit Cluster)</option>
+                <option value="PALM" ${r.contactEffector === 'PALM' ? 'selected' : ''}>PALM (Flat Palmar Face)</option>
+                <option value="FIST_HEEL" ${r.contactEffector === 'FIST_HEEL' ? 'selected' : ''}>FIST_HEEL (Hypothenar Heel)</option>
+                <option value="BLADE" ${r.contactEffector === 'BLADE' ? 'selected' : ''}>BLADE / ULNAR_EDGE (Karate Chop)</option>
+                <option value="RADIAL_EDGE" ${r.contactEffector === 'RADIAL_EDGE' ? 'selected' : ''}>RADIAL_EDGE (Index/Thumb Ridge)</option>
+              </select>
+            </div>
+          </div>
+
+          ${(r.bilateral === 'ASYMMETRIC_BASE' || r.bilateral === 'INDEPENDENT_DUAL') ? `
+          <div class="param-field" style="background:rgba(16,185,129,0.06); border:1px solid rgba(16,185,129,0.25); border-radius:4px; padding:6px;">
+            <span class="param-field-label" style="color:#10b981;">Target Non-Dominant Part:</span>
+            <div class="param-field-control">
+              <select class="param-select" onchange="LexiconWorkbench.onSignParamChange('baseContactPart', this.value)">
+                <option value="AUTO" ${(!r.baseContactPart || r.baseContactPart === 'AUTO') ? 'selected' : ''}>AUTO (Resolved from Handshape)</option>
+                <option value="PALM_CENTER" ${r.baseContactPart === 'PALM_CENTER' ? 'selected' : ''}>PALM_CENTER (Palm Surface - e.g. Read, Stop)</option>
+                <option value="DORSAL_WRIST" ${r.baseContactPart === 'DORSAL_WRIST' ? 'selected' : ''}>DORSAL_WRIST (Back of Wrist - e.g. Time)</option>
+                <option value="FIST_TOP" ${r.baseContactPart === 'FIST_TOP' ? 'selected' : ''}>FIST_TOP (Knuckles - e.g. Work)</option>
+                <option value="INDEX_TIP" ${r.baseContactPart === 'INDEX_TIP' ? 'selected' : ''}>INDEX_TIP (Index Tip - e.g. Name)</option>
+                <option value="INDEX_EDGE" ${r.baseContactPart === 'INDEX_EDGE' ? 'selected' : ''}>INDEX_EDGE (Index Ridge - e.g. Train)</option>
+                <option value="FINGERTIP_CLUSTER" ${r.baseContactPart === 'FINGERTIP_CLUSTER' ? 'selected' : ''}>FINGERTIP_CLUSTER (e.g. More)</option>
+                <option value="FOREARM_DORSAL" ${r.baseContactPart === 'FOREARM_DORSAL' ? 'selected' : ''}>FOREARM_DORSAL (e.g. Night)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="param-field" style="background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.25); border-radius:4px; padding:6px;">
+            <span class="param-field-label" style="color:#38bdf8;">Non-Dominant Handshape:</span>
+            <div class="param-field-control">
+              <select class="param-select" onchange="LexiconWorkbench.onSignParamChange('baseHandshape', this.value)">
+                ${hsKeys.map(k => `<option value="${k}" ${k === (r.baseHandshape || 'flat_b') ? 'selected' : ''}>${k.toUpperCase()}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+          ` : ''}
+
+          <div class="param-field">
+            <span class="param-field-label">3D Movement Direction:</span>
+            <div class="param-field-control">
+              <select class="param-select" onchange="LexiconWorkbench.onSignParamChange('movementDirection', this.value)">
+                <option value="AUTO" ${(!r.movementDirection || r.movementDirection === 'AUTO') ? 'selected' : ''}>AUTO (Standard Kinematic Path)</option>
+                <option value="FORWARD" ${r.movementDirection === 'FORWARD' ? 'selected' : ''}>FORWARD (+Z)</option>
+                <option value="BACKWARD" ${r.movementDirection === 'BACKWARD' ? 'selected' : ''}>BACKWARD (-Z)</option>
+                <option value="UP" ${r.movementDirection === 'UP' ? 'selected' : ''}>UP (+Y)</option>
+                <option value="DOWN" ${r.movementDirection === 'DOWN' ? 'selected' : ''}>DOWN (-Y)</option>
+                <option value="LATERAL_OUT" ${r.movementDirection === 'LATERAL_OUT' ? 'selected' : ''}>LATERAL_OUT (+X)</option>
+                <option value="MEDIAL_IN" ${r.movementDirection === 'MEDIAL_IN' ? 'selected' : ''}>MEDIAL_IN (-X)</option>
+                <option value="FORWARD_UP" ${r.movementDirection === 'FORWARD_UP' ? 'selected' : ''}>DIAGONAL: FORWARD_UP</option>
+                <option value="FORWARD_DOWN" ${r.movementDirection === 'FORWARD_DOWN' ? 'selected' : ''}>DIAGONAL: FORWARD_DOWN</option>
               </select>
             </div>
           </div>
@@ -6950,7 +7225,11 @@ const AIRPORT_LEXICON_30 = [
         if (hudElbow && armR) hudElbow.innerText = armR.elbowAngleDeg + "°";
 
         const hudEff = document.getElementById('hud-contact-effector');
-        if (hudEff && this.activeWorkingRecipe) hudEff.innerText = this.activeWorkingRecipe.contactEffector || 'AUTO';
+        if (hudEff && this.activeWorkingRecipe) {
+          const eff = this.activeWorkingRecipe.contactEffector || 'AUTO';
+          const basePart = (this.activeWorkingRecipe.baseContactPart && this.activeWorkingRecipe.baseContactPart !== 'AUTO') ? ` → ${this.activeWorkingRecipe.baseContactPart}` : "";
+          hudEff.innerText = `${eff}${basePart}`;
+        }
       },
 
       toggleVerified() {
