@@ -1407,12 +1407,12 @@ const AIRPORT_LEXICON_30 = [
     name: "AIRPLANE / FLIGHT",
     category: "Flight Status (14 CFR § 382.57)",
     signType: "OneHanded",
-    desc: "Departure & flight announcement. Iconic ILY wing shape glides forward in high space.",
+    desc: "14 CFR § 382.57 core announcement sign. Hand in ILY shape beside upper head/temple, executing double forward-upward wing flutter.",
     recipe: {
       handshape: "ily",
-      location: "neutral_high",
+      location: "temple",
       orientation: "PALM_PRONE",
-      movement: "LINEAR_FORWARD",
+      movement: "TAP_2X",
       bilateral: "UNILATERAL",
       contactEffector: "NONE"
     }
@@ -1938,23 +1938,23 @@ const AIRPORT_LEXICON_30 = [
       locations: {
         "crown": { name: "Crown (Top of Head)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.0, 24.0, 3.5), desc: "Apex of the head, clear of cranium" },
         "forehead": { name: "Forehead (Frontal Bone)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.2, 19.8, 6.5), desc: "Upper cranial locus, in front of forehead (e.g. Father)" },
-        "temple": { name: "Temple (Parietal-Temporal)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * -4.8, 18.5, 4.5), desc: "Lateral upper head locus (e.g. Hello, Salute)" },
+        "temple": { name: "Temple (Parietal-Temporal)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * -8.5, 20.5, 9.0), desc: "Lateral cranial locus beside head (e.g. Airplane, Hello)" },
         "eyes": { name: "Eyes (Periorbital)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.8, 18.0, 6.8), desc: "Eye level forward signing locus (e.g. See)" },
         "nose": { name: "Nose (Nasion)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 16.5, 7.2), desc: "Mid-facial locus, forward of nasal bridge" },
-        "cheek": { name: "Cheek (Zygomatic Arch)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 4.2, 16.2, 6.0), desc: "Lateral cheek locus, clear of cheekbone (e.g. Tomorrow, Deaf)" },
-        "ear": { name: "Ear (Auricle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 5.5, 18.0, 2.0), desc: "Lateral auricle locus, clear of ear" },
+        "cheek": { name: "Cheek (Zygomatic Arch)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * -4.2, 16.2, 6.0), desc: "Lateral cheek locus, clear of cheekbone (e.g. Tomorrow, Deaf)" },
+        "ear": { name: "Ear (Auricle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * -5.5, 18.0, 2.0), desc: "Lateral auricle locus, clear of ear" },
         "mouth": { name: "Mouth (Lips / Labial)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 15.2, 6.8), desc: "Oral locus, in front of lips (e.g. Eat)" },
         "chin": { name: "Chin (Mandible / Mental)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 14.2, 6.2), desc: "Base of jaw / chin locus (e.g. Water, Mother, Thank You)" },
-        "jaw": { name: "Jaw (Mandibular Angle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 3.8, 13.5, 5.2), desc: "Lateral lower mandibular angle locus" },
+        "jaw": { name: "Jaw (Mandibular Angle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * -3.8, 13.5, 5.2), desc: "Lateral lower mandibular angle locus" },
         "throat": { name: "Throat (Larynx / Trachea)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 11.5, 5.5), desc: "Anterior laryngeal locus, forward of neck" },
-        "clavicle": { name: "Clavicle (Collarbone)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 5.2, 9.8, 6.5), desc: "Subclavicular locus, forward of collarbone" },
+        "clavicle": { name: "Clavicle (Collarbone)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * -5.2, 9.8, 6.5), desc: "Subclavicular locus, forward of collarbone" },
         "sternum": { name: "Sternum (Chest Center)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.2, 5.0, 7.8), desc: "Chest center locus, in front of sternum (e.g. Me)" },
         "heart": { name: "Heart (Left Upper Chest)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * -3.8, 6.0, 7.6), desc: "Precordial chest locus, in front of pectoralis" },
         "stomach": { name: "Stomach (Mid Abdomen)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, -2.5, 7.2), desc: "Epigastric abdominal locus, in front of torso" },
-        "shoulder": { name: "Shoulder (Acromion)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 17.0, 10.0, 4.0), desc: "Acromial shoulder locus, lateral to glenoid" },
-        "passive_forearm": { name: "Passive Forearm Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(2.0, 6.0, 15.5) : new THREE.Vector3(2.0, 8.5, 15.5), desc: "Horizontal non-dominant forearm shelf in open conversational space (e.g. Night)" },
-        "passive_wrist": { name: "Passive Wrist Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(2.0, 6.0, 16.0) : new THREE.Vector3(2.0, 8.5, 16.0), desc: "Non-dominant dorsal wrist joint shelf in open conversational space (e.g. Work, Time)" },
-        "passive_palm": { name: "Passive Palm Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(2.0, 6.0, 16.0) : new THREE.Vector3(2.0, 8.5, 16.0), desc: "Flat upward/forward non-dominant palm shelf in open conversational space (e.g. Read, Paper)" },
+        "shoulder": { name: "Shoulder (Acromion)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * -15.5, 10.0, 4.0), desc: "Acromial shoulder locus, lateral to glenoid" },
+        "passive_forearm": { name: "Passive Forearm Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(2.0, 6.0, 15.5) : new THREE.Vector3(-2.0, 8.5, 15.5), desc: "Horizontal non-dominant forearm shelf in open conversational space (e.g. Night)" },
+        "passive_wrist": { name: "Passive Wrist Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(2.0, 6.0, 16.0) : new THREE.Vector3(-2.0, 8.5, 16.0), desc: "Non-dominant dorsal wrist joint shelf in open conversational space (e.g. Work, Time)" },
+        "passive_palm": { name: "Passive Palm Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(2.0, 6.0, 16.0) : new THREE.Vector3(-2.0, 8.5, 16.0), desc: "Flat upward/forward non-dominant palm shelf in open conversational space (e.g. Read, Paper)" },
         "neutral_high": { name: "Neutral Space (High)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * -15.0, 19.5, 22.5), desc: "High open conversational space (expanded arm reach)" },
         "neutral_mid": { name: "Neutral Space (Mid / Chest)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * -15.0, 8.0, 24.0), desc: "Wide open chest-level conversational space (expanded arm reach)" },
         "neutral_low": { name: "Neutral Space (Low / Waist)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * -15.0, -2.5, 23.0), desc: "Low open waist-level conversational space (expanded arm reach)" },
@@ -2309,8 +2309,8 @@ const AIRPORT_LEXICON_30 = [
       setSign(recipe, locusR, locusL, endLocusR, endLocusL) {
         this.currentRecipe = recipe;
         this.canonicalLoci = {
-          locusR: locusR ? locusR.clone() : new THREE.Vector3(1.5, 7.5, 11.5),
-          locusL: locusL ? locusL.clone() : new THREE.Vector3(-8.0, 4.0, 2.0),
+          locusR: locusR ? locusR.clone() : new THREE.Vector3(-8.5, 8.5, 16.0),
+          locusL: locusL ? locusL.clone() : new THREE.Vector3(8.5, 6.0, 14.0),
           endLocusR: endLocusR ? endLocusR.clone() : null,
           endLocusL: endLocusL ? endLocusL.clone() : null
         };
@@ -2360,9 +2360,23 @@ const AIRPORT_LEXICON_30 = [
           };
         }
 
+        // SPECIAL SIGN: AIRPLANE (Beside/above head, double forward-upward wing flutter)
+        if (lem === "airplane" || lem.includes("airplane")) {
+          const ft = (recipe && recipe.fineTune) ? recipe.fineTune : {};
+          const pBase = basePosR ? basePosR.clone() : new THREE.Vector3(-8.8 + (ft.ox || 0), 20.5 + (ft.oy || 0), 9.0 + (ft.oz || 0));
+          const pFlutter = pBase.clone().add(new THREE.Vector3(0.0, 1.4, 3.2));
+          return {
+            pContact: pBase,
+            pPrep: pFlutter,
+            nApproach: new THREE.Vector3(0.0, 0.4, 0.9).normalize(),
+            dApproach: 3.5,
+            distanceCm: 3.5
+          };
+        }
+
         // 1. Dual-Locus Trajectory: Explicit endLocation specified
         if (endLoc && PARAMETRIC_LEXICONS.locations[endLoc]) {
-          const pPrep = basePosR ? basePosR.clone() : new THREE.Vector3(1.5, 9.8, 6.0);
+          const pPrep = basePosR ? basePosR.clone() : new THREE.Vector3(-8.5, 9.8, 14.0);
           let pContact = endPosR ? endPosR.clone() : null;
           if (!pContact) {
             const endLocDef = PARAMETRIC_LEXICONS.locations[endLoc];
@@ -2389,7 +2403,7 @@ const AIRPORT_LEXICON_30 = [
         }
 
         // 2. Single-Locus Procedural Trajectories (when endLocation is 'none' or not set)
-        const pLocus = basePosR ? basePosR.clone() : new THREE.Vector3(1.5, 7.5, 11.5);
+        const pLocus = basePosR ? basePosR.clone() : new THREE.Vector3(-8.5, 8.5, 16.0);
         let pPrep = pLocus.clone();
         let pContact = pLocus.clone();
         let nApproach = new THREE.Vector3(0, 0.2, 1.0).normalize();
@@ -2579,6 +2593,22 @@ const AIRPORT_LEXICON_30 = [
           handR.targetWristQuat.setFromEuler(new THREE.Euler(1.35, Math.PI - easeInOut * 0.45, 0.0));
           handL.targetWristQuat.setFromEuler(new THREE.Euler(1.35, -Math.PI + easeInOut * 0.45, 0.0));
           currentPhase = easeInOut;
+        } else if (lem === "airplane" || lem.includes("airplane")) {
+          // Authentic ASL AIRPLANE: double forward-upward wing flutter beside/above head
+          const pBase = wp.pContact;
+          const pDisp = new THREE.Vector3(0.0, 1.2, 2.6);
+          let pulseFactor = 0;
+          if (u < 0.45) {
+            pulseFactor = Math.sin((u / 0.45) * Math.PI);
+          } else if (u < 0.90) {
+            pulseFactor = Math.sin(((u - 0.45) / 0.45) * Math.PI);
+          } else {
+            pulseFactor = 0;
+          }
+          targetR.copy(pBase).addScaledVector(pDisp, pulseFactor);
+          const qWings = new THREE.Quaternion().setFromEuler(new THREE.Euler(1.35, 0.0, -0.15 + pulseFactor * 0.08));
+          handR.targetWristQuat.copy(qWings);
+          currentPhase = u;
         } else if (mov === "TAP_2X") {
           // One-shot double-tap: Approach -> Tap 1 -> Rebound -> Tap 2 -> Hold
           const pRebound = wp.pContact.clone().addScaledVector(wp.nApproach, 3.0);
@@ -2872,7 +2902,7 @@ const AIRPORT_LEXICON_30 = [
         locusR.y += (ft.oy || 0);
         locusR.z += (ft.oz || 0);
 
-        let locusL = new THREE.Vector3(-8.0, 4.0, 2.0); // Default relaxed
+        let locusL = new THREE.Vector3(8.5, 4.0, 12.0); // Default relaxed on left side
 
         // Resolve end location locus if specified
         let endLocusR = null;
@@ -3247,7 +3277,7 @@ const AIRPORT_LEXICON_30 = [
       resolve(entry, currentLocus) {
         const rec = UniversalSignCompiler.compileRecipeFromASLLEX(entry);
         const movDef = PARAMETRIC_LEXICONS.movements[rec.movement];
-        const base = currentLocus ? currentLocus.clone() : new THREE.Vector3(1.5, 7.5, 11.5);
+        const base = currentLocus ? currentLocus.clone() : new THREE.Vector3(-8.5, 8.5, 16.0);
         let dir = [0.0, 0.0, 1.0];
         let disp = 12.0;
         let act = "Glenohumeral + Elbow Extension";
@@ -3691,6 +3721,7 @@ const AIRPORT_LEXICON_30 = [
 
         // Effective wrist reach anchor (guarantees exact triangle lengths)
         const Weff = new THREE.Vector3().addVectors(S, n.clone().multiplyScalar(dClamped));
+        this.Weff = Weff;
 
         // 2. Exact Triangle Geometry: Altitude (h) and Midpoint Distance (dMid)
         // dMid^2 + h^2 = L1^2  and  (dClamped - dMid)^2 + h^2 = L2^2 identically
@@ -5121,7 +5152,7 @@ const AIRPORT_LEXICON_30 = [
       const isPassiveBaseDiff = stype === "AsymmetricalDifferentHandshape";
 
       const locusR = ASLLEXCompiler.resolveSpatialLocus(entry, false);
-      let locusL = new THREE.Vector3(-8.0, 4.0, 2.0); // Default relaxed rest for non-dom hand
+      let locusL = new THREE.Vector3(8.5, 4.0, 12.0); // Default relaxed rest for non-dom hand
 
       if (isSymmetric) {
         locusL = ASLLEXCompiler.resolveSpatialLocus(entry, true);
@@ -5969,6 +6000,14 @@ const AIRPORT_LEXICON_30 = [
       armR.update(handR.root.position, handR.root.visible, handR.root.quaternion);
       armL.update(handL.root.position, handL.root.visible, handL.root.quaternion);
 
+      // Zero-Detachment Invariant: Lock hand roots strictly to forearm Weff reach anchors
+      if (handR.root.visible && !window.isAblationActive && armR.Weff) {
+        handR.root.position.copy(armR.Weff);
+      }
+      if (handL.root.visible && !window.isAblationActive && armL.Weff) {
+        handL.root.position.copy(armL.Weff);
+      }
+
       updateHudMetrics();
 
       gizmoCamera.position.copy(camera.position).normalize().multiplyScalar(5); 
@@ -6446,9 +6485,10 @@ const AIRPORT_LEXICON_30 = [
 
         handR.root.visible = true;
         handL.root.visible = false;
-        handR.targetRootPos.set(1.5, 8.0, 4.0);
+        handR.targetRootPos.set(-8.5, 9.5, 14.0);
         handR.root.position.copy(handR.targetRootPos);
         armR.update(handR.root.position, true);
+        if (armR.Weff) handR.root.position.copy(armR.Weff);
         handR.executePose(hsDef.tokens, hsDef.name, true);
 
         const deck = document.getElementById('param-controls-deck');
@@ -6626,9 +6666,10 @@ const AIRPORT_LEXICON_30 = [
         const euler = oriDef.euler(false);
         handR.root.visible = true;
         handL.root.visible = false;
-        handR.targetRootPos.set(1.5, 8.0, 4.0);
+        handR.targetRootPos.set(-8.5, 9.5, 14.0);
         handR.root.position.copy(handR.targetRootPos);
         armR.update(handR.root.position, true);
+        if (armR.Weff) handR.root.position.copy(armR.Weff);
         handR.targetWristQuat.setFromEuler(new THREE.Euler(...euler));
         handR.root.quaternion.copy(handR.targetWristQuat);
         isPlayingSignMotion = false;
@@ -6740,9 +6781,10 @@ const AIRPORT_LEXICON_30 = [
       executeAlphabetItem(item) {
         handR.root.visible = true;
         handL.root.visible = false;
-        handR.targetRootPos.set(1.5, 8.0, 4.0);
+        handR.targetRootPos.set(-8.5, 9.5, 14.0);
         handR.root.position.copy(handR.targetRootPos);
         armR.update(handR.root.position, true);
+        if (armR.Weff) handR.root.position.copy(armR.Weff);
         executeProceduralPose(ASL_ALPHABET[item.id], item.id, true);
 
         const deck = document.getElementById('param-controls-deck');
