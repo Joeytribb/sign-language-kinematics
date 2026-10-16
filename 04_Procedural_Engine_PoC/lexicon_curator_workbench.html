@@ -2771,6 +2771,22 @@
           };
         }
 
+        // SPECIAL SIGN: BAD / SEVERE (Anchored on chin, rotates wrist outward/downward, NO forward translation)
+        if (lem === "bad") {
+          const qStart = new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.25, 2.85, -0.15));
+          const effOffset = new THREE.Vector3(0, 11.5, 0.2).applyQuaternion(qStart);
+          const chinLocus = PARAMETRIC_LEXICONS.locations["chin"].coords(false, 1.0);
+          const pContact = chinLocus.clone().sub(effOffset);
+          return {
+            pContact: pContact,
+            pPrep: pContact.clone(),
+            nApproach: new THREE.Vector3(0, 0, 0),
+            dApproach: 0.0,
+            distanceCm: 0.0,
+            isMultiLocus: false
+          };
+        }
+
         // 1. Dual-Locus Trajectory: Explicit endLocation specified
         if (endLoc && PARAMETRIC_LEXICONS.locations[endLoc]) {
           const pPrep = basePosR ? basePosR.clone() : new THREE.Vector3(1.5, 14.0, 6.0);
@@ -2959,6 +2975,14 @@
           handR.targetWristQuat.slerpQuaternions(qStart, qEnd, easeInOut);
           currentPhase = easeInOut;
           if (u >= 0.90) isContactInstant = true;
+        } else if (lem === "bad") {
+          // ASL "BAD" / "SEVERE": Anchored on chin, wrist pronates downward-outward
+          targetR.copy(wp.pContact);
+          const qStart = new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.25, 2.85, -0.15));
+          const qEnd = new THREE.Quaternion().setFromEuler(new THREE.Euler(1.40, 0.35, -0.20));
+          handR.targetWristQuat.slerpQuaternions(qStart, qEnd, easeInOut);
+          currentPhase = easeInOut;
+          if (u >= 0.85) isContactInstant = true;
         } else if (lem === "car" && !endLoc) {
           // Steering wheel single cycle
           const steer = Math.sin(u * Math.PI * 2.0);
@@ -3075,6 +3099,12 @@
           targetL.set(-targetR.x, targetR.y, targetR.z);
         } else if (recipe.bilateral === "BILATERAL_RECIPROCAL" && handL.root.visible && lem !== "car") {
           targetL.set(-targetR.x, wp.pContact.y - (targetR.y - wp.pContact.y), targetR.z);
+        }
+
+        if (!wp.isMultiLocus && recipe.endOrientation && recipe.endOrientation !== "none" && PARAMETRIC_LEXICONS.orientations[recipe.endOrientation] && lem !== "bad") {
+          const oriEndDef = PARAMETRIC_LEXICONS.orientations[recipe.endOrientation];
+          const qEnd = new THREE.Quaternion().setFromEuler(new THREE.Euler(...oriEndDef.euler(false)));
+          handR.targetWristQuat.slerpQuaternions(handR.targetWristQuat, qEnd, easeInOut);
         }
 
         this.currentStrokePhase = currentPhase;
@@ -3852,15 +3882,6 @@
       depthWrite: false
     });
 
-    // --- SIMPLE CHARACTER SILHOUETTE (Establishes Signer vs User Perspective) ---
-    const silhouetteMat = new THREE.MeshStandardMaterial({
-      color: 0x94a3b8, // Clean slate
-      roughness: 0.50,
-      metalness: 0.05,
-      transparent: true,
-      opacity: 0.14,
-      depthWrite: false
-    });
 
     // Professional Anatomical Digital Twin Armature Material (Dark Slate / Titanium Stealth)
     const silhouetteMat = new THREE.MeshStandardMaterial({
