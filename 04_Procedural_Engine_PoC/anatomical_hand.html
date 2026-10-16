@@ -6385,13 +6385,42 @@
 
       loadState() {
         try {
-          const raw = localStorage.getItem('ASL_LEXICON_CURATOR_WORKBENCH_V1');
-          if (raw) {
-            const data = JSON.parse(raw);
-            this.verifiedMap = data.verified || {};
-            this.overrides = data.overrides || {};
-            this.applyAllOverrides();
+          const keys = [
+            'ASL_LEXICON_CURATOR_WORKBENCH_V1',
+            'ASL_LEXICON_STUDIO_STATE',
+            'ASL_LEXICON_CURATOR_OVERRIDES',
+            'ASL_LEXICON_STATE',
+            'ASL_STUDIO_STATE',
+            'asl_curator_overrides'
+          ];
+          for (const k of keys) {
+            const raw = localStorage.getItem(k);
+            if (raw) {
+              try {
+                const data = JSON.parse(raw);
+                if (data.verified) this.verifiedMap = Object.assign(this.verifiedMap, data.verified);
+                if (data.overrides) {
+                  if (data.overrides.signs) {
+                    if (!this.overrides.signs) this.overrides.signs = {};
+                    Object.assign(this.overrides.signs, data.overrides.signs);
+                  }
+                  if (data.overrides.locations) {
+                    if (!this.overrides.locations) this.overrides.locations = {};
+                    Object.assign(this.overrides.locations, data.overrides.locations);
+                  }
+                  if (data.overrides.orientations) {
+                    if (!this.overrides.orientations) this.overrides.orientations = {};
+                    Object.assign(this.overrides.orientations, data.overrides.orientations);
+                  }
+                  if (data.overrides.handshapes) {
+                    if (!this.overrides.handshapes) this.overrides.handshapes = {};
+                    Object.assign(this.overrides.handshapes, data.overrides.handshapes);
+                  }
+                }
+              } catch(err) {}
+            }
           }
+          this.applyAllOverrides();
         } catch(e) {
           console.warn("Workbench state load error:", e);
         }
@@ -6399,11 +6428,13 @@
 
       saveState() {
         try {
-          localStorage.setItem('ASL_LEXICON_CURATOR_WORKBENCH_V1', JSON.stringify({
+          const payload = JSON.stringify({
             verified: this.verifiedMap,
             overrides: this.overrides,
             timestamp: new Date().toISOString()
-          }));
+          });
+          localStorage.setItem('ASL_LEXICON_CURATOR_WORKBENCH_V1', payload);
+          localStorage.setItem('ASL_LEXICON_STUDIO_STATE', payload);
         } catch(e) {}
       },
 
@@ -6632,8 +6663,9 @@
           fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
         };
 
-        if (this.overrides.signs && this.overrides.signs[item.id]) {
-          const ov = this.overrides.signs[item.id];
+        const signKey = (item.id || (item.data && item.data.lemma) || "").toLowerCase();
+        const ov = this.overrides.signs && (this.overrides.signs[item.id] || this.overrides.signs[signKey] || this.overrides.signs[item.name.toLowerCase()]);
+        if (ov) {
           if (ov.handshape) cleanRecipe.handshape = ov.handshape;
           if (ov.location) cleanRecipe.location = ov.location;
           if (ov.orientation) cleanRecipe.orientation = ov.orientation;
