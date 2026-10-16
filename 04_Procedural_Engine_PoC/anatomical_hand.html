@@ -3701,6 +3701,7 @@ const AIRPORT_LEXICON_30 = [
         const W = wristPos;
         const L1 = this.L1, L2 = this.L2;
         const sign = this.isLeft ? -1 : 1;
+        const latSign = this.isLeft ? 1.0 : -1.0;
 
         // 1. Strict Euclidean Reach Clamping
         // Guarantees that target W is strictly reachable and the triangle is non-degenerate
@@ -3729,42 +3730,72 @@ const AIRPORT_LEXICON_30 = [
         const h = Math.sqrt(Math.max(0, L1*L1 - dMid*dMid));
         const C = new THREE.Vector3().addVectors(S, n.clone().multiplyScalar(dMid));
 
-        // 3. Orthonormal Swivel Circle Basis (u, v) in Plane Perpendicular to n
-        let rx = sign * 0.85, ry = -0.45, rz = 0.20;
-        if (W.z > 5.0) rz = Math.max(rz, (W.z - 5.0) * 0.04);
-        const rlen = Math.sqrt(rx*rx + ry*ry + rz*rz);
-        const refDir = new THREE.Vector3(rx / rlen, ry / rlen, rz / rlen);
-
-        const dot = refDir.dot(n);
-        let u = new THREE.Vector3().subVectors(refDir, n.clone().multiplyScalar(dot));
+        // 3. Orthonormal Swivel Circle Basis (u, v) in Plane Perpendicular to n:
+        // u is the pure lateral vector in the circle plane (pointing outward from body)
+        const latTarget = new THREE.Vector3(latSign, 0, 0);
+        let u = new THREE.Vector3().subVectors(latTarget, n.clone().multiplyScalar(latTarget.dot(n)));
         if (u.lengthSq() < 1e-4) {
-          u.set(sign, 0, 0);
-          const dot2 = u.dot(n);
-          u.sub(n.clone().multiplyScalar(dot2));
+          const downTarget = new THREE.Vector3(0, -1, 0);
+          u = new THREE.Vector3().subVectors(downTarget, n.clone().multiplyScalar(downTarget.dot(n)));
         }
         u.normalize();
 
-        // v = n x u (completes right-handed orthonormal basis on circle plane)
-        const v = new THREE.Vector3().crossVectors(n, u).normalize();
+        // v is the inferior / downward vector in the circle plane
+        let v = new THREE.Vector3().crossVectors(n, u).normalize();
+        if (v.y > 0) v.negate(); // Ensure v points downwards
 
-        // 4. Optimal Swivel Angle (psi) on Circle:
-        // Evaluates 17 discrete candidates on [-PI/2, PI/2] to keep elbow in front of coronal plane
-        // and clear of ribcage, WITHOUT ever modifying Cartesian coordinates or breaking bone lengths!
+        // 4. Anatomical Swivel Angle (psi) Optimization:
+        // Strictly prevents inward elbow bends, ribcage penetrations, and unnatural chicken-wing flare
         let bestPsi = 0;
-        let bestScore = -9999;
-        for (let step = -8; step <= 8; step++) {
+        let bestScore = -999999;
+        for (let step = -16; step <= 16; step++) {
           const psi = step * (Math.PI / 16);
           const cosP = Math.cos(psi), sinP = Math.sin(psi);
-          const tEx = C.x + h * (cosP * u.x + sinP * v.x);
-          const tEy = C.y + h * (cosP * u.y + sinP * v.y);
-          const tEz = C.z + h * (cosP * u.z + sinP * v.z);
+          const tE = new THREE.Vector3(
+            C.x + h * (cosP * u.x + sinP * v.x),
+            C.y + h * (cosP * u.y + sinP * v.y),
+            C.z + h * (cosP * u.z + sinP * v.z)
+          );
 
-          let score = -Math.abs(psi) * 2.0; // Bias toward natural resting carrying angle
-          if (tEz < -0.5) score -= (-0.5 - tEz) * 30.0; // Strong penalty for poking behind back
-          const minLateral = sign * 4.0;
-          if (this.isLeft ? tEx > minLateral : tEx < minLateral) {
-            score -= (Math.abs(minLateral - tEx)) * 20.0; // Penalty for penetrating ribs
+          let score = 0;
+
+          // Hard Anatomical Constraint 1: Ribcage Clearance & Zero Inward Elbow Bending
+          // Elbow must remain strictly lateral to the ribcage margin
+          const latDist = latSign * tE.x;
+          if (latDist < 9.0) {
+            score -= (9.0 - latDist) * 80.0 + 500.0; // STRICTLY FORBID INWARD ELBOW BENDS
+          } else {
+            score += Math.min(latDist, 18.0) * 2.0; // Reward natural lateral clearance
           }
+
+          // Hard Anatomical Constraint 2: Posterior Coronal Back Clearance
+          if (tE.z < -1.5) {
+            score -= (-1.5 - tE.z) * 50.0;
+          }
+
+          // Hard Anatomical Constraint 3: Humeroulnar Hinge Flexion Direction
+          const upperVec = new THREE.Vector3().subVectors(tE, S).normalize();
+          const foreVec = new THREE.Vector3().subVectors(Weff, tE).normalize();
+          const armNormal = new THREE.Vector3().crossVectors(upperVec, foreVec);
+          // In natural human flexion, arm normal Y component prevents hyperextended/inverted hinge
+          if (latSign * armNormal.y < -0.15) {
+            score -= 600.0;
+          }
+
+          // Soft Anatomical Constraint 1: Gravity Hanging Angle
+          // If hand is below shoulder level, elbow hangs below shoulder
+          if (W.y < S.y + 4.0) {
+            if (tE.y > S.y + 1.0) {
+              score -= (tE.y - (S.y + 1.0)) * 30.0; // Strongly penalize chicken-wing flare
+            } else {
+              score += (S.y - tE.y) * 1.5;
+            }
+          }
+
+          // Soft Anatomical Constraint 2: Natural Carrying Angle (sweet spot ~35-50 deg outward & down)
+          const targetPsi = 0.65;
+          score -= Math.abs(psi - targetPsi) * 6.0;
+
           if (score > bestScore) {
             bestScore = score;
             bestPsi = psi;
@@ -3836,10 +3867,10 @@ const AIRPORT_LEXICON_30 = [
         // Proximal Articular Anchors at Elbow Epicondyles:
         let elbowLat = new THREE.Vector3().crossVectors(upperDir, foreDir);
         if (elbowLat.lengthSq() < 1e-4) {
-          elbowLat.set(sign, 0, 0);
+          elbowLat.set(latSign, 0, 0);
         } else {
           elbowLat.normalize();
-          if (elbowLat.dot(new THREE.Vector3(sign, 0, 0)) < 0) elbowLat.negate();
+          if (elbowLat.dot(new THREE.Vector3(latSign, 0, 0)) < 0) elbowLat.negate();
         }
         this.elbowGroup.quaternion.setFromUnitVectors(new THREE.Vector3(1, 0, 0), elbowLat);
 
