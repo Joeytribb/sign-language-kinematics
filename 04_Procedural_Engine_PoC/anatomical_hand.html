@@ -1262,10 +1262,10 @@
     let animSpeed = 1.0;
 
     const FINGER_SPECS = [
-      { id: 'idx', name: 'Index', color: 0x38bdf8, baseR: [-2.4, 5.0, 0], lengths: [4.5, 2.5, 1.5] },
-      { id: 'mid', name: 'Middle', color: 0xa855f7, baseR: [-0.8, 5.1, 0], lengths: [5.0, 3.0, 1.8] },
-      { id: 'rng', name: 'Ring', color: 0x22c55e, baseR: [ 0.8, 5.0, 0], lengths: [4.6, 2.7, 1.6] },
-      { id: 'pnk', name: 'Pinky', color: 0xef4444, baseR: [ 2.4, 4.8, 0], lengths: [3.5, 2.0, 1.2] }
+      { id: 'idx', name: 'Index', color: 0x38bdf8, baseR: [-2.1, 4.9, 0], lengths: [2.25, 1.40, 0.85] },
+      { id: 'mid', name: 'Middle', color: 0xa855f7, baseR: [-0.7, 5.0, 0], lengths: [2.40, 1.55, 0.95] },
+      { id: 'rng', name: 'Ring', color: 0x22c55e, baseR: [ 0.7, 4.9, 0], lengths: [2.20, 1.40, 0.85] },
+      { id: 'pnk', name: 'Pinky', color: 0xef4444, baseR: [ 2.0, 4.6, 0], lengths: [1.70, 1.05, 0.70] }
     ];
     
     const LIM_F = {
@@ -1274,7 +1274,7 @@
       rest: { f: 10*deg2rad, a: 0 }
     };
 
-    const L_T = [3.8, 2.5, 1.5];
+    const L_T = [1.85, 1.30, 0.85];
     const LIM_T_R = {
       cmc_f: [-60*deg2rad, 120*deg2rad], cmc_a: [-80*deg2rad, 60*deg2rad],
       mcp_f: [0*deg2rad, 80*deg2rad], ip_f:  [0*deg2rad, 90*deg2rad],
@@ -2756,7 +2756,7 @@
         // SPECIAL SIGN: THANK YOU (Starts at chin/lips, travels forward-down into neutral space far)
         if (lem === "thankyou" || lem === "thank you" || lem === "thank_you" || (loc === "chin" && mov === "LINEAR_FORWARD" && (recipe.handshape === "open_b" || recipe.handshape === "5") && !endLoc)) {
           const qStart = new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.25, 2.85, -0.15));
-          const effOffset = new THREE.Vector3(-1.6, 14.0, 0.2).applyQuaternion(qStart);
+          const effOffset = new THREE.Vector3(-1.0, 9.8, 0.2).applyQuaternion(qStart);
           const ft = (recipe && recipe.fineTune) ? recipe.fineTune : {};
           const chinLocus = PARAMETRIC_LEXICONS.locations["chin"].coords(false, 1.0);
           const pPrep = basePosR ? basePosR.clone() : chinLocus.clone().sub(effOffset);
@@ -2774,7 +2774,7 @@
         // SPECIAL SIGN: BAD / SEVERE (Anchored on chin, rotates wrist outward/downward, NO forward translation)
         if (lem === "bad") {
           const qStart = new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.25, 2.85, -0.15));
-          const effOffset = new THREE.Vector3(0, 11.5, 0.2).applyQuaternion(qStart);
+          const effOffset = new THREE.Vector3(0, 8.2, 0.2).applyQuaternion(qStart);
           const chinLocus = PARAMETRIC_LEXICONS.locations["chin"].coords(false, 1.0);
           const pContact = chinLocus.clone().sub(effOffset);
           return {
@@ -2789,7 +2789,7 @@
 
         // 1. Dual-Locus Trajectory: Explicit endLocation specified
         if (endLoc && PARAMETRIC_LEXICONS.locations[endLoc]) {
-          const pPrep = basePosR ? basePosR.clone() : new THREE.Vector3(1.5, 14.0, 6.0);
+          const pPrep = basePosR ? basePosR.clone() : new THREE.Vector3(1.5, 9.8, 6.0);
           let pContact = endPosR ? endPosR.clone() : null;
           if (!pContact) {
             const endLocDef = PARAMETRIC_LEXICONS.locations[endLoc];
@@ -3203,21 +3203,21 @@
         const eff = (recipe && recipe.contactEffector ? recipe.contactEffector : "AUTO").toUpperCase();
 
         if (eff === "NONE") return new THREE.Vector3(0, 0, 0);
-        if (eff === "INDEX_TIP") return new THREE.Vector3(sign * -2.4, 13.5, 0.2);
-        if (eff === "THUMB_TIP") return new THREE.Vector3(sign * -4.5, 5.4, 1.0);
-        if (eff === "FINGERTIPS") return new THREE.Vector3(sign * -1.6, 14.0, 0.2);
-        if (eff === "PALM") return new THREE.Vector3(0.0, 4.5, 0.6);
-        if (eff === "FIST_HEEL") return new THREE.Vector3(sign * 1.2, 0.5, 0.4);
+        if (eff === "INDEX_TIP") return new THREE.Vector3(sign * -2.1, 9.4, 0.2);
+        if (eff === "THUMB_TIP") return new THREE.Vector3(sign * -3.8, 4.2, 0.8);
+        if (eff === "FINGERTIPS") return new THREE.Vector3(sign * -1.0, 9.8, 0.2);
+        if (eff === "PALM") return new THREE.Vector3(0.0, 2.8, 0.5);
+        if (eff === "FIST_HEEL") return new THREE.Vector3(sign * 1.0, 0.5, 0.4);
 
         // AUTO Heuristic Resolution:
         // 1. Passive base shelf signs (e.g. Work, Coffee, Night, Read):
         if (loc.includes("passive")) {
           if (hs === "s" || hs === "a") {
-            return new THREE.Vector3(sign * 1.2, 0.5, 0.4); // Fist heel
+            return new THREE.Vector3(sign * 1.0, 0.5, 0.4); // Fist heel
           } else if (hs === "v" || hs === "1" || hs === "2") {
-            return new THREE.Vector3(sign * -2.0, 13.5, 0.2); // Fingertips
+            return new THREE.Vector3(sign * -1.5, 9.4, 0.2); // Fingertips
           }
-          return new THREE.Vector3(0.0, 4.5, 0.6);
+          return new THREE.Vector3(0.0, 2.8, 0.5);
         }
 
         // 2. Cranial & Facial landmarks (Chin, Mouth, Nose, Forehead, Temple, Cheek, Eyes, Crown, Ear, Jaw):
@@ -3226,28 +3226,28 @@
             loc === "ear" || loc === "jaw") {
           // Thumb contact (Mother, Father, Open 5 / 3 at chin/forehead)
           if ((lem.includes("mother") || lem.includes("father") || hs === "5") && (loc === "chin" || loc === "forehead")) {
-            return new THREE.Vector3(sign * -4.5, 5.4, 1.0);
+            return new THREE.Vector3(sign * -3.8, 4.2, 0.8);
           }
           if (hs === "1" || hs === "w" || hs === "candy" || hs === "curved_1" || lem === "water") {
-            return new THREE.Vector3(sign * -2.4, 13.5, 0.2); // Index tip
+            return new THREE.Vector3(sign * -2.1, 9.4, 0.2); // Index tip
           }
           if (hs === "s" || hs === "a") {
-            return new THREE.Vector3(0.0, 5.0, 0.8); // Knuckles / fist
+            return new THREE.Vector3(0.0, 3.5, 0.6); // Knuckles / fist
           }
           // Extended fingertips reach landmark (Thank You, Eat, Hello, etc.)
-          return new THREE.Vector3(sign * -1.6, 14.0, 0.2);
+          return new THREE.Vector3(sign * -1.0, 9.8, 0.2);
         }
 
         // 3. Torso landmarks (Sternum, Clavicle, Stomach, Heart):
         if (loc === "sternum" || loc === "clavicle" || loc === "stomach" || loc === "heart") {
           if (hs === "1" || hs === "curved_1" || lem.includes("me")) {
-            return new THREE.Vector3(sign * -2.4, 13.5, 0.2); // Index fingertip
+            return new THREE.Vector3(sign * -2.1, 9.4, 0.2); // Index fingertip
           }
-          return new THREE.Vector3(0.0, 4.5, 0.6); // Palm center on chest
+          return new THREE.Vector3(0.0, 2.8, 0.5); // Palm center on chest
         }
 
         // 4. Conversational Neutral Space:
-        return new THREE.Vector3(0.0, 4.5, 0.0);
+        return new THREE.Vector3(0.0, 3.0, 0.0);
       },
 
       // Universal Synthesize function: compiles ANY sign from 5 lexicons
@@ -4687,7 +4687,7 @@
         ];
 
         carpalDefs.forEach(c => {
-          const cGeo = new THREE.DodecahedronGeometry(0.40, 1);
+          const cGeo = new THREE.DodecahedronGeometry(0.32, 1);
           const cMesh = new THREE.Mesh(cGeo, carpalMat);
           cMesh.scale.set(c.scale[0], c.scale[1], c.scale[2]);
           cMesh.position.set(c.pos[0], c.pos[1], c.pos[2]);
@@ -4696,7 +4696,7 @@
         });
 
         // Hamate hook (hamulus) protruding anteriorly on the ulnar side
-        const hookGeo = new THREE.ConeGeometry(0.16, 0.40, 8);
+        const hookGeo = new THREE.ConeGeometry(0.14, 0.35, 8);
         const hookMesh = new THREE.Mesh(hookGeo, carpalMat);
         hookMesh.position.set(sign * 0.68, 0.22, 0.46);
         hookMesh.rotation.x = Math.PI * 0.45;
@@ -4706,11 +4706,11 @@
         // --- AUTHENTIC ANATOMICAL METACARPAL RAY ARCHITECTURE (Paul Jarrett Osteology) ---
         // Metacarpals converge tightly at the carpal base and splay outwards to the MCP knuckles
         const mcDefs = [
-          { id: 'idx', name: 'MC II', base: [-1.4, 0.40, 0.10], head: [-2.4, 5.0, 0.00], r: 0.38 },
-          { id: 'mid', name: 'MC III', base: [-0.4, 0.50, 0.15], head: [-0.8, 5.1, 0.05], r: 0.40 },
-          { id: 'rng', name: 'MC IV', base: [0.5, 0.40, 0.08], head: [0.8, 5.0, 0.00], r: 0.36 },
-          { id: 'pnk', name: 'MC V', base: [1.3, 0.20, -0.05], head: [2.4, 4.8, -0.05], r: 0.34 },
-          { id: 'thm', name: 'MC I', base: [-1.6, -0.15, 0.35], head: [-3.0, 1.8, 0.65], r: 0.45 }
+          { id: 'idx', name: 'MC II', base: [-1.2, 0.40, 0.10], head: [-2.1, 4.9, 0.00], r: 0.28 },
+          { id: 'mid', name: 'MC III', base: [-0.3, 0.50, 0.15], head: [-0.7, 5.0, 0.05], r: 0.30 },
+          { id: 'rng', name: 'MC IV', base: [0.4, 0.40, 0.08], head: [0.7, 4.9, 0.00], r: 0.27 },
+          { id: 'pnk', name: 'MC V', base: [1.1, 0.20, -0.05], head: [2.0, 4.6, -0.05], r: 0.25 },
+          { id: 'thm', name: 'MC I', base: [-1.4, -0.15, 0.30], head: [-2.6, 1.8, 0.60], r: 0.32 }
         ];
 
         mcDefs.forEach(mc => {
@@ -4738,16 +4738,16 @@
         });
 
         // Translucent See-Through Palmar Soft Tissue & Thenar Eminence
-        const palmMuscleGeo = new THREE.BoxGeometry(4.8, 4.8, 1.25);
+        const palmMuscleGeo = new THREE.BoxGeometry(4.0, 4.6, 1.1);
         const palmMuscle = new THREE.Mesh(palmMuscleGeo, muscleMat);
         palmMuscle.position.set(0.0, 2.5, 0.1);
         palmMuscle.raycast = () => {};
         palmGroup.add(palmMuscle);
 
-        const thenarGeo = new THREE.SphereGeometry(1.25, 12, 12);
+        const thenarGeo = new THREE.SphereGeometry(1.0, 12, 12);
         thenarGeo.scale(1.1, 1.45, 0.95);
         const thenarMesh = new THREE.Mesh(thenarGeo, muscleMat);
-        thenarMesh.position.set(sign * -2.1, 1.1, 0.45);
+        thenarMesh.position.set(sign * -1.8, 1.1, 0.45);
         thenarMesh.raycast = () => {};
         palmGroup.add(thenarMesh);
 
@@ -4760,7 +4760,7 @@
         });
 
         // Thumb (attaching directly to MC I knuckle head)
-        const thumbBasePos = [sign * -3.0, 1.8, 0.65];
+        const thumbBasePos = [sign * -2.6, 1.8, 0.60];
         this.initFinger('thm', 'Thumb', 0xfb923c, thumbBasePos, L_T, true);
       }
 
@@ -4783,30 +4783,30 @@
         
         // Proximal Phalanx
         const g1 = new THREE.Group(); gBase.add(g1);
-        const p1Mesh = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[0], isThumb ? 0.46 : 0.38, false), innerBoneMat);
+        const p1Mesh = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[0], isThumb ? 0.32 : 0.26, false), innerBoneMat);
         p1Mesh.castShadow = true;
         g1.add(p1Mesh);
-        const p1Muscle = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[0], (isThumb ? 0.46 : 0.38) * 1.35, false), muscleMat);
+        const p1Muscle = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[0], (isThumb ? 0.32 : 0.26) * 1.35, false), muscleMat);
         p1Muscle.raycast = () => {};
         g1.add(p1Muscle);
         const ik1 = new IKNode(L[0]); ikBase.child = ik1; ik1.parent = ikBase;
         
         // Middle Phalanx (or Interphalangeal for thumb)
         const g2 = new THREE.Group(); g2.position.y = L[0]; g1.add(g2);
-        const p2Mesh = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[1], isThumb ? 0.40 : 0.32, false), innerBoneMat);
+        const p2Mesh = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[1], isThumb ? 0.28 : 0.22, false), innerBoneMat);
         p2Mesh.castShadow = true;
         g2.add(p2Mesh);
-        const p2Muscle = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[1], (isThumb ? 0.40 : 0.32) * 1.35, false), muscleMat);
+        const p2Muscle = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[1], (isThumb ? 0.28 : 0.22) * 1.35, false), muscleMat);
         p2Muscle.raycast = () => {};
         g2.add(p2Muscle);
         const ik2 = new IKNode(L[1]); ik1.child = ik2; ik2.parent = ik1;
         
         // Distal Phalanx with Spatulate Apical Tuft
         const g3 = new THREE.Group(); g3.position.y = L[1]; g2.add(g3);
-        const p3Mesh = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[2], isThumb ? 0.34 : 0.28, true), innerBoneMat);
+        const p3Mesh = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[2], isThumb ? 0.24 : 0.18, true), innerBoneMat);
         p3Mesh.castShadow = true;
         g3.add(p3Mesh);
-        const p3Muscle = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[2], (isThumb ? 0.34 : 0.28) * 1.38, true), muscleMat);
+        const p3Muscle = new THREE.Mesh(createAnatomicalPhalanxGeometry(L[2], (isThumb ? 0.24 : 0.18) * 1.38, true), muscleMat);
         p3Muscle.raycast = () => {};
         g3.add(p3Muscle);
         const ik3 = new IKNode(L[2]); ik2.child = ik3; ik3.parent = ik2;
@@ -4831,7 +4831,7 @@
           const masterGroup = new THREE.Group();
           
           // Sleek minimalist gimbal ring
-          const ringGeo = new THREE.RingGeometry(0.35, 0.48, 32);
+          const ringGeo = new THREE.RingGeometry(0.24, 0.34, 32);
           const ringMat = new THREE.MeshBasicMaterial({ 
             color: this.isLeft ? 0xd946ef : 0x0ea5e9, 
             transparent: true, 
@@ -4842,7 +4842,7 @@
           masterGroup.add(ringMesh);
 
           // Subtle core point
-          const coreGeo = new THREE.SphereGeometry(0.20, 16, 16);
+          const coreGeo = new THREE.SphereGeometry(0.14, 16, 16);
           const coreMat = new THREE.MeshStandardMaterial({ 
             color: this.isLeft ? 0xa855f7 : 0x0284c7, 
             roughness: 0.3
@@ -7668,8 +7668,8 @@
           const signWater = LexiconWorkbench.items[0];
           LexiconWorkbench.onSignParamChange('contactEffector', 'INDEX_TIP');
           const effVec = UniversalSignCompiler.computeEffectorOffset(UniversalSignCompiler.activeRecipe, false);
-          if (Math.abs(effVec.x - (-2.4)) > 0.01 || Math.abs(effVec.y - 13.5) > 0.01) {
-            throw new Error(`INDEX_TIP effector offset inaccurate: expected [-2.4, 13.5, 0.2], got [${effVec.x.toFixed(2)}, ${effVec.y.toFixed(2)}, ${effVec.z.toFixed(2)}]`);
+          if (Math.abs(effVec.x - (-2.1)) > 0.01 || Math.abs(effVec.y - 9.4) > 0.01) {
+            throw new Error(`INDEX_TIP effector offset inaccurate: expected [-2.1, 9.4, 0.2], got [${effVec.x.toFixed(2)}, ${effVec.y.toFixed(2)}, ${effVec.z.toFixed(2)}]`);
           }
 
           // REGRESSION TEST 2: State Bleeding across Next / Prev Navigation
