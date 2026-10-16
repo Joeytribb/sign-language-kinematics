@@ -1262,10 +1262,10 @@
     let animSpeed = 1.0;
 
     const FINGER_SPECS = [
-      { id: 'idx', name: 'Index', color: 0x38bdf8, baseR: [-2.1, 4.9, 0], lengths: [2.25, 1.40, 0.85] },
-      { id: 'mid', name: 'Middle', color: 0xa855f7, baseR: [-0.7, 5.0, 0], lengths: [2.40, 1.55, 0.95] },
-      { id: 'rng', name: 'Ring', color: 0x22c55e, baseR: [ 0.7, 4.9, 0], lengths: [2.20, 1.40, 0.85] },
-      { id: 'pnk', name: 'Pinky', color: 0xef4444, baseR: [ 2.0, 4.6, 0], lengths: [1.70, 1.05, 0.70] }
+      { id: 'idx', name: 'Index', color: 0x38bdf8, baseR: [ 2.1, 4.9, 0], lengths: [2.25, 1.40, 0.85] },
+      { id: 'mid', name: 'Middle', color: 0xa855f7, baseR: [ 0.7, 5.0, 0], lengths: [2.40, 1.55, 0.95] },
+      { id: 'rng', name: 'Ring', color: 0x22c55e, baseR: [-0.7, 4.9, 0], lengths: [2.20, 1.40, 0.85] },
+      { id: 'pnk', name: 'Pinky', color: 0xef4444, baseR: [-2.0, 4.6, 0], lengths: [1.70, 1.05, 0.70] }
     ];
     
     const LIM_F = {
@@ -2329,7 +2329,7 @@ const AIRPORT_LEXICON_30 = [
         // SPECIAL SIGN: THANK YOU (Starts at chin/lips, travels forward-down into neutral space far)
         if (lem === "thankyou" || lem === "thank you" || lem === "thank_you" || (loc === "chin" && mov === "LINEAR_FORWARD" && (recipe.handshape === "open_b" || recipe.handshape === "5") && !endLoc)) {
           const qStart = new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.25, 2.85, -0.15));
-          const effOffset = new THREE.Vector3(-1.0, 9.8, 0.2).applyQuaternion(qStart);
+          const effOffset = new THREE.Vector3(0.7, 9.8, 0.2).applyQuaternion(qStart);
           const ft = (recipe && recipe.fineTune) ? recipe.fineTune : {};
           const chinLocus = PARAMETRIC_LEXICONS.locations["chin"].coords(false, 1.0);
           const pPrep = basePosR ? basePosR.clone() : chinLocus.clone().sub(effOffset);
@@ -2776,11 +2776,11 @@ const AIRPORT_LEXICON_30 = [
         const eff = (recipe && recipe.contactEffector ? recipe.contactEffector : "AUTO").toUpperCase();
 
         if (eff === "NONE") return new THREE.Vector3(0, 0, 0);
-        if (eff === "INDEX_TIP") return new THREE.Vector3(sign * -2.1, 9.4, 0.2);
-        if (eff === "THUMB_TIP") return new THREE.Vector3(sign * -3.8, 4.2, 0.8);
-        if (eff === "FINGERTIPS") return new THREE.Vector3(sign * -1.0, 9.8, 0.2);
+        if (eff === "INDEX_TIP") return new THREE.Vector3(sign * 2.1, 9.4, 0.2);
+        if (eff === "THUMB_TIP") return new THREE.Vector3(sign * 3.8, 4.2, 0.8);
+        if (eff === "FINGERTIPS") return new THREE.Vector3(sign * 0.7, 9.8, 0.2);
         if (eff === "PALM") return new THREE.Vector3(0.0, 2.8, 0.5);
-        if (eff === "FIST_HEEL") return new THREE.Vector3(sign * 1.0, 0.5, 0.4);
+        if (eff === "FIST_HEEL") return new THREE.Vector3(sign * -1.0, 0.5, 0.4);
 
         // AUTO Heuristic Resolution:
         // 1. Passive base shelf signs (e.g. Work, Coffee, Night, Read):
@@ -4265,14 +4265,14 @@ const AIRPORT_LEXICON_30 = [
         carpalsGroup.name = "carpalCluster";
 
         const carpalDefs = [
-          { name: "scaphoid", pos: [sign * -0.85, -0.35, 0.12], scale: [0.55, 0.45, 0.48] }, // Articulates with Radius
-          { name: "lunate", pos: [sign * -0.05, -0.30, 0.10], scale: [0.50, 0.48, 0.45] },   // Articulates with Radius
-          { name: "triquetrum", pos: [sign * 0.75, -0.28, 0.05], scale: [0.48, 0.44, 0.46] },// Articulates with Ulna
-          { name: "pisiform", pos: [sign * 0.88, -0.15, 0.45], scale: [0.38, 0.38, 0.40] },  // Anterior palmar tubercle
-          { name: "trapezium", pos: [sign * -1.35, 0.05, 0.25], scale: [0.52, 0.46, 0.48] }, // MC I saddle joint
-          { name: "trapezoid", pos: [sign * -0.70, 0.10, 0.12], scale: [0.46, 0.44, 0.44] }, // MC II base
-          { name: "capitate", pos: [sign * -0.15, 0.20, 0.12], scale: [0.58, 0.60, 0.52] },  // Central keystone, MC III base
-          { name: "hamate", pos: [sign * 0.68, 0.15, 0.10], scale: [0.52, 0.54, 0.48] }      // MC IV & V base
+          { name: "scaphoid", pos: [sign * 0.85, -0.35, 0.12], scale: [0.55, 0.45, 0.48] }, // Articulates with Radius (Radial side / Thumb)
+          { name: "lunate", pos: [sign * 0.05, -0.30, 0.10], scale: [0.50, 0.48, 0.45] },   // Articulates with Radius
+          { name: "triquetrum", pos: [sign * -0.75, -0.28, 0.05], scale: [0.48, 0.44, 0.46] },// Articulates with Ulna (Ulnar side / Pinky)
+          { name: "pisiform", pos: [sign * -0.88, -0.15, 0.45], scale: [0.38, 0.38, 0.40] },  // Anterior palmar tubercle
+          { name: "trapezium", pos: [sign * 1.35, 0.05, 0.25], scale: [0.52, 0.46, 0.48] }, // MC I saddle joint
+          { name: "trapezoid", pos: [sign * 0.70, 0.10, 0.12], scale: [0.46, 0.44, 0.44] }, // MC II base
+          { name: "capitate", pos: [sign * 0.15, 0.20, 0.12], scale: [0.58, 0.60, 0.52] },  // Central keystone, MC III base
+          { name: "hamate", pos: [sign * -0.68, 0.15, 0.10], scale: [0.52, 0.54, 0.48] }      // MC IV & V base
         ];
 
         carpalDefs.forEach(c => {
@@ -4287,7 +4287,7 @@ const AIRPORT_LEXICON_30 = [
         // Hamate hook (hamulus) protruding anteriorly on the ulnar side
         const hookGeo = new THREE.ConeGeometry(0.14, 0.35, 8);
         const hookMesh = new THREE.Mesh(hookGeo, carpalMat);
-        hookMesh.position.set(sign * 0.68, 0.22, 0.46);
+        hookMesh.position.set(sign * -0.68, 0.22, 0.46);
         hookMesh.rotation.x = Math.PI * 0.45;
         carpalsGroup.add(hookMesh);
         palmGroup.add(carpalsGroup);
@@ -4295,11 +4295,11 @@ const AIRPORT_LEXICON_30 = [
         // --- AUTHENTIC ANATOMICAL METACARPAL RAY ARCHITECTURE (Paul Jarrett Osteology) ---
         // Metacarpals converge tightly at the carpal base and splay outwards to the MCP knuckles
         const mcDefs = [
-          { id: 'idx', name: 'MC II', base: [-1.2, 0.40, 0.10], head: [-2.1, 4.9, 0.00], r: 0.28 },
-          { id: 'mid', name: 'MC III', base: [-0.3, 0.50, 0.15], head: [-0.7, 5.0, 0.05], r: 0.30 },
-          { id: 'rng', name: 'MC IV', base: [0.4, 0.40, 0.08], head: [0.7, 4.9, 0.00], r: 0.27 },
-          { id: 'pnk', name: 'MC V', base: [1.1, 0.20, -0.05], head: [2.0, 4.6, -0.05], r: 0.25 },
-          { id: 'thm', name: 'MC I', base: [-1.4, -0.15, 0.30], head: [-2.6, 1.8, 0.60], r: 0.32 }
+          { id: 'idx', name: 'MC II', base: [ 1.2, 0.40, 0.10], head: [ 2.1, 4.9, 0.00], r: 0.28 },
+          { id: 'mid', name: 'MC III', base: [ 0.3, 0.50, 0.15], head: [ 0.7, 5.0, 0.05], r: 0.30 },
+          { id: 'rng', name: 'MC IV', base: [-0.4, 0.40, 0.08], head: [-0.7, 4.9, 0.00], r: 0.27 },
+          { id: 'pnk', name: 'MC V', base: [-1.1, 0.20, -0.05], head: [-2.0, 4.6, -0.05], r: 0.25 },
+          { id: 'thm', name: 'MC I', base: [ 1.4, -0.15, 0.30], head: [ 2.6, 1.8, 0.60], r: 0.32 }
         ];
 
         mcDefs.forEach(mc => {
@@ -4336,7 +4336,7 @@ const AIRPORT_LEXICON_30 = [
         const thenarGeo = new THREE.SphereGeometry(1.0, 12, 12);
         thenarGeo.scale(1.1, 1.45, 0.95);
         const thenarMesh = new THREE.Mesh(thenarGeo, muscleMat);
-        thenarMesh.position.set(sign * -1.8, 1.1, 0.45);
+        thenarMesh.position.set(sign * 1.8, 1.1, 0.45);
         thenarMesh.raycast = () => {};
         palmGroup.add(thenarMesh);
 
@@ -4349,7 +4349,7 @@ const AIRPORT_LEXICON_30 = [
         });
 
         // Thumb (attaching directly to MC I knuckle head)
-        const thumbBasePos = [sign * -2.6, 1.8, 0.60];
+        const thumbBasePos = [sign * 2.6, 1.8, 0.60];
         this.initFinger('thm', 'Thumb', 0xfb923c, thumbBasePos, L_T, true);
       }
 
@@ -4362,7 +4362,7 @@ const AIRPORT_LEXICON_30 = [
         const ikBase = new IKNode(0); 
         ikBase.worldPos.fromArray(basePos);
 
-        const thumbEuler = new THREE.Euler(90*deg2rad, sign * 90*deg2rad, 0, 'XYZ');
+        const thumbEuler = new THREE.Euler(90*deg2rad, -sign * 90*deg2rad, 0, 'XYZ');
         if(isThumb) { 
           gBase.rotation.copy(thumbEuler); 
           ikBase.localRot.copy(thumbEuler); 
@@ -7257,8 +7257,8 @@ const AIRPORT_LEXICON_30 = [
           const signWater = LexiconWorkbench.items[0];
           LexiconWorkbench.onSignParamChange('contactEffector', 'INDEX_TIP');
           const effVec = UniversalSignCompiler.computeEffectorOffset(UniversalSignCompiler.activeRecipe, false);
-          if (Math.abs(effVec.x - (-2.1)) > 0.01 || Math.abs(effVec.y - 9.4) > 0.01) {
-            throw new Error(`INDEX_TIP effector offset inaccurate: expected [-2.1, 9.4, 0.2], got [${effVec.x.toFixed(2)}, ${effVec.y.toFixed(2)}, ${effVec.z.toFixed(2)}]`);
+          if (Math.abs(effVec.x - 2.1) > 0.01 || Math.abs(effVec.y - 9.4) > 0.01) {
+            throw new Error(`INDEX_TIP effector offset inaccurate: expected [2.1, 9.4, 0.2], got [${effVec.x.toFixed(2)}, ${effVec.y.toFixed(2)}, ${effVec.z.toFixed(2)}]`);
           }
 
           // REGRESSION TEST 2: State Bleeding across Next / Prev Navigation
