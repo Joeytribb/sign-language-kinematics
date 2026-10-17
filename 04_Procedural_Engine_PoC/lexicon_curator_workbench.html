@@ -1566,8 +1566,8 @@
       CROSSED_IDX_UNDER: { f1: -8, a1: -16, f2: 2, f3: 2, desc: "Index finger straight passing posteriorly (-Z) under middle" },
       CROSSED_MID_OVER: { f1: 8, a1: 24, f2: 4, f3: 2, desc: "Middle finger crossing anteriorly (+Z) over index finger in authentic ASL R" },
       CROSSED_R: { f1: -8, a1: -16, f2: 2, f3: 2, desc: "Index under crossed middle (R)" },
-      CLOSED: { f1: 90, a1: 0, f2: 90, f3: 80, desc: "Full fist closed" },
-      CLOSED_OVER_THUMB: { f1: 85, a1: 0, f2: 75, f3: 50, desc: "Closed over tucked thumb" },
+      CLOSED: { f1: 88, a1: 0, f2: 90, f3: 78, desc: "Full fist closed" },
+      CLOSED_OVER_THUMB: { f1: 80, a1: 0, f2: 88, f3: 72, desc: "Closed over tucked thumb in tight fist" },
       CURVED: { f1: 45, a1: 0, f2: 45, f3: 45, desc: "C-shape curved arc" },
       CURVED_O: { f1: 55, a1: 0, f2: 65, f3: 50, desc: "O-shape circle arc" },
       HALF_BENT: { f1: 85, a1: 0, f2: 10, f3: 0, desc: "L-bend at knuckle (MCP 85°)" },
@@ -1583,9 +1583,9 @@
       THM_FLAT_PALM: { f1: 0, a1: -70, f2: 60, f3: 60, desc: "Flat across lower palm" },
       THM_OUT: { f1: -50, a1: -30, f2: 0, f3: 0, desc: "Extended 90° outward" },
       THM_OUT_SPREAD: { f1: -65, a1: -30, f2: 0, f3: 0, desc: "Wide outward spread" },
-      THM_TUCK_T: { f1: -18, a1: -75, f2: 12, f3: 8, desc: "Tucked inside palm, thumb tip pushed firmly UP and OUT through index-middle cleft" },
-      THM_TUCK_N: { f1: 20, a1: -60, f2: 12, f3: 8, desc: "Tucked inside palm, thumb tip pushed firmly UP and OUT through middle-ring cleft" },
-      THM_TUCK_M: { f1: 50, a1: -50, f2: 12, f3: 8, desc: "Tucked inside palm, thumb tip pushed firmly UP and OUT through ring-pinky cleft" },
+      THM_TUCK_T: { f1: -34, a1: -66, f2: 10, f3: 50, desc: "Thumb tucked under index, tip protruding through index-middle cleft" },
+      THM_TUCK_N: { f1: 8, a1: -60, f2: 20, f3: 20, desc: "Thumb tucked under index & middle, tip protruding through middle-ring cleft" },
+      THM_TUCK_M: { f1: 44, a1: -50, f2: 10, f3: 10, desc: "Thumb tucked under index, middle, ring, tip protruding through ring-pinky cleft" },
       THM_PINCH_INDEX: { f1: -40, a1: -45, f2: 50, f3: 70, desc: "Pinching index fingertip" },
       THM_PINCH_MID: { f1: -25, a1: -45, f2: 50, f3: 70, desc: "Touching middle fingertip" },
       THM_CURVED: { f1: -30, a1: -40, f2: 40, f3: 40, desc: "C-shape opposing curve" },
@@ -6768,67 +6768,11 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
                   const thumb = fA.isThumb ? fA : fB;
                   const finger = fA.isThumb ? fB : fA;
 
-                  // CASE 2A: ANATOMICAL THUMB TUCK & GAP PROTRUSION (M, T, N)
+                  // CASE 2A: ANATOMICAL THUMB TUCK (T, N, M) & FIST WRAPS (S, A, etc.)
                   const isTuckPose = poseTokens.thm === "THM_TUCK_T" || poseTokens.thm === "THM_TUCK_N" || poseTokens.thm === "THM_TUCK_M";
-                  if (isTuckPose) {
-                    let isGapL = false, isGapR = false, isCovering = false;
-                    if (poseTokens.thm === "THM_TUCK_T") {
-                      if (finger.id === 'idx') { isGapL = true; isCovering = true; }
-                      if (finger.id === 'mid') { isGapR = true; }
-                    } else if (poseTokens.thm === "THM_TUCK_N") {
-                      if (finger.id === 'idx' || finger.id === 'mid') isCovering = true;
-                      if (finger.id === 'mid') isGapL = true;
-                      if (finger.id === 'rng') isGapR = true;
-                    } else if (poseTokens.thm === "THM_TUCK_M") {
-                      if (finger.id === 'idx' || finger.id === 'mid' || finger.id === 'rng') isCovering = true;
-                      if (finger.id === 'rng') isGapL = true;
-                      if (finger.id === 'pnk') isGapR = true;
-                    }
-
-                    // 1. Covering fingers: rest on top of thumb shaft in depth (Z)
-                    if (isCovering) {
-                      const thumbShaftZ = thumb.ikNodes[2].worldPos.z;
-                      const fingerMidZ = finger.ikNodes[2].worldPos.z;
-                      if (fingerMidZ < thumbShaftZ + 0.35) {
-                        finger.q.pip_f = Math.max(0.1, finger.q.pip_f - 0.04);
-                        finger.q.dip_f = Math.max(0.1, finger.q.dip_f - 0.04);
-                      }
-                    }
-
-                    // 2. High-force penetration through the inter-finger gap (push thumb tip proud)
-                    if (isGapL || isGapR) {
-                      const thumbTip = thumb.ikNodes[3].getEffectorPos();
-                      const fingerTip = finger.ikNodes[3].getEffectorPos();
-                      const lateralDist = Math.abs(fingerTip.x - thumbTip.x);
-                      const minLateralClearance = 0.92;
-                      
-                      if (lateralDist < minLateralClearance) {
-                        const penetration = minLateralClearance - lateralDist;
-                        const pushForce = penetration * 0.75;
-                        const restoringForce = 0.15;
-                        const netDelta = pushForce * (1.0 - restoringForce);
-
-                        if (isGapL) {
-                          finger.q.mcp_a += sign * (-netDelta);
-                        } else if (isGapR) {
-                          finger.q.mcp_a += sign * (netDelta);
-                        }
-                        finger.q.mcp_a = Math.max(-0.55, Math.min(0.55, finger.q.mcp_a));
-                      }
-                      // Push thumb forward through the cleft so it stands out proudly
-                      thumb.q.pip_f = Math.max(0.18, thumb.q.pip_f);
-                      thumb.q.dip_f = Math.max(0.12, thumb.q.dip_f);
-                    }
-
-                    updateNodes(thumb);
-                    updateNodes(finger);
-                    continue;
-                  }
-
-                  // If thumb is intentionally wrapping over fingers in a fist (e.g. 1, S, A, E, V, bent_v, etc.) or tucking
                   const isWrapPose = poseTokens.thm === "THM_WRAP_FRONT" || poseTokens.thm === "THM_WRAP_OVER" || isTuckPose;
                   if (isWrapPose) {
-                    continue; // Thumb rests on dorsal surface of curled fingers; preserve fist closure
+                    continue; // Preserve authentic anatomical fist closure without uncurling or flaring
                   }
 
                   const thumbTip = thumb.ikNodes[3].getEffectorPos();
