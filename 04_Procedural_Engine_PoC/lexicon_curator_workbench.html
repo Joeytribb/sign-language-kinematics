@@ -53,17 +53,18 @@
       letter-spacing: -0.01em;
     }
 
-    /* HARDWARE DECK 1: TOP INSTRUMENT HEADER */
+    /* HARDWARE DECK 1: STREAMLINED TOP INSTRUMENT HEADER */
     #hardware-header {
-      height: 48px;
+      height: 38px;
       background: #141519;
       border-bottom: 1px solid var(--border-subtle);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 16px;
+      padding: 0 14px;
       z-index: 50;
       position: relative;
+      transition: all 0.2s ease;
     }
 
     .brand-cluster {
@@ -198,16 +199,17 @@
       box-shadow: 0 0 10px var(--accent-orange-glow);
     }
 
-    /* HARDWARE DECK 2: SUB-BAR STEPPER & CONTROLS */
+    /* HARDWARE DECK 2: STREAMLINED SUB-BAR STEPPER & CONTROLS */
     #hardware-subbar {
-      height: 44px;
+      height: 36px;
       background: #17181d;
       border-bottom: 1px solid var(--border-subtle);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 16px;
+      padding: 0 14px;
       z-index: 45;
+      transition: all 0.2s ease;
     }
 
     .stepper-cluster {
@@ -343,12 +345,13 @@
       transition: width 0.3s ease;
     }
 
-    /* WORKSPACE BODY (SPLIT VIEW) */
+    /* WORKSPACE BODY (EXPANDED DYNAMIC SPLIT VIEW) */
     #workspace-container {
       display: flex;
-      height: calc(100vh - 92px);
+      height: calc(100vh - 74px);
       width: 100vw;
       position: relative;
+      overflow: hidden;
     }
 
     /* 3D VIEWPORT CONTAINER */
@@ -560,9 +563,10 @@
       box-shadow: 0 0 6px var(--accent-orange-glow);
     }
 
-    /* RIGHT STAGE: HARDWARE CURATION CONSOLE PANEL */
+    /* RIGHT STAGE: HARDWARE CURATION CONSOLE PANEL (COLLAPSIBLE) */
     #curation-console-pane {
-      width: 450px;
+      width: 380px;
+      min-width: 380px;
       background: #15161a;
       border-left: 1px solid var(--border-subtle);
       display: flex;
@@ -571,6 +575,173 @@
       scrollbar-width: thin;
       scrollbar-color: #2a2c32 #15161a;
       z-index: 30;
+      transition: width 0.22s cubic-bezier(0.4, 0, 0.2, 1), min-width 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #curation-console-pane.collapsed {
+      width: 0 !important;
+      min-width: 0 !important;
+      max-width: 0 !important;
+      padding: 0 !important;
+      border-left: none !important;
+      overflow: hidden !important;
+      pointer-events: none !important;
+    }
+
+    /* DOCKED CONSOLE COLLAPSE / EXPAND TAB */
+    .console-toggle-btn {
+      position: absolute;
+      top: 10px;
+      right: 380px;
+      z-index: 50;
+      background: rgba(20, 21, 26, 0.94);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-tactile);
+      border-right: none;
+      border-radius: 5px 0 0 5px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      padding: 6px 9px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: right 0.22s cubic-bezier(0.4, 0, 0.2, 1), background 0.15s, color 0.15s, border-color 0.15s;
+      box-shadow: -4px 0 12px rgba(0,0,0,0.45);
+    }
+    .console-toggle-btn:hover {
+      color: var(--accent-orange);
+      border-color: var(--accent-orange);
+      background: var(--card-surface);
+    }
+    .console-toggle-btn.collapsed {
+      right: 0px !important;
+      border-right: 1px solid var(--border-tactile);
+      border-radius: 5px 0 0 5px;
+      color: #38bdf8;
+      border-color: rgba(14, 165, 233, 0.5);
+      background: rgba(14, 165, 233, 0.18);
+      box-shadow: -4px 0 15px rgba(14, 165, 233, 0.3);
+    }
+
+    /* TACTILE DUAL HAND SEGMENTED SWITCH */
+    .hand-deck-switch {
+      display: flex;
+      background: var(--card-inset);
+      border: 1px solid var(--border-subtle);
+      border-radius: 5px;
+      padding: 2.5px;
+      gap: 3px;
+      margin-bottom: 10px;
+    }
+    .hand-tab-btn {
+      flex: 1;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      font-weight: 700;
+      padding: 5.5px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .hand-tab-btn:hover {
+      color: var(--bone-white);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .hand-tab-btn.active {
+      background: var(--card-surface);
+      color: var(--bone-white);
+      border-color: var(--border-tactile);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    .hand-tab-btn.active[data-hand="dominant"] {
+      border-color: rgba(14, 165, 233, 0.5);
+      color: #38bdf8;
+    }
+    .hand-tab-btn.active[data-hand="nonDominant"] {
+      border-color: rgba(0, 230, 118, 0.5);
+      color: #00e676;
+    }
+    .hand-badge {
+      font-size: 7.5px;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-weight: 800;
+    }
+    .h1-badge {
+      background: rgba(14, 165, 233, 0.2);
+      color: #38bdf8;
+      border: 1px solid rgba(14, 165, 233, 0.35);
+    }
+    .h2-badge {
+      background: rgba(0, 230, 118, 0.2);
+      color: #00e676;
+      border: 1px solid rgba(0, 230, 118, 0.35);
+    }
+    .h2-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-dim);
+    }
+    .h2-status-dot.active {
+      background: #00e676;
+      box-shadow: 0 0 6px rgba(0, 230, 118, 0.6);
+    }
+    .h2-status-dot.resting {
+      background: #f59e0b;
+    }
+
+    /* FULL VIEWPORT / ZEN MODE */
+    body.zen-mode #hardware-header,
+    body.zen-mode #hardware-subbar {
+      display: none !important;
+    }
+    body.zen-mode #workspace-container {
+      height: 100vh !important;
+    }
+    body.zen-mode #curation-console-pane {
+      display: none !important;
+    }
+    body.zen-mode .console-toggle-btn {
+      display: none !important;
+    }
+    .zen-restore-pill {
+      display: none;
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      z-index: 60;
+      background: rgba(14, 165, 233, 0.25);
+      backdrop-filter: blur(12px);
+      border: 1px solid #0ea5e9;
+      color: #38bdf8;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+      transition: all 0.15s;
+    }
+    .zen-restore-pill:hover {
+      background: rgba(14, 165, 233, 0.45);
+      color: #ffffff;
+    }
+    body.zen-mode .zen-restore-pill {
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
 
     .rack-section {
@@ -1060,6 +1231,8 @@
         <button class="view-cam-btn" data-cam="top" onclick="LexiconWorkbench.setCameraPreset('top')">TOP</button>
         <button class="view-cam-btn" data-cam="reset" onclick="LexiconWorkbench.setCameraPreset('reset')" title="Reset Camera">↺</button>
         <div class="dock-divider"></div>
+        <button class="view-cam-btn" onclick="LexiconWorkbench.toggleZenMode()" title="Full Viewport Mode (F / Z / ESC)">⛶ MAX</button>
+        <div class="dock-divider"></div>
         <span class="dock-label">LIGHT</span>
         <button class="view-cam-btn btn-lighting-preset active" data-preset="sun" onclick="StudioLighting.setPreset('sun')" title="Sunlight">☀️</button>
         <button class="view-cam-btn btn-lighting-preset" data-preset="studio" onclick="StudioLighting.setPreset('studio')" title="Studio Key/Rim">🎬</button>
@@ -1102,6 +1275,17 @@
           <span id="hud-contact-effector" class="hud-val">INDEX_TIP</span>
         </div>
       </div>
+
+      <!-- Floating Zen Mode Restore Pill -->
+      <button id="zen-restore-btn" class="zen-restore-pill" onclick="LexiconWorkbench.toggleZenMode()" title="Restore Workbench Interface">
+        <span>⤢</span> RESTORE UI (ESC)
+      </button>
+
+      <!-- Floating Console Toggle Button -->
+      <button id="btn-toggle-console" class="console-toggle-btn" onclick="LexiconWorkbench.toggleConsole()" title="Toggle Recipe Console (Tab / \)">
+        <span id="console-toggle-arrow">▶</span>
+        <span id="console-toggle-text">RECIPE CONSOLE</span>
+      </button>
 
       <!-- Bottom Transport Controls -->
       <div id="viewport-transport">
@@ -1158,10 +1342,13 @@
       <!-- Rack C: Spatial Fine-Tune Nudge Matrix -->
       <div id="rack-finetune" class="rack-section">
         <div class="rack-title">
-          <span>03 // 3D SPATIAL NUDGE MATRIX</span>
           <div style="display:flex; align-items:center; gap:6px;">
-            <span style="font-size:8.5px; color:var(--text-dim);">&plusmn;12 cm / &plusmn;60&deg;</span>
-            <button class="te-btn-tiny" onclick="LexiconWorkbench.resetCurrentSignNudges()" title="Reset all 6 nudge axes to 0">RESET</button>
+            <span id="rack-finetune-label">03 // 3D SPATIAL NUDGE</span>
+            <span id="rack-finetune-badge" class="hand-badge h1-badge">H1 RIGHT</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span style="font-size:8px; color:var(--text-dim);">&plusmn;12cm / &plusmn;60&deg;</span>
+            <button class="te-btn-tiny" onclick="LexiconWorkbench.resetCurrentSignNudges()" title="Reset current hand nudge axes to 0">RESET</button>
           </div>
         </div>
         <div class="param-grid">
@@ -3224,19 +3411,33 @@ const AIRPORT_LEXICON_30 = [
           handL.executePose(hsTokensL, rec.name || "Custom", immediate);
         } else if (bilMode === "ASYMMETRIC_BASE") {
           // Left hand is base shelf with explicit part-to-part contact alignment
-          const baseLoc = PARAMETRIC_LEXICONS.locations[rec.location] || PARAMETRIC_LEXICONS.locations["passive_wrist"];
-          locusL = baseLoc.coords(true, -1.0);
           handL.setVisible(true);
           handR.setVisible(true);
+
+          const nd = rec.nonDominant || {};
+          const baseLocKey = nd.location || "passive_wrist";
+          const baseLoc = PARAMETRIC_LEXICONS.locations[baseLocKey] || PARAMETRIC_LEXICONS.locations["passive_wrist"];
+          locusL = baseLoc.coords(true, -1.0);
+
+          const ftL = nd.fineTune || { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 };
+          locusL.x += (ftL.ox || 0);
+          locusL.y += (ftL.oy || 0);
+          locusL.z += (ftL.oz || 0);
+
           handL.root.position.copy(locusL);
           handL.targetRootPos.copy(locusL);
 
-          const baseHsKey = (rec.nonDominant && rec.nonDominant.handshape) || rec.baseHandshape || "flat_b";
+          const baseHsKey = nd.handshape || rec.baseHandshape || "flat_b";
           const baseHsDef = PARAMETRIC_LEXICONS.handshapes[baseHsKey] || PARAMETRIC_LEXICONS.handshapes["flat_b"];
           const baseTokens = JSON.parse(JSON.stringify(baseHsDef.tokens));
-          const baseOriKey = (rec.nonDominant && rec.nonDominant.orientation) || "PALM_PRONE";
-          const baseOriDef = PARAMETRIC_LEXICONS.orientations[baseOriKey];
-          baseTokens.wrist = baseOriDef ? baseOriDef.euler(true) : [1.40, 0.0, 0.0];
+          const baseOriKey = nd.orientation || "PALM_PRONE";
+          const baseOriDef = PARAMETRIC_LEXICONS.orientations[baseOriKey] || PARAMETRIC_LEXICONS.orientations["PALM_PRONE"];
+          const wristBaseEuler = baseOriDef.euler(true);
+          baseTokens.wrist = [
+            wristBaseEuler[0] + (ftL.rx || 0) * Math.PI / 180,
+            wristBaseEuler[1] + (ftL.ry || 0) * Math.PI / 180,
+            wristBaseEuler[2] + (ftL.rz || 0) * Math.PI / 180
+          ];
           handL.executePose(baseTokens, "Base", immediate);
 
           const qWristL = new THREE.Quaternion().setFromEuler(new THREE.Euler(...baseTokens.wrist));
@@ -3244,9 +3445,7 @@ const AIRPORT_LEXICON_30 = [
           armL.update(locusL, true, qWristL);
 
           // Part-to-Part Touch Resolution:
-          // Computes exact world coordinate of designated target part on Hand L,
-          // then aligns Hand R's designated contact effector directly onto it!
-          const targetPartKey = (rec.nonDominant && (rec.nonDominant.contactPart || rec.nonDominant.targetPart)) || rec.baseContactPart || rec.targetContactPart || "AUTO";
+          const targetPartKey = nd.contactPart || nd.targetPart || rec.baseContactPart || rec.targetContactPart || "AUTO";
           const basePartOffset = this.computeBaseContactPartOffset(targetPartKey, baseHsKey).applyQuaternion(qWristL);
           const pContactWorld = locusL.clone().add(basePartOffset);
 
@@ -3255,29 +3454,43 @@ const AIRPORT_LEXICON_30 = [
           locusR.x += (ft.ox || 0);
           locusR.y += (ft.oy || 0);
           locusR.z += (ft.oz || 0);
-        } else if (bilMode === "INDEPENDENT_DUAL" || rec.nonDominant) {
-          // Independent Dual-Hand Mode: Non-dominant hand has its own movement sequence and instructions!
+        } else if (bilMode === "INDEPENDENT_DUAL") {
+          // Independent Dual-Hand Mode: Non-dominant hand has its own movement sequence and recipe!
           handL.setVisible(true);
           handR.setVisible(true);
           const nd = rec.nonDominant || {};
-          const ndHsKey = nd.handshape || "flat_b";
+          const ndHsKey = nd.handshape || rec.baseHandshape || "flat_b";
           const ndHsDef = PARAMETRIC_LEXICONS.handshapes[ndHsKey] || PARAMETRIC_LEXICONS.handshapes["flat_b"];
           const ndLocKey = nd.location || nd.startLocation || "passive_palm";
           const ndLocDef = PARAMETRIC_LEXICONS.locations[ndLocKey] || PARAMETRIC_LEXICONS.locations["passive_palm"];
           const ndOriKey = nd.orientation || "PALM_SUPINE";
           const ndOriDef = PARAMETRIC_LEXICONS.orientations[ndOriKey] || PARAMETRIC_LEXICONS.orientations["PALM_ANTERIOR"];
 
-          const qWristL = new THREE.Quaternion().setFromEuler(new THREE.Euler(...ndOriDef.euler(true)));
+          const ftL = nd.fineTune || { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 };
+          const wristEulerL = ndOriDef.euler(true);
+          const finalWristEulerL = [
+            wristEulerL[0] + (ftL.rx || 0) * Math.PI / 180,
+            wristEulerL[1] + (ftL.ry || 0) * Math.PI / 180,
+            wristEulerL[2] + (ftL.rz || 0) * Math.PI / 180
+          ];
+
+          const qWristL = new THREE.Quaternion().setFromEuler(new THREE.Euler(...finalWristEulerL));
           const effOffsetL = this.computeEffectorOffset({ ...nd, location: ndLocKey, handshape: ndHsKey }, true).applyQuaternion(qWristL);
           locusL = ndLocDef.coords(true, -1.0).sub(effOffsetL);
+          locusL.x += (ftL.ox || 0);
+          locusL.y += (ftL.oy || 0);
+          locusL.z += (ftL.oz || 0);
 
           if (nd.endLocation && nd.endLocation !== 'none' && PARAMETRIC_LEXICONS.locations[nd.endLocation]) {
             const endLocDef = PARAMETRIC_LEXICONS.locations[nd.endLocation];
             endLocusL = endLocDef.coords(true, -1.0).sub(effOffsetL);
+            endLocusL.x += (ftL.ox || 0);
+            endLocusL.y += (ftL.oy || 0);
+            endLocusL.z += (ftL.oz || 0);
           }
 
           const hsTokensL = JSON.parse(JSON.stringify(ndHsDef.tokens));
-          hsTokensL.wrist = ndOriDef.euler(true);
+          hsTokensL.wrist = finalWristEulerL;
           rec._tokensStartL = JSON.parse(JSON.stringify(hsTokensL));
 
           if (nd.endHandshape && nd.endHandshape !== 'none' && PARAMETRIC_LEXICONS.handshapes[nd.endHandshape]) {
@@ -3292,7 +3505,7 @@ const AIRPORT_LEXICON_30 = [
           handL.targetWristQuat.copy(qWristL);
           armL.update(locusL, true, qWristL);
         } else {
-          // UNILATERAL
+          // UNILATERAL: Dominant active only, non-dominant rests
           handL.setVisible(false);
           handR.setVisible(true);
         }
@@ -3722,8 +3935,12 @@ const AIRPORT_LEXICON_30 = [
 
     function getViewportDims() {
       const vp = document.getElementById('viewport-pane');
-      const w = (vp && vp.clientWidth > 0) ? vp.clientWidth : Math.max(300, window.innerWidth - 450);
-      const h = (vp && vp.clientHeight > 0) ? vp.clientHeight : Math.max(300, window.innerHeight - 92);
+      const consoleEl = document.getElementById('curation-console-pane');
+      const consoleW = (consoleEl && !consoleEl.classList.contains('collapsed')) ? (consoleEl.offsetWidth || 380) : 0;
+      const w = (vp && vp.clientWidth > 0) ? vp.clientWidth : Math.max(300, window.innerWidth - consoleW);
+      const isZen = document.body.classList.contains('zen-mode');
+      const topOffset = isZen ? 0 : 74;
+      const h = (vp && vp.clientHeight > 0) ? vp.clientHeight : Math.max(300, window.innerHeight - topOffset);
       return { w, h };
     }
     const initDims = getViewportDims();
@@ -7763,11 +7980,187 @@ const AIRPORT_LEXICON_30 = [
         if (bilEl) bilEl.innerText = entry.signType || "OneHanded";
 
         this.renderSignControls();
+        this.syncFineTuneInputs();
         this.updateRecipeCode();
         this.updateHudAndClearance();
       },
 
+      activeHandTab: 'dominant', // 'dominant' | 'nonDominant'
+
+      switchHandTab(tab) {
+        this.activeHandTab = tab;
+        this.renderSignControls();
+        this.syncFineTuneInputs();
+        this.updateRecipeCode();
+      },
+
+      initNonDominantDefault() {
+        if (!this.activeWorkingRecipe) return;
+        const r = this.activeWorkingRecipe;
+        if (!r.nonDominant) {
+          r.nonDominant = {
+            handshape: r.baseHandshape || "flat_b",
+            location: "passive_palm",
+            orientation: "PALM_SUPINE",
+            movement: "STATIC_HOLD",
+            contactPart: r.baseContactPart || "AUTO",
+            endHandshape: "none",
+            endLocation: "none",
+            fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+          };
+        }
+        return r.nonDominant;
+      },
+
+      copyDominantToNonDominant() {
+        if (!this.activeWorkingRecipe) return;
+        const r = this.activeWorkingRecipe;
+        const nd = this.initNonDominantDefault();
+        nd.handshape = r.handshape;
+        nd.orientation = r.orientation;
+        if (r.bilateral === 'UNILATERAL') r.bilateral = 'ASYMMETRIC_BASE';
+        this.onNonDominantParamChange('handshape', nd.handshape);
+        this.showToast("Copied Handshape & Orientation from H1 to H2.");
+      },
+
+      resetNonDominantDefault() {
+        if (!this.activeWorkingRecipe) return;
+        const r = this.activeWorkingRecipe;
+        r.nonDominant = {
+          handshape: "flat_b",
+          location: "passive_palm",
+          orientation: "PALM_SUPINE",
+          movement: "STATIC_HOLD",
+          contactPart: "PALM_CENTER",
+          endHandshape: "none",
+          endLocation: "none",
+          fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+        };
+        r.baseHandshape = "flat_b";
+        r.baseContactPart = "PALM_CENTER";
+        if (r.bilateral === 'UNILATERAL') r.bilateral = 'ASYMMETRIC_BASE';
+        this.onNonDominantParamChange('handshape', 'flat_b');
+        this.showToast("Reset Non-Dominant to standard flat palm shelf.");
+      },
+
+      onNonDominantRoleChange(val) {
+        if (!this.activeWorkingRecipe) return;
+        this.activeWorkingRecipe.bilateral = val;
+        if (val === 'ASYMMETRIC_BASE' || val === 'INDEPENDENT_DUAL') {
+          this.initNonDominantDefault();
+        }
+        this.onSignParamChange('bilateral', val);
+        this.renderSignControls();
+      },
+
+      onNonDominantParamChange(param, val) {
+        if (!this.activeWorkingRecipe) return;
+        const nd = this.initNonDominantDefault();
+        nd[param] = val;
+
+        if (param === 'handshape') this.activeWorkingRecipe.baseHandshape = val;
+        if (param === 'contactPart') this.activeWorkingRecipe.baseContactPart = val;
+
+        if (this.activeWorkingRecipe.bilateral === 'UNILATERAL') {
+          this.activeWorkingRecipe.bilateral = 'ASYMMETRIC_BASE';
+        }
+
+        UniversalSignCompiler.synthesize(this.activeWorkingRecipe, false);
+        strokeClock = 0;
+        isPlayingSignMotion = true;
+        const playBtn = document.getElementById('btn-transport-play');
+        if (playBtn) playBtn.innerText = "⏸ PAUSE";
+
+        if (!this.overrides.signs) this.overrides.signs = {};
+        const currentItem = this.items[this.currentIndex];
+        if (currentItem) {
+          this.overrides.signs[currentItem.id] = { ...this.activeWorkingRecipe };
+          this.saveState();
+        }
+
+        this.renderSignControls();
+        this.updateRecipeCode();
+        this.markPending();
+        this.updateHudAndClearance();
+      },
+
+      syncFineTuneInputs() {
+        const rackLabel = document.getElementById('rack-finetune-label');
+        const rackBadge = document.getElementById('rack-finetune-badge');
+        const r = this.activeWorkingRecipe;
+        if (!r) return;
+
+        const isND = (this.activeHandTab === 'nonDominant');
+        if (rackLabel) {
+          rackLabel.innerText = isND ? "03 // NON-DOMINANT 3D NUDGE" : "03 // DOMINANT 3D NUDGE";
+        }
+        if (rackBadge) {
+          rackBadge.innerText = isND ? "H2 LEFT" : "H1 RIGHT";
+          rackBadge.className = isND ? "hand-badge h2-badge" : "hand-badge h1-badge";
+        }
+
+        const ft = isND 
+          ? ((r.nonDominant && r.nonDominant.fineTune) || { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 })
+          : (r.fineTune || { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 });
+
+        ['ox', 'oy', 'oz', 'rx', 'ry', 'rz'].forEach(p => {
+          const el = document.getElementById('tune-' + p);
+          if (el) el.value = ft[p] || 0;
+          const lbl = document.getElementById('lbl-tune-' + p);
+          if (lbl) lbl.innerText = p.startsWith('r') ? ((ft[p] || 0) + '°') : (((ft[p] || 0).toFixed(1)) + ' cm');
+        });
+      },
+
+      toggleConsole() {
+        const consolePane = document.getElementById('curation-console-pane');
+        const toggleBtn = document.getElementById('btn-toggle-console');
+        const arrow = document.getElementById('console-toggle-arrow');
+        const txt = document.getElementById('console-toggle-text');
+        if (!consolePane) return;
+
+        const isCollapsed = consolePane.classList.toggle('collapsed');
+        if (toggleBtn) toggleBtn.classList.toggle('collapsed', isCollapsed);
+        if (arrow) arrow.innerText = isCollapsed ? '◀' : '▶';
+        if (txt) txt.innerText = isCollapsed ? 'RECIPE CONSOLE' : 'COLLAPSE';
+
+        this.triggerViewportResize();
+        this.showToast(isCollapsed ? "Console collapsed: Viewport expanded" : "Console open");
+      },
+
+      toggleZenMode() {
+        const isZen = document.body.classList.toggle('zen-mode');
+        this.triggerViewportResize();
+        this.showToast(isZen ? "⛶ Full Viewport Mode Active (Press ESC to restore)" : "Restored Normal Workbench");
+      },
+
+      triggerViewportResize() {
+        requestAnimationFrame(() => {
+          const d = getViewportDims();
+          if (camera && renderer) {
+            camera.aspect = d.w / d.h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(d.w, d.h);
+          }
+        });
+        setTimeout(() => {
+          const d = getViewportDims();
+          if (camera && renderer) {
+            camera.aspect = d.w / d.h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(d.w, d.h);
+          }
+        }, 240);
+      },
+
       renderSignControls() {
+        if (this.activeHandTab === 'nonDominant') {
+          this.renderNonDominantControls();
+        } else {
+          this.renderDominantControls();
+        }
+      },
+
+      renderDominantControls() {
         const deck = document.getElementById('param-controls-deck');
         if (!deck || !this.activeWorkingRecipe) return;
         const r = this.activeWorkingRecipe;
@@ -7777,9 +8170,21 @@ const AIRPORT_LEXICON_30 = [
         const oriKeys = Object.keys(PARAMETRIC_LEXICONS.orientations);
         const movKeys = Object.keys(PARAMETRIC_LEXICONS.movements);
 
+        const isUnilateral = (r.bilateral === 'UNILATERAL');
         deck.innerHTML = `
+          <!-- Hand Tab Switcher -->
+          <div class="hand-deck-switch">
+            <button class="hand-tab-btn active" data-hand="dominant" onclick="LexiconWorkbench.switchHandTab('dominant')">
+              <span class="hand-badge h1-badge">H1</span> DOMINANT (RIGHT)
+            </button>
+            <button class="hand-tab-btn" data-hand="nonDominant" onclick="LexiconWorkbench.switchHandTab('nonDominant')">
+              <span class="hand-badge h2-badge">H2</span> NON-DOMINANT (LEFT)
+              <span class="h2-status-dot ${isUnilateral ? 'resting' : 'active'}"></span>
+            </button>
+          </div>
+
           <div class="param-field">
-            <span class="param-field-label">1. Handshape (H):</span>
+            <span class="param-field-label">1. Handshape (H1):</span>
             <div class="param-field-control">
               <select class="param-select" onchange="LexiconWorkbench.onSignParamChange('handshape', this.value)">
                 ${hsKeys.map(k => `<option value="${k}" ${k === r.handshape ? 'selected' : ''}>${k.toUpperCase()}</option>`).join('')}
@@ -7905,6 +8310,145 @@ const AIRPORT_LEXICON_30 = [
                 ${locKeys.map(k => `<option value="${k}" ${k === r.endLocation ? 'selected' : ''}>${k.toUpperCase()}</option>`).join('')}
               </select>
             </div>
+          </div>
+        `;
+      },
+
+      renderNonDominantControls() {
+        const deck = document.getElementById('param-controls-deck');
+        if (!deck || !this.activeWorkingRecipe) return;
+        const r = this.activeWorkingRecipe;
+        const nd = r.nonDominant || (r.nonDominant = {
+          handshape: r.baseHandshape || "flat_b",
+          location: "passive_palm",
+          orientation: "PALM_SUPINE",
+          movement: "STATIC_HOLD",
+          contactPart: r.baseContactPart || "AUTO",
+          endHandshape: "none",
+          endLocation: "none",
+          fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+        });
+
+        const hsKeys = Object.keys(PARAMETRIC_LEXICONS.handshapes);
+        const locKeys = Object.keys(PARAMETRIC_LEXICONS.locations);
+        const oriKeys = Object.keys(PARAMETRIC_LEXICONS.orientations);
+        const movKeys = Object.keys(PARAMETRIC_LEXICONS.movements);
+
+        const isUnilateral = (r.bilateral === 'UNILATERAL');
+        const isSymmetric = (r.bilateral === 'BILATERAL_SYMMETRIC');
+        const isBase = (r.bilateral === 'ASYMMETRIC_BASE');
+        const isDual = (r.bilateral === 'INDEPENDENT_DUAL');
+
+        deck.innerHTML = `
+          <!-- Hand Tab Switcher -->
+          <div class="hand-deck-switch">
+            <button class="hand-tab-btn" data-hand="dominant" onclick="LexiconWorkbench.switchHandTab('dominant')">
+              <span class="hand-badge h1-badge">H1</span> DOMINANT (RIGHT)
+            </button>
+            <button class="hand-tab-btn active" data-hand="nonDominant" onclick="LexiconWorkbench.switchHandTab('nonDominant')">
+              <span class="hand-badge h2-badge">H2</span> NON-DOMINANT (LEFT)
+              <span class="h2-status-dot ${isUnilateral ? 'resting' : 'active'}"></span>
+            </button>
+          </div>
+
+          <!-- Non-Dominant Role & Engagement -->
+          <div class="param-field" style="background:rgba(0, 230, 118, 0.05); border:1px solid rgba(0, 230, 118, 0.22); border-radius:5px; padding:7px;">
+            <span class="param-field-label" style="color:#00e676;">H2 Bilateral Role:</span>
+            <div class="param-field-control">
+              <select class="param-select" onchange="LexiconWorkbench.onNonDominantRoleChange(this.value)">
+                <option value="UNILATERAL" ${isUnilateral ? 'selected' : ''}>💤 PASSIVE REST (Left Arm Relaxed)</option>
+                <option value="ASYMMETRIC_BASE" ${isBase ? 'selected' : ''}>🛡️ ASYMMETRIC BASE (Stationary Shelf / Contact)</option>
+                <option value="INDEPENDENT_DUAL" ${isDual ? 'selected' : ''}>⚡ INDEPENDENT DUAL (Active Dual Trajectory)</option>
+                <option value="BILATERAL_SYMMETRIC" ${isSymmetric ? 'selected' : ''}>🔄 MIRROR SYMMETRIC (Mirrors Dominant Hand)</option>
+              </select>
+            </div>
+          </div>
+
+          ${isUnilateral ? `
+          <div style="background:rgba(245, 158, 11, 0.08); border:1px solid rgba(245, 158, 11, 0.25); border-radius:4px; padding:7px 9px; font-size:9.5px; color:#fde68a; display:flex; align-items:center; justify-content:space-between; gap:6px;">
+            <span>🤚 Hand 2 is currently resting. Select Base Shelf or Dual to articulate.</span>
+            <button class="te-btn-tiny" style="background:#f59e0b; color:#000; font-weight:800;" onclick="LexiconWorkbench.onNonDominantRoleChange('ASYMMETRIC_BASE')">+ ACTIVATE</button>
+          </div>` : ''}
+
+          ${isSymmetric ? `
+          <div style="background:rgba(14, 165, 233, 0.08); border:1px solid rgba(14, 165, 233, 0.25); border-radius:4px; padding:7px 9px; font-size:9.5px; color:#bae6fd; display:flex; align-items:center; justify-content:space-between; gap:6px;">
+            <span>🔄 Currently mirroring Dominant Hand. Decouple to customize H2.</span>
+            <button class="te-btn-tiny" style="background:#0ea5e9; color:#fff;" onclick="LexiconWorkbench.onNonDominantRoleChange('INDEPENDENT_DUAL')">⚡ DECOUPLE</button>
+          </div>` : ''}
+
+          <!-- 1. H2 Handshape -->
+          <div class="param-field">
+            <span class="param-field-label">1. H2 Handshape:</span>
+            <div class="param-field-control">
+              <select class="param-select" onchange="LexiconWorkbench.onNonDominantParamChange('handshape', this.value)">
+                ${hsKeys.map(k => `<option value="${k}" ${k === (nd.handshape || 'flat_b') ? 'selected' : ''}>${k.toUpperCase()}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+
+          <!-- 2. H2 Location (Locus) -->
+          <div class="param-field">
+            <span class="param-field-label">2. H2 Location (Locus):</span>
+            <div class="param-field-control">
+              <select class="param-select" onchange="LexiconWorkbench.onNonDominantParamChange('location', this.value)">
+                ${locKeys.map(k => `<option value="${k}" ${k === (nd.location || 'passive_palm') ? 'selected' : ''}>${k.toUpperCase()}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+
+          <!-- 3. H2 Orientation -->
+          <div class="param-field">
+            <span class="param-field-label">3. H2 Orientation:</span>
+            <div class="param-field-control">
+              <select class="param-select" onchange="LexiconWorkbench.onNonDominantParamChange('orientation', this.value)">
+                ${oriKeys.map(k => `<option value="${k}" ${k === (nd.orientation || 'PALM_SUPINE') ? 'selected' : ''}>${k}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+
+          <!-- 4. H2 Movement -->
+          <div class="param-field">
+            <span class="param-field-label">4. H2 Movement:</span>
+            <div class="param-field-control">
+              <select class="param-select" onchange="LexiconWorkbench.onNonDominantParamChange('movement', this.value)">
+                ${movKeys.map(k => `<option value="${k}" ${k === (nd.movement || 'STATIC_HOLD') ? 'selected' : ''}>${k}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+
+          <!-- 5. H2 Contact Target Part -->
+          <div class="param-field">
+            <span class="param-field-label">5. H2 Contact Target Part:</span>
+            <div class="param-field-control">
+              <select class="param-select" onchange="LexiconWorkbench.onNonDominantParamChange('contactPart', this.value)">
+                <option value="AUTO" ${(!nd.contactPart || nd.contactPart === 'AUTO') ? 'selected' : ''}>AUTO (Heuristic from Handshape)</option>
+                <option value="PALM_CENTER" ${nd.contactPart === 'PALM_CENTER' ? 'selected' : ''}>PALM_CENTER (Palm Face - Stop, Read)</option>
+                <option value="DORSAL_WRIST" ${nd.contactPart === 'DORSAL_WRIST' ? 'selected' : ''}>DORSAL_WRIST (Back of Wrist - Time)</option>
+                <option value="FIST_TOP" ${nd.contactPart === 'FIST_TOP' ? 'selected' : ''}>FIST_TOP (Knuckles - Work)</option>
+                <option value="INDEX_TIP" ${nd.contactPart === 'INDEX_TIP' ? 'selected' : ''}>INDEX_TIP (Index Tip - Name)</option>
+                <option value="INDEX_EDGE" ${nd.contactPart === 'INDEX_EDGE' ? 'selected' : ''}>INDEX_EDGE (Radial Edge - Train)</option>
+                <option value="FINGERTIP_CLUSTER" ${nd.contactPart === 'FINGERTIP_CLUSTER' ? 'selected' : ''}>FINGERTIP_CLUSTER (Cluster - More)</option>
+                <option value="FOREARM_DORSAL" ${nd.contactPart === 'FOREARM_DORSAL' ? 'selected' : ''}>FOREARM_DORSAL (Forearm - Night)</option>
+                <option value="NONE" ${nd.contactPart === 'NONE' ? 'selected' : ''}>NONE (No Touch Target)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 6. H2 End Handshape -->
+          <div class="param-field">
+            <span class="param-field-label">6. H2 End Handshape:</span>
+            <div class="param-field-control">
+              <select class="param-select" onchange="LexiconWorkbench.onNonDominantParamChange('endHandshape', this.value)">
+                <option value="none" ${(!nd.endHandshape || nd.endHandshape === 'none') ? 'selected' : ''}>NONE (Static Shape)</option>
+                ${hsKeys.map(k => `<option value="${k}" ${k === nd.endHandshape ? 'selected' : ''}>${k.toUpperCase()}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+
+          <!-- Quick Presets -->
+          <div style="display:flex; gap:6px; margin-top:4px;">
+            <button class="te-btn-tiny" style="flex:1;" onclick="LexiconWorkbench.copyDominantToNonDominant()" title="Copy shape and orientation from dominant hand">⧉ COPY FROM H1</button>
+            <button class="te-btn-tiny" style="flex:1;" onclick="LexiconWorkbench.resetNonDominantDefault()" title="Reset to standard horizontal palm shelf">↺ FLAT BASE SHELF</button>
           </div>
         `;
       },
@@ -8275,7 +8819,12 @@ const AIRPORT_LEXICON_30 = [
         const lblRy = document.getElementById('lbl-tune-ry'); if (lblRy) lblRy.innerText = ry + "°";
         const lblRz = document.getElementById('lbl-tune-rz'); if (lblRz) lblRz.innerText = rz + "°";
 
-        this.activeWorkingRecipe.fineTune = { ox, oy, oz, rx, ry, rz };
+        if (this.activeHandTab === 'nonDominant') {
+          const nd = this.initNonDominantDefault();
+          nd.fineTune = { ox, oy, oz, rx, ry, rz };
+        } else {
+          this.activeWorkingRecipe.fineTune = { ox, oy, oz, rx, ry, rz };
+        }
 
         // Instant 3D visual response: re-synthesize sign with the new fine-tune offsets!
         UniversalSignCompiler.synthesize(this.activeWorkingRecipe, true);
@@ -8313,9 +8862,16 @@ const AIRPORT_LEXICON_30 = [
 
       resetCurrentSignNudges() {
         if (!this.activeWorkingRecipe) return;
+        if (this.activeHandTab === 'nonDominant') {
+          if (this.activeWorkingRecipe.nonDominant) {
+            this.activeWorkingRecipe.nonDominant.fineTune = { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 };
+          }
+        } else {
+          this.activeWorkingRecipe.fineTune = { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 };
+        }
         this.resetFineTuneInputs();
         this.onFineTuneInput();
-        this.showToast("Nudge offsets reset to zero.");
+        this.showToast(`Nudge offsets reset for ${this.activeHandTab === 'nonDominant' ? 'Non-Dominant (H2)' : 'Dominant (H1)'}.`);
       },
 
       updateRecipeCode() {
@@ -8330,7 +8886,17 @@ const AIRPORT_LEXICON_30 = [
           const ftStr = hasFt ? `, fineTune: { ox: ${ft.ox||0}, oy: ${ft.oy||0}, oz: ${ft.oz||0}, rx: ${ft.rx||0}, ry: ${ft.ry||0}, rz: ${ft.rz||0} }` : '';
           const endHsStr = (r.endHandshape && r.endHandshape !== 'none') ? `, endHandshape: "${r.endHandshape}"` : '';
           const endLocStr = (r.endLocation && r.endLocation !== 'none') ? `, endLocation: "${r.endLocation}"` : '';
-          codeBlock.innerText = `"${item.id}": { handshape: "${r.handshape}", location: "${r.location}", orientation: "${r.orientation}", movement: "${r.movement}", bilateral: "${r.bilateral}", contactEffector: "${r.contactEffector || 'AUTO'}"${endHsStr}${endLocStr}${ftStr} },`;
+
+          let ndStr = '';
+          if (r.nonDominant && r.bilateral !== 'UNILATERAL') {
+            const nd = r.nonDominant;
+            const ftL = nd.fineTune || {};
+            const hasFtL = ftL.ox || ftL.oy || ftL.oz || ftL.rx || ftL.ry || ftL.rz;
+            const ftLStr = hasFtL ? `, fineTune: { ox: ${ftL.ox||0}, oy: ${ftL.oy||0}, oz: ${ftL.oz||0}, rx: ${ftL.rx||0}, ry: ${ftL.ry||0}, rz: ${ftL.rz||0} }` : '';
+            ndStr = `, nonDominant: { handshape: "${nd.handshape || 'flat_b'}", location: "${nd.location || 'passive_palm'}", orientation: "${nd.orientation || 'PALM_SUPINE'}", movement: "${nd.movement || 'STATIC_HOLD'}", contactPart: "${nd.contactPart || 'AUTO'}"${ftLStr} }`;
+          }
+
+          codeBlock.innerText = `"${item.id}": { handshape: "${r.handshape}", location: "${r.location}", orientation: "${r.orientation}", movement: "${r.movement}", bilateral: "${r.bilateral}", contactEffector: "${r.contactEffector || 'AUTO'}"${endHsStr}${endLocStr}${ftStr}${ndStr} },`;
         }
       },
 
@@ -8670,6 +9236,10 @@ const AIRPORT_LEXICON_30 = [
 
       bindShortcuts() {
         window.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && document.body.classList.contains('zen-mode')) {
+            this.toggleZenMode();
+            return;
+          }
           if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
           if (e.key === '[' || e.key === 'ArrowLeft') {
             e.preventDefault();
@@ -8686,6 +9256,12 @@ const AIRPORT_LEXICON_30 = [
           } else if (e.key.toLowerCase() === 'v') {
             e.preventDefault();
             this.toggleVerified();
+          } else if (e.key === '\\' || e.key === 'Tab') {
+            e.preventDefault();
+            this.toggleConsole();
+          } else if (e.key.toLowerCase() === 'f' || e.key.toLowerCase() === 'z') {
+            e.preventDefault();
+            this.toggleZenMode();
           } else if (e.key === '1') {
             this.setCameraPreset('front');
           } else if (e.key === '2') {
