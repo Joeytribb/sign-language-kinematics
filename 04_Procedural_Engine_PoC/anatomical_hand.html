@@ -2211,24 +2211,29 @@ const AIRPORT_LEXICON_30 = [
             const pulse = 1.25 + Math.sin(time * 5.0) * 0.10;
             item.node.scale.set(pulse, pulse, pulse);
             
-            item.sphereMat.color.setHex(0x38bdf8);
-            item.sphereMat.emissive.setHex(0x0284c7);
-            item.sphereMat.emissiveIntensity = 0.95;
-            item.sphereMat.opacity = 0.95;
-            item.ringMat.color.setHex(0x38bdf8);
-            item.ringMat.opacity = 0.85;
-            
-            item.sprite.material.opacity = 0.90;
-            item.sprite.position.y = 1.40;
+            if (item._wasHighlighted !== true) {
+              item._wasHighlighted = true;
+              item.sphereMat.color.setHex(0x38bdf8);
+              item.sphereMat.emissive.setHex(0x0284c7);
+              item.sphereMat.emissiveIntensity = 0.95;
+              item.sphereMat.opacity = 0.95;
+              item.ringMat.color.setHex(0x38bdf8);
+              item.ringMat.opacity = 0.85;
+              item.sprite.material.opacity = 0.90;
+              item.sprite.position.y = 1.40;
+            }
           } else {
-            // Inactive loci: subtle, non-intrusive micro-fiducials (0.18 opacity, no clutter rings)
-            item.node.scale.set(1.0, 1.0, 1.0);
-            item.sphereMat.color.setHex(0x475569);
-            item.sphereMat.emissive.setHex(0x0f172a);
-            item.sphereMat.emissiveIntensity = 0.0;
-            item.sphereMat.opacity = 0.18;
-            item.ringMat.opacity = 0.0;
-            item.sprite.material.opacity = 0.0;
+            // Inactive loci: update only once when state changes
+            if (item._wasHighlighted !== false) {
+              item._wasHighlighted = false;
+              item.node.scale.set(1.0, 1.0, 1.0);
+              item.sphereMat.color.setHex(0x475569);
+              item.sphereMat.emissive.setHex(0x0f172a);
+              item.sphereMat.emissiveIntensity = 0.0;
+              item.sphereMat.opacity = 0.18;
+              item.ringMat.opacity = 0.0;
+              item.sprite.material.opacity = 0.0;
+            }
           }
         }
       }
@@ -3594,9 +3599,9 @@ const AIRPORT_LEXICON_30 = [
     const camera = new THREE.PerspectiveCamera(40, initDims.w / initDims.h, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
     renderer.setSize(initDims.w, initDims.h);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.1;
     container.appendChild(renderer.domElement);
@@ -3654,7 +3659,12 @@ const AIRPORT_LEXICON_30 = [
     // Clinical 3-Point Surgical Studio Illumination with Precision Rim Backlighting
     scene.add(new THREE.AmbientLight(0x0f172a, 0.45)); // Deep slate ambient fill
     const dirLight = new THREE.DirectionalLight(0xffffff, 1.20); dirLight.position.set(18, 28, 22); dirLight.castShadow = true;
-    dirLight.shadow.mapSize.width = 2048; dirLight.shadow.mapSize.height = 2048; scene.add(dirLight);
+    dirLight.shadow.mapSize.width = 1024; dirLight.shadow.mapSize.height = 1024;
+    dirLight.shadow.camera.near = 10; dirLight.shadow.camera.far = 70;
+    dirLight.shadow.camera.left = -26; dirLight.shadow.camera.right = 26;
+    dirLight.shadow.camera.top = 26; dirLight.shadow.camera.bottom = -26;
+    dirLight.shadow.bias = -0.0005;
+    scene.add(dirLight);
     const fillLight = new THREE.DirectionalLight(0x94a3b8, 0.35); fillLight.position.set(-18, 12, 10); scene.add(fillLight);
     
     // Cool Cyan Surgical Rim Backlight: casts razor-sharp edge contours along phalanx bones and joints
@@ -3800,6 +3810,27 @@ const AIRPORT_LEXICON_30 = [
     }
     buildSignerSilhouette(silhouetteGroup);
     
+    // =========================================================================
+    // 60 FPS HIGH-PERFORMANCE ZERO-ALLOCATION STATIC SCRATCH POOLS
+    // Eliminates all per-frame heap allocations & GC scavenger thread pauses
+    // =========================================================================
+    const _scratchV1 = new THREE.Vector3();
+    const _scratchV2 = new THREE.Vector3();
+    const _scratchV3 = new THREE.Vector3();
+    const _scratchV4 = new THREE.Vector3();
+    const _scratchV5 = new THREE.Vector3();
+    const _scratchV6 = new THREE.Vector3();
+    const _scratchQ1 = new THREE.Quaternion();
+    const _scratchQ2 = new THREE.Quaternion();
+    const _segD1 = new THREE.Vector3();
+    const _segD2 = new THREE.Vector3();
+    const _segR = new THREE.Vector3();
+    const _segPt1 = new THREE.Vector3();
+    const _segPt2 = new THREE.Vector3();
+    const _hudTipWorld = new THREE.Vector3();
+    const _hudDomCache = {};
+    let _hudFrameCounter = 0;
+
     // ------------------------------------------------------------------------
     // ANATOMICAL LIMB RIG & RIGID 2-BONE KINEMATICS WITH TRANSLUCENT MUSCLE
     // ------------------------------------------------------------------------
@@ -3892,7 +3923,7 @@ const AIRPORT_LEXICON_30 = [
         this.forearmBone = this.radiusBone;
       }
 
-      update(wristPos, isVisible, wristQuat) {
+            update(wristPos, isVisible, wristQuat) {
         this.group.visible = isVisible;
         if (!isVisible) return;
 
@@ -3902,98 +3933,121 @@ const AIRPORT_LEXICON_30 = [
         const sign = this.isLeft ? -1 : 1;
         const latSign = Math.sign(this.shoulder.x) || (this.isLeft ? -1.0 : 1.0);
 
-        // 1. Strict Euclidean Reach Clamping
-        // Guarantees that target W is strictly reachable and the triangle is non-degenerate
-        const dx = W.x - S.x, dy = W.y - S.y, dz = W.z - S.z;
+        // 1. Strict Euclidean Reach & Conical Movement Areas
+        let dx = W.x - S.x, dy = W.y - S.y, dz = W.z - S.z;
         let d = Math.sqrt(dx*dx + dy*dy + dz*dz);
         if (d < 1e-4) d = 1e-4;
-        
-        const dMin = 6.0; // Minimum anatomical elbow flexion (prevents arm self-collapse)
+        let nx = dx / d, ny = dy / d, nz = dz / d;
+
+        // --- SHOULDER MOVEMENT CONE (Two Regions) ---
+        // Neutral relaxed shoulder axis pointing slightly lateral, downward, and forward
+        const axSx = latSign * 0.15, axSy = -0.92, axSz = 0.35;
+        const axLen = Math.sqrt(axSx*axSx + axSy*axSy + axSz*axSz);
+        const uAxSx = axSx / axLen, uAxSy = axSy / axLen, uAxSz = axSz / axLen;
+        const cosShoulder = THREE.MathUtils.clamp(nx * uAxSx + ny * uAxSy + nz * uAxSz, -1.0, 1.0);
+        const degShoulder = Math.acos(cosShoulder) * rad2deg;
+
+        // Inner Region (0 to 45 deg): Ease of movement (frictionless, effortless transit)
+        // Extreme Region (45 to 95 deg): Progressive quadratic resistance barrier
+        if (degShoulder > 45.0) {
+          const penS = Math.min(1.0, (degShoulder - 45.0) / 50.0);
+          const resistFactor = penS * penS * 0.26; // Non-linear elastic restoring impedance
+          nx = nx * (1.0 - resistFactor) + uAxSx * resistFactor;
+          ny = ny * (1.0 - resistFactor) + uAxSy * resistFactor;
+          nz = nz * (1.0 - resistFactor) + uAxSz * resistFactor;
+          const nLen = Math.sqrt(nx*nx + ny*ny + nz*nz);
+          nx /= nLen; ny /= nLen; nz /= nLen;
+        }
+
+        // --- ELBOW MOVEMENT CONE (Two Regions: Interior Angle 40-105 deg comfort zone) ---
+        const dMin = 6.0;
         const dMax = 0.998 * (L1 + L2); // 29.94 units
-        const dClamped = Math.max(dMin, Math.min(d, dMax));
+        let dClamped = Math.max(dMin, Math.min(d, dMax));
+
+        let currentElbowDeg = Math.round(180 - Math.acos(THREE.MathUtils.clamp((L1*L1 + L2*L2 - dClamped*dClamped) / (2.0 * L1 * L2), -1, 1)) * rad2deg);
+        // Extreme Region Resistance: Hyperextension lockout (<40 deg) or acute hyperflexion (>105 deg)
+        if (currentElbowDeg < 40.0) {
+          const penE = Math.min(1.0, (40.0 - currentElbowDeg) / 25.0);
+          dClamped -= penE * penE * 1.4; // Progressive resistance cushions lock-out
+        } else if (currentElbowDeg > 105.0) {
+          const penE = Math.min(1.0, (currentElbowDeg - 105.0) / 35.0);
+          dClamped += penE * penE * 1.1; // Progressive resistance cushions hyper-flexion
+        }
+        dClamped = Math.max(dMin, Math.min(dClamped, dMax));
 
         this.elbowAngleDeg = Math.round(180 - Math.acos(THREE.MathUtils.clamp((L1*L1 + L2*L2 - dClamped*dClamped) / (2.0 * L1 * L2), -1, 1)) * rad2deg);
         this.reachPct = Math.round((dClamped / (L1 + L2)) * 100);
 
-        // Reach ray unit vector from shoulder towards target
-        const nx = dx / d, ny = dy / d, nz = dz / d;
-        const n = new THREE.Vector3(nx, ny, nz);
-
-        // Effective wrist reach anchor (guarantees exact triangle lengths)
-        const Weff = new THREE.Vector3().addVectors(S, n.clone().multiplyScalar(dClamped));
-        this.Weff = Weff;
+        if (!this.Weff) this.Weff = new THREE.Vector3();
+        this.Weff.set(S.x + nx * dClamped, S.y + ny * dClamped, S.z + nz * dClamped);
+        const Weff = this.Weff;
 
         // 2. Exact Triangle Geometry: Altitude (h) and Midpoint Distance (dMid)
-        // dMid^2 + h^2 = L1^2  and  (dClamped - dMid)^2 + h^2 = L2^2 identically
         const dMid = (L1*L1 - L2*L2 + dClamped*dClamped) / (2.0 * dClamped);
         const h = Math.sqrt(Math.max(0, L1*L1 - dMid*dMid));
-        const C = new THREE.Vector3().addVectors(S, n.clone().multiplyScalar(dMid));
+        const Cx = S.x + nx * dMid, Cy = S.y + ny * dMid, Cz = S.z + nz * dMid;
 
-        // 3. Continuous Orthonormal Swivel Basis (u, v) in Plane Perpendicular to n:
-        // Guaranteed strictly continuous across the entire reach hemisphere (no sign flips when n.z crosses 0)
-        const refDown = new THREE.Vector3(0, -1, 0);
-        let v_proj = refDown.clone().sub(n.clone().multiplyScalar(refDown.dot(n)));
-        if (v_proj.lengthSq() < 1e-4) {
-          const refAnt = new THREE.Vector3(0, 0, 1);
-          v_proj = refAnt.clone().sub(n.clone().multiplyScalar(refAnt.dot(n)));
+        // 3. Zero-Allocation Orthonormal Swivel Basis (u, v)
+        // Project refDown (0, -1, 0) onto plane perpendicular to n
+        const dotDown = -ny;
+        let vpx = 0.0 - nx * dotDown, vpy = -1.0 - ny * dotDown, vpz = 0.0 - nz * dotDown;
+        let vpLenSq = vpx*vpx + vpy*vpy + vpz*vpz;
+        if (vpLenSq < 1e-4) {
+          const dotAnt = nz;
+          vpx = 0.0 - nx * dotAnt; vpy = 0.0 - ny * dotAnt; vpz = 1.0 - nz * dotAnt;
+          vpLenSq = vpx*vpx + vpy*vpy + vpz*vpz;
         }
-        const v = v_proj.normalize(); // Continuous downward reference vector
+        const vpLen = Math.sqrt(vpLenSq);
+        const vx = vpx / vpLen, vy = vpy / vpLen, vz = vpz / vpLen; // Continuous downward basis v
 
-        let u = new THREE.Vector3().crossVectors(n, v).normalize();
-        if (u.dot(new THREE.Vector3(latSign, 0, 0)) < 0) {
-          u.negate();
-        } // Continuous outward lateral reference vector
+        // u = n x v
+        let ux = ny * vz - nz * vy;
+        let uy = nz * vx - nx * vz;
+        let uz = nx * vy - ny * vx;
+        const uLen = Math.sqrt(ux*ux + uy*uy + uz*uz);
+        ux /= uLen; uy /= uLen; uz /= uLen;
+        if (ux * latSign < 0) { ux = -ux; uy = -uy; uz = -uz; } // Continuous outward lateral basis u
 
-        // 4. Anatomical Swivel Angle (psi) Optimization:
-        // Strictly prevents inward elbow bends, ribcage penetrations, and unnatural chicken-wing flare
+        // 4. Zero-Allocation Anatomical Swivel Angle (psi) Optimization
         let bestPsi = (typeof this.currentPsi === 'number') ? this.currentPsi : 0.65;
         let bestScore = -999999;
         for (let step = -16; step <= 16; step++) {
           const psi = step * (Math.PI / 16);
           const cosP = Math.cos(psi), sinP = Math.sin(psi);
-          const tE = new THREE.Vector3(
-            C.x + h * (cosP * u.x + sinP * v.x),
-            C.y + h * (cosP * u.y + sinP * v.y),
-            C.z + h * (cosP * u.z + sinP * v.z)
-          );
+          const tEx = Cx + h * (cosP * ux + sinP * vx);
+          const tEy = Cy + h * (cosP * uy + sinP * vy);
+          const tEz = Cz + h * (cosP * uz + sinP * vz);
 
           let score = 0;
 
-          // Hard Anatomical Constraint 1: Ribcage Clearance & Zero Inward Elbow Bending
-          const latDist = latSign * tE.x;
+          // Hard Anatomical Constraint 1: Ribcage Clearance
+          const latDist = latSign * tEx;
           if (latDist < 9.0) {
-            score -= (9.0 - latDist) * 80.0 + 500.0; // STRICTLY FORBID INWARD ELBOW BENDS
+            score -= (9.0 - latDist) * 80.0 + 500.0;
           } else {
-            score += Math.min(latDist, 18.0) * 2.0; // Reward natural lateral clearance
+            score += Math.min(latDist, 18.0) * 2.0;
           }
 
-          // Hard Anatomical Constraint 2: Posterior Coronal Back Clearance
-          if (tE.z < -1.5) {
-            score -= (-1.5 - tE.z) * 50.0;
-          }
+          // Hard Anatomical Constraint 2: Posterior Coronal Clearance
+          if (tEz < -1.5) score -= (-1.5 - tEz) * 50.0;
 
-          // Hard Anatomical Constraint 3: Humeroulnar Hinge Flexion Direction
-          const upperVec = new THREE.Vector3().subVectors(tE, S).normalize();
-          const foreVec = new THREE.Vector3().subVectors(Weff, tE).normalize();
-          const armNormal = new THREE.Vector3().crossVectors(upperVec, foreVec);
-          if (latSign * armNormal.y < -0.15) {
-            score -= 600.0;
-          }
+          // Hard Anatomical Constraint 3: Humeroulnar Hinge Flexion Direction (Pure Scalar)
+          const upx = tEx - S.x, upy = tEy - S.y, upz = tEz - S.z;
+          const fox = Weff.x - tEx, foy = Weff.y - tEy, foz = Weff.z - tEz;
+          const normY = upz * fox - upx * foz;
+          if (latSign * normY < -0.15) score -= 600.0;
 
-          // Soft Anatomical Constraint 1: Gravity Hanging Angle
+          // Gravity Hanging Angle
           if (W.y < S.y + 4.0) {
-            if (tE.y > S.y + 1.0) {
-              score -= (tE.y - (S.y + 1.0)) * 30.0; // Strongly penalize chicken-wing flare
-            } else {
-              score += (S.y - tE.y) * 1.5;
-            }
+            if (tEy > S.y + 1.0) score -= (tEy - (S.y + 1.0)) * 30.0;
+            else score += (S.y - tEy) * 1.5;
           }
 
-          // Soft Anatomical Constraint 2: Natural Carrying Angle (sweet spot ~35-50 deg outward & down)
+          // Natural Carrying Angle Comfort Cone (~35-50 deg outward & down)
           const targetPsi = 0.65;
           score -= Math.abs(psi - targetPsi) * 6.0;
 
-          // Temporal Continuity Invariant: Prevent sudden teleportation between competing minima
+          // Temporal Continuity Damping
           if (typeof this.currentPsi === 'number') {
             const dAngle = Math.atan2(Math.sin(psi - this.currentPsi), Math.cos(psi - this.currentPsi));
             score -= Math.abs(dAngle) * 22.0;
@@ -4012,133 +4066,98 @@ const AIRPORT_LEXICON_30 = [
         }
 
         const cosPsi = Math.cos(this.currentPsi), sinPsi = Math.sin(this.currentPsi);
-        const E = new THREE.Vector3().addVectors(
-          C,
-          u.clone().multiplyScalar(h * cosPsi).add(v.clone().multiplyScalar(h * sinPsi))
-        );
+        const Ex = Cx + h * (cosPsi * ux + sinPsi * vx);
+        const Ey = Cy + h * (cosPsi * uy + sinPsi * vy);
+        const Ez = Cz + h * (cosPsi * uz + sinPsi * vz);
 
-        // Position Elbow Articulation Group with Exponential Damping to Eliminate Sudden Snapping
-        if (!this.currentE) this.currentE = E.clone();
-        else this.currentE.lerp(E, 0.40);
-
-        if (window.isAblationActive) {
-          // ABLATION MODE: Simulate unconstrained black-box neural network predictions
-          const tNow = Date.now() * 0.0035;
-          const dislocOffset = new THREE.Vector3(sign * Math.sin(tNow * 1.5) * 3.2, Math.cos(tNow) * 2.5, -Math.abs(Math.sin(tNow * 0.9)) * 3.8);
-          E.add(dislocOffset);
-          this.elbowGroup.position.copy(E);
-
-          const upperDist = S.distanceTo(E);
-          const upperScaleY = upperDist / L1;
-          const upperDir = new THREE.Vector3().subVectors(E, S).normalize();
-          const upperMid = new THREE.Vector3().addVectors(S, E).multiplyScalar(0.5);
-          const upperQuat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, -1, 0), upperDir);
-
-          this.humerusBone.position.copy(upperMid);
-          this.humerusBone.quaternion.copy(upperQuat);
-          this.humerusBone.scale.set(1.0, upperScaleY, 1.0);
-          if (this.humerusMuscle) this.humerusMuscle.scale.set(1.0, upperScaleY, 1.0);
-
-          const foreDist = E.distanceTo(W);
-          const foreScaleY = foreDist / L2;
-          const foreDir = new THREE.Vector3().subVectors(W, E).normalize();
-          const foreQuat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, -1, 0), foreDir);
-          const foreMid = new THREE.Vector3().addVectors(E, W).multiplyScalar(0.5);
-
-          this.radiusBone.position.copy(foreMid);
-          this.radiusBone.quaternion.copy(foreQuat);
-          this.radiusBone.scale.set(1.0, foreScaleY, 1.0);
-
-          this.ulnaBone.position.copy(foreMid);
-          this.ulnaBone.quaternion.copy(foreQuat);
-          this.ulnaBone.scale.set(1.0, foreScaleY, 1.0);
-
-          if (this.forearmMuscle) {
-            this.forearmMuscle.position.copy(foreMid);
-            this.forearmMuscle.quaternion.copy(foreQuat);
-            this.forearmMuscle.scale.set(1.0, foreScaleY, 1.0);
-          }
-          return;
+        if (!this.currentE) this.currentE = new THREE.Vector3(Ex, Ey, Ez);
+        else {
+          this.currentE.x += (Ex - this.currentE.x) * 0.40;
+          this.currentE.y += (Ey - this.currentE.y) * 0.40;
+          this.currentE.z += (Ez - this.currentE.z) * 0.40;
         }
 
         const effElbowPos = this.currentE;
         this.elbowGroup.position.copy(effElbowPos);
 
-        // 5. Upper Arm: Humerus (S to effElbowPos) - 100% Rigid Length Invariance L1
-        const upperDir = new THREE.Vector3().subVectors(effElbowPos, S).normalize();
-        const upperMid = new THREE.Vector3().addVectors(S, effElbowPos).multiplyScalar(0.5);
-        const upperQuat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, -1, 0), upperDir);
+        // 5. Upper Arm: Humerus (S to effElbowPos) - Zero Allocation Scratch Math
+        _scratchV1.subVectors(effElbowPos, S).normalize(); // upperDir
+        _scratchV2.addVectors(S, effElbowPos).multiplyScalar(0.5); // upperMid
+        _scratchQ1.setFromUnitVectors(new THREE.Vector3(0, -1, 0), _scratchV1); // upperQuat
 
-        this.humerusBone.position.copy(upperMid);
-        this.humerusBone.quaternion.copy(upperQuat);
-        this.humerusBone.scale.set(1, 1, 1); // STRICT RIGID BONE - NO SCALE DISTORTION
+        this.humerusBone.position.copy(_scratchV2);
+        this.humerusBone.quaternion.copy(_scratchQ1);
+        this.humerusBone.scale.set(1, 1, 1);
 
-        // 6. Forearm: Radius & Ulna (effElbowPos to Weff) - 100% Rigid Length Invariance L2
-        const foreDir = new THREE.Vector3().subVectors(Weff, effElbowPos).normalize();
-        const foreQuat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, -1, 0), foreDir);
+        // 6. Forearm: Radius & Ulna (effElbowPos to Weff) - Zero Allocation
+        _scratchV3.subVectors(Weff, effElbowPos).normalize(); // foreDir
+        _scratchQ2.setFromUnitVectors(new THREE.Vector3(0, -1, 0), _scratchV3); // foreQuat
 
         // Proximal Articular Anchors at Elbow Epicondyles:
-        let elbowLat = new THREE.Vector3().crossVectors(upperDir, foreDir);
-        if (elbowLat.lengthSq() < 1e-4) {
-          elbowLat.set(latSign, 0, 0);
+        _scratchV4.crossVectors(_scratchV1, _scratchV3); // elbowLat
+        if (_scratchV4.lengthSq() < 1e-4) {
+          _scratchV4.set(latSign, 0, 0);
         } else {
-          elbowLat.normalize();
-          if (elbowLat.dot(new THREE.Vector3(latSign, 0, 0)) < 0) elbowLat.negate();
+          _scratchV4.normalize();
+          if (_scratchV4.x * latSign < 0) _scratchV4.negate();
         }
-        this.elbowGroup.quaternion.setFromUnitVectors(new THREE.Vector3(1, 0, 0), elbowLat);
+        this.elbowGroup.quaternion.setFromUnitVectors(new THREE.Vector3(1, 0, 0), _scratchV4);
 
         const epSep = 0.65;
-        const pRadiusHead = effElbowPos.clone().addScaledVector(elbowLat, epSep);  // Lateral capitulum
-        const pUlnaHead = effElbowPos.clone().addScaledVector(elbowLat, -epSep);    // Medial trochlea
+        const pRadiusHead = _scratchV5.copy(effElbowPos).addScaledVector(_scratchV4, epSep);
+        const pUlnaHead = _scratchV6.copy(effElbowPos).addScaledVector(_scratchV4, -epSep);
 
-        // Distal Articular Anchors at Wrist Carpal Base:
-        const effWristQuat = wristQuat || foreQuat;
+        // Distal Articular Anchors at Wrist Carpal Base
+        const effWristQuat = wristQuat || _scratchQ2;
         const radSign = (this.shoulder.x > 0) ? 1 : -1;
-        const vWristRad = new THREE.Vector3(radSign, 0, 0).applyQuaternion(effWristQuat).normalize();
-        const vWristUln = new THREE.Vector3(-radSign, 0, 0).applyQuaternion(effWristQuat).normalize();
+        _scratchV1.set(radSign, 0, 0).applyQuaternion(effWristQuat).normalize(); // vWristRad
+        _scratchV2.set(-radSign, 0, 0).applyQuaternion(effWristQuat).normalize(); // vWristUln
         const carpalSep = 0.68;
-        // Joint line sits at carpal base
-        const carpalBase = Weff.clone().add(new THREE.Vector3(0, -0.35, 0).applyQuaternion(effWristQuat));
-        const dRadiusStyloid = carpalBase.clone().addScaledVector(vWristRad, carpalSep);
-        const dUlnaStyloid = carpalBase.clone().addScaledVector(vWristUln, carpalSep);
+        
+        // carpalBase in scratch
+        _scratchV3.set(0, -0.35, 0).applyQuaternion(effWristQuat).add(Weff); // carpalBase
+        const dRadiusStyloid = _scratchV4.copy(_scratchV3).addScaledVector(_scratchV1, carpalSep);
+        const dUlnaStyloid = _scratchV1.copy(_scratchV3).addScaledVector(_scratchV2, carpalSep);
 
-        // Ulna Bone (Proximal Medial E -> Distal Medial/Pinky W)
-        const uMid = new THREE.Vector3().addVectors(pUlnaHead, dUlnaStyloid).multiplyScalar(0.5);
-        const uDir = new THREE.Vector3().subVectors(dUlnaStyloid, pUlnaHead).normalize();
-        const uQuat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, -1, 0), uDir);
-        this.ulnaBone.position.copy(uMid);
-        this.ulnaBone.quaternion.copy(uQuat);
-        this.ulnaBone.scale.set(1, 1, 1); // STRICT RIGID BONE - NO SCALE DISTORTION
+        // Ulna Bone
+        _scratchV2.addVectors(pUlnaHead, dUlnaStyloid).multiplyScalar(0.5); // uMid
+        _scratchV3.subVectors(dUlnaStyloid, pUlnaHead).normalize(); // uDir
+        this.ulnaBone.position.copy(_scratchV2);
+        this.ulnaBone.quaternion.setFromUnitVectors(new THREE.Vector3(0, -1, 0), _scratchV3);
+        this.ulnaBone.scale.set(1, 1, 1);
 
-        // Radius Bone (Proximal Lateral E -> Distal Lateral/Thumb W)
-        // Naturally crosses over the anterior surface of the ulna during pronation
-        const rMid = new THREE.Vector3().addVectors(pRadiusHead, dRadiusStyloid).multiplyScalar(0.5);
-        const rDir = new THREE.Vector3().subVectors(dRadiusStyloid, pRadiusHead).normalize();
-        const rQuat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, -1, 0), rDir);
-        this.radiusBone.position.copy(rMid);
-        this.radiusBone.quaternion.copy(rQuat);
-        this.radiusBone.scale.set(1, 1, 1); // STRICT RIGID BONE - NO SCALE DISTORTION
+        // Radius Bone
+        _scratchV2.addVectors(pRadiusHead, dRadiusStyloid).multiplyScalar(0.5); // rMid
+        _scratchV3.subVectors(dRadiusStyloid, pRadiusHead).normalize(); // rDir
+        this.radiusBone.position.copy(_scratchV2);
+        this.radiusBone.quaternion.setFromUnitVectors(new THREE.Vector3(0, -1, 0), _scratchV3);
+        this.radiusBone.scale.set(1, 1, 1);
 
-        // Position & Orient Translucent Forearm Muscle Envelope
-        const foreMid = new THREE.Vector3().addVectors(E, Weff).multiplyScalar(0.5);
-        this.forearmMuscle.position.copy(foreMid);
-        this.forearmMuscle.quaternion.copy(foreQuat);
-        this.forearmMuscle.scale.set(1, 1, 1);
+        // 7. Musculature Layer
+        if (this.humerusMuscle) {
+          this.humerusMuscle.position.copy(this.humerusBone.position);
+          this.humerusMuscle.quaternion.copy(this.humerusBone.quaternion);
+          this.humerusMuscle.scale.set(1, 1, 1);
+        }
+        if (this.forearmMuscle) {
+          _scratchV2.addVectors(effElbowPos, Weff).multiplyScalar(0.5);
+          this.forearmMuscle.position.copy(_scratchV2);
+          this.forearmMuscle.quaternion.copy(_scratchQ2);
+          this.forearmMuscle.scale.set(1, 1, 1);
+        }
       }
     }
 
     const armR = new ArmLimb(false, new THREE.Vector3(15.5, 9.5, 0.0));
     const armL = new ArmLimb(true, new THREE.Vector3(-15.5, 9.5, 0.0));
 
-    // 5. Universal Physiological Wrist Biomechanics & ROM Enforcer
+    // 5. Universal Physiological Wrist Biomechanics & Dual-Region Conical ROM Enforcer
     // Formulated from functional anatomy & clinical kinesiology (Kapandji 1982, Ryu et al. 1991)
     const PhysiologicalWristEngine = {
       ROM: {
-        maxForearmAngle: 75.0 * deg2rad, // Max deviation angle between hand and forearm axis
-        maxFlexion: 75.0 * deg2rad,      // Palmar flexion limit
-        maxExtension: 65.0 * deg2rad,    // Dorsiflexion limit
-        maxRadialDev: 20.0 * deg2rad,    // Abduction limit
-        maxUlnarDev: 35.0 * deg2rad      // Adduction limit
+        innerConeAngle: 30.0 * deg2rad, // Inner Region: Comfort Zone (zero resistance, fluid ease of movement)
+        extremeConeAngle: 72.0 * deg2rad, // Extreme Region: Progressive ligamentous resistance zone
+        maxForearmAngle: 75.0 * deg2rad  // Absolute anatomical boundary clamp
       },
 
       enforce(hand, arm, isBodyContact = false) {
@@ -4147,35 +4166,50 @@ const AIRPORT_LEXICON_30 = [
         const W = hand.root.position;
         const E = arm.elbowGroup.position;
 
-        // Forearm longitudinal unit vector (Elbow -> Wrist)
-        const u_forearm = new THREE.Vector3().subVectors(W, E);
-        const flen = u_forearm.length();
+        // Forearm longitudinal unit vector (Elbow -> Wrist) - ZERO HEAP ALLOCATION
+        _scratchV1.subVectors(W, E);
+        const flen = _scratchV1.length();
         if (flen < 1e-4) return;
-        u_forearm.multiplyScalar(1.0 / flen);
+        _scratchV1.multiplyScalar(1.0 / flen); // u_forearm
 
-        // Hand longitudinal unit vector in world coordinates (middle metacarpal axis)
-        const u_hand = new THREE.Vector3(0, 1, 0).applyQuaternion(hand.root.quaternion);
+        // Hand longitudinal unit vector in world coordinates (middle metacarpal axis) - ZERO ALLOCATION
+        _scratchV2.set(0, 1, 0).applyQuaternion(hand.root.quaternion); // u_hand
 
-        // Forearm-Relative Conical ROM Clamp (Max 75 deg deviation from forearm axis)
-        const cosTheta = THREE.MathUtils.clamp(u_hand.dot(u_forearm), -1.0, 1.0);
+        // Conical Deflection Angle
+        const cosTheta = THREE.MathUtils.clamp(_scratchV2.dot(_scratchV1), -1.0, 1.0);
         const theta = Math.acos(cosTheta);
 
-        if (theta > this.ROM.maxForearmAngle) {
-          let ortho = new THREE.Vector3().subVectors(u_hand, u_forearm.clone().multiplyScalar(cosTheta));
-          if (ortho.lengthSq() < 1e-6) {
-            ortho.set(0, 0, 1).cross(u_forearm);
-            if (ortho.lengthSq() < 1e-6) ortho.set(1, 0, 0);
-          }
-          ortho.normalize();
-
-          const u_clamped = new THREE.Vector3()
-            .addScaledVector(u_forearm, Math.cos(this.ROM.maxForearmAngle))
-            .addScaledVector(ortho, Math.sin(this.ROM.maxForearmAngle))
-            .normalize();
-
-          const q_corr = new THREE.Quaternion().setFromUnitVectors(u_hand, u_clamped);
-          hand.root.quaternion.premultiply(q_corr);
+        // Region 1: Inner Ease Zone (theta <= 30 deg / 0.52 rad)
+        // 100% free movement, zero resistance.
+        if (theta <= this.ROM.innerConeAngle) {
+          return;
         }
+
+        // Region 2: Extreme Progressive Resistance Zone (30 deg < theta <= 72 deg)
+        // It becomes increasingly difficult to deflect and stay in this extreme region.
+        // Viscoelastic restoring torque pulls the wrist back toward the comfort cone.
+        const penetration = Math.min(1.0, (theta - this.ROM.innerConeAngle) / (this.ROM.extremeConeAngle - this.ROM.innerConeAngle));
+        const restoreFactor = penetration * penetration * 0.45; // Progressive quadratic stiffness barrier
+
+        // Orthogonal deviation vector
+        _scratchV3.copy(_scratchV1).multiplyScalar(cosTheta);
+        _scratchV4.subVectors(_scratchV2, _scratchV3); // ortho
+        if (_scratchV4.lengthSq() < 1e-6) {
+          _scratchV4.set(0, 0, 1).cross(_scratchV1);
+          if (_scratchV4.lengthSq() < 1e-6) _scratchV4.set(1, 0, 0);
+        }
+        _scratchV4.normalize();
+
+        // Target angle with progressive spring pull back towards inner cone
+        const targetTheta = theta - (theta - this.ROM.innerConeAngle) * restoreFactor;
+        const clampedTheta = Math.min(targetTheta, this.ROM.maxForearmAngle);
+
+        _scratchV5.copy(_scratchV1).multiplyScalar(Math.cos(clampedTheta))
+          .addScaledVector(_scratchV4, Math.sin(clampedTheta))
+          .normalize();
+
+        _scratchQ1.setFromUnitVectors(_scratchV2, _scratchV5);
+        hand.root.quaternion.premultiply(_scratchQ1);
       }
     };
 
@@ -4186,33 +4220,37 @@ const AIRPORT_LEXICON_30 = [
     const KinematicCollisionEngine = {
       // Closest points between two 3D line segments (Sunday's Algorithm)
       closestDistSegments(p1, q1, p2, q2) {
-        const d1 = new THREE.Vector3().subVectors(q1, p1);
-        const d2 = new THREE.Vector3().subVectors(q2, p2);
-        const r = new THREE.Vector3().subVectors(p1, p2);
-        const a = d1.dot(d1);
-        const e = d2.dot(d2);
-        const f = d2.dot(r);
+        _segD1.subVectors(q1, p1);
+        _segD2.subVectors(q2, p2);
+        _segR.subVectors(p1, p2);
+        const a = _segD1.dot(_segD1);
+        const e = _segD2.dot(_segD2);
+        const f = _segD2.dot(_segR);
 
         let s = 0, t = 0;
-        if (a <= 1e-6 && e <= 1e-6) return { dist: p1.distanceTo(p2), pA: p1.clone(), pB: p2.clone() };
+        if (a <= 1e-6 && e <= 1e-6) {
+          _segPt1.copy(p1);
+          _segPt2.copy(p2);
+          return { dist: p1.distanceTo(p2), pA: _segPt1, pB: _segPt2 };
+        }
         if (a <= 1e-6) {
           s = 0.0;
           t = THREE.MathUtils.clamp(f / e, 0.0, 1.0);
         } else {
-          const c = d1.dot(r);
+          const c = _segD1.dot(_segR);
           if (e <= 1e-6) {
             t = 0.0;
             s = THREE.MathUtils.clamp(-c / a, 0.0, 1.0);
           } else {
-            const b = d1.dot(d2);
+            const b = _segD1.dot(_segD2);
             const denom = a * e - b * b;
             s = denom !== 0.0 ? THREE.MathUtils.clamp((b * f - c * e) / denom, 0.0, 1.0) : 0.0;
             t = THREE.MathUtils.clamp((b * s + f) / e, 0.0, 1.0);
           }
         }
-        const pt1 = new THREE.Vector3().addVectors(p1, d1.clone().multiplyScalar(s));
-        const pt2 = new THREE.Vector3().addVectors(p2, d2.clone().multiplyScalar(t));
-        return { dist: pt1.distanceTo(pt2), pA: pt1, pB: pt2 };
+        _segPt1.copy(p1).addScaledVector(_segD1, s);
+        _segPt2.copy(p2).addScaledVector(_segD2, t);
+        return { dist: _segPt1.distanceTo(_segPt2), pA: _segPt1, pB: _segPt2 };
       },
 
       distPointToSegment(p, a, b) {
@@ -5754,15 +5792,19 @@ const AIRPORT_LEXICON_30 = [
       const formatF = v => v.toFixed(2).padStart(5, ' ');
 
       for (let f of activeHand.fingerData) {
-        const tipWorld = new THREE.Vector3(); 
-        f.gTip.getWorldPosition(tipWorld);
-        const err = tipWorld.distanceTo(f.tgt.group.position);
+        f.gTip.getWorldPosition(_hudTipWorld);
+        const err = _hudTipWorld.distanceTo(f.tgt.group.position);
         
-        const elTgt = document.getElementById(`hud-${f.id}-target`);
-        const elErr = document.getElementById(`hud-${f.id}-error`);
-        const elMcp = document.getElementById(`hud-${f.id}-mcp`);
-        const elPip = document.getElementById(`hud-${f.id}-pip_f`);
-        const elDip = document.getElementById(`hud-${f.id}-dip_f`);
+        let elTgt = _hudDomCache[`hud-${f.id}-target`];
+        if (!elTgt) elTgt = _hudDomCache[`hud-${f.id}-target`] = document.getElementById(`hud-${f.id}-target`);
+        let elErr = _hudDomCache[`hud-${f.id}-error`];
+        if (!elErr) elErr = _hudDomCache[`hud-${f.id}-error`] = document.getElementById(`hud-${f.id}-error`);
+        let elMcp = _hudDomCache[`hud-${f.id}-mcp`];
+        if (!elMcp) elMcp = _hudDomCache[`hud-${f.id}-mcp`] = document.getElementById(`hud-${f.id}-mcp`);
+        let elPip = _hudDomCache[`hud-${f.id}-pip_f`];
+        if (!elPip) elPip = _hudDomCache[`hud-${f.id}-pip_f`] = document.getElementById(`hud-${f.id}-pip_f`);
+        let elDip = _hudDomCache[`hud-${f.id}-dip_f`];
+        if (!elDip) elDip = _hudDomCache[`hud-${f.id}-dip_f`] = document.getElementById(`hud-${f.id}-dip_f`);
 
         if (elTgt) elTgt.innerText = `${formatF(f.tgt.group.position.x)}, ${formatF(f.tgt.group.position.y)}, ${formatF(f.tgt.group.position.z)}`;
         if (elErr) {
@@ -6137,12 +6179,15 @@ const AIRPORT_LEXICON_30 = [
       const strokeProgress = Math.min(1.0, strokeClock / STROKE_DURATION);
       const phi = strokeProgress * Math.PI * 2.0;
 
-      // Update Phase Scrubber HUD
+      // Update Phase Scrubber HUD (only on actual value change)
       const phasePct = Math.round(strokeProgress * 100);
-      const scrubber = document.getElementById('transport-scrubber');
-      const phaseLabel = document.getElementById('transport-scrub-val');
-      if (scrubber && !scrubber.matches(':active')) scrubber.value = phasePct;
-      if (phaseLabel) phaseLabel.innerText = `${phasePct}%`;
+      if (window._prevPhasePct !== phasePct) {
+        window._prevPhasePct = phasePct;
+        const scrubber = _hudDomCache['transport-scrubber'] || (_hudDomCache['transport-scrubber'] = document.getElementById('transport-scrubber'));
+        const phaseLabel = _hudDomCache['transport-scrub-val'] || (_hudDomCache['transport-scrub-val'] = document.getElementById('transport-scrub-val'));
+        if (scrubber && !scrubber.matches(':active')) scrubber.value = phasePct;
+        if (phaseLabel) phaseLabel.innerText = `${phasePct}%`;
+      }
 
       // Evaluate Dynamic Targets from Base Target Positions
       const isCuratingSign = (!window.LexiconWorkbench || window.LexiconWorkbench.currentCategory === 'signs' || window.LexiconWorkbench.currentCategory === 'movements');
@@ -6252,7 +6297,10 @@ const AIRPORT_LEXICON_30 = [
         handL.root.position.copy(armL.Weff);
       }
 
-      updateHudMetrics();
+      _hudFrameCounter = (_hudFrameCounter + 1) % 4; // Throttle HUD to 15Hz to decouple WebGL 60fps from browser layout reflows
+      if (_hudFrameCounter === 0) {
+        updateHudMetrics();
+      }
 
       gizmoCamera.position.copy(camera.position).normalize().multiplyScalar(5); 
       gizmoCamera.lookAt(0,0,0); 
