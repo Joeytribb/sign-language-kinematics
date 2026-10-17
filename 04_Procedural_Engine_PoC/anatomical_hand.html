@@ -401,6 +401,12 @@
       background: rgba(14, 165, 233, 0.18) !important;
       box-shadow: 0 0 10px rgba(14, 165, 233, 0.35);
     }
+    .btn-hand-color.active {
+      color: #38bdf8 !important;
+      border-color: #0ea5e9 !important;
+      background: rgba(14, 165, 233, 0.18) !important;
+      box-shadow: 0 0 10px rgba(14, 165, 233, 0.35);
+    }
 
     /* PROTOTYPE EXPRESSION / HUMANIZATION NOTE */
     .viewport-prototype-note {
@@ -1063,6 +1069,13 @@
       <div class="viewport-prototype-note" style="top: 104px;">
         <span class="prototype-note-tag">PROTOTYPE NOTE</span>
         <span class="prototype-note-msg">Facial expressions are test placeholders to humanize the stick figure model. Final production system integrates photorealistic human digital twins with FACS micro-expressions.</span>
+      </div>
+
+      <!-- Hand Contrast Palette Presets -->
+      <div class="viewport-overlay-cluster" style="top: 136px;">
+        <button class="view-cam-btn btn-hand-color active" data-color="contrast" onclick="HandColorEngine.setMode('contrast')" title="High-Contrast: Distinct Color Per Finger (Thumb, Index, Mid, Ring, Pinky) + Dual R/L Tint">🌈 FINGER-CODED</button>
+        <button class="view-cam-btn btn-hand-color" data-color="dual" onclick="HandColorEngine.setMode('dual')" title="Biaxial Dual: Dominant Right (Cyan) vs Non-Dominant Left (Amber)">🔵🟠 R/L DUAL</button>
+        <button class="view-cam-btn btn-hand-color" data-color="mono" onclick="HandColorEngine.setMode('mono')" title="Classic Monochrome: Medical Ivory Cortical Bone">🤍 CLASSIC</button>
       </div>
 
       <!-- Biomechanical Telemetry HUD -->
@@ -4640,6 +4653,7 @@ const AIRPORT_LEXICON_30 = [
         const socketMesh = new THREE.Mesh(new THREE.SphereGeometry(1.35, 16, 16), jointMat);
         socketMesh.position.copy(this.shoulder);
         this.group.add(socketMesh);
+        this.socketMesh = socketMesh;
 
         // Anthropometric Arm Lengths: Humerus L1=12.0, Forearm L2=10.0 (Total reach 22.0 units)
         this.L1 = 12.0;
@@ -4656,6 +4670,7 @@ const AIRPORT_LEXICON_30 = [
         const humeralHead = new THREE.Mesh(new THREE.SphereGeometry(1.20, 16, 16), jointMat);
         humeralHead.position.y = this.L1 / 2;
         this.humerusBone.add(humeralHead);
+        this.humeralHead = humeralHead;
 
         // Translucent See-Through Upper Arm Musculature (Biceps / Triceps / Brachialis)
         const humerusMuscleGeo = new THREE.CylinderGeometry(1.35, 1.55, this.L1 * 0.94, 16);
@@ -4671,14 +4686,17 @@ const AIRPORT_LEXICON_30 = [
         const epicondyleMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.85, 0.85, 2.4, 16), jointMat);
         epicondyleMesh.rotation.z = Math.PI / 2;
         this.elbowGroup.add(epicondyleMesh);
+        this.epicondyleMesh = epicondyleMesh;
         // Olecranon Process of Ulna (posterior bony prominence of the elbow)
         const olecranonMesh = new THREE.Mesh(new THREE.SphereGeometry(0.88, 14, 14), innerBoneMat);
         olecranonMesh.scale.set(0.9, 1.1, 1.3);
         olecranonMesh.position.set(0, 0, -0.45);
         this.elbowGroup.add(olecranonMesh);
+        this.olecranonMesh = olecranonMesh;
         // Trochlear articular condyle
         const trochleaMesh = new THREE.Mesh(new THREE.SphereGeometry(0.80, 14, 14), jointMat);
         this.elbowGroup.add(trochleaMesh);
+        this.trochleaMesh = trochleaMesh;
 
         // --- FOREARM: DUAL BONES (RADIUS & ULNA) + TRANSLUCENT MUSCLE ---
         // 1. Radius (Lateral / Thumb side - slender at elbow, expands broadly at wrist)
@@ -4687,6 +4705,7 @@ const AIRPORT_LEXICON_30 = [
         const radialStyloid = new THREE.Mesh(new THREE.ConeGeometry(0.35, 0.7, 8), jointMat);
         radialStyloid.position.set(0, -this.L2 / 2, 0.25);
         this.radiusBone.add(radialStyloid);
+        this.radialStyloid = radialStyloid;
 
         // 2. Ulna (Medial / Pinky side - thick at elbow, slender styloid at wrist)
         this.ulnaBone = new THREE.Mesh(createAnatomicalLimbBoneGeometry(this.L2, 0.40, 0.95, 1.60), innerBoneMat);
@@ -4694,6 +4713,7 @@ const AIRPORT_LEXICON_30 = [
         const ulnarStyloid = new THREE.Mesh(new THREE.ConeGeometry(0.28, 0.6, 8), jointMat);
         ulnarStyloid.position.set(0, -this.L2 / 2, 0);
         this.ulnaBone.add(ulnarStyloid);
+        this.ulnarStyloid = ulnarStyloid;
 
         // Translucent See-Through Forearm Musculature (Brachioradialis / Flexors / Extensors)
         const forearmMuscleGeo = new THREE.CylinderGeometry(1.10, 1.65, this.L2 * 0.94, 16);
@@ -5431,6 +5451,171 @@ const AIRPORT_LEXICON_30 = [
       }
     }
 
+    // =========================================================================
+    // DYNAMIC HIGH-CONTRAST HAND COLOR CODING & VISUAL CLARITY ENGINE
+    // Distinctive contrasting palettes across fingers and dominant (Right) vs non-dominant (Left) hands
+    // =========================================================================
+    const HandColorEngine = {
+      currentMode: 'contrast', // 'contrast' | 'dual' | 'mono'
+      materials: null,
+
+      init() {
+        this.materials = {
+          // 1. Classic Monochrome
+          boneMono: new THREE.MeshStandardMaterial({ color: 0xeee7db, roughness: 0.38, metalness: 0.02 }),
+          jointMono: new THREE.MeshStandardMaterial({ color: 0xded5c4, roughness: 0.32, metalness: 0.03 }),
+          muscleMono: new THREE.MeshStandardMaterial({ color: 0xc8daf0, roughness: 0.22, metalness: 0.08, transparent: true, opacity: 0.28, depthWrite: false }),
+
+          // 2. Dual Biaxial (Dominant Right: Cyan / Non-Dominant Left: Coral Amber)
+          boneR: new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.32, metalness: 0.04 }),
+          jointR: new THREE.MeshStandardMaterial({ color: 0x0ea5e9, roughness: 0.28, metalness: 0.06 }),
+          muscleR: new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.18, metalness: 0.08, transparent: true, opacity: 0.28, depthWrite: false }),
+
+          boneL: new THREE.MeshStandardMaterial({ color: 0xfb923c, roughness: 0.32, metalness: 0.04 }),
+          jointL: new THREE.MeshStandardMaterial({ color: 0xf97316, roughness: 0.28, metalness: 0.06 }),
+          muscleL: new THREE.MeshStandardMaterial({ color: 0xfb923c, roughness: 0.18, metalness: 0.08, transparent: true, opacity: 0.28, depthWrite: false }),
+
+          // 3. Multi-Finger Contrasting (Thumb=Amber, Index=Cyan, Middle=Purple, Ring=Green, Pinky=Rose)
+          fingers: {
+            thm: {
+              bone: new THREE.MeshStandardMaterial({ color: 0xfbbf24, roughness: 0.32, metalness: 0.04 }),
+              joint: new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.26, metalness: 0.06 }),
+              muscle: new THREE.MeshStandardMaterial({ color: 0xfde68a, roughness: 0.20, metalness: 0.06, transparent: true, opacity: 0.26, depthWrite: false })
+            },
+            idx: {
+              bone: new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.32, metalness: 0.04 }),
+              joint: new THREE.MeshStandardMaterial({ color: 0x0ea5e9, roughness: 0.26, metalness: 0.06 }),
+              muscle: new THREE.MeshStandardMaterial({ color: 0xbae6fd, roughness: 0.20, metalness: 0.06, transparent: true, opacity: 0.26, depthWrite: false })
+            },
+            mid: {
+              bone: new THREE.MeshStandardMaterial({ color: 0xc084fc, roughness: 0.32, metalness: 0.04 }),
+              joint: new THREE.MeshStandardMaterial({ color: 0xa855f7, roughness: 0.26, metalness: 0.06 }),
+              muscle: new THREE.MeshStandardMaterial({ color: 0xe9d5ff, roughness: 0.20, metalness: 0.06, transparent: true, opacity: 0.26, depthWrite: false })
+            },
+            rng: {
+              bone: new THREE.MeshStandardMaterial({ color: 0x34d399, roughness: 0.32, metalness: 0.04 }),
+              joint: new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.26, metalness: 0.06 }),
+              muscle: new THREE.MeshStandardMaterial({ color: 0xa7f3d0, roughness: 0.20, metalness: 0.06, transparent: true, opacity: 0.26, depthWrite: false })
+            },
+            pnk: {
+              bone: new THREE.MeshStandardMaterial({ color: 0xfb7185, roughness: 0.32, metalness: 0.04 }),
+              joint: new THREE.MeshStandardMaterial({ color: 0xf43f5e, roughness: 0.26, metalness: 0.06 }),
+              muscle: new THREE.MeshStandardMaterial({ color: 0xfecdd3, roughness: 0.20, metalness: 0.06, transparent: true, opacity: 0.26, depthWrite: false })
+            }
+          },
+          carpalR: new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.34, metalness: 0.03 }),
+          carpalL: new THREE.MeshStandardMaterial({ color: 0xffedd5, roughness: 0.34, metalness: 0.03 })
+        };
+      },
+
+      setMode(mode) {
+        this.currentMode = mode;
+        this.apply();
+        document.querySelectorAll('.btn-hand-color').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.color === mode);
+        });
+      },
+
+      apply() {
+        if (!this.materials) return;
+        const mode = this.currentMode;
+        const mats = this.materials;
+
+        const hands = [
+          { hand: window.handR, arm: typeof armR !== 'undefined' ? armR : window.armR, isLeft: false },
+          { hand: window.handL, arm: typeof armL !== 'undefined' ? armL : window.armL, isLeft: true }
+        ];
+
+        hands.forEach(({ hand, arm, isLeft }) => {
+          if (!hand) return;
+
+          // Soft tissue & muscles
+          const palmMat = (mode === 'mono') ? mats.muscleMono : (isLeft ? mats.muscleL : mats.muscleR);
+          if (hand.palmarMuscleMesh) hand.palmarMuscleMesh.material = palmMat;
+          if (hand.thenarMuscleMesh) hand.thenarMuscleMesh.material = palmMat;
+
+          // Carpals
+          const carpalMat = (mode === 'mono') ? mats.boneMono : (mode === 'dual' ? (isLeft ? mats.boneL : mats.boneR) : (isLeft ? mats.carpalL : mats.carpalR));
+          if (hand.carpalMeshes) {
+            hand.carpalMeshes.forEach(m => { m.material = carpalMat; });
+          }
+
+          // Metacarpals & Condyles
+          if (hand.metacarpalMeshes) {
+            Object.entries(hand.metacarpalMeshes).forEach(([id, mc]) => {
+              if (mode === 'contrast') {
+                mc.shaft.material = isLeft ? mats.carpalL : mats.carpalR;
+                if (mats.fingers[id]) mc.condyle.material = mats.fingers[id].joint;
+              } else if (mode === 'dual') {
+                mc.shaft.material = isLeft ? mats.boneL : mats.boneR;
+                mc.condyle.material = isLeft ? mats.jointL : mats.jointR;
+              } else {
+                mc.shaft.material = mats.boneMono;
+                mc.condyle.material = mats.jointMono;
+              }
+            });
+          }
+
+          // Fingers
+          if (hand.fingerMeshMap) {
+            Object.entries(hand.fingerMeshMap).forEach(([id, fData]) => {
+              let bMat, mMat;
+              if (mode === 'contrast') {
+                bMat = mats.fingers[id] ? mats.fingers[id].bone : (isLeft ? mats.boneL : mats.boneR);
+                mMat = mats.fingers[id] ? mats.fingers[id].muscle : palmMat;
+              } else if (mode === 'dual') {
+                bMat = isLeft ? mats.boneL : mats.boneR;
+                mMat = isLeft ? mats.muscleL : mats.muscleR;
+              } else {
+                bMat = mats.boneMono;
+                mMat = mats.muscleMono;
+              }
+              if (fData.bones) fData.bones.forEach(b => { b.material = bMat; });
+              if (fData.muscles) fData.muscles.forEach(m => { m.material = mMat; });
+            });
+          }
+
+          // Master Gimbal Ring
+          if (hand.masterRingMat) {
+            hand.masterRingMat.color.setHex(isLeft ? 0xf97316 : 0x0ea5e9);
+          }
+
+          // Arm limb
+          if (arm) {
+            const armBoneMat = (mode === 'mono') ? mats.boneMono : (mode === 'dual' ? (isLeft ? mats.boneL : mats.boneR) : (isLeft ? mats.carpalL : mats.carpalR));
+            const armJointMat = (mode === 'mono') ? mats.jointMono : (isLeft ? mats.jointL : mats.jointR);
+            const armMuscMat = (mode === 'mono') ? mats.muscleMono : (isLeft ? mats.muscleL : mats.muscleR);
+
+            if (arm.humerusBone) arm.humerusBone.material = armBoneMat;
+            if (arm.radiusBone) arm.radiusBone.material = armBoneMat;
+            if (arm.ulnaBone) arm.ulnaBone.material = armBoneMat;
+            if (arm.olecranonMesh) arm.olecranonMesh.material = armBoneMat;
+
+            if (arm.socketMesh) arm.socketMesh.material = armJointMat;
+            if (arm.humeralHead) arm.humeralHead.material = armJointMat;
+            if (arm.epicondyleMesh) arm.epicondyleMesh.material = armJointMat;
+            if (arm.trochleaMesh) arm.trochleaMesh.material = armJointMat;
+            if (arm.radialStyloid) arm.radialStyloid.material = armJointMat;
+            if (arm.ulnarStyloid) arm.ulnarStyloid.material = armJointMat;
+
+            if (arm.humerusMuscle) arm.humerusMuscle.material = armMuscMat;
+            if (arm.forearmMuscle) arm.forearmMuscle.material = armMuscMat;
+          }
+        });
+
+        // Resting Left Arm
+        if (window.staticLeftArmGroup && window.staticLeftArmGroup.children) {
+          const restHandGroup = window.staticLeftArmGroup.children.find(c => c.children && c.children.length >= 5);
+          if (restHandGroup) {
+            restHandGroup.children.forEach(c => {
+              c.material = (mode === 'mono') ? stickmanMat : mats.muscleL;
+            });
+          }
+        }
+      }
+    };
+    window.HandColorEngine = HandColorEngine;
+
     // --- ANATOMICAL HAND RIG ---
     class AnatomicalHand {
       constructor(isLeft, defaultX) {
@@ -5475,6 +5660,7 @@ const AIRPORT_LEXICON_30 = [
           { name: "hamate", pos: [sign * -0.68, 0.15, 0.10], scale: [0.52, 0.54, 0.48] }      // MC IV & V base
         ];
 
+        this.carpalMeshes = [];
         carpalDefs.forEach(c => {
           const cGeo = new THREE.DodecahedronGeometry(0.32, 1);
           const cMesh = new THREE.Mesh(cGeo, carpalMat);
@@ -5482,6 +5668,7 @@ const AIRPORT_LEXICON_30 = [
           cMesh.position.set(c.pos[0], c.pos[1], c.pos[2]);
           cMesh.castShadow = true;
           carpalsGroup.add(cMesh);
+          this.carpalMeshes.push(cMesh);
         });
 
         // Hamate hook (hamulus) protruding anteriorly on the ulnar side
@@ -5490,6 +5677,7 @@ const AIRPORT_LEXICON_30 = [
         hookMesh.position.set(sign * -0.68, 0.22, 0.46);
         hookMesh.rotation.x = Math.PI * 0.45;
         carpalsGroup.add(hookMesh);
+        this.carpalMeshes.push(hookMesh);
         palmGroup.add(carpalsGroup);
 
         // --- AUTHENTIC ANATOMICAL METACARPAL RAY ARCHITECTURE (Paul Jarrett Osteology) ---
@@ -5501,6 +5689,7 @@ const AIRPORT_LEXICON_30 = [
           { id: 'pnk', name: 'MC V', base: [-1.1, 0.20, -0.05], head: [-2.0, 4.6, -0.05], r: 0.25 }
         ];
 
+        this.metacarpalMeshes = {};
         mcDefs.forEach(mc => {
           const pBase = new THREE.Vector3(sign * mc.base[0], mc.base[1], mc.base[2]);
           const pHead = new THREE.Vector3(sign * mc.head[0], mc.head[1], mc.head[2]);
@@ -5523,6 +5712,8 @@ const AIRPORT_LEXICON_30 = [
           const condyle = new THREE.Mesh(condyleGeo, jointMat);
           condyle.position.copy(pHead);
           palmGroup.add(condyle);
+
+          this.metacarpalMeshes[mc.id] = { shaft: mcMesh, condyle: condyle };
         });
 
         // Translucent See-Through Palmar Soft Tissue & Thenar Eminence
@@ -5531,6 +5722,7 @@ const AIRPORT_LEXICON_30 = [
         palmMuscle.position.set(0.0, 2.5, 0.1);
         palmMuscle.raycast = () => {};
         palmGroup.add(palmMuscle);
+        this.palmarMuscleMesh = palmMuscle;
 
         const thenarGeo = new THREE.SphereGeometry(1.0, 12, 12);
         thenarGeo.scale(1.1, 1.45, 0.95);
@@ -5538,6 +5730,7 @@ const AIRPORT_LEXICON_30 = [
         thenarMesh.position.set(sign * 1.8, 1.1, 0.45);
         thenarMesh.raycast = () => {};
         palmGroup.add(thenarMesh);
+        this.thenarMuscleMesh = thenarMesh;
 
         this.root.add(palmGroup);
 
@@ -5553,6 +5746,7 @@ const AIRPORT_LEXICON_30 = [
       }
 
       initFinger(id, name, color, basePos, L, isThumb) {
+        this.fingerMeshMap = this.fingerMeshMap || {};
         const sign = this.isLeft ? -1 : 1;
         const gBase = new THREE.Group(); 
         gBase.position.fromArray(basePos); 
@@ -5600,6 +5794,10 @@ const AIRPORT_LEXICON_30 = [
         const ik3 = new IKNode(L[2]); ik2.child = ik3; ik3.parent = ik2;
         
         const gTip = new THREE.Group(); gTip.position.y = L[2]; g3.add(gTip);
+        this.fingerMeshMap[id] = {
+          bones: [p1Mesh, p2Mesh, p3Mesh],
+          muscles: [p1Muscle, p2Muscle, p3Muscle]
+        };
 
         // Invisible Target Object for local finger tracking
         const tgtGroup = new THREE.Group();
@@ -5621,11 +5819,12 @@ const AIRPORT_LEXICON_30 = [
           // Sleek minimalist gimbal ring
           const ringGeo = new THREE.RingGeometry(0.24, 0.34, 32);
           const ringMat = new THREE.MeshBasicMaterial({ 
-            color: this.isLeft ? 0xd946ef : 0x0ea5e9, 
+            color: this.isLeft ? 0xf97316 : 0x0ea5e9, 
             transparent: true, 
             opacity: 0.80, 
             side: THREE.DoubleSide 
           });
+          this.masterRingMat = ringMat;
           const ringMesh = new THREE.Mesh(ringGeo, ringMat);
           masterGroup.add(ringMesh);
 
@@ -6237,6 +6436,10 @@ const AIRPORT_LEXICON_30 = [
     // --- INSTANTIATE ARTICULATED HANDS ---
     const handR = window.handR = new AnatomicalHand(false, 1.5);
     const handL = window.handL = new AnatomicalHand(true, -6.5);
+
+    // Initialize Dynamic Hand Contrast & Visual Clarity Engine
+    HandColorEngine.init();
+    HandColorEngine.setMode('contrast');
 
     // --- CCD IK SOLVER FUNCTION ---
     function ccdStep(node, targetPos, limits, restPose, isHinge, isThumb = false) {
