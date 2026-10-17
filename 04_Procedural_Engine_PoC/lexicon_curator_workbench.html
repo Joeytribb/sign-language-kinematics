@@ -1144,6 +1144,178 @@
       box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
     }
 
+    /* Island Greeting Strip */
+    .island-greeting-strip {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 3px 0;
+      margin-top: 1px;
+    }
+    .island-greeting-strip::-webkit-scrollbar { display: none; }
+
+    .island-greeting-pill {
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 3px 9px;
+      border-radius: 9999px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .island-greeting-pill:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+    .island-greeting-pill.active {
+      background: rgba(14, 165, 233, 0.25);
+      border-color: #38bdf8;
+      color: #38bdf8;
+      box-shadow: 0 0 12px rgba(14, 165, 233, 0.4);
+    }
+
+    /* Pro Studio Guide Banner (Inside Curation Console) */
+    .pro-guide-banner {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.12), rgba(20, 22, 28, 0.95));
+      border: 1px solid rgba(14, 165, 233, 0.35);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+    .pro-guide-banner-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .pro-guide-banner-title {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #38bdf8;
+    }
+    .pro-guide-dismiss-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 11px;
+      line-height: 1;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+    .pro-guide-dismiss-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .pro-guide-banner-desc {
+      font-size: 10px;
+      line-height: 1.45;
+      color: rgba(255, 255, 255, 0.85);
+      margin: 0;
+    }
+    .pro-guide-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 2px;
+    }
+    .pro-guide-item {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      padding: 6px 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .pro-guide-num {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 800;
+      color: #38bdf8;
+      background: rgba(14, 165, 233, 0.2);
+      border-radius: 3px;
+      padding: 1px 4px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .pro-guide-txt {
+      font-size: 9px;
+      line-height: 1.35;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    .pro-guide-txt strong {
+      color: #ffffff;
+    }
+    .pro-guide-banner-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 2px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .pro-guide-action-btn {
+      background: rgba(14, 165, 233, 0.2);
+      border: 1px solid rgba(14, 165, 233, 0.4);
+      color: #38bdf8;
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .pro-guide-action-btn:hover {
+      background: #0ea5e9;
+      color: #ffffff;
+    }
+
+    /* Full Pro Guide Modal */
+    .pro-guide-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(10, 11, 14, 0.85);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      z-index: 210;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .pro-guide-modal-card {
+      max-width: 640px;
+      width: 100%;
+      background: #17181d;
+      border: 1px solid rgba(14, 165, 233, 0.35);
+      border-radius: 20px;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.9), 0 0 24px rgba(14, 165, 233, 0.2);
+      padding: 26px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      color: #f4f4f2;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
     /* =========================================================================
        ONBOARDING WELCOME MODAL
        ========================================================================= */
@@ -1844,6 +2016,16 @@
             </div>
             <span id="island-item-counter" class="island-step-counter">1 / 30</span>
           </div>
+
+          <!-- Welcome Greeting Phrase Strip -->
+          <div id="island-greeting-strip" class="island-greeting-strip" style="display:none;">
+            <button class="island-greeting-pill active" data-step="0" onclick="LexiconWorkbench.playWelcomePhrase(0)">👋 1. HI</button>
+            <button class="island-greeting-pill" data-step="1" onclick="LexiconWorkbench.playWelcomePhrase(1)">2. My Name is</button>
+            <button class="island-greeting-pill" data-step="2" onclick="LexiconWorkbench.playWelcomePhrase(2)">3. SammY</button>
+            <button class="island-greeting-pill" data-step="3" onclick="LexiconWorkbench.playWelcomePhrase(3)">4. How are you</button>
+            <button class="island-greeting-pill" style="color:#00e599; border-color:rgba(0,229,153,0.3);" onclick="LexiconWorkbench.exitWelcomeSequence(0)" title="Skip to 30 Core ASL Words">30 SIGNS ↗</button>
+          </div>
+
           <div id="island-sign-formation" class="island-formation-desc">
             Hydration / liquid (English: water). 'W' hand taps index side against chin twice.
           </div>
@@ -1863,6 +2045,7 @@
             <button id="island-play-btn" class="island-main-play-btn" onclick="LexiconWorkbench.togglePlayPause()" title="Play / Pause Motion (Space)">⏸ PAUSE</button>
             <button class="island-icon-btn" onclick="LexiconWorkbench.nextItem()" title="Next Sign (Shortcut: ] )">►</button>
             <button class="island-icon-btn-secondary" onclick="LexiconWorkbench.replayCurrent()" title="Replay Sign from Start (R)">↺</button>
+            <button class="island-icon-btn-secondary" onclick="LexiconWorkbench.startWelcomeSequence()" title="Replay Sammy's Welcome Greeting (HI, My Name is, SammY, How are you)">👋</button>
           </div>
 
           <div class="island-scrubber-cluster">
@@ -1943,6 +2126,71 @@
             </button>
             <button class="onboarding-btn-primary" onclick="LexiconWorkbench.closeOnboardingModal(false)">
               EXPLORE SIGNS
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pro Studio Introduction Modal -->
+      <div id="pro-guide-modal" class="pro-guide-modal-overlay" style="display: none;" onclick="if(event.target===this) LexiconWorkbench.closeProGuideModal()">
+        <div class="pro-guide-modal-card" onclick="event.stopPropagation()">
+          <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:12px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="background:rgba(14,165,233,0.2); border:1px solid rgba(14,165,233,0.4); color:#38bdf8; font-family:var(--font-mono); font-size:9px; font-weight:800; padding:2px 8px; border-radius:4px;">PRO STUDIO GUIDE</span>
+              <h2 style="font-family:var(--font-body); font-size:18px; font-weight:800; color:#ffffff; margin:0;">How to Use Pro Curator Studio</h2>
+            </div>
+            <button onclick="LexiconWorkbench.closeProGuideModal()" style="background:transparent; border:none; color:var(--text-muted); font-size:16px; cursor:pointer; padding:4px 8px; border-radius:4px;">✕</button>
+          </div>
+
+          <p style="font-size:11.5px; line-height:1.55; color:var(--text-muted); margin:0;">
+            The <strong>Pro Curator Studio</strong> exposes the raw deterministic mathematical foundation of our ASL synthesis engine. Here is how to author and curate procedural signs:
+          </p>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:10px; padding:12px;">
+              <div style="font-family:var(--font-mono); font-size:10px; font-weight:800; color:#38bdf8; margin-bottom:4px;">01 // PHONOLOGY EDIT &lang;H,L,M,O,B&rang;</div>
+              <p style="font-size:10.5px; line-height:1.45; color:rgba(255,255,255,0.8); margin:0;">
+                Select from <strong>38 ASL-LEX handshapes</strong>, <strong>66 bilateral spatial loci</strong>, wrist Euler angles, and contact movement trajectories. Changes update in real time at 60 FPS.
+              </p>
+            </div>
+
+            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:10px; padding:12px;">
+              <div style="font-family:var(--font-mono); font-size:10px; font-weight:800; color:#38bdf8; margin-bottom:4px;">02 // 3D SPATIAL NUDGE MATRIX</div>
+              <p style="font-size:10.5px; line-height:1.45; color:rgba(255,255,255,0.8); margin:0;">
+                Micro-adjust hand position along $X, Y, Z$ axes (±12 cm) and wrist roll/pitch/yaw (±60°). Use the ±0.5 nudge buttons for sub-millimeter precision.
+              </p>
+            </div>
+
+            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:10px; padding:12px;">
+              <div style="font-family:var(--font-mono); font-size:10px; font-weight:800; color:#38bdf8; margin-bottom:4px;">03 // H1 &amp; H2 DUAL-HAND TABS</div>
+              <p style="font-size:10.5px; line-height:1.45; color:rgba(255,255,255,0.8); margin:0;">
+                Switch between Dominant (H1) and Non-Dominant (H2) tabs. Curate base handshapes, target touch landmarks (e.g., palm center, dorsal wrist), and bilateral mirroring.
+              </p>
+            </div>
+
+            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:10px; padding:12px;">
+              <div style="font-family:var(--font-mono); font-size:10px; font-weight:800; color:#38bdf8; margin-bottom:4px;">04 // CLEARANCE HUD &amp; AUDIT</div>
+              <p style="font-size:10.5px; line-height:1.45; color:rgba(255,255,255,0.8); margin:0;">
+                Live HUD monitors torso/hand clearances and elbow angles. Click <strong>⚡ AUTO-AUDIT</strong> in the header to run batch clearance validation across the entire lexicon.
+              </p>
+            </div>
+          </div>
+
+          <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:10px 14px;">
+            <div style="font-family:var(--font-mono); font-size:9px; font-weight:800; color:var(--text-dim); text-transform:uppercase; margin-bottom:6px;">PRO KEYBOARD WORKFLOW</div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; font-family:var(--font-mono); font-size:9.5px; color:rgba(255,255,255,0.85);">
+              <span><kbd style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); padding:1px 5px; border-radius:3px;">P</kbd> or <kbd style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); padding:1px 5px; border-radius:3px;">ESC</kbd> Minimal/Pro Mode</span>
+              <span><kbd style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); padding:1px 5px; border-radius:3px;">[</kbd> <kbd style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); padding:1px 5px; border-radius:3px;">]</kbd> Step Signs</span>
+              <span><kbd style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); padding:1px 5px; border-radius:3px;">Space</kbd> Play/Pause</span>
+              <span><kbd style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); padding:1px 5px; border-radius:3px;">R</kbd> Replay</span>
+              <span><kbd style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); padding:1px 5px; border-radius:3px;">V</kbd> Verify</span>
+              <span><kbd style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); padding:1px 5px; border-radius:3px;">Tab</kbd> Toggle Console</span>
+            </div>
+          </div>
+
+          <div style="display:flex; align-items:center; justify-content:flex-end; gap:10px; padding-top:6px; border-top:1px solid rgba(255,255,255,0.08);">
+            <button onclick="LexiconWorkbench.closeProGuideModal()" style="background:#0ea5e9; border:1px solid #38bdf8; color:#ffffff; font-family:var(--font-mono); font-size:10px; font-weight:800; padding:8px 18px; border-radius:8px; cursor:pointer; box-shadow:0 0 16px rgba(14,165,233,0.4); transition:all 0.15s;">
+              START CURATING &rarr;
             </button>
           </div>
         </div>
@@ -2032,6 +2280,42 @@
     <!-- RIGHT STAGE: HARDWARE CURATION CONSOLE PANE -->
     <div id="curation-console-pane">
       
+      <!-- Pro Studio Introduction Banner -->
+      <div id="pro-studio-guide-banner" class="pro-guide-banner">
+        <div class="pro-guide-banner-header">
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span class="pro-guide-icon">⚡</span>
+            <span class="pro-guide-banner-title">PRO CURATOR STUDIO // HOW TO USE</span>
+          </div>
+          <button class="pro-guide-dismiss-btn" onclick="LexiconWorkbench.dismissProGuideBanner()" title="Dismiss Guide Banner">✕</button>
+        </div>
+        <p class="pro-guide-banner-desc">
+          Low-level deterministic biomechanical authoring suite. Modify 24-DOF bone articulation, 66 3D spatial loci, and dual-hand interaction.
+        </p>
+        <div class="pro-guide-grid">
+          <div class="pro-guide-item">
+            <span class="pro-guide-num">01</span>
+            <span class="pro-guide-txt"><strong>Recipe Edit:</strong> Tune phonological primitives &lang;H, L, M, O, B&rang; across ASL-LEX 2.0 taxonomy.</span>
+          </div>
+          <div class="pro-guide-item">
+            <span class="pro-guide-num">02</span>
+            <span class="pro-guide-txt"><strong>Spatial Fine-Tune:</strong> Nudge position ($X,Y,Z$) and wrist attitude in real-time space.</span>
+          </div>
+          <div class="pro-guide-item">
+            <span class="pro-guide-num">03</span>
+            <span class="pro-guide-txt"><strong>H1 / H2 Dual-Hand:</strong> Switch tabs to customize non-dominant hand base shelf and contact points.</span>
+          </div>
+          <div class="pro-guide-item">
+            <span class="pro-guide-num">04</span>
+            <span class="pro-guide-txt"><strong>Recipe Code:</strong> Copy verified JSON recipe blocks or export patch in header.</span>
+          </div>
+        </div>
+        <div class="pro-guide-banner-footer">
+          <span style="font-family:var(--font-mono); font-size:8px; color:var(--text-dim);">Shortcuts: [ / ] step &bull; Space play/pause &bull; P exit</span>
+          <button class="pro-guide-action-btn" onclick="LexiconWorkbench.openProGuideModal()">FULL MANUAL &amp; SHORTCUTS &rarr;</button>
+        </div>
+      </div>
+
       <!-- Rack A: Active Item Identity -->
       <div class="rack-section">
         <div class="rack-title">
@@ -2396,6 +2680,89 @@
     }
     const ASL_ALPHABET = compileASLJSON(LLM_ASL_DICTIONARY);
     window.ASL_ALPHABET = ASL_ALPHABET;
+
+
+    // --- SAMMY'S AVATAR WELCOME GREETING SEQUENCE ---
+    const WELCOME_SEQUENCE = [
+      {
+        lemma: "hi",
+        name: "HI / HELLO",
+        category: "Welcome Greeting",
+        signType: "OneHanded",
+        desc: "ASL greeting wave: dominant Open-B handshape initiates at temple locus with anterior arc and smiling affect.",
+        emotion: "happy",
+        recipe: {
+          name: "HI",
+          handshape: "open_b",
+          location: "temple",
+          orientation: "PALM_ANTERIOR",
+          movement: "ARC_CORONAL",
+          bilateral: "UNILATERAL",
+          fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+        }
+      },
+      {
+        lemma: "my_name_is",
+        name: "MY NAME IS...",
+        category: "Welcome Greeting",
+        signType: "TwoHanded",
+        desc: "Dominant and non-dominant H-handshapes tapping in contact at neutral space (ASL 'NAME').",
+        emotion: "happy",
+        recipe: {
+          name: "MY NAME IS",
+          handshape: "h",
+          location: "neutral_mid",
+          orientation: "PALM_CONTRALATERAL",
+          movement: "TAP_2X",
+          bilateral: "ASYMMETRIC_BASE",
+          baseHandshape: "h",
+          contactEffector: "INDEX_TIP",
+          baseContactPart: "INDEX_DORSAL",
+          fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+        }
+      },
+      {
+        lemma: "sammy",
+        name: "S-A-M-M-Y",
+        category: "Welcome Greeting",
+        signType: "OneHanded",
+        desc: "Sequential ASL manual fingerspelling spelling out S-A-M-M-Y at neutral chest locus.",
+        emotion: "happy",
+        isFingerspelling: true,
+        letters: ["s", "a", "m", "m", "y"],
+        recipe: {
+          name: "SAMMY",
+          handshape: "s",
+          location: "neutral_high",
+          orientation: "PALM_ANTERIOR",
+          movement: "LINEAR_LATERAL",
+          bilateral: "UNILATERAL",
+          isFingerspelling: true,
+          letters: ["s", "a", "m", "m", "y"],
+          fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+        }
+      },
+      {
+        lemma: "how_are_you",
+        name: "HOW ARE YOU?",
+        category: "Welcome Greeting",
+        signType: "TwoHanded",
+        desc: "Bilateral open palms rolling forward to point inquiringly with raised brow question affect.",
+        emotion: "question",
+        recipe: {
+          name: "HOW ARE YOU",
+          handshape: "open_b",
+          endHandshape: "1",
+          location: "neutral_mid",
+          endLocation: "neutral_far",
+          orientation: "PALM_SUPINE",
+          movement: "ARC_SAGITTAL",
+          bilateral: "BILATERAL_SYMMETRIC",
+          fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+        }
+      }
+    ];
+    window.WELCOME_SEQUENCE = WELCOME_SEQUENCE;
 
     // --- TOP 30 MOST USED ENGLISH WORDS (CORE CONVERSATIONAL ASL LEXICON) ---
 const TOP_30_ENGLISH_WORDS = [
@@ -4252,6 +4619,8 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           contactEffector: (recipe && recipe.contactEffector && recipe.contactEffector !== "") ? recipe.contactEffector : "AUTO",
           endHandshape: (recipe && recipe.endHandshape && recipe.endHandshape !== 'none') ? recipe.endHandshape : "none",
           endLocation: (recipe && recipe.endLocation && recipe.endLocation !== 'none') ? recipe.endLocation : "none",
+          isFingerspelling: !!(recipe && recipe.isFingerspelling),
+          letters: (recipe && recipe.letters) ? [...recipe.letters] : null,
           fineTune: cleanFineTune
         };
         const rec = this.activeRecipe;
@@ -5665,6 +6034,92 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
       }
     };
     window.StickmanEmotionEngine = StickmanEmotionEngine;
+
+    // =========================================================================
+    // PROCEDURAL WEB AUDIO SYNTHESIZER (ZERO-DEPENDENCY ACOUSTIC SWISH ENGINE)
+    // =========================================================================
+    const SoundEngine = {
+      ctx: null,
+      noiseBuffer: null,
+
+      init() {
+        if (this.ctx) return;
+        try {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) {
+            this.ctx = new AudioCtx();
+            // Pre-bake 1-second pink/white noise buffer for zero-lag playback
+            const bufferSize = this.ctx.sampleRate * 1.0;
+            this.noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+            const output = this.noiseBuffer.getChannelData(0);
+            let b0 = 0, b1 = 0, b2 = 0;
+            for (let i = 0; i < bufferSize; i++) {
+              const white = Math.random() * 2 - 1;
+              b0 = 0.99886 * b0 + white * 0.0555179;
+              b1 = 0.99332 * b1 + white * 0.0750759;
+              b2 = 0.96900 * b2 + white * 0.1538520;
+              output[i] = (b0 + b1 + b2 + white * 0.1) * 0.4;
+            }
+          }
+        } catch(e) {
+          console.warn("SoundEngine Web Audio initialization error:", e);
+        }
+      },
+
+      playSwish(isOpening = true) {
+        try {
+          this.init();
+          if (!this.ctx || !this.noiseBuffer) return;
+          if (this.ctx.state === 'suspended') {
+            this.ctx.resume();
+          }
+
+          const now = this.ctx.currentTime;
+          const duration = 0.32;
+
+          // 1. Noise Source
+          const source = this.ctx.createBufferSource();
+          source.buffer = this.noiseBuffer;
+
+          // 2. Dynamic Bandpass Sweeping Filter
+          const filter = this.ctx.createBiquadFilter();
+          filter.type = 'bandpass';
+          filter.Q.setValueAtTime(2.6, now);
+
+          // 3. Amplitude Envelope Gain
+          const gain = this.ctx.createGain();
+          gain.gain.setValueAtTime(0.0001, now);
+
+          if (isOpening) {
+            // Forward swoosh: rising pitch with energetic peak and soft landing
+            filter.frequency.setValueAtTime(450, now);
+            filter.frequency.exponentialRampToValueAtTime(2800, now + duration * 0.6);
+            filter.frequency.exponentialRampToValueAtTime(550, now + duration);
+
+            gain.gain.exponentialRampToValueAtTime(0.35, now + duration * 0.45);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+          } else {
+            // Reverse swoosh: declining pitch descending into minimal mode
+            filter.frequency.setValueAtTime(2400, now);
+            filter.frequency.exponentialRampToValueAtTime(420, now + duration);
+
+            gain.gain.exponentialRampToValueAtTime(0.28, now + duration * 0.3);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+          }
+
+          // Connect signal chain: Source -> Filter -> Gain -> Destination
+          source.connect(filter);
+          filter.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          source.start(now);
+          source.stop(now + duration);
+        } catch(e) {
+          console.warn("SoundEngine playback failed:", e);
+        }
+      }
+    };
+    window.SoundEngine = SoundEngine;
 
     // Pure Smooth White 3D Stick Figure Mannequin Materials (Classic Minimalist Character)
     const stickmanMat = new THREE.MeshStandardMaterial({
@@ -8478,6 +8933,11 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           if (playBtn) playBtn.innerText = "▶ PLAY";
           const islandPlayBtn = _hudDomCache['island-play-btn'] || (_hudDomCache['island-play-btn'] = document.getElementById('island-play-btn'));
           if (islandPlayBtn) islandPlayBtn.innerText = "▶ PLAY";
+
+          // Auto-advance welcome sequence if active
+          if (window.LexiconWorkbench && window.LexiconWorkbench.isInWelcomeSequence) {
+            window.LexiconWorkbench.onWelcomePhraseFinished();
+          }
         }
       }
       const strokeProgress = Math.min(1.0, strokeClock / STROKE_DURATION);
@@ -8514,15 +8974,34 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
 
         if (isPlayingSignMotion || strokeProgress > 0) {
           KinematicMovementSolver.evaluate(rec, phi, targetR, targetL, handR, handL, strokeProgress);
-          // Apply dynamic handshape morphing from start handshape to end handshape
-          if (rec._tokensEnd && rec._tokensStart) {
+          // Apply dynamic fingerspelling sequencing if active
+          if (rec.isFingerspelling && rec.letters && rec.letters.length > 0) {
+            const numLetters = rec.letters.length;
+            const letterIdx = Math.min(numLetters - 1, Math.floor(strokeProgress * numLetters));
+            const activeLetter = rec.letters[letterIdx];
+            if (PARAMETRIC_LEXICONS.handshapes[activeLetter]) {
+              const toks = PARAMETRIC_LEXICONS.handshapes[activeLetter].tokens;
+              if (handR.root.visible) handR.morphPose(toks, toks, 0.0);
+            }
+            const bHs = _hudDomCache['island-badge-handshape'] || (_hudDomCache['island-badge-handshape'] = document.getElementById('island-badge-handshape'));
+            if (bHs) bHs.innerText = "LETTER: " + activeLetter.toUpperCase();
+          } else if (rec._tokensEnd && rec._tokensStart) {
+            // Apply dynamic handshape morphing from start handshape to end handshape
             if (handR.root.visible) handR.morphPose(rec._tokensStart, rec._tokensEnd, strokeProgress);
             if (handL.root.visible && rec.bilateral === "BILATERAL_SYMMETRIC") handL.morphPose(rec._tokensStart, rec._tokensEnd, strokeProgress);
           }
         } else {
           // Rest pose at 0% progress
           KinematicMovementSolver.evaluate(rec, phi, targetR, targetL, handR, handL, 0.0);
-          if (rec._tokensStart) {
+          if (rec.isFingerspelling && rec.letters && rec.letters.length > 0) {
+            const activeLetter = rec.letters[0];
+            if (PARAMETRIC_LEXICONS.handshapes[activeLetter]) {
+              const toks = PARAMETRIC_LEXICONS.handshapes[activeLetter].tokens;
+              if (handR.root.visible) handR.morphPose(toks, toks, 0.0);
+            }
+            const bHs = _hudDomCache['island-badge-handshape'] || (_hudDomCache['island-badge-handshape'] = document.getElementById('island-badge-handshape'));
+            if (bHs) bHs.innerText = "LETTER: " + activeLetter.toUpperCase();
+          } else if (rec._tokensStart) {
             if (handR.root.visible) handR.morphPose(rec._tokensStart, rec._tokensStart, 0.0);
             if (handL.root.visible && rec.bilateral === "BILATERAL_SYMMETRIC") handL.morphPose(rec._tokensStart, rec._tokensStart, 0.0);
           }
@@ -8631,26 +9110,199 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
       overrides: {},
       activeWorkingRecipe: null,
       isProMode: false,
+      isInWelcomeSequence: false,
+      welcomeIndex: 0,
+      welcomeAutoTimer: null,
 
       init() {
         this.loadState();
         this.switchCategory('signs', 0);
         this.bindShortcuts();
         this.checkOnboardingFirstLaunch();
-        console.log("⚡ LexiconWorkbench initialized in Teenage Engineering Scandinavian Industrial theme.");
+
+        const urlParams = new URLSearchParams(window.location.search);
+        if (!urlParams.has('test')) {
+          this.startWelcomeSequence();
+        }
+        console.log("⚡ LexiconWorkbench initialized with Avatar Welcome Greeting & Pro Studio Guide.");
       },
 
       toggleProMode() {
         this.isProMode = !this.isProMode;
+        if (typeof SoundEngine !== 'undefined') {
+          SoundEngine.playSwish(this.isProMode);
+        }
         document.body.classList.toggle('pro-mode', this.isProMode);
         const lbl = document.getElementById('pro-mode-label');
         const icon = document.getElementById('pro-mode-icon');
         if (lbl) lbl.innerText = this.isProMode ? 'MINIMAL STUDIO' : 'PRO STUDIO • EDIT';
         if (icon) icon.innerText = this.isProMode ? '✕' : '⚡';
         this.showToast(this.isProMode ? "Entered Pro Curator Studio" : "Returned to Minimal Presentation Mode");
+        if (this.isProMode) {
+          this.checkProGuideFirstLaunch();
+        }
         if (typeof onWindowResize === 'function') {
           setTimeout(() => { onWindowResize(); }, 60);
         }
+      },
+
+      startWelcomeSequence() {
+        if (this.welcomeAutoTimer) {
+          clearTimeout(this.welcomeAutoTimer);
+          this.welcomeAutoTimer = null;
+        }
+        this.isInWelcomeSequence = true;
+        this.welcomeIndex = 0;
+        const strip = document.getElementById('island-greeting-strip');
+        if (strip) strip.style.display = 'flex';
+        this.playWelcomePhrase(0);
+      },
+
+      renderGreetingStrip() {
+        const strip = document.getElementById('island-greeting-strip');
+        if (!strip) return;
+        strip.querySelectorAll('.island-greeting-pill[data-step]').forEach(pill => {
+          const s = parseInt(pill.dataset.step, 10);
+          pill.classList.toggle('active', s === this.welcomeIndex);
+        });
+      },
+
+      playWelcomePhrase(idx) {
+        if (this.welcomeAutoTimer) {
+          clearTimeout(this.welcomeAutoTimer);
+          this.welcomeAutoTimer = null;
+        }
+        this.isInWelcomeSequence = true;
+        this.welcomeIndex = Math.max(0, Math.min(idx, WELCOME_SEQUENCE.length - 1));
+        const item = WELCOME_SEQUENCE[this.welcomeIndex];
+        this.renderGreetingStrip();
+
+        // Teardown previous animation queues
+        isPlayingSignMotion = false;
+        strokeClock = 0;
+        signMotionClock = 0;
+        if (typeof handR !== 'undefined' && handR) {
+          handR.animationQueue = [];
+          handR.isOscillating = false;
+          handR.oscillationTimer = 0;
+        }
+        if (typeof handL !== 'undefined' && handL) {
+          handL.animationQueue = [];
+          handL.isOscillating = false;
+          handL.oscillationTimer = 0;
+        }
+        if (typeof KinematicMovementSolver !== 'undefined') {
+          KinematicMovementSolver.activeWaypoints = null;
+          KinematicMovementSolver.currentRecipe = null;
+          KinematicMovementSolver.canonicalLoci = null;
+        }
+
+        // Set affect for this phrase
+        if (item.emotion && typeof StickmanEmotionEngine !== 'undefined') {
+          StickmanEmotionEngine.setEmotion(item.emotion);
+          document.querySelectorAll('.island-emotion-pill').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.emotion === item.emotion);
+          });
+        }
+
+        // Setup active recipe & synthesize
+        const rec = { ...item.recipe };
+        this.activeWorkingRecipe = rec;
+        UniversalSignCompiler.synthesize(rec, false);
+
+        strokeClock = 0;
+        isPlayingSignMotion = true;
+        const playBtn = document.getElementById('btn-transport-play');
+        if (playBtn) playBtn.innerText = "⏸ PAUSE";
+        const islandPlay = document.getElementById('island-play-btn');
+        if (islandPlay) islandPlay.innerText = "⏸ PAUSE";
+
+        this.updateDynamicIslandForWelcome(item);
+      },
+
+      updateDynamicIslandForWelcome(item) {
+        if (!item) return;
+        const lemmaEl = document.getElementById('island-sign-lemma');
+        const catEl = document.getElementById('island-sign-cat');
+        const countEl = document.getElementById('island-item-counter');
+        const formEl = document.getElementById('island-sign-formation');
+        const bHs = document.getElementById('island-badge-handshape');
+        const bLoc = document.getElementById('island-badge-locus');
+        const bOri = document.getElementById('island-badge-orientation');
+        const bMov = document.getElementById('island-badge-movement');
+        const bBil = document.getElementById('island-badge-bilateral');
+
+        if (lemmaEl) lemmaEl.innerText = item.name;
+        if (catEl) catEl.innerText = "WELCOME GREETING";
+        if (countEl) countEl.innerText = (this.welcomeIndex + 1) + " / " + WELCOME_SEQUENCE.length;
+        if (formEl) formEl.innerText = item.desc;
+
+        const rec = item.recipe || {};
+        if (bHs) bHs.innerText = "HS: " + (rec.isFingerspelling ? "FINGERSPELLING" : (rec.handshape || "—"));
+        if (bLoc) bLoc.innerText = "LOC: " + (rec.location || "—");
+        if (bOri) bOri.innerText = "ORI: " + (rec.orientation || "—");
+        if (bMov) bMov.innerText = "MOV: " + (rec.movement || "—");
+        if (bBil) bBil.innerText = rec.bilateral ? rec.bilateral.replace(/_/g, ' ') : "UNILATERAL";
+      },
+
+      onWelcomePhraseFinished() {
+        if (!this.isInWelcomeSequence) return;
+        if (this.welcomeIndex < WELCOME_SEQUENCE.length - 1) {
+          if (this.welcomeAutoTimer) clearTimeout(this.welcomeAutoTimer);
+          this.welcomeAutoTimer = setTimeout(() => {
+            if (this.isInWelcomeSequence) {
+              this.playWelcomePhrase(this.welcomeIndex + 1);
+            }
+          }, 650);
+        } else {
+          console.log("👋 Welcome sequence complete. User can re-trigger anytime or browse signs.");
+        }
+      },
+
+      exitWelcomeSequence(targetIndex = 0) {
+        if (this.welcomeAutoTimer) {
+          clearTimeout(this.welcomeAutoTimer);
+          this.welcomeAutoTimer = null;
+        }
+        this.isInWelcomeSequence = false;
+        const strip = document.getElementById('island-greeting-strip');
+        if (strip) strip.style.display = 'none';
+        this.switchCategory('signs', targetIndex);
+      },
+
+      openProGuideModal() {
+        const modal = document.getElementById('pro-guide-modal');
+        if (modal) modal.style.display = 'flex';
+      },
+
+      closeProGuideModal() {
+        const modal = document.getElementById('pro-guide-modal');
+        if (modal) modal.style.display = 'none';
+        try {
+          localStorage.setItem('ASL_PRO_GUIDE_SEEN', '1');
+        } catch(e) {}
+      },
+
+      dismissProGuideBanner() {
+        const banner = document.getElementById('pro-studio-guide-banner');
+        if (banner) banner.style.display = 'none';
+        try {
+          localStorage.setItem('ASL_PRO_GUIDE_BANNER_DISMISSED', '1');
+        } catch(e) {}
+      },
+
+      checkProGuideFirstLaunch() {
+        try {
+          const dismissed = localStorage.getItem('ASL_PRO_GUIDE_BANNER_DISMISSED');
+          const banner = document.getElementById('pro-studio-guide-banner');
+          if (banner && dismissed === '1') {
+            banner.style.display = 'none';
+          }
+          const seen = localStorage.getItem('ASL_PRO_GUIDE_SEEN');
+          if (!seen && this.isProMode) {
+            this.openProGuideModal();
+          }
+        } catch(e) {}
       },
 
       openOnboardingModal() {
@@ -8803,6 +9455,15 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
       },
 
       switchCategory(cat, targetIdx = 0) {
+        if (this.isInWelcomeSequence) {
+          if (this.welcomeAutoTimer) {
+            clearTimeout(this.welcomeAutoTimer);
+            this.welcomeAutoTimer = null;
+          }
+          this.isInWelcomeSequence = false;
+          const strip = document.getElementById('island-greeting-strip');
+          if (strip) strip.style.display = 'none';
+        }
         this.currentCategory = cat;
         this.items = this.getItemsForCategory(cat);
         this.currentIndex = Math.min(Math.max(0, targetIdx), Math.max(0, this.items.length - 1));
@@ -10120,11 +10781,21 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
       },
 
       prevItem() {
+        if (this.isInWelcomeSequence) {
+          if (this.welcomeIndex > 0) this.playWelcomePhrase(this.welcomeIndex - 1);
+          else this.playWelcomePhrase(WELCOME_SEQUENCE.length - 1);
+          return;
+        }
         if (this.currentIndex > 0) this.selectItem(this.currentIndex - 1);
         else this.selectItem(this.items.length - 1);
       },
 
       nextItem() {
+        if (this.isInWelcomeSequence) {
+          if (this.welcomeIndex < WELCOME_SEQUENCE.length - 1) this.playWelcomePhrase(this.welcomeIndex + 1);
+          else this.playWelcomePhrase(0);
+          return;
+        }
         if (this.currentIndex < this.items.length - 1) this.selectItem(this.currentIndex + 1);
         else this.selectItem(0);
       },
@@ -10146,6 +10817,10 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
       },
 
       replayCurrent() {
+        if (this.isInWelcomeSequence) {
+          this.playWelcomePhrase(this.welcomeIndex);
+          return;
+        }
         strokeClock = 0;
         isPlayingSignMotion = true;
         const btn = document.getElementById('btn-transport-play');
@@ -10337,6 +11012,11 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
       bindShortcuts() {
         window.addEventListener('keydown', (e) => {
           if (e.key === 'Escape') {
+            const pgm = document.getElementById('pro-guide-modal');
+            if (pgm && pgm.style.display !== 'none') {
+              this.closeProGuideModal();
+              return;
+            }
             const onb = document.getElementById('onboarding-modal');
             if (onb && onb.style.display !== 'none') {
               this.closeOnboardingModal(false);
