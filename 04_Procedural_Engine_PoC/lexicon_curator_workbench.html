@@ -2054,9 +2054,9 @@
           </div>
 
           <div class="island-speed-cluster">
+            <button class="island-speed-btn active" data-speed="0.25" onclick="LexiconWorkbench.setSpeed(0.25)">0.25x</button>
             <button class="island-speed-btn" data-speed="0.5" onclick="LexiconWorkbench.setSpeed(0.5)">0.5x</button>
-            <button class="island-speed-btn active" data-speed="1.0" onclick="LexiconWorkbench.setSpeed(1.0)">1.0x</button>
-            <button class="island-speed-btn" data-speed="1.5" onclick="LexiconWorkbench.setSpeed(1.5)">1.5x</button>
+            <button class="island-speed-btn" data-speed="1.0" onclick="LexiconWorkbench.setSpeed(1.0)">1.0x</button>
           </div>
         </div>
 
@@ -2270,9 +2270,9 @@
         <span id="transport-scrub-val" style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted); min-width:32px;">0%</span>
 
         <div style="display:flex; gap:2px;">
-          <button class="transport-btn speed-btn" data-speed="0.25" onclick="LexiconWorkbench.setSpeed(0.25)">0.25x</button>
+          <button class="transport-btn speed-btn active" data-speed="0.25" onclick="LexiconWorkbench.setSpeed(0.25)">0.25x</button>
           <button class="transport-btn speed-btn" data-speed="0.5" onclick="LexiconWorkbench.setSpeed(0.5)">0.5x</button>
-          <button class="transport-btn speed-btn active" data-speed="1.0" onclick="LexiconWorkbench.setSpeed(1.0)">1.0x</button>
+          <button class="transport-btn speed-btn" data-speed="1.0" onclick="LexiconWorkbench.setSpeed(1.0)">1.0x</button>
         </div>
       </div>
     </div>
@@ -2535,7 +2535,7 @@
       document.body.appendChild(errDiv);
     };
     const deg2rad = Math.PI / 180, rad2deg = 180 / Math.PI;
-    let animSpeed = 1.0;
+    let animSpeed = 0.25;
 
     const FINGER_SPECS = [
       { id: 'idx', name: 'Index', color: 0x38bdf8, baseR: [-2.1, 4.9, 0], lengths: [2.25, 1.40, 0.85] },
@@ -2689,14 +2689,14 @@
         name: "HI / HELLO",
         category: "Welcome Greeting",
         signType: "OneHanded",
-        desc: "ASL greeting wave: dominant Open-B handshape initiates at temple locus with anterior arc and smiling affect.",
+        desc: "ASL friendly greeting wave: dominant Open-B handshape waving 4-5 times at temple locus with welcoming smile.",
         emotion: "happy",
         recipe: {
           name: "HI",
           handshape: "open_b",
           location: "temple",
           orientation: "PALM_ANTERIOR",
-          movement: "ARC_CORONAL",
+          movement: "WAVE_5X",
           bilateral: "UNILATERAL",
           fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
         }
@@ -2726,19 +2726,19 @@
         name: "S-A-M-M-Y",
         category: "Welcome Greeting",
         signType: "OneHanded",
-        desc: "Sequential ASL manual fingerspelling spelling out S-A-M-M-Y at neutral chest locus.",
+        desc: "Sequential ASL manual fingerspelling articulating S → A → M → M → Y with clear phoneme apertures and double-letter bounce.",
         emotion: "happy",
         isFingerspelling: true,
-        letters: ["s", "a", "m", "m", "y"],
+        letters: ["S", "A", "M", "M", "Y"],
         recipe: {
           name: "SAMMY",
           handshape: "s",
           location: "neutral_high",
           orientation: "PALM_ANTERIOR",
-          movement: "LINEAR_LATERAL",
+          movement: "FINGERSPELL_SAMMY",
           bilateral: "UNILATERAL",
           isFingerspelling: true,
-          letters: ["s", "a", "m", "m", "y"],
+          letters: ["S", "A", "M", "M", "Y"],
           fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
         }
       },
@@ -3492,7 +3492,9 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         "GATE_OPEN": { name: "Gate Open (Wrist Hinge)", desc: "Dominant hand hinges backward at wrist opening gateway like a door", class: "Hinge Joint Oscillation", dyn: (t, p, s) => p.clone(), ribbon: "Hinge Arc" },
         "WRIST_NOD": { name: "Wrist Nod (Pitch Oscillation)", desc: "Repeated flexion-extension nodding of wrist (e.g. Yes)", class: "Axial Joint Oscillation", dyn: (t, p, s) => p.clone(), ribbon: "Pitch Rocker" },
         "FOREARM_TWIST": { name: "Forearm Twist (Sup/Pro)", desc: "Rapid axial pronation-supination oscillation", class: "Radio-Ulnar Rotation", dyn: (t, p, s) => p.clone(), ribbon: "Axial Vortex" },
-        "APERTURE_CLOSE": { name: "Aperture Close (Open to Pinch)", desc: "Dynamic finger closing from open to pinched", class: "Synergistic Morph", dyn: (t, p, s) => p.clone(), ribbon: "Aperture Pinch" }
+        "APERTURE_CLOSE": { name: "Aperture Close (Open to Pinch)", desc: "Dynamic finger closing from open to pinched", class: "Synergistic Morph", dyn: (t, p, s) => p.clone(), ribbon: "Aperture Pinch" },
+        "WAVE_5X": { name: "Wave 5x (Multi-Oscillation Greeting)", desc: "Multi-cycle lateral wave (4-5 oscillations) at temple locus with wrist waggle", class: "Periodic Lateral Oscillation", dyn: (t, p, s) => { const ph = t * Math.PI * 2.0 * 4.5; return new THREE.Vector3(p.x + Math.sin(ph) * 3.4 * s, p.y + Math.abs(Math.sin(ph * 0.5)) * 0.9, p.z + Math.cos(ph) * 0.5); }, ribbon: "Multi-Cycle Wave" },
+        "FINGERSPELL_SAMMY": { name: "Fingerspell S-A-M-M-Y", desc: "Sequential phoneme articulation across S-A-M-M-Y with double-letter slide", class: "Sequential Phoneme Articulation", dyn: (t, p, s) => new THREE.Vector3(p.x + t * 4.0, p.y, p.z), ribbon: "Phonemic Sweep" }
       },
 
       // 5. BILATERAL INTERACTION MODES (4 Symmetry Formulations)
@@ -4305,6 +4307,52 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           targetR.copy(pBase).addScaledVector(pDisp, pulseFactor);
           const qWings = new THREE.Quaternion().setFromEuler(new THREE.Euler(1.35, 0.0, -0.15 + pulseFactor * 0.08));
           handR.targetWristQuat.copy(qWings);
+          currentPhase = u;
+        } else if ((lem === "hi" || mov === "WAVE_5X") && !endLoc) {
+          // Authentic ASL GREETING WAVE: Hand at temple locus waves laterally 4-5 full cycles with wrist waggle
+          const ft = recipe.fineTune || {};
+          const pBase = wp.pContact;
+          // 4.5 full wave cycles
+          const wavePhase = u * Math.PI * 2.0 * 4.5;
+          const waveEnvelope = Math.sin(u * Math.PI); // Envelope ramps up and softly lands at end
+          const waveAmpX = 3.4 * waveEnvelope;
+          const waveAmpY = 0.9 * waveEnvelope;
+
+          targetR.set(
+            pBase.x + Math.sin(wavePhase) * waveAmpX + (ft.ox || 0),
+            pBase.y + Math.abs(Math.sin(wavePhase * 0.5)) * waveAmpY + (ft.oy || 0),
+            pBase.z + Math.cos(wavePhase) * 0.5 + (ft.oz || 0)
+          );
+
+          // Synchronous wrist roll / waggle (±20 deg)
+          const wristWaggleZ = Math.sin(wavePhase) * 0.35 * waveEnvelope;
+          const wristWaggleY = Math.cos(wavePhase) * 0.18 * waveEnvelope;
+          const qWave = new THREE.Quaternion().setFromEuler(new THREE.Euler(
+            0.0 + (ft.rx || 0) * Math.PI / 180,
+            wristWaggleY + (ft.ry || 0) * Math.PI / 180,
+            wristWaggleZ + (ft.rz || 0) * Math.PI / 180
+          ));
+          handR.targetWristQuat.copy(qWave);
+
+          currentPhase = u;
+          isContactInstant = false;
+        } else if ((lem === "sammy" || mov === "FINGERSPELL_SAMMY" || recipe.isFingerspelling) && !endLoc) {
+          // Authentic ASL Fingerspelling Translation Sweep
+          const ft = recipe.fineTune || {};
+          const pBase = wp.pContact;
+          const letterIdx = Math.min(4, Math.floor(u * 5.0));
+          const tau = (u * 5.0) - letterIdx;
+
+          // Gentle lateral drift across letters + double letter M shift on letter 3
+          const letterDrift = letterIdx * 0.85;
+          const doubleLetterShift = (letterIdx >= 3 ? 1.6 : 0.0);
+          const tapBounce = (letterIdx === 3) ? Math.sin(tau * Math.PI) * 0.7 : 0.0;
+
+          targetR.set(
+            pBase.x + letterDrift + doubleLetterShift + (ft.ox || 0),
+            pBase.y - tapBounce + (ft.oy || 0),
+            pBase.z + (ft.oz || 0)
+          );
           currentPhase = u;
         } else if (mov === "TAP_2X") {
           // One-shot double-tap: Approach -> Tap 1 -> Rebound -> Tap 2 -> Hold
@@ -7333,6 +7381,10 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         this.animationQueue = [];
         this.targetWristQuat = new THREE.Quaternion();
         this.targetRootPos = new THREE.Vector3(defaultX, 10, 0);
+        this.prevRootPos = new THREE.Vector3(defaultX, 10, 0);
+        this.rootVel = new THREE.Vector3();
+        this.prevRootVel = new THREE.Vector3();
+        this.rootAccel = new THREE.Vector3();
         this.handPathCurve = null;
         this.pathAnimProgress = 0;
         this.oscillationTimer = 0;
@@ -7573,6 +7625,7 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           ikNodes: [ikBase, ik1, ik2, ik3], tgt: { group: tgtGroup, mesh: tgtMesh }, line, color, 
           q: {mcp_f:0, mcp_a:0, pip_f:0, dip_f:0}, 
           q_v: {mcp_f:0, mcp_a:0, pip_f:0, dip_f:0}, 
+          vel: {mcp_f:0, mcp_a:0, pip_f:0, dip_f:0},
           limits,
           restTarget,
           hand: this
@@ -7897,14 +7950,76 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         // Step 2: Continuous Anatomical Anti-Penetration Resolution
         this.resolveInterFingerCollisions();
 
-        // Step 3: Biological Tendon Smoothing Filter & Mesh Transforms
-        for(let f of this.fingerData) {
-          const filterDt = 0.12;
-          f.q_v.mcp_f += (f.q.mcp_f - f.q_v.mcp_f)*filterDt; 
-          f.q_v.mcp_a += (f.q.mcp_a - f.q_v.mcp_a)*filterDt;
-          f.q_v.pip_f += (f.q.pip_f - f.q_v.pip_f)*filterDt; 
-          f.q_v.dip_f += (f.q.dip_f - f.q_v.dip_f)*filterDt;
-          
+        // Calculate Hand Velocity & 3D G-Force Acceleration for Ragdoll Inertia
+        if (!this.prevRootPos) this.prevRootPos = this.root.position.clone();
+        if (!this.rootVel) this.rootVel = new THREE.Vector3();
+        if (!this.prevRootVel) this.prevRootVel = new THREE.Vector3();
+        if (!this.rootAccel) this.rootAccel = new THREE.Vector3();
+
+        const safeDt = THREE.MathUtils.clamp(dt || 0.016, 0.005, 0.033);
+        this.rootVel.subVectors(this.root.position, this.prevRootPos).divideScalar(safeDt);
+        this.rootAccel.subVectors(this.rootVel, this.prevRootVel).divideScalar(safeDt);
+        this.prevRootPos.copy(this.root.position);
+        this.prevRootVel.copy(this.rootVel);
+
+        // Project G-Force into Hand Local Reference Frame
+        const invWristQuat = this.root.quaternion.clone().invert();
+        const localAccel = this.rootAccel.clone().applyQuaternion(invWristQuat);
+        const gTorqueFlex = THREE.MathUtils.clamp(-localAccel.z * 0.00035, -0.35, 0.35);
+        const gTorqueAbd  = THREE.MathUtils.clamp(-localAccel.x * 0.00028 * (this.isLeft ? -1 : 1), -0.25, 0.25);
+        const gTorqueDrop = THREE.MathUtils.clamp(-localAccel.y * 0.00025, -0.25, 0.25);
+
+        // Step 3: Second-Order Mass-Spring-Damper Ragdoll Inertia Solver
+        const omega = 28.0; // Natural frequency: snappy biological response
+        const zeta = 0.72;  // Damping ratio: subcritical damping creates natural organic settling & overshoot
+        const kSpring = omega * omega;
+        const kDamp = 2.0 * zeta * omega;
+
+        for (let f of this.fingerData) {
+          if (!f.vel) f.vel = { mcp_f: 0, mcp_a: 0, pip_f: 0, dip_f: 0 };
+
+          // Inertial mass scales with digit size
+          const massFactor = f.isThumb ? 1.3 : (f.id === 'mid' ? 1.15 : (f.id === 'pnk' ? 0.85 : 1.0));
+          const digitGForceFlex = gTorqueFlex * massFactor + gTorqueDrop * 0.5;
+          const digitGForceAbd  = gTorqueAbd * massFactor;
+
+          // 1. MCP Flexion Ragdoll Integration
+          const errMcpF = (f.q.mcp_f - f.q_v.mcp_f);
+          const accMcpF = kSpring * errMcpF - kDamp * f.vel.mcp_f + digitGForceFlex * 60.0;
+          f.vel.mcp_f += accMcpF * safeDt;
+          f.q_v.mcp_f += f.vel.mcp_f * safeDt;
+
+          // 2. MCP Abduction (lateral sway)
+          const errMcpA = (f.q.mcp_a - f.q_v.mcp_a);
+          const accMcpA = kSpring * errMcpA - kDamp * f.vel.mcp_a + digitGForceAbd * 50.0;
+          f.vel.mcp_a += accMcpA * safeDt;
+          f.q_v.mcp_a += f.vel.mcp_a * safeDt;
+
+          // 3. PIP Flexion (Cascades with MCP acceleration - phalangeal whip effect)
+          const pipInertiaCarry = accMcpF * 0.12;
+          const errPipF = (f.q.pip_f - f.q_v.pip_f);
+          const accPipF = kSpring * 1.1 * errPipF - kDamp * 1.05 * f.vel.pip_f + digitGForceFlex * 75.0 + pipInertiaCarry;
+          f.vel.pip_f += accPipF * safeDt;
+          f.q_v.pip_f += f.vel.pip_f * safeDt;
+
+          // Volar Plate Anatomical Hard Stop: fingers cannot hyperextend past 0 rad
+          if (!f.isThumb && f.q_v.pip_f < 0.0) {
+            f.q_v.pip_f = 0.0;
+            f.vel.pip_f = -f.vel.pip_f * 0.15; // Soft elastic recoil off volar plate
+          }
+
+          // 4. DIP Flexion (Distal whip)
+          const dipInertiaCarry = accPipF * 0.10;
+          const errDipF = (f.q.dip_f - f.q_v.dip_f);
+          const accDipF = kSpring * 1.2 * errDipF - kDamp * 1.1 * f.vel.dip_f + digitGForceFlex * 85.0 + dipInertiaCarry;
+          f.vel.dip_f += accDipF * safeDt;
+          f.q_v.dip_f += f.vel.dip_f * safeDt;
+          if (!f.isThumb && f.q_v.dip_f < 0.0) {
+            f.q_v.dip_f = 0.0;
+            f.vel.dip_f = -f.vel.dip_f * 0.15;
+          }
+
+          // Apply updated ragdoll bone rotations to Three.js meshes
           f.g1.rotation.set(f.q_v.mcp_f, 0, f.q_v.mcp_a, 'XYZ'); 
           f.g2.rotation.x = f.q_v.pip_f; 
           f.g3.rotation.x = f.q_v.dip_f;
@@ -8491,11 +8606,15 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
       currentActiveTokens = JSON.parse(JSON.stringify(poseTokens));
 
       if (handMode === 'both' || handMode === 'right') {
-        handR.targetRootPos.set(handMode === 'both' ? 1.5 : -2.5, 10, 0);
+        if (typeof currentMainTab !== 'undefined' && currentMainTab !== 'alphabet') {
+          handR.targetRootPos.set(handMode === 'both' ? 1.5 : -2.5, 10, 0);
+        }
         handR.executePose(poseTokens, poseName, immediate);
       }
       if (handMode === 'both' || handMode === 'left') {
-        handL.targetRootPos.set(handMode === 'both' ? -6.5 : -2.5, 10, 0);
+        if (typeof currentMainTab !== 'undefined' && currentMainTab !== 'alphabet') {
+          handL.targetRootPos.set(handMode === 'both' ? -6.5 : -2.5, 10, 0);
+        }
         handL.executePose(poseTokens, poseName, immediate);
       }
     }
@@ -8976,15 +9095,105 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           KinematicMovementSolver.evaluate(rec, phi, targetR, targetL, handR, handL, strokeProgress);
           // Apply dynamic fingerspelling sequencing if active
           if (rec.isFingerspelling && rec.letters && rec.letters.length > 0) {
-            const numLetters = rec.letters.length;
-            const letterIdx = Math.min(numLetters - 1, Math.floor(strokeProgress * numLetters));
-            const activeLetter = rec.letters[letterIdx];
-            if (PARAMETRIC_LEXICONS.handshapes[activeLetter]) {
-              const toks = PARAMETRIC_LEXICONS.handshapes[activeLetter].tokens;
-              if (handR.root.visible) handR.morphPose(toks, toks, 0.0);
+            const letters = rec.letters.map(l => l.toUpperCase());
+            const numLetters = letters.length;
+            const letterSlice = 1.0 / numLetters;
+            const letterIdx = Math.min(numLetters - 1, Math.max(0, Math.floor(strokeProgress / letterSlice)));
+            const tau = (strokeProgress - letterIdx * letterSlice) / letterSlice; // 0.0 to 1.0 within this letter
+            const curL = letters[letterIdx];
+            const prevL = letterIdx > 0 ? letters[letterIdx - 1] : letters[0];
+
+            // Resolve letter token definitions from ASL_ALPHABET or PARAMETRIC_LEXICONS
+            const getLetterTokens = (L) => {
+              const upper = L.toUpperCase();
+              const lower = L.toLowerCase();
+              if (typeof ASL_ALPHABET !== 'undefined' && ASL_ALPHABET[upper]) return ASL_ALPHABET[upper];
+              if (PARAMETRIC_LEXICONS.handshapes[lower]) return PARAMETRIC_LEXICONS.handshapes[lower].tokens;
+              return PARAMETRIC_LEXICONS.handshapes["1"].tokens;
+            };
+
+            const curTokens = getLetterTokens(curL);
+            const prevTokens = getLetterTokens(prevL);
+
+            // Compute Articulatory Interpolation with Natural Aperture Arc:
+            // When tau in [0.0, 0.28]: transition from prev to cur with relaxing finger aperture
+            // When tau in [0.28, 0.85]: solid readable hold of curLetter
+            // When tau in [0.85, 1.00]: preparation for next
+            let morphFactor = 1.0;
+            let apertureBoost = 0.0;
+            if (tau < 0.28) {
+              const tTrans = tau / 0.28;
+              morphFactor = Math.sin(tTrans * Math.PI * 0.5); // 0 -> 1 smooth sine ease
+              apertureBoost = Math.sin(tTrans * Math.PI) * 0.40;
+            } else {
+              morphFactor = 1.0;
+              apertureBoost = 0.0;
             }
+
+            // Apply pose with aperture relaxation to handR
+            if (handR.root.visible) {
+              const sign = handR.isLeft ? -1 : 1;
+              for (let fid in curTokens) {
+                if (fid === 'wrist') continue;
+                const f = handR.fingerData.find(x => x.id === fid);
+                if (!f) continue;
+
+                const aPrev = fid === 'thm' ? THUMB_TOKENS[prevTokens[fid]] : FINGER_TOKENS[prevTokens[fid]];
+                const aCur  = fid === 'thm' ? THUMB_TOKENS[curTokens[fid]]  : FINGER_TOKENS[curTokens[fid]];
+                if (!aPrev || !aCur) continue;
+
+                let f1 = (1.0 - morphFactor) * aPrev.f1 + morphFactor * aCur.f1;
+                let a1 = (1.0 - morphFactor) * aPrev.a1 + morphFactor * aCur.a1;
+                let f2 = (1.0 - morphFactor) * aPrev.f2 + morphFactor * aCur.f2;
+                let f3 = (1.0 - morphFactor) * aPrev.f3 + morphFactor * aCur.f3;
+
+                // Aperture relaxation: fingers lift up/open during the transition arc
+                if (!f.isThumb && apertureBoost > 0) {
+                  f1 = Math.max(10, f1 - apertureBoost * 45);
+                  f2 = Math.max(10, f2 - apertureBoost * 55);
+                  f3 = Math.max(8,  f3 - apertureBoost * 45);
+                } else if (f.isThumb && apertureBoost > 0) {
+                  f1 = f1 - apertureBoost * 20;
+                }
+
+                // Double M distinction (letter 3): rhythmic tap
+                if (curL === 'M' && letterIdx === 3) {
+                  const mTap = Math.sin(tau * Math.PI) * 0.25;
+                  f1 += mTap * 12;
+                  f2 += mTap * 16;
+                }
+
+                f.target_q = {
+                  mcp_f: f1 * deg2rad,
+                  mcp_a: sign * a1 * deg2rad,
+                  pip_f: f2 * deg2rad,
+                  dip_f: f3 * deg2rad
+                };
+                f.q.mcp_f = f.target_q.mcp_f;
+                f.q.mcp_a = f.target_q.mcp_a;
+                f.q.pip_f = f.target_q.pip_f;
+                f.q.dip_f = f.target_q.dip_f;
+              }
+            }
+
+            // Sync dynamic HUD feedback for current letter
             const bHs = _hudDomCache['island-badge-handshape'] || (_hudDomCache['island-badge-handshape'] = document.getElementById('island-badge-handshape'));
-            if (bHs) bHs.innerText = "LETTER: " + activeLetter.toUpperCase();
+            if (bHs) bHs.innerText = "LETTER: " + curL + " (" + (letterIdx + 1) + "/" + numLetters + ")";
+
+            const islandLemma = _hudDomCache['island-sign-lemma'] || (_hudDomCache['island-sign-lemma'] = document.getElementById('island-sign-lemma'));
+            if (islandLemma) islandLemma.innerText = "SAMMY // '" + curL + "'";
+
+            const islandForm = _hudDomCache['island-sign-formation'] || (_hudDomCache['island-sign-formation'] = document.getElementById('island-sign-formation'));
+            if (islandForm) {
+              const letterDescs = {
+                'S': "Letter 'S': Tight fist with thumb firmly wrapped across index/middle anteriorly.",
+                'A': "Letter 'A': Closed fist with thumb resting straight upright on lateral index side.",
+                'M': "Letter 'M': Index, middle, ring fingers closed over tucked thumb.",
+                'Y': "Letter 'Y': Classic ASL horns/Y-shape with thumb and pinky extended wide."
+              };
+              const d = (letterIdx === 3) ? "Letter 'M' (Double Letter): Re-strike with lateral rightward slide." : (letterDescs[curL] || ("Fingerspelling letter " + curL));
+              islandForm.innerText = "(" + (letterIdx + 1) + "/5) " + d;
+            }
           } else if (rec._tokensEnd && rec._tokensStart) {
             // Apply dynamic handshape morphing from start handshape to end handshape
             if (handR.root.visible) handR.morphPose(rec._tokensStart, rec._tokensEnd, strokeProgress);
@@ -8994,13 +9203,13 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           // Rest pose at 0% progress
           KinematicMovementSolver.evaluate(rec, phi, targetR, targetL, handR, handL, 0.0);
           if (rec.isFingerspelling && rec.letters && rec.letters.length > 0) {
-            const activeLetter = rec.letters[0];
-            if (PARAMETRIC_LEXICONS.handshapes[activeLetter]) {
-              const toks = PARAMETRIC_LEXICONS.handshapes[activeLetter].tokens;
-              if (handR.root.visible) handR.morphPose(toks, toks, 0.0);
-            }
+            const firstL = rec.letters[0].toUpperCase();
+            const toks = (typeof ASL_ALPHABET !== 'undefined' && ASL_ALPHABET[firstL]) ? ASL_ALPHABET[firstL] : PARAMETRIC_LEXICONS.handshapes[firstL.toLowerCase()].tokens;
+            if (handR.root.visible) handR.morphPose(toks, toks, 0.0);
             const bHs = _hudDomCache['island-badge-handshape'] || (_hudDomCache['island-badge-handshape'] = document.getElementById('island-badge-handshape'));
-            if (bHs) bHs.innerText = "LETTER: " + activeLetter.toUpperCase();
+            if (bHs) bHs.innerText = "LETTER: " + firstL;
+            const islandLemma = _hudDomCache['island-sign-lemma'] || (_hudDomCache['island-sign-lemma'] = document.getElementById('island-sign-lemma'));
+            if (islandLemma) islandLemma.innerText = "SAMMY // '" + firstL + "'";
           } else if (rec._tokensStart) {
             if (handR.root.visible) handR.morphPose(rec._tokensStart, rec._tokensStart, 0.0);
             if (handL.root.visible && rec.bilateral === "BILATERAL_SYMMETRIC") handL.morphPose(rec._tokensStart, rec._tokensStart, 0.0);
@@ -9119,12 +9328,13 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         this.switchCategory('signs', 0);
         this.bindShortcuts();
         this.checkOnboardingFirstLaunch();
+        this.setSpeed(0.25);
 
         const urlParams = new URLSearchParams(window.location.search);
         if (!urlParams.has('test')) {
           this.startWelcomeSequence();
         }
-        console.log("⚡ LexiconWorkbench initialized with Avatar Welcome Greeting & Pro Studio Guide.");
+        console.log("⚡ LexiconWorkbench initialized with Avatar Welcome Greeting & Pro Studio Guide (0.25x default speed).");
       },
 
       toggleProMode() {
@@ -10524,13 +10734,14 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
       },
 
       executeAlphabetItem(item) {
+        currentMainTab = 'alphabet';
         handR.root.visible = true;
         handL.root.visible = false;
         handR.targetRootPos.set(6.5, 9.5, 14.0);
         handR.root.position.copy(handR.targetRootPos);
         armR.update(handR.root.position, true);
         if (armR.Weff) handR.root.position.copy(armR.Weff);
-        executeProceduralPose(ASL_ALPHABET[item.id], item.id, true);
+        handR.executePose(ASL_ALPHABET[item.id], item.id, true);
 
         const deck = document.getElementById('param-controls-deck');
         if (!deck) return;
@@ -10832,7 +11043,7 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
       setSpeed(speed) {
         animSpeed = speed;
         document.querySelectorAll('#viewport-transport .speed-btn, #dynamic-island .island-speed-btn').forEach(b => {
-          b.classList.toggle('active', parseFloat(b.dataset.speed) === speed);
+          b.classList.toggle('active', Math.abs(parseFloat(b.dataset.speed) - speed) < 0.01);
         });
         this.showToast("Speed: " + speed + "x");
       },
