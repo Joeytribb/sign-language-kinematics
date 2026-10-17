@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>14 CFR § 382.57 Airport ASL Curator Workbench | Teenage Engineering Scandinavian Industrial</title>
+  <title>Top 30 Most Used English Words | ASL Procedural Kinematics Workbench</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1135,13 +1135,13 @@
         <span>LEXICON CURATOR</span>
         <span class="live-led"></span>
       </div>
-      <span class="brand-sub">// 14 CFR § 382.57 AIRPORT LEXICON</span>
+      <span class="brand-sub">// TOP 30 MOST USED ENGLISH WORDS</span>
     </div>
 
     <!-- Category selector tabs -->
     <div class="cat-switch-bar">
       <button class="cat-switch-btn active" data-cat="signs" onclick="LexiconWorkbench.switchCategory('signs')">
-        <span class="num">01</span> AIRPORT SIGNS (30)
+        <span class="num">01</span> TOP 30 ENGLISH (30)
       </button>
       <button class="cat-switch-btn" data-cat="handshapes" onclick="LexiconWorkbench.switchCategory('handshapes')">
         <span class="num">02</span> HANDSHAPES (38)
@@ -1671,344 +1671,196 @@
     const ASL_ALPHABET = compileASLJSON(LLM_ASL_DICTIONARY);
     window.ASL_ALPHABET = ASL_ALPHABET;
 
-    // --- 14 CFR § 382.57 AIRPORT & AVIATION ACCESSIBILITY BENCHMARK LEXICON (30 WORDS) ---
-const AIRPORT_LEXICON_30 = [
+    // --- TOP 30 MOST USED ENGLISH WORDS (CORE CONVERSATIONAL ASL LEXICON) ---
+const TOP_30_ENGLISH_WORDS = [
   {
-    lemma: "airplane",
-    name: "AIRPLANE / FLIGHT",
-    category: "Flight Status (14 CFR § 382.57)",
+    lemma: "me",
+    name: "ME / I",
+    category: "Core Pronouns",
     signType: "OneHanded",
-    desc: "14 CFR § 382.57 core announcement sign. Hand in ILY shape beside upper head/temple, executing double forward-upward wing flutter.",
+    desc: "First-person deictic pronoun (English: I / me). Index finger points to center of chest (sternum).",
     recipe: {
-      handshape: "ily",
-      location: "temple",
-      orientation: "PALM_PRONE",
-      movement: "TAP_2X",
+      handshape: "1",
+      location: "sternum",
+      orientation: "FINGERS_POSTERIOR",
+      movement: "LINEAR_BACKWARD",
       bilateral: "UNILATERAL",
-      contactEffector: "NONE"
+      contactEffector: "INDEX_TIP",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
-    lemma: "gate",
-    name: "GATE",
-    category: "Flight Status (14 CFR § 382.57)",
-    signType: "Asymmetrical",
-    desc: "Designated departure gate. Bilateral B-hands forming an opening gateway.",
+    lemma: "you",
+    name: "YOU",
+    category: "Core Pronouns",
+    signType: "OneHanded",
+    desc: "Second-person deictic pronoun (English: you). Index finger points straight forward toward interlocutor.",
     recipe: {
-      handshape: "open_b",
-      location: "neutral_mid",
+      handshape: "1",
+      location: "neutral_far",
+      orientation: "FINGERS_ANTERIOR",
+      movement: "LINEAR_FORWARD",
+      bilateral: "UNILATERAL",
+      contactEffector: "INDEX_TIP",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "we",
+    name: "WE / US",
+    category: "Core Pronouns",
+    signType: "OneHanded",
+    desc: "First-person plural pronoun (English: we / us). Index finger touches ipsilateral shoulder then arcs across to contralateral shoulder.",
+    recipe: {
+      handshape: "1",
+      location: "clavicle",
+      endLocation: "heart",
       orientation: "PALM_POSTERIOR",
       movement: "ARC_CORONAL",
-      bilateral: "ASYMMETRIC_BASE",
-      baseHandshape: "open_b",
-      contactEffector: "NONE"
+      bilateral: "UNILATERAL",
+      contactEffector: "INDEX_TIP",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
-    lemma: "ticket",
-    name: "TICKET / BOARDING PASS",
-    category: "Flight Status (14 CFR § 382.57)",
-    signType: "Asymmetrical",
-    desc: "Boarding pass or validation ticket. Bent-V clips passive palm edge twice.",
-    recipe: {
-      handshape: "bent_v",
-      location: "passive_palm",
-      orientation: "PALM_PRONE",
-      movement: "TAP_2X",
-      bilateral: "ASYMMETRIC_BASE",
-      baseHandshape: "flat_b",
-      contactEffector: "INDEX_TIP"
-    }
-  },
-  {
-    lemma: "boarding",
-    name: "BOARDING",
-    category: "Flight Status (14 CFR § 382.57)",
-    signType: "Asymmetrical",
-    desc: "Flight boarding call. Bent-V legs step onto passive runway palm and move forward.",
-    recipe: {
-      handshape: "bent_v",
-      location: "passive_palm",
-      endLocation: "neutral_far",
-      orientation: "PALM_PRONE",
-      movement: "ARC_SAGITTAL",
-      bilateral: "ASYMMETRIC_BASE",
-      baseHandshape: "flat_b",
-      contactEffector: "NONE"
-    }
-  },
-  {
-    lemma: "time",
-    name: "TIME",
-    category: "Flight Status (14 CFR § 382.57)",
-    signType: "Asymmetrical",
-    desc: "Scheduled flight time (14 CFR § 382.57). Index finger double-taps dorsal wrist watch.",
+    lemma: "they",
+    name: "THEY / THEM",
+    category: "Core Pronouns",
+    signType: "OneHanded",
+    desc: "Third-person plural pronoun (English: they / them). Index finger sweeps in a smooth horizontal transverse arc across neutral space.",
     recipe: {
       handshape: "1",
-      location: "passive_wrist",
-      orientation: "PALM_PRONE",
-      movement: "TAP_2X",
-      bilateral: "ASYMMETRIC_BASE",
-      baseHandshape: "s",
-      contactEffector: "INDEX_TIP"
+      location: "neutral_mid",
+      orientation: "FINGERS_ANTERIOR",
+      movement: "CIRCULAR_TRANSVERSE",
+      movementDirection: "LATERAL_OUT",
+      bilateral: "UNILATERAL",
+      contactEffector: "INDEX_TIP",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
-    lemma: "now",
-    name: "NOW / IMMEDIATE",
-    category: "Flight Status (14 CFR § 382.57)",
+    lemma: "have",
+    name: "HAVE / HAS",
+    category: "High-Frequency Verbs",
     signType: "Symmetrical",
-    desc: "Immediate departure or boarding now. Bilateral Y-hands drop decisively.",
+    desc: "Possession / existence (English: have / has). Bilateral bent-B hands with fingertips pointing inward touch upper chest.",
     recipe: {
-      handshape: "y",
-      location: "neutral_mid",
-      orientation: "PALM_SUPINE",
-      movement: "VERTICAL_DROP",
-      bilateral: "BILATERAL_SYMMETRIC",
-      contactEffector: "NONE"
-    }
-  },
-  {
-    lemma: "delay",
-    name: "DELAY / POSTPONE",
-    category: "Flight Status (14 CFR § 382.57)",
-    signType: "Asymmetrical",
-    desc: "Flight delay notice (14 CFR § 382.57). Dominant hand arcs forward in temporal displacement.",
-    recipe: {
-      handshape: "open_b",
-      location: "neutral_mid",
-      endLocation: "neutral_far",
-      orientation: "PALM_CONTRALATERAL",
-      movement: "ARC_SAGITTAL",
-      bilateral: "ASYMMETRIC_BASE",
-      baseHandshape: "open_b",
-      contactEffector: "NONE"
-    }
-  },
-  {
-    lemma: "cancel",
-    name: "CANCEL / VOID",
-    category: "Flight Status (14 CFR § 382.57)",
-    signType: "Asymmetrical",
-    desc: "Flight cancellation announcement. Index finger slashes decisive 'X' across passive palm.",
-    recipe: {
-      handshape: "1",
-      location: "passive_palm",
+      handshape: "bent_b",
+      location: "sternum",
       orientation: "PALM_POSTERIOR",
-      movement: "ZIGZAG",
-      bilateral: "ASYMMETRIC_BASE",
-      baseHandshape: "flat_b",
-      contactEffector: "INDEX_TIP"
+      movement: "LINEAR_BACKWARD",
+      bilateral: "BILATERAL_SYMMETRIC",
+      contactEffector: "FINGERTIPS",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
-    lemma: "wait",
-    name: "WAIT / STANDBY",
-    category: "Flight Status (14 CFR § 382.57)",
+    lemma: "want",
+    name: "WANT",
+    category: "High-Frequency Verbs",
     signType: "Symmetrical",
-    desc: "Stand by at gate / flight holding. Bilateral 5-hands flutter upward in patient holding posture.",
+    desc: "Volition / desire (English: want). Both claw-5 hands held upward in neutral space pull backward toward the body.",
     recipe: {
       handshape: "curved_5",
       location: "neutral_mid",
       orientation: "PALM_SUPINE",
-      movement: "TAP_2X",
+      movement: "LINEAR_BACKWARD",
       bilateral: "BILATERAL_SYMMETRIC",
-      contactEffector: "NONE"
+      contactEffector: "NONE",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
-    lemma: "change",
-    name: "CHANGE / REALLOCATE",
-    category: "Flight Status (14 CFR § 382.57)",
+    lemma: "more",
+    name: "MORE",
+    category: "Prepositions & Particles",
     signType: "Symmetrical",
-    desc: "Gate change or flight reallocation (14 CFR § 382.57). Crossed X-hands twist and swap places.",
-    recipe: {
-      handshape: "x",
-      location: "neutral_mid",
-      orientation: "PALM_POSTERIOR",
-      movement: "CIRCULAR_SAGITTAL",
-      bilateral: "BILATERAL_SYMMETRIC",
-      contactEffector: "NONE"
-    }
-  },
-  {
-    lemma: "arrive",
-    name: "ARRIVE / LANDING",
-    category: "Flight Status (14 CFR § 382.57)",
-    signType: "Asymmetrical",
-    desc: "Flight arrival / landing. Dominant hand glides down and touches passive runway palm.",
-    recipe: {
-      handshape: "flat_b",
-      location: "neutral_high",
-      endLocation: "passive_palm",
-      orientation: "PALM_PRONE",
-      movement: "ARC_SAGITTAL",
-      bilateral: "ASYMMETRIC_BASE",
-      baseHandshape: "flat_b",
-      contactEffector: "PALM"
-    }
-  },
-  {
-    lemma: "depart",
-    name: "DEPART / TAKEOFF",
-    category: "Flight Status (14 CFR § 382.57)",
-    signType: "Asymmetrical",
-    desc: "Flight departure / takeoff. Hand ascends from passive runway into forward climb.",
-    recipe: {
-      handshape: "open_b",
-      location: "passive_palm",
-      endLocation: "neutral_high",
-      orientation: "PALM_PRONE",
-      movement: "ARC_SAGITTAL",
-      bilateral: "ASYMMETRIC_BASE",
-      baseHandshape: "flat_b",
-      contactEffector: "NONE"
-    }
-  },
-  {
-    lemma: "baggage",
-    name: "BAGGAGE / LUGGAGE",
-    category: "Terminal Wayfinding",
-    signType: "Symmetrical",
-    desc: "Baggage claim & luggage drop. Bilateral S-fists simulate holding suitcase handles.",
-    recipe: {
-      handshape: "s",
-      location: "neutral_low",
-      orientation: "PALM_CONTRALATERAL",
-      movement: "TAP_2X",
-      bilateral: "BILATERAL_SYMMETRIC",
-      contactEffector: "NONE"
-    }
-  },
-  {
-    lemma: "security",
-    name: "SECURITY / TSA",
-    category: "Terminal Wayfinding",
-    signType: "OneHanded",
-    desc: "TSA / airport security checkpoint. S-hand taps officer badge locus over chest.",
-    recipe: {
-      handshape: "s",
-      location: "heart",
-      orientation: "PALM_POSTERIOR",
-      movement: "TAP_2X",
-      bilateral: "UNILATERAL",
-      contactEffector: "FIST_HEEL"
-    }
-  },
-  {
-    lemma: "passport",
-    name: "PASSPORT / ID",
-    category: "Terminal Wayfinding",
-    signType: "Asymmetrical",
-    desc: "Passport / official identification stamp. Fist stamps firmly into passive palm.",
-    recipe: {
-      handshape: "s",
-      location: "passive_palm",
-      orientation: "PALM_PRONE",
-      movement: "TAP_1X",
-      bilateral: "ASYMMETRIC_BASE",
-      baseHandshape: "open_b",
-      contactEffector: "FIST_HEEL"
-    }
-  },
-  {
-    lemma: "seat",
-    name: "SEAT / SIT",
-    category: "Terminal Wayfinding",
-    signType: "Asymmetrical",
-    desc: "Assigned passenger seat / row. Bent-V hooks over passive fingers twice.",
-    recipe: {
-      handshape: "bent_v",
-      location: "neutral_mid",
-      orientation: "PALM_PRONE",
-      movement: "TAP_2X",
-      bilateral: "ASYMMETRIC_BASE",
-      baseHandshape: "bent_v",
-      contactEffector: "FINGERTIPS"
-    }
-  },
-  {
-    lemma: "line",
-    name: "LINE / QUEUE",
-    category: "Terminal Wayfinding",
-    signType: "Symmetrical",
-    desc: "Boarding queue / security line. Bilateral 4-hands trace a straight line forward.",
-    recipe: {
-      handshape: "4",
-      location: "neutral_mid",
-      endLocation: "neutral_far",
-      orientation: "PALM_CONTRALATERAL",
-      movement: "LINEAR_FORWARD",
-      bilateral: "BILATERAL_SYMMETRIC",
-      contactEffector: "NONE"
-    }
-  },
-  {
-    lemma: "bathroom",
-    name: "BATHROOM / RESTROOM",
-    category: "Terminal Wayfinding",
-    signType: "OneHanded",
-    desc: "Terminal restroom / lavatory. Iconic shaking T-handshape.",
-    recipe: {
-      handshape: "t",
-      location: "neutral_mid",
-      orientation: "PALM_ANTERIOR",
-      movement: "FOREARM_TWIST",
-      bilateral: "UNILATERAL",
-      contactEffector: "NONE"
-    }
-  },
-  {
-    lemma: "water",
-    name: "WATER",
-    category: "Terminal Wayfinding",
-    signType: "OneHanded",
-    desc: "Drinking water / terminal fountain. W-hand taps chin twice.",
-    recipe: {
-      handshape: "w",
-      location: "chin",
-      orientation: "PALM_CONTRALATERAL",
-      movement: "TAP_2X",
-      bilateral: "UNILATERAL",
-      contactEffector: "INDEX_TIP"
-    }
-  },
-  {
-    lemma: "food",
-    name: "FOOD / EAT",
-    category: "Terminal Wayfinding",
-    signType: "OneHanded",
-    desc: "In-flight meal / airport dining. Flat-O touches lips twice.",
+    desc: "Quantity increment (English: more). Both flat-O hands tap fingertips together repeatedly at midline in front of chest.",
     recipe: {
       handshape: "flat_o",
-      location: "mouth",
-      orientation: "PALM_POSTERIOR",
+      location: "neutral_mid",
+      orientation: "PALM_CONTRALATERAL",
       movement: "TAP_2X",
-      bilateral: "UNILATERAL",
-      contactEffector: "FINGERTIPS"
+      bilateral: "BILATERAL_SYMMETRIC",
+      contactEffector: "FINGERTIP_CLUSTER",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
-    lemma: "where",
-    name: "WHERE / LOCATE",
-    category: "Terminal Wayfinding",
-    signType: "OneHanded",
-    desc: "Terminal navigation inquiry. Index finger wags side-to-side.",
+    lemma: "with",
+    name: "WITH",
+    category: "Prepositions & Particles",
+    signType: "Symmetrical",
+    desc: "Association / accompaniment (English: with). Both A-hands held apart bring knuckles/palms together at midline.",
     recipe: {
-      handshape: "1",
+      handshape: "a",
       location: "neutral_mid",
-      orientation: "PALM_ANTERIOR",
+      orientation: "PALM_CONTRALATERAL",
       movement: "LINEAR_LATERAL",
-      bilateral: "UNILATERAL",
-      contactEffector: "NONE"
+      bilateral: "BILATERAL_SYMMETRIC",
+      contactEffector: "PALM_CENTER",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "in",
+    name: "IN",
+    category: "Prepositions & Particles",
+    signType: "Asymmetrical",
+    desc: "Containment (English: in). Dominant flat-O hand inserts downward into non-dominant C-hand opening.",
+    recipe: {
+      handshape: "flat_o",
+      location: "passive_palm",
+      orientation: "PALM_PRONE",
+      movement: "VERTICAL_DROP",
+      bilateral: "ASYMMETRIC_BASE",
+      baseHandshape: "c",
+      contactEffector: "FINGERTIP_CLUSTER",
+      baseContactPart: "PALM_CENTER",
+      nonDominant: {
+        handshape: "c",
+        location: "passive_palm",
+        orientation: "PALM_CONTRALATERAL",
+        movement: "STATIC_HOLD",
+        contactPart: "PALM_CENTER",
+        fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+      },
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "on",
+    name: "ON",
+    category: "Prepositions & Particles",
+    signType: "Asymmetrical",
+    desc: "Superposition (English: on). Dominant flat-B hand descends and lands atop dorsal back of non-dominant flat hand.",
+    recipe: {
+      handshape: "flat_b",
+      location: "passive_wrist",
+      orientation: "PALM_PRONE",
+      movement: "VERTICAL_DROP",
+      bilateral: "ASYMMETRIC_BASE",
+      baseHandshape: "flat_b",
+      contactEffector: "PALM_CENTER",
+      baseContactPart: "DORSAL_WRIST",
+      nonDominant: {
+        handshape: "flat_b",
+        location: "passive_wrist",
+        orientation: "PALM_PRONE",
+        movement: "STATIC_HOLD",
+        contactPart: "DORSAL_WRIST",
+        fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+      },
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
     lemma: "help",
-    name: "HELP / SPECIAL ASSISTANCE",
-    category: "Assistance & Emergency",
+    name: "HELP",
+    category: "High-Frequency Verbs",
     signType: "Asymmetrical",
-    desc: "Passenger assistance / wheelchair escort (14 CFR § 382). Thumbs-up lifted on open palm.",
+    desc: "Assistance (English: help). Dominant A-hand (thumbs-up) rests on non-dominant flat palm and both lift upward together.",
     recipe: {
       handshape: "a",
       location: "passive_palm",
@@ -2016,137 +1868,366 @@ const AIRPORT_LEXICON_30 = [
       movement: "VERTICAL_RISE",
       bilateral: "ASYMMETRIC_BASE",
       baseHandshape: "flat_b",
-      contactEffector: "FIST_HEEL"
-    }
-  },
-  {
-    lemma: "need",
-    name: "NEED / MUST",
-    category: "Assistance & Emergency",
-    signType: "OneHanded",
-    desc: "Mandatory requirement / passenger need. X-hook flexes downward.",
-    recipe: {
-      handshape: "x",
-      location: "neutral_mid",
-      orientation: "PALM_PRONE",
-      movement: "VERTICAL_DROP",
-      bilateral: "UNILATERAL",
-      contactEffector: "NONE"
+      contactEffector: "FIST_HEEL",
+      baseContactPart: "PALM_CENTER",
+      nonDominant: {
+        handshape: "flat_b",
+        location: "passive_palm",
+        orientation: "PALM_SUPINE",
+        movement: "STATIC_HOLD",
+        contactPart: "PALM_CENTER",
+        fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+      },
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
     lemma: "please",
     name: "PLEASE",
-    category: "Assistance & Emergency",
+    category: "Conversational Responses",
     signType: "OneHanded",
-    desc: "Courtesy announcement (e.g. Please proceed to gate). Flat hand rubs chest in circle.",
+    desc: "Polite request (English: please). Dominant flat-B palm rubs in gentle circular motion against center of chest.",
     recipe: {
       handshape: "flat_b",
       location: "sternum",
       orientation: "PALM_POSTERIOR",
-      movement: "CIRCULAR_SAGITTAL",
+      movement: "CIRCULAR_TRANSVERSE",
       bilateral: "UNILATERAL",
-      contactEffector: "PALM"
+      contactEffector: "PALM_CENTER",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
-    lemma: "thank_you",
+    lemma: "thankyou",
     name: "THANK YOU",
-    category: "Assistance & Emergency",
+    category: "Conversational Responses",
     signType: "OneHanded",
-    desc: "Thank you for flying. Hand sweeps smoothly outward from chin.",
+    desc: "Gratitude (English: thank you). Flat hand touches lips/chin and extends forward-downward toward interlocutor.",
     recipe: {
       handshape: "open_b",
       location: "chin",
       endLocation: "neutral_far",
       orientation: "PALM_POSTERIOR",
-      endOrientation: "PALM_SUPINE",
       movement: "LINEAR_FORWARD",
       bilateral: "UNILATERAL",
-      contactEffector: "FINGERTIPS"
-    }
-  },
-  {
-    lemma: "sorry",
-    name: "SORRY / APOLOGY",
-    category: "Assistance & Emergency",
-    signType: "OneHanded",
-    desc: "Airline delay apology. A-fist rubs circular path over heart.",
-    recipe: {
-      handshape: "a",
-      location: "heart",
-      orientation: "PALM_POSTERIOR",
-      movement: "CIRCULAR_SAGITTAL",
-      bilateral: "UNILATERAL",
-      contactEffector: "FIST_HEEL"
-    }
-  },
-  {
-    lemma: "lost",
-    name: "LOST / MISPLACED",
-    category: "Assistance & Emergency",
-    signType: "Symmetrical",
-    desc: "Lost & found / missing baggage. Fingertips drop and splay apart downward.",
-    recipe: {
-      handshape: "flat_o",
-      location: "neutral_mid",
-      endLocation: "neutral_low",
-      orientation: "PALM_PRONE",
-      movement: "VERTICAL_DROP",
-      bilateral: "BILATERAL_SYMMETRIC",
-      contactEffector: "NONE"
-    }
-  },
-  {
-    lemma: "emergency",
-    name: "EMERGENCY / ALERT",
-    category: "Assistance & Emergency",
-    signType: "OneHanded",
-    desc: "In-flight safety / terminal alert. E-hand vibrates with urgency in high space.",
-    recipe: {
-      handshape: "e",
-      location: "neutral_high",
-      orientation: "PALM_ANTERIOR",
-      movement: "LINEAR_LATERAL",
-      bilateral: "UNILATERAL",
-      contactEffector: "NONE"
+      contactEffector: "FINGERTIPS",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
     lemma: "yes",
-    name: "YES / CONFIRMED",
-    category: "Assistance & Emergency",
+    name: "YES",
+    category: "Conversational Responses",
     signType: "OneHanded",
-    desc: "Affirmation / confirmation. S-fist articulates nodding motion.",
+    desc: "Affirmation (English: yes). S-fist nods up and down at the wrist, mimicking a nodding head.",
     recipe: {
       handshape: "s",
       location: "neutral_mid",
       orientation: "PALM_PRONE",
       movement: "WRIST_NOD",
       bilateral: "UNILATERAL",
-      contactEffector: "NONE"
+      contactEffector: "NONE",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
     lemma: "no",
-    name: "NO / RESTRICTED",
-    category: "Assistance & Emergency",
+    name: "NO",
+    category: "Conversational Responses",
     signType: "OneHanded",
-    desc: "Negative / restricted access. Index and middle snap shut on thumb.",
+    desc: "Negation (English: no). Extended index and middle fingers snap shut firmly onto thumb pad.",
     recipe: {
       handshape: "bent_v",
       location: "neutral_mid",
       orientation: "PALM_ANTERIOR",
       movement: "APERTURE_CLOSE",
       bilateral: "UNILATERAL",
-      contactEffector: "NONE"
+      contactEffector: "THUMB_TIP",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "not",
+    name: "NOT",
+    category: "Conversational Responses",
+    signType: "OneHanded",
+    desc: "Denial / negation (English: not). Thumb of A-hand touches underside of chin and flicks forward.",
+    recipe: {
+      handshape: "a",
+      location: "chin",
+      orientation: "PALM_CONTRALATERAL",
+      movement: "LINEAR_FORWARD",
+      bilateral: "UNILATERAL",
+      contactEffector: "THUMB_TIP",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "good",
+    name: "GOOD",
+    category: "Conversational Responses",
+    signType: "Asymmetrical",
+    desc: "Positive evaluation (English: good). Flat hand touches chin then moves downward to land in non-dominant palm.",
+    recipe: {
+      handshape: "open_b",
+      location: "chin",
+      endLocation: "passive_palm",
+      orientation: "PALM_POSTERIOR",
+      movement: "LINEAR_FORWARD",
+      bilateral: "ASYMMETRIC_BASE",
+      baseHandshape: "flat_b",
+      contactEffector: "FINGERTIPS",
+      baseContactPart: "PALM_CENTER",
+      nonDominant: {
+        handshape: "flat_b",
+        location: "passive_palm",
+        orientation: "PALM_SUPINE",
+        movement: "STATIC_HOLD",
+        contactPart: "PALM_CENTER",
+        fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+      },
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "bad",
+    name: "BAD",
+    category: "Conversational Responses",
+    signType: "OneHanded",
+    desc: "Negative evaluation (English: bad). Flat hand touches chin and twists downward with wrist pronation.",
+    recipe: {
+      handshape: "open_b",
+      location: "chin",
+      orientation: "PALM_POSTERIOR",
+      movement: "FOREARM_TWIST",
+      bilateral: "UNILATERAL",
+      contactEffector: "FINGERTIPS",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "go",
+    name: "GO",
+    category: "High-Frequency Verbs",
+    signType: "Symmetrical",
+    desc: "Outward locomotion (English: go). Both index fingers point upward, then arc forward in unison away from the body.",
+    recipe: {
+      handshape: "1",
+      location: "neutral_mid",
+      endLocation: "neutral_far",
+      orientation: "FINGERS_ANTERIOR",
+      movement: "ARC_SAGITTAL",
+      bilateral: "BILATERAL_SYMMETRIC",
+      contactEffector: "NONE",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "come",
+    name: "COME",
+    category: "High-Frequency Verbs",
+    signType: "Symmetrical",
+    desc: "Inward locomotion (English: come). Both index fingers roll and beckon inward toward the signer's body.",
+    recipe: {
+      handshape: "1",
+      location: "neutral_far",
+      endLocation: "neutral_mid",
+      orientation: "PALM_POSTERIOR",
+      movement: "LINEAR_BACKWARD",
+      bilateral: "BILATERAL_SYMMETRIC",
+      contactEffector: "NONE",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "know",
+    name: "KNOW",
+    category: "High-Frequency Verbs",
+    signType: "OneHanded",
+    desc: "Cognition / knowledge (English: know). Bent-B fingertips tap temple/forehead twice.",
+    recipe: {
+      handshape: "bent_b",
+      location: "temple",
+      orientation: "PALM_POSTERIOR",
+      movement: "TAP_2X",
+      bilateral: "UNILATERAL",
+      contactEffector: "FINGERTIPS",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "think",
+    name: "THINK",
+    category: "High-Frequency Verbs",
+    signType: "OneHanded",
+    desc: "Mental cogitation (English: think). Tip of index finger touches temple or forehead.",
+    recipe: {
+      handshape: "1",
+      location: "forehead",
+      orientation: "FINGERS_POSTERIOR",
+      movement: "TAP_1X",
+      bilateral: "UNILATERAL",
+      contactEffector: "INDEX_TIP",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "see",
+    name: "SEE / LOOK",
+    category: "High-Frequency Verbs",
+    signType: "OneHanded",
+    desc: "Visual perception (English: see / look). V-hand with fingers pointing forward moves outward from eye level.",
+    recipe: {
+      handshape: "v",
+      location: "eyes",
+      endLocation: "neutral_far",
+      orientation: "PALM_POSTERIOR",
+      movement: "LINEAR_FORWARD",
+      bilateral: "UNILATERAL",
+      contactEffector: "NONE",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "like",
+    name: "LIKE",
+    category: "High-Frequency Verbs",
+    signType: "OneHanded",
+    desc: "Affection / preference (English: like). Open 5-hand touches chest with thumb and middle finger, pulling forward into pinch.",
+    recipe: {
+      handshape: "5",
+      endHandshape: "open_8",
+      location: "sternum",
+      orientation: "PALM_POSTERIOR",
+      movement: "LINEAR_FORWARD",
+      bilateral: "UNILATERAL",
+      contactEffector: "THUMB_TIP",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "can",
+    name: "CAN / ABLE",
+    category: "High-Frequency Verbs",
+    signType: "Symmetrical",
+    desc: "Capability / permission (English: can / able). Both S-fists held in front of torso drop downward firmly in unison.",
+    recipe: {
+      handshape: "s",
+      location: "neutral_mid",
+      endLocation: "neutral_low",
+      orientation: "PALM_PRONE",
+      movement: "VERTICAL_DROP",
+      bilateral: "BILATERAL_SYMMETRIC",
+      contactEffector: "NONE",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "make",
+    name: "MAKE / DO",
+    category: "High-Frequency Verbs",
+    signType: "Symmetrical",
+    desc: "Creation / execution (English: make / do). Stacked S-fists twist against each other with rhythmic wrist rotations.",
+    recipe: {
+      handshape: "s",
+      location: "neutral_mid",
+      orientation: "PALM_CONTRALATERAL",
+      movement: "WRIST_NOD",
+      bilateral: "BILATERAL_SYMMETRIC",
+      contactEffector: "FIST_TOP",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "time",
+    name: "TIME",
+    category: "Prepositions & Particles",
+    signType: "Asymmetrical",
+    desc: "Temporal marker (English: time). Dominant index finger taps dorsal wrist of non-dominant hand twice, as if checking a watch.",
+    recipe: {
+      handshape: "1",
+      location: "passive_wrist",
+      orientation: "PALM_PRONE",
+      movement: "TAP_2X",
+      bilateral: "ASYMMETRIC_BASE",
+      baseHandshape: "s",
+      contactEffector: "INDEX_TIP",
+      baseContactPart: "DORSAL_WRIST",
+      nonDominant: {
+        handshape: "s",
+        location: "passive_wrist",
+        orientation: "PALM_PRONE",
+        movement: "STATIC_HOLD",
+        contactPart: "DORSAL_WRIST",
+        fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+      },
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "all",
+    name: "ALL",
+    category: "Prepositions & Particles",
+    signType: "Asymmetrical",
+    desc: "Totality (English: all). Dominant flat hand describes full sweeping circular orbit and lands into non-dominant palm.",
+    recipe: {
+      handshape: "flat_b",
+      location: "neutral_high",
+      endLocation: "passive_palm",
+      orientation: "PALM_ANTERIOR",
+      movement: "CIRCULAR_TRANSVERSE",
+      bilateral: "ASYMMETRIC_BASE",
+      baseHandshape: "flat_b",
+      contactEffector: "PALM_CENTER",
+      baseContactPart: "PALM_CENTER",
+      nonDominant: {
+        handshape: "flat_b",
+        location: "passive_palm",
+        orientation: "PALM_SUPINE",
+        movement: "STATIC_HOLD",
+        contactPart: "PALM_CENTER",
+        fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+      },
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "finish",
+    name: "FINISH / DONE",
+    category: "Conversational Responses",
+    signType: "Symmetrical",
+    desc: "Completion / aspect (English: finish / done). Both 5-hands held facing body flick rapidly outward and downward.",
+    recipe: {
+      handshape: "5",
+      location: "neutral_mid",
+      endLocation: "neutral_low",
+      orientation: "PALM_POSTERIOR",
+      endOrientation: "PALM_PRONE",
+      movement: "ARC_CORONAL",
+      bilateral: "BILATERAL_SYMMETRIC",
+      contactEffector: "NONE",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
+    }
+  },
+  {
+    lemma: "what",
+    name: "WHAT",
+    category: "Conversational Responses",
+    signType: "Symmetrical",
+    desc: "Interrogative inquiry (English: what). Both hands held open supine in neutral space execute horizontal lateral oscillation.",
+    recipe: {
+      handshape: "open_b",
+      location: "neutral_mid",
+      orientation: "PALM_SUPINE",
+      movement: "LINEAR_LATERAL",
+      bilateral: "BILATERAL_SYMMETRIC",
+      contactEffector: "NONE",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   }
 ];
 
-
-
-    const TOP50_ASLLEX = AIRPORT_LEXICON_30;
+const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
 
     // --- PHONOLOGICAL HANDSHAPE PRIMITIVES (ASL-LEX 2.0 CANONICAL TAXONOMY) ---
     // =========================================================================
@@ -2262,6 +2343,7 @@ const AIRPORT_LEXICON_30 = [
         "CIRCULAR_SAGITTAL": { name: "Circular Sagittal (YZ Orbit)", desc: "Continuous elliptical orbit in sagittal plane", class: "Closed Orbital Loop", dyn: (t, p, s) => { const ph = t * 3.0; return new THREE.Vector3(p.x, p.y + Math.cos(ph) * 1.8, p.z + Math.sin(ph) * 1.8); }, ribbon: "Sagittal Orbit" },
         "CIRCULAR_TRANSVERSE": { name: "Circular Transverse (XZ Orbit)", desc: "Horizontal circular orbit (e.g. Family, Class)", class: "Horizontal Transverse Orbit", dyn: (t, p, s) => { const ph = t * 3.0; return new THREE.Vector3(p.x + Math.cos(ph) * 2.2 * s, p.y, p.z + Math.sin(ph) * 2.2); }, ribbon: "Transverse Ring" },
         "ZIGZAG": { name: "Zigzag (Multi-Inflection)", desc: "Alternating multi-inflection path", class: "Harmonic Undulation", dyn: (t, p, s) => { const ph = t * 4.0; return new THREE.Vector3(p.x + Math.sin(ph * 2.0) * 1.8 * s, p.y - (ph % 2.0), p.z); }, ribbon: "Undulating Serpent" },
+        "GATE_OPEN": { name: "Gate Open (Wrist Hinge)", desc: "Dominant hand hinges backward at wrist opening gateway like a door", class: "Hinge Joint Oscillation", dyn: (t, p, s) => p.clone(), ribbon: "Hinge Arc" },
         "WRIST_NOD": { name: "Wrist Nod (Pitch Oscillation)", desc: "Repeated flexion-extension nodding of wrist (e.g. Yes)", class: "Axial Joint Oscillation", dyn: (t, p, s) => p.clone(), ribbon: "Pitch Rocker" },
         "FOREARM_TWIST": { name: "Forearm Twist (Sup/Pro)", desc: "Rapid axial pronation-supination oscillation", class: "Radio-Ulnar Rotation", dyn: (t, p, s) => p.clone(), ribbon: "Axial Vortex" },
         "APERTURE_CLOSE": { name: "Aperture Close (Open to Pinch)", desc: "Dynamic finger closing from open to pinched", class: "Synergistic Morph", dyn: (t, p, s) => p.clone(), ribbon: "Aperture Pinch" }
@@ -2979,6 +3061,54 @@ const AIRPORT_LEXICON_30 = [
           handR.targetWristQuat.setFromEuler(new THREE.Euler(1.35, Math.PI, shrug * 0.25));
           handL.targetWristQuat.setFromEuler(new THREE.Euler(1.35, -Math.PI, -shrug * 0.25));
           currentPhase = u;
+        } else if ((lem === "gate" || mov === "GATE_OPEN") && !endLoc) {
+          // Authentic ASL GATE: Non-dominant hand holds stationary gate post, dominant hand swings open on wrist hinge
+          const ft = recipe.fineTune || {};
+          const nd = recipe.nonDominant || {};
+          const ftL = nd.fineTune || {};
+
+          // Stationary Base Gate Post (Left Hand):
+          const baseLx = -10.5 + (ftL.ox || 0);
+          const baseLy = 5.5 + (ftL.oy || 0);
+          const baseLz = 16.0 + (ftL.oz || 0);
+          targetL.set(baseLx, baseLy, baseLz);
+          const qGateL = new THREE.Quaternion().setFromEuler(new THREE.Euler(
+            0.0 + (ftL.rx || 0) * Math.PI / 180,
+            Math.PI + (ftL.ry || 0) * Math.PI / 180,
+            Math.PI / 2 + (ftL.rz || 0) * Math.PI / 180
+          ));
+          handL.targetWristQuat.copy(qGateL);
+          handL.root.quaternion.copy(qGateL);
+
+          // Dynamic Swinging Gate (Right Hand):
+          // 0.0 -> 0.40: Swing open wide
+          // 0.40 -> 0.70: Hold open
+          // 0.70 -> 1.00: Smooth return to close
+          let swing = 0;
+          if (u < 0.40) {
+            swing = Math.sin((u / 0.40) * Math.PI * 0.5);
+          } else if (u < 0.70) {
+            swing = 1.0;
+          } else {
+            const t = (u - 0.70) / 0.30;
+            swing = Math.cos(t * Math.PI * 0.5);
+          }
+
+          const swingAngle = swing * 1.25; // 72 degrees swing open
+          const eulerR = [
+            0.0 + (ft.rx || 0) * Math.PI / 180,
+            Math.PI - swingAngle + (ft.ry || 0) * Math.PI / 180,
+            -Math.PI / 2 + (ft.rz || 0) * Math.PI / 180
+          ];
+          const qGateR = new THREE.Quaternion().setFromEuler(new THREE.Euler(...eulerR));
+          const baseRx = 10.5 + (ft.ox || 0);
+          const baseRy = 5.5 + (ft.oy || 0);
+          const baseRz = 16.0 + (ft.oz || 0) - swing * 1.2;
+          targetR.set(baseRx, baseRy, baseRz);
+          handR.targetWristQuat.copy(qGateR);
+
+          currentPhase = swing;
+          isContactInstant = (swing < 0.05);
         } else if (lem === "book" && !endLoc) {
           // Book opening single cycle
           targetR.x = 2.5 + easeInOut * 3.0;
@@ -3414,6 +3544,40 @@ const AIRPORT_LEXICON_30 = [
           handL.setVisible(true);
           handR.setVisible(true);
 
+          const lem = (rec.lemma || rec.name || "").toLowerCase();
+          if (lem === "gate" || rec.movement === "GATE_OPEN") {
+            const nd = rec.nonDominant || {};
+            const ftL = nd.fineTune || { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 };
+            locusL = new THREE.Vector3(-10.5 + (ftL.ox || 0), 5.5 + (ftL.oy || 0), 16.0 + (ftL.oz || 0));
+            handL.root.position.copy(locusL);
+            handL.targetRootPos.copy(locusL);
+
+            const baseHsKey = nd.handshape || "open_b";
+            const baseHsDef = PARAMETRIC_LEXICONS.handshapes[baseHsKey] || PARAMETRIC_LEXICONS.handshapes["open_b"];
+            const baseTokens = JSON.parse(JSON.stringify(baseHsDef.tokens));
+            baseTokens.wrist = [
+              0.0 + (ftL.rx || 0) * Math.PI / 180,
+              Math.PI + (ftL.ry || 0) * Math.PI / 180,
+              Math.PI / 2 + (ftL.rz || 0) * Math.PI / 180
+            ];
+            handL.executePose(baseTokens, "BaseGate", immediate);
+
+            const qWristL = new THREE.Quaternion().setFromEuler(new THREE.Euler(...baseTokens.wrist));
+            handL.targetWristQuat.copy(qWristL);
+            armL.update(locusL, true, qWristL);
+
+            // Right hand start locus (closed gate):
+            locusR = new THREE.Vector3(10.5 + (ft.ox || 0), 5.5 + (ft.oy || 0), 16.0 + (ft.oz || 0));
+            hsTokens.wrist = [
+              0.0 + (ft.rx || 0) * Math.PI / 180,
+              Math.PI + (ft.ry || 0) * Math.PI / 180,
+              -Math.PI / 2 + (ft.rz || 0) * Math.PI / 180
+            ];
+            handR.executePose(hsTokens, "Gate", immediate);
+            const qWristR = new THREE.Quaternion().setFromEuler(new THREE.Euler(...hsTokens.wrist));
+            handR.targetWristQuat.copy(qWristR);
+          } else {
+
           const nd = rec.nonDominant || {};
           const baseLocKey = nd.location || "passive_wrist";
           const baseLoc = PARAMETRIC_LEXICONS.locations[baseLocKey] || PARAMETRIC_LEXICONS.locations["passive_wrist"];
@@ -3454,6 +3618,7 @@ const AIRPORT_LEXICON_30 = [
           locusR.x += (ft.ox || 0);
           locusR.y += (ft.oy || 0);
           locusR.z += (ft.oz || 0);
+          }
         } else if (bilMode === "INDEPENDENT_DUAL") {
           // Independent Dual-Hand Mode: Non-dominant hand has its own movement sequence and recipe!
           handL.setVisible(true);
@@ -3869,6 +4034,11 @@ const AIRPORT_LEXICON_30 = [
           dir = [0.7, 0.0, 0.7];
           disp = 13.0;
           act = "Transverse Horizontal Ring";
+        } else if (rec.movement === "GATE_OPEN") {
+          dir = [-0.7, 0.0, -0.7];
+          disp = 10.0;
+          act = "Radiocarpal Gate Hinge Swing";
+          sec = "Stationary Left Gate Post";
         } else if (rec.movement === "WRIST_NOD") {
           dir = [0.0, 0.0, 0.0];
           disp = 2.0;
@@ -7013,22 +7183,37 @@ const AIRPORT_LEXICON_30 = [
     }
     window.switchMainTab = switchMainTab;
 
-    const CANONICAL_PRESETS = {
-      thankyou: { handshape: "open_b", location: "chin", orientation: "PALM_POSTERIOR", movement: "LINEAR_FORWARD", bilateral: "UNILATERAL" },
-      water: { handshape: "w", location: "chin", orientation: "PALM_CONTRALATERAL", movement: "TAP_2X", bilateral: "UNILATERAL" },
-      book: { handshape: "open_b", location: "neutral_center", orientation: "PALM_SUPINE", movement: "ARC_SAGITTAL", bilateral: "BILATERAL_SYMMETRIC" },
-      work: { handshape: "s", location: "passive_wrist", orientation: "PALM_PRONE", movement: "TAP_2X", bilateral: "ASYMMETRIC_BASE", baseHandshape: "s" },
+        const CANONICAL_PRESETS = {
       me: { handshape: "1", location: "sternum", orientation: "FINGERS_POSTERIOR", movement: "LINEAR_BACKWARD", bilateral: "UNILATERAL" },
       you: { handshape: "1", location: "neutral_far", orientation: "FINGERS_ANTERIOR", movement: "LINEAR_FORWARD", bilateral: "UNILATERAL" },
-      night: { handshape: "bent_b", location: "passive_forearm", orientation: "PALM_PRONE", movement: "ARC_SAGITTAL", bilateral: "ASYMMETRIC_BASE", baseHandshape: "flat_b" },
-      read: { handshape: "v", location: "passive_palm", orientation: "PALM_PRONE", movement: "VERTICAL_DROP", bilateral: "ASYMMETRIC_BASE", baseHandshape: "flat_b" },
-      mother: { handshape: "5", location: "chin", orientation: "PALM_CONTRALATERAL", movement: "TAP_1X", bilateral: "UNILATERAL" },
-      father: { handshape: "5", location: "forehead", orientation: "PALM_CONTRALATERAL", movement: "TAP_1X", bilateral: "UNILATERAL" },
-      eat: { handshape: "flat_o", location: "mouth", orientation: "PALM_CONTRALATERAL", movement: "TAP_2X", bilateral: "UNILATERAL" },
-      hello: { handshape: "flat_b", location: "temple", orientation: "PALM_CONTRALATERAL", movement: "LINEAR_FORWARD", bilateral: "UNILATERAL" },
+      we: { handshape: "1", location: "clavicle", endLocation: "heart", orientation: "PALM_POSTERIOR", movement: "ARC_CORONAL", bilateral: "UNILATERAL" },
+      they: { handshape: "1", location: "neutral_mid", orientation: "FINGERS_ANTERIOR", movement: "CIRCULAR_TRANSVERSE", bilateral: "UNILATERAL" },
+      have: { handshape: "bent_b", location: "sternum", orientation: "PALM_POSTERIOR", movement: "LINEAR_BACKWARD", bilateral: "BILATERAL_SYMMETRIC" },
+      want: { handshape: "curved_5", location: "neutral_mid", orientation: "PALM_SUPINE", movement: "LINEAR_BACKWARD", bilateral: "BILATERAL_SYMMETRIC" },
+      more: { handshape: "flat_o", location: "neutral_mid", orientation: "PALM_CONTRALATERAL", movement: "TAP_2X", bilateral: "BILATERAL_SYMMETRIC" },
+      with: { handshape: "a", location: "neutral_mid", orientation: "PALM_CONTRALATERAL", movement: "LINEAR_LATERAL", bilateral: "BILATERAL_SYMMETRIC" },
+      in: { handshape: "flat_o", location: "passive_palm", orientation: "PALM_PRONE", movement: "VERTICAL_DROP", bilateral: "ASYMMETRIC_BASE", baseHandshape: "c" },
+      on: { handshape: "flat_b", location: "passive_wrist", orientation: "PALM_PRONE", movement: "VERTICAL_DROP", bilateral: "ASYMMETRIC_BASE", baseHandshape: "flat_b" },
+      help: { handshape: "a", location: "passive_palm", orientation: "PALM_CONTRALATERAL", movement: "VERTICAL_RISE", bilateral: "ASYMMETRIC_BASE", baseHandshape: "flat_b" },
+      please: { handshape: "flat_b", location: "sternum", orientation: "PALM_POSTERIOR", movement: "CIRCULAR_TRANSVERSE", bilateral: "UNILATERAL" },
+      thankyou: { handshape: "open_b", location: "chin", endLocation: "neutral_far", orientation: "PALM_POSTERIOR", movement: "LINEAR_FORWARD", bilateral: "UNILATERAL" },
       yes: { handshape: "s", location: "neutral_mid", orientation: "PALM_PRONE", movement: "WRIST_NOD", bilateral: "UNILATERAL" },
-      coffee: { handshape: "s", location: "passive_wrist", orientation: "PALM_PRONE", movement: "CIRCULAR_TRANSVERSE", bilateral: "ASYMMETRIC_BASE", baseHandshape: "s" },
-      friend: { handshape: "curved_1", location: "neutral_mid", orientation: "PALM_POSTERIOR", movement: "TAP_2X", bilateral: "BILATERAL_SYMMETRIC" }
+      no: { handshape: "bent_v", location: "neutral_mid", orientation: "PALM_ANTERIOR", movement: "APERTURE_CLOSE", bilateral: "UNILATERAL" },
+      not: { handshape: "a", location: "chin", orientation: "PALM_CONTRALATERAL", movement: "LINEAR_FORWARD", bilateral: "UNILATERAL" },
+      good: { handshape: "open_b", location: "chin", endLocation: "passive_palm", orientation: "PALM_POSTERIOR", movement: "LINEAR_FORWARD", bilateral: "ASYMMETRIC_BASE", baseHandshape: "flat_b" },
+      bad: { handshape: "open_b", location: "chin", orientation: "PALM_POSTERIOR", movement: "FOREARM_TWIST", bilateral: "UNILATERAL" },
+      go: { handshape: "1", location: "neutral_mid", endLocation: "neutral_far", orientation: "FINGERS_ANTERIOR", movement: "ARC_SAGITTAL", bilateral: "BILATERAL_SYMMETRIC" },
+      come: { handshape: "1", location: "neutral_far", endLocation: "neutral_mid", orientation: "PALM_POSTERIOR", movement: "LINEAR_BACKWARD", bilateral: "BILATERAL_SYMMETRIC" },
+      know: { handshape: "bent_b", location: "temple", orientation: "PALM_POSTERIOR", movement: "TAP_2X", bilateral: "UNILATERAL" },
+      think: { handshape: "1", location: "forehead", orientation: "FINGERS_POSTERIOR", movement: "TAP_1X", bilateral: "UNILATERAL" },
+      see: { handshape: "v", location: "eyes", endLocation: "neutral_far", orientation: "PALM_POSTERIOR", movement: "LINEAR_FORWARD", bilateral: "UNILATERAL" },
+      like: { handshape: "5", endHandshape: "open_8", location: "sternum", orientation: "PALM_POSTERIOR", movement: "LINEAR_FORWARD", bilateral: "UNILATERAL" },
+      can: { handshape: "s", location: "neutral_mid", endLocation: "neutral_low", orientation: "PALM_PRONE", movement: "VERTICAL_DROP", bilateral: "BILATERAL_SYMMETRIC" },
+      make: { handshape: "s", location: "neutral_mid", orientation: "PALM_CONTRALATERAL", movement: "WRIST_NOD", bilateral: "BILATERAL_SYMMETRIC" },
+      time: { handshape: "1", location: "passive_wrist", orientation: "PALM_PRONE", movement: "TAP_2X", bilateral: "ASYMMETRIC_BASE", baseHandshape: "s" },
+      all: { handshape: "flat_b", location: "neutral_high", endLocation: "passive_palm", orientation: "PALM_ANTERIOR", movement: "CIRCULAR_TRANSVERSE", bilateral: "ASYMMETRIC_BASE", baseHandshape: "flat_b" },
+      finish: { handshape: "5", location: "neutral_mid", endLocation: "neutral_low", orientation: "PALM_POSTERIOR", endOrientation: "PALM_PRONE", movement: "ARC_CORONAL", bilateral: "BILATERAL_SYMMETRIC" },
+      what: { handshape: "open_b", location: "neutral_mid", orientation: "PALM_SUPINE", movement: "LINEAR_LATERAL", bilateral: "BILATERAL_SYMMETRIC" }
     };
 
     function loadUniversalPreset(name) {
@@ -7907,7 +8092,7 @@ const AIRPORT_LEXICON_30 = [
       executeSignItem(item) {
         const entry = item.data;
         currentActiveWord = entry.lemma;
-        const baseRec = UniversalSignCompiler.compileRecipeFromASLLEX(entry);
+        const baseRec = (entry && entry.recipe) ? { ...entry.recipe, name: entry.name || entry.lemma } : UniversalSignCompiler.compileRecipeFromASLLEX(entry);
         const cleanRecipe = {
           name: baseRec.name,
           handshape: baseRec.handshape,
