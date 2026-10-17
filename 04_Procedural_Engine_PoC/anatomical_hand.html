@@ -3078,7 +3078,7 @@ const AIRPORT_LEXICON_30 = [
         const rawLocusR = locDef.coords(false, 1.0);
         const qWristR = new THREE.Quaternion().setFromEuler(new THREE.Euler(...finalWristEulerR));
         const effOffsetR = this.computeEffectorOffset(rec, false).applyQuaternion(qWristR);
-        const locusR = rawLocusR.clone().sub(effOffsetR);
+        let locusR = rawLocusR.clone().sub(effOffsetR);
 
         // Apply 3D Spatial Fine-Tune Nudge Translation (ox, oy, oz in cm)
         locusR.x += (ft.ox || 0);
