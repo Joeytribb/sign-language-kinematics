@@ -1542,30 +1542,30 @@
 
     const L_T = [2.20, 1.45, 1.00];
     const LIM_T_R = {
-      cmc_f: [-60*deg2rad, 120*deg2rad], cmc_a: [-80*deg2rad, 60*deg2rad],
-      mcp_f: [0*deg2rad, 80*deg2rad], ip_f:  [0*deg2rad, 90*deg2rad],
-      rest: { f: 30*deg2rad, a: 15*deg2rad }
-    };
-    const LIM_T_L = {
-      cmc_f: [-60*deg2rad, 120*deg2rad], cmc_a: [-60*deg2rad, 80*deg2rad],
+      cmc_f: [-60*deg2rad, 120*deg2rad], cmc_a: [-90*deg2rad, 70*deg2rad],
       mcp_f: [0*deg2rad, 80*deg2rad], ip_f:  [0*deg2rad, 90*deg2rad],
       rest: { f: 30*deg2rad, a: -15*deg2rad }
+    };
+    const LIM_T_L = {
+      cmc_f: [-60*deg2rad, 120*deg2rad], cmc_a: [-70*deg2rad, 90*deg2rad],
+      mcp_f: [0*deg2rad, 80*deg2rad], ip_f:  [0*deg2rad, 90*deg2rad],
+      rest: { f: 30*deg2rad, a: 15*deg2rad }
     };
 
     // --- PHONOLOGICAL TOKENS (ASL-LEX & LINGUISTIC PRIMITIVES) ---
     const FINGER_TOKENS = {
       EXTENDED: { f1: 2, a1: 0, f2: 6, f3: 4, desc: "Anatomically extended straight" },
-      NATURAL_REST_IDX: { f1: 16, a1: -4, f2: 24, f3: 16, desc: "Natural relaxed cascade curl" },
+      NATURAL_REST_IDX: { f1: 16, a1: 4, f2: 24, f3: 16, desc: "Natural relaxed cascade curl" },
       NATURAL_REST_MID: { f1: 22, a1: 0, f2: 32, f3: 20, desc: "Natural relaxed cascade curl" },
-      NATURAL_REST_RNG: { f1: 28, a1: 6, f2: 44, f3: 28, desc: "Natural relaxed cascade curl" },
-      NATURAL_REST_PNK: { f1: 34, a1: 12, f2: 54, f3: 34, desc: "Natural relaxed cascade curl" },
-      EXTENDED_SPREAD_L: { f1: 2, a1: -24, f2: 4, f3: 2, desc: "Extended abducted lateral to +X (-24° flare)" },
-      EXTENDED_SPREAD_R: { f1: 2, a1: 22, f2: 4, f3: 2, desc: "Extended abducted medial to -X (+22° flare)" },
-      EXTENDED_FLARE_WIDE_L: { f1: 2, a1: -28, f2: 4, f3: 2, desc: "Extended wide flare lateral to +X (-28°)" },
-      EXTENDED_FLARE_WIDE_R: { f1: 2, a1: 32, f2: 4, f3: 2, desc: "Extended wide flare medial to -X (+32°)" },
-      CROSSED_IDX_UNDER: { f1: -8, a1: 16, f2: 2, f3: 2, desc: "Index finger straight passing posteriorly (-Z) under middle" },
-      CROSSED_MID_OVER: { f1: 8, a1: -24, f2: 4, f3: 2, desc: "Middle finger crossing anteriorly (+Z) over index finger in authentic ASL R" },
-      CROSSED_R: { f1: -8, a1: 16, f2: 2, f3: 2, desc: "Index under crossed middle (R)" },
+      NATURAL_REST_RNG: { f1: 28, a1: -6, f2: 44, f3: 28, desc: "Natural relaxed cascade curl" },
+      NATURAL_REST_PNK: { f1: 34, a1: -12, f2: 54, f3: 34, desc: "Natural relaxed cascade curl" },
+      EXTENDED_SPREAD_L: { f1: 2, a1: 22, f2: 4, f3: 2, desc: "Extended abducted medial to -X (+22° flare)" },
+      EXTENDED_SPREAD_R: { f1: 2, a1: -22, f2: 4, f3: 2, desc: "Extended abducted lateral to +X (-22° flare)" },
+      EXTENDED_FLARE_WIDE_L: { f1: 2, a1: 30, f2: 4, f3: 2, desc: "Extended wide flare medial to -X (+30°)" },
+      EXTENDED_FLARE_WIDE_R: { f1: 2, a1: -30, f2: 4, f3: 2, desc: "Extended wide flare lateral to +X (-30°)" },
+      CROSSED_IDX_UNDER: { f1: -8, a1: -16, f2: 2, f3: 2, desc: "Index finger straight passing posteriorly (-Z) under middle" },
+      CROSSED_MID_OVER: { f1: 8, a1: 24, f2: 4, f3: 2, desc: "Middle finger crossing anteriorly (+Z) over index finger in authentic ASL R" },
+      CROSSED_R: { f1: -8, a1: -16, f2: 2, f3: 2, desc: "Index under crossed middle (R)" },
       CLOSED: { f1: 90, a1: 0, f2: 90, f3: 80, desc: "Full fist closed" },
       CLOSED_OVER_THUMB: { f1: 85, a1: 0, f2: 75, f3: 50, desc: "Closed over tucked thumb" },
       CURVED: { f1: 45, a1: 0, f2: 45, f3: 45, desc: "C-shape curved arc" },
@@ -1583,9 +1583,9 @@
       THM_FLAT_PALM: { f1: 0, a1: -70, f2: 60, f3: 60, desc: "Flat across lower palm" },
       THM_OUT: { f1: -50, a1: -30, f2: 0, f3: 0, desc: "Extended 90° outward" },
       THM_OUT_SPREAD: { f1: -65, a1: -30, f2: 0, f3: 0, desc: "Wide outward spread" },
-      THM_TUCK_T: { f1: -18, a1: -84, f2: 8, f3: 2, desc: "Tucked inside palm, thumb tip pushed firmly UP and OUT through index-middle cleft" },
-      THM_TUCK_N: { f1: 18, a1: -80, f2: 8, f3: 2, desc: "Tucked inside palm, thumb tip pushed firmly UP and OUT through middle-ring cleft" },
-      THM_TUCK_M: { f1: 48, a1: -74, f2: 8, f3: 2, desc: "Tucked inside palm, thumb tip pushed firmly UP and OUT through ring-pinky cleft" },
+      THM_TUCK_T: { f1: -18, a1: -75, f2: 12, f3: 8, desc: "Tucked inside palm, thumb tip pushed firmly UP and OUT through index-middle cleft" },
+      THM_TUCK_N: { f1: 20, a1: -60, f2: 12, f3: 8, desc: "Tucked inside palm, thumb tip pushed firmly UP and OUT through middle-ring cleft" },
+      THM_TUCK_M: { f1: 50, a1: -50, f2: 12, f3: 8, desc: "Tucked inside palm, thumb tip pushed firmly UP and OUT through ring-pinky cleft" },
       THM_PINCH_INDEX: { f1: -40, a1: -45, f2: 50, f3: 70, desc: "Pinching index fingertip" },
       THM_PINCH_MID: { f1: -25, a1: -45, f2: 50, f3: 70, desc: "Touching middle fingertip" },
       THM_CURVED: { f1: -30, a1: -40, f2: 40, f3: 40, desc: "C-shape opposing curve" },
@@ -6227,7 +6227,7 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         const ikBase = new IKNode(0); 
         ikBase.worldPos.fromArray(basePos);
 
-        const thumbEuler = new THREE.Euler(90*deg2rad, sign * 90*deg2rad, 0, 'XYZ');
+        const thumbEuler = new THREE.Euler(0, sign * 90*deg2rad, sign * 90*deg2rad, 'XYZ');
         if(isThumb) { 
           gBase.rotation.copy(thumbEuler); 
           ikBase.localRot.copy(thumbEuler); 
@@ -6364,7 +6364,7 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           let t = poseTokens[fid];
           let a = fid === 'thm' ? THUMB_TOKENS[t] : FINGER_TOKENS[t];
           if(a && f) {
-            const abd = (fid === 'thm' ? (this.isLeft ? 1 : -1) : (this.isLeft ? -1 : 1)) * a.a1 * deg2rad;
+            const abd = (this.isLeft ? -1 : 1) * a.a1 * deg2rad;
             f.target_q = {
               mcp_f: a.f1 * deg2rad,
               mcp_a: abd,
@@ -6418,7 +6418,7 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
             let t = poseTokens[fid];
             let a = fid === 'thm' ? THUMB_TOKENS[t] : FINGER_TOKENS[t];
             if (a && f) {
-              const abd = (fid === 'thm' ? (this.isLeft ? 1 : -1) : (this.isLeft ? -1 : 1)) * a.a1 * deg2rad;
+              const abd = (this.isLeft ? -1 : 1) * a.a1 * deg2rad;
               f.q.mcp_f = a.f1 * deg2rad;
               f.q.mcp_a = abd;
               f.q.pip_f = a.f2 * deg2rad;
@@ -6489,7 +6489,7 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           const f2 = (1.0 - easeU) * a0.f2 + easeU * a1.f2;
           const f3 = (1.0 - easeU) * a0.f3 + easeU * a1.f3;
 
-          const abd = (fid === 'thm' ? (this.isLeft ? 1 : -1) : (this.isLeft ? -1 : 1)) * a1_ang * deg2rad;
+          const abd = (this.isLeft ? -1 : 1) * a1_ang * deg2rad;
           f.target_q = {
             mcp_f: f1 * deg2rad,
             mcp_a: abd,
@@ -6849,8 +6849,7 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
                   } else {
                     // Lateral separation
                     if (finger.id === 'idx') {
-                      if (sign === 1) thumb.q.mcp_a = Math.min(-0.35, thumb.q.mcp_a - 0.03);
-                      else thumb.q.mcp_a = Math.max(0.35, thumb.q.mcp_a + 0.03);
+                      thumb.q.mcp_a += sign * 0.03;
                     } else {
                       thumb.q.mcp_f -= 0.02;
                     }
