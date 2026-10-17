@@ -368,73 +368,81 @@
     }
     #canvas-container:active { cursor: grabbing; }
 
-    /* COMPACT VIEWPORT CONTROL DOCKS */
+    /* ULTRA-COMPACT VIEWPORT MICRO-TOOLBAR */
     .viewport-compact-dock {
       position: absolute;
       display: flex;
       align-items: center;
-      gap: 5px;
-      background: rgba(18, 19, 23, 0.84);
-      backdrop-filter: blur(10px);
+      gap: 4px;
+      background: rgba(14, 15, 18, 0.88);
+      backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 5px;
-      padding: 3px 6px;
+      border-radius: 4px;
+      padding: 2px 5px;
       z-index: 20;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
     }
     .dock-group {
       display: flex;
       align-items: center;
-      gap: 3px;
+      gap: 2px;
     }
     .dock-label {
       font-family: var(--font-mono);
-      font-size: 8px;
-      font-weight: 700;
+      font-size: 7.5px;
+      font-weight: 800;
       color: var(--text-dim);
-      margin-right: 2px;
-      letter-spacing: 0.5px;
+      margin: 0 2px;
+      letter-spacing: 0.6px;
     }
     .dock-divider {
       width: 1px;
-      height: 14px;
+      height: 12px;
       background: rgba(255, 255, 255, 0.12);
       margin: 0 3px;
     }
-    .dock-prototype-badge {
+    .dock-prototype-badge-bar {
+      position: absolute;
       display: flex;
       align-items: center;
       gap: 5px;
       font-family: var(--font-mono);
-      font-size: 8px;
+      font-size: 7.5px;
       cursor: help;
+      z-index: 20;
+      background: rgba(14, 15, 18, 0.70);
+      padding: 1.5px 5px;
+      border-radius: 3px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
     }
-    .dock-prototype-badge .proto-tag {
+    .dock-prototype-badge-bar .proto-tag {
       background: rgba(14, 165, 233, 0.18);
       color: #38bdf8;
       border: 1px solid rgba(14, 165, 233, 0.35);
-      padding: 1px 4px;
-      border-radius: 3px;
+      padding: 0.5px 3.5px;
+      border-radius: 2.5px;
       font-weight: 700;
-      font-size: 7.5px;
+      font-size: 7px;
     }
-    .dock-prototype-badge .proto-txt {
+    .dock-prototype-badge-bar .proto-txt {
       color: #94a3b8;
-      font-size: 8px;
+      font-size: 7.5px;
       white-space: nowrap;
     }
     .view-cam-btn {
-      background: rgba(25, 27, 32, 0.75);
+      background: rgba(24, 25, 30, 0.75);
       border: 1px solid rgba(255, 255, 255, 0.08);
       color: var(--text-muted);
       font-family: var(--font-mono);
-      font-size: 8.5px;
+      font-size: 8px;
       font-weight: 600;
-      padding: 2.5px 6px;
-      border-radius: 3.5px;
+      padding: 2px 5px;
+      border-radius: 3px;
       cursor: pointer;
       transition: all 0.15s;
       white-space: nowrap;
+      min-width: 18px;
+      text-align: center;
     }
     .view-cam-btn:hover, .view-cam-btn.active {
       color: var(--bone-white);
@@ -1043,40 +1051,32 @@
       <div id="canvas-container"></div>
       <div id="gizmo-container"></div>
 
-      <!-- Compact Top Viewport Control Dock -->
-      <div class="viewport-compact-dock" style="top: 10px; left: 14px;">
-        <div class="dock-group">
-          <span class="dock-label">CAM</span>
-          <button class="view-cam-btn active" data-cam="front" onclick="LexiconWorkbench.setCameraPreset('front')">FRONT</button>
-          <button class="view-cam-btn" data-cam="iso" onclick="LexiconWorkbench.setCameraPreset('iso')">ISO</button>
-          <button class="view-cam-btn" data-cam="profile" onclick="LexiconWorkbench.setCameraPreset('profile')">PROFILE</button>
-          <button class="view-cam-btn" data-cam="top" onclick="LexiconWorkbench.setCameraPreset('top')">TOP</button>
-          <button class="view-cam-btn" data-cam="reset" onclick="LexiconWorkbench.setCameraPreset('reset')" title="Reset Camera (0)">↺</button>
-        </div>
+      <!-- Compact Top Viewport Micro-Dock -->
+      <div class="viewport-compact-dock" style="top: 8px; left: 10px;">
+        <span class="dock-label">CAM</span>
+        <button class="view-cam-btn active" data-cam="front" onclick="LexiconWorkbench.setCameraPreset('front')">FRONT</button>
+        <button class="view-cam-btn" data-cam="iso" onclick="LexiconWorkbench.setCameraPreset('iso')">ISO</button>
+        <button class="view-cam-btn" data-cam="profile" onclick="LexiconWorkbench.setCameraPreset('profile')">PROFILE</button>
+        <button class="view-cam-btn" data-cam="top" onclick="LexiconWorkbench.setCameraPreset('top')">TOP</button>
+        <button class="view-cam-btn" data-cam="reset" onclick="LexiconWorkbench.setCameraPreset('reset')" title="Reset Camera">↺</button>
         <div class="dock-divider"></div>
-        <div class="dock-group">
-          <span class="dock-label">LIGHT</span>
-          <button class="view-cam-btn btn-lighting-preset active" data-preset="sun" onclick="StudioLighting.setPreset('sun')" title="World Sunlight">☀️ SUN</button>
-          <button class="view-cam-btn btn-lighting-preset" data-preset="studio" onclick="StudioLighting.setPreset('studio')" title="Studio Key/Rim">🎬 STUDIO</button>
-          <button class="view-cam-btn btn-lighting-preset" data-preset="clinical" onclick="StudioLighting.setPreset('clinical')" title="Clinical Lab">🔬 CLINICAL</button>
-          <button class="view-cam-btn btn-lighting-preset" data-preset="stealth" onclick="StudioLighting.setPreset('stealth')" title="Stealth Soundstage">🌌 STEALTH</button>
-        </div>
+        <span class="dock-label">LIGHT</span>
+        <button class="view-cam-btn btn-lighting-preset active" data-preset="sun" onclick="StudioLighting.setPreset('sun')" title="Sunlight">☀️</button>
+        <button class="view-cam-btn btn-lighting-preset" data-preset="studio" onclick="StudioLighting.setPreset('studio')" title="Studio Key/Rim">🎬</button>
+        <button class="view-cam-btn btn-lighting-preset" data-preset="clinical" onclick="StudioLighting.setPreset('clinical')" title="Clinical Lab">🔬</button>
+        <button class="view-cam-btn btn-lighting-preset" data-preset="stealth" onclick="StudioLighting.setPreset('stealth')" title="Stealth Stage">🌌</button>
+        <div class="dock-divider"></div>
+        <span class="dock-label">EXPR</span>
+        <button class="view-cam-btn btn-emotion-preset active" data-emotion="happy" onclick="StickmanEmotionEngine.setEmotion('happy')" title="Happy Grin">😄</button>
+        <button class="view-cam-btn btn-emotion-preset" data-emotion="surprised" onclick="StickmanEmotionEngine.setEmotion('surprised')" title="Surprised">😮</button>
+        <button class="view-cam-btn btn-emotion-preset" data-emotion="question" onclick="StickmanEmotionEngine.setEmotion('question')" title="Question">🤔</button>
+        <button class="view-cam-btn btn-emotion-preset" data-emotion="neutral" onclick="StickmanEmotionEngine.setEmotion('neutral')" title="Neutral">😐</button>
+        <button class="view-cam-btn btn-emotion-preset" data-emotion="wink" onclick="StickmanEmotionEngine.setEmotion('wink')" title="Wink">😉</button>
       </div>
 
-      <div class="viewport-compact-dock" style="top: 38px; left: 14px;">
-        <div class="dock-group">
-          <span class="dock-label">EXPR</span>
-          <button class="view-cam-btn btn-emotion-preset active" data-emotion="happy" onclick="StickmanEmotionEngine.setEmotion('happy')" title="Happy Grin (Celebration / Center Figure)">😄 HAPPY</button>
-          <button class="view-cam-btn btn-emotion-preset" data-emotion="surprised" onclick="StickmanEmotionEngine.setEmotion('surprised')" title="Surprised 'O' (Right Figure)">😮 SURPRISED</button>
-          <button class="view-cam-btn btn-emotion-preset" data-emotion="question" onclick="StickmanEmotionEngine.setEmotion('question')" title="Inquisitive Brow (WH-Grammar)">🤔 QUESTION</button>
-          <button class="view-cam-btn btn-emotion-preset" data-emotion="neutral" onclick="StickmanEmotionEngine.setEmotion('neutral')" title="Neutral (Left Figure)">😐 NEUTRAL</button>
-          <button class="view-cam-btn btn-emotion-preset" data-emotion="wink" onclick="StickmanEmotionEngine.setEmotion('wink')" title="Wink Affirmation">😉 WINK</button>
-        </div>
-        <div class="dock-divider"></div>
-        <div class="dock-prototype-badge" title="Facial expressions are test placeholders to humanize the stick figure model. Final production system integrates photorealistic human digital twins with FACS micro-expressions.">
-          <span class="proto-tag">NOTE</span>
-          <span class="proto-txt">Stickman test expressions · Final: Photoreal human</span>
-        </div>
+      <div class="dock-prototype-badge-bar" style="top: 36px; left: 10px;" title="Facial expressions are test placeholders to humanize the stick figure model. Final production system integrates photorealistic human digital twins with FACS micro-expressions.">
+        <span class="proto-tag">NOTE</span>
+        <span class="proto-txt">Stickman test expressions · Final: Photoreal human</span>
       </div>
 
       <!-- Biomechanical Telemetry HUD -->
@@ -1368,17 +1368,17 @@
     // --- PHONOLOGICAL TOKENS (ASL-LEX & LINGUISTIC PRIMITIVES) ---
     const FINGER_TOKENS = {
       EXTENDED: { f1: 2, a1: 0, f2: 6, f3: 4, desc: "Anatomically extended straight" },
-      NATURAL_REST_IDX: { f1: 16, a1: 4, f2: 24, f3: 16, desc: "Natural relaxed cascade curl" },
+      NATURAL_REST_IDX: { f1: 16, a1: -4, f2: 24, f3: 16, desc: "Natural relaxed cascade curl" },
       NATURAL_REST_MID: { f1: 22, a1: 0, f2: 32, f3: 20, desc: "Natural relaxed cascade curl" },
-      NATURAL_REST_RNG: { f1: 28, a1: -4, f2: 44, f3: 28, desc: "Natural relaxed cascade curl" },
-      NATURAL_REST_PNK: { f1: 34, a1: -8, f2: 54, f3: 34, desc: "Natural relaxed cascade curl" },
-      EXTENDED_SPREAD_L: { f1: 2, a1: 22, f2: 4, f3: 2, desc: "Extended abducted lateral (+22° wide flare)" },
-      EXTENDED_SPREAD_R: { f1: 2, a1: -22, f2: 4, f3: 2, desc: "Extended abducted medial (-22° wide flare)" },
-      EXTENDED_FLARE_WIDE_L: { f1: 2, a1: 28, f2: 4, f3: 2, desc: "Extended wide flare lateral (+28°)" },
-      EXTENDED_FLARE_WIDE_R: { f1: 2, a1: -28, f2: 4, f3: 2, desc: "Extended wide flare medial (-28°)" },
-      CROSSED_IDX_UNDER: { f1: 6, a1: -12, f2: 2, f3: 2, desc: "Index finger straight passing posteriorly under middle" },
-      CROSSED_MID_OVER: { f1: -4, a1: 28, f2: 6, f3: 4, desc: "Middle finger crossing anteriorly over index finger in authentic ASL R" },
-      CROSSED_R: { f1: 6, a1: -12, f2: 2, f3: 2, desc: "Index under crossed middle (R)" },
+      NATURAL_REST_RNG: { f1: 28, a1: 6, f2: 44, f3: 28, desc: "Natural relaxed cascade curl" },
+      NATURAL_REST_PNK: { f1: 34, a1: 12, f2: 54, f3: 34, desc: "Natural relaxed cascade curl" },
+      EXTENDED_SPREAD_L: { f1: 2, a1: -24, f2: 4, f3: 2, desc: "Extended abducted lateral to +X (-24° flare)" },
+      EXTENDED_SPREAD_R: { f1: 2, a1: 22, f2: 4, f3: 2, desc: "Extended abducted medial to -X (+22° flare)" },
+      EXTENDED_FLARE_WIDE_L: { f1: 2, a1: -28, f2: 4, f3: 2, desc: "Extended wide flare lateral to +X (-28°)" },
+      EXTENDED_FLARE_WIDE_R: { f1: 2, a1: 32, f2: 4, f3: 2, desc: "Extended wide flare medial to -X (+32°)" },
+      CROSSED_IDX_UNDER: { f1: -8, a1: 16, f2: 2, f3: 2, desc: "Index finger straight passing posteriorly (-Z) under middle" },
+      CROSSED_MID_OVER: { f1: 8, a1: -24, f2: 4, f3: 2, desc: "Middle finger crossing anteriorly (+Z) over index finger in authentic ASL R" },
+      CROSSED_R: { f1: -8, a1: 16, f2: 2, f3: 2, desc: "Index under crossed middle (R)" },
       CLOSED: { f1: 90, a1: 0, f2: 90, f3: 80, desc: "Full fist closed" },
       CLOSED_OVER_THUMB: { f1: 85, a1: 0, f2: 75, f3: 50, desc: "Closed over tucked thumb" },
       CURVED: { f1: 45, a1: 0, f2: 45, f3: 45, desc: "C-shape curved arc" },
@@ -1396,9 +1396,9 @@
       THM_FLAT_PALM: { f1: 0, a1: -70, f2: 60, f3: 60, desc: "Flat across lower palm" },
       THM_OUT: { f1: -50, a1: -30, f2: 0, f3: 0, desc: "Extended 90° outward" },
       THM_OUT_SPREAD: { f1: -65, a1: -30, f2: 0, f3: 0, desc: "Wide outward spread" },
-      THM_TUCK_T: { f1: -22, a1: -76, f2: 18, f3: 18, desc: "Tucked inside palm, pushed firmly through index-middle cleft" },
-      THM_TUCK_N: { f1: 16, a1: -74, f2: 18, f3: 15, desc: "Tucked inside palm, pushed firmly through middle-ring cleft" },
-      THM_TUCK_M: { f1: 46, a1: -68, f2: 16, f3: 12, desc: "Tucked inside palm, pushed firmly through ring-pinky cleft" },
+      THM_TUCK_T: { f1: -18, a1: -84, f2: 8, f3: 2, desc: "Tucked inside palm, thumb tip pushed firmly UP and OUT through index-middle cleft" },
+      THM_TUCK_N: { f1: 18, a1: -80, f2: 8, f3: 2, desc: "Tucked inside palm, thumb tip pushed firmly UP and OUT through middle-ring cleft" },
+      THM_TUCK_M: { f1: 48, a1: -74, f2: 8, f3: 2, desc: "Tucked inside palm, thumb tip pushed firmly UP and OUT through ring-pinky cleft" },
       THM_PINCH_INDEX: { f1: -40, a1: -45, f2: 50, f3: 70, desc: "Pinching index fingertip" },
       THM_PINCH_MID: { f1: -25, a1: -45, f2: 50, f3: 70, desc: "Touching middle fingertip" },
       THM_CURVED: { f1: -30, a1: -40, f2: 40, f3: 40, desc: "C-shape opposing curve" },
@@ -1449,10 +1449,10 @@
         (s.selected || []).forEach(f => {
           let flex = s.flexion;
           if(s.spread && flex === "EXTENDED") {
-            if(f === "idx") flex = "EXTENDED_SPREAD_L";
+            if(f === "idx") flex = "EXTENDED_FLARE_WIDE_L";
             else if(f === "pnk") flex = "EXTENDED_FLARE_WIDE_R";
             else if(f === "mid" && s.selected.length === 2) flex = "EXTENDED_SPREAD_R"; 
-            else if(f === "rng" && s.selected.length === 3) flex = "EXTENDED_SPREAD_R";
+            else if(f === "rng" && s.selected.length === 3) flex = "EXTENDED_FLARE_WIDE_R";
           }
           if(flex === "CROSSED_R") {
             if(f === "idx") flex = "CROSSED_IDX_UNDER";
@@ -1971,9 +1971,9 @@ const AIRPORT_LEXICON_30 = [
         "1": { name: "1-Handshape", category: "Numeral / Deictic", tokens: { idx: "EXTENDED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index extended straight, other digits curled tightly, thumb wrapped across" },
         "curved_1": { name: "Curved 1 / Hook", category: "Modified Numeral", tokens: { idx: "HOOK_BENT", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index curled 90° at PIP joint, other digits closed" },
         "bent_1": { name: "Bent 1", category: "Modified Numeral", tokens: { idx: "HOOK_BENT", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index bent hook, thumb folded over" },
-        "v": { name: "V / 2-Handshape", category: "Alphabetic / Numeral", tokens: { idx: "EXTENDED_SPREAD_L", mid: "EXTENDED_SPREAD_R", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index and Middle extended in wide spread V (+44° total opening), ring/pinky closed" },
+        "v": { name: "V / 2-Handshape", category: "Alphabetic / Numeral", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED_SPREAD_R", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index and Middle extended in wide dynamic V (+50° total opening), ring/pinky closed" },
         "bent_v": { name: "Bent V / Double Hook", category: "Modified Numeral", tokens: { idx: "HOOK_BENT", mid: "HOOK_BENT", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index and Middle bent at PIP joints in spread hooks" },
-        "3": { name: "3-Handshape", category: "Numeral", tokens: { idx: "EXTENDED_SPREAD_L", mid: "EXTENDED_SPREAD_R", rng: "CLOSED", pnk: "CLOSED", thm: "THM_OUT_SPREAD" }, desc: "Thumb, Index, Middle extended wide spread; Ring and Pinky closed" },
+        "3": { name: "3-Handshape", category: "Numeral", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED_SPREAD_R", rng: "CLOSED", pnk: "CLOSED", thm: "THM_OUT_SPREAD" }, desc: "Thumb, Index, Middle extended wide spread; Ring and Pinky closed" },
         "curved_3": { name: "Curved 3", category: "Numeral", tokens: { idx: "CURVED", mid: "CURVED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_CURVED" }, desc: "Thumb, Index, Middle curved claws" },
         "4": { name: "4-Handshape", category: "Numeral", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "EXTENDED_FLARE_WIDE_R", thm: "THM_FLAT_PALM" }, desc: "Four fingers extended wide spread; thumb folded flat across palm" },
         "5": { name: "5-Handshape (Open)", category: "Numeral / Open", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "EXTENDED_FLARE_WIDE_R", thm: "THM_OUT_SPREAD" }, desc: "All 5 digits extended in wide dynamic flare" },
@@ -2003,7 +2003,7 @@ const AIRPORT_LEXICON_30 = [
         "q": { name: "Q-Handshape", category: "Downward / Alphabetic", tokens: { idx: "POINTING_DOWN", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_POINTING_DOWN" }, desc: "G-shape oriented downward (Index and thumb pointing down)" },
         "r": { name: "R-Handshape", category: "Crossed / Alphabetic", tokens: { idx: "CROSSED_IDX_UNDER", mid: "CROSSED_MID_OVER", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_OVER" }, desc: "Middle finger crossed anteriorly over index finger in authentic ASL R" },
         "u": { name: "U-Handshape", category: "Pair / Alphabetic", tokens: { idx: "EXTENDED", mid: "EXTENDED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_FLAT_PALM" }, desc: "Index and Middle extended together straight side-by-side" },
-        "w": { name: "W-Handshape", category: "Numeral / Alphabetic", tokens: { idx: "EXTENDED_SPREAD_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "CLOSED", thm: "THM_HOLD_PINKY" }, desc: "Index, Middle, Ring extended wide spread in trident W-shape; Pinky held by thumb" },
+        "w": { name: "W-Handshape", category: "Numeral / Alphabetic", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED", rng: "EXTENDED_FLARE_WIDE_R", pnk: "CLOSED", thm: "THM_HOLD_PINKY" }, desc: "Index, Middle, Ring extended wide flare in trident W-shape; Pinky held by thumb" },
         "x": { name: "X-Handshape", category: "Hook / Alphabetic", tokens: { idx: "HOOK_BENT", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_REST_SIDE" }, desc: "Index curled into hook/crook; others closed" },
         "y": { name: "Y-Handshape", category: "Horns / Alphabetic", tokens: { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "EXTENDED_SPREAD_R", thm: "THM_OUT_SPREAD" }, desc: "Thumb and Pinky extended out wide; middle three fingers curled in fist" },
         "ily": { name: "ILY (I Love You)", category: "Combined", tokens: { idx: "EXTENDED_SPREAD_L", mid: "CLOSED", rng: "CLOSED", pnk: "EXTENDED_SPREAD_R", thm: "THM_OUT_SPREAD" }, desc: "Thumb, Index, and Pinky extended; Middle and Ring closed" },
@@ -2014,7 +2014,7 @@ const AIRPORT_LEXICON_30 = [
         "curved_l": { name: "Curved L (Hook L)", category: "Modified Numeral", tokens: { idx: "HOOK_BENT", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_OUT_SPREAD" }, desc: "Index bent at PIP joint into 90° hook, thumb extended out 90°" },
         "curved_v": { name: "Curved V (Bent V Claws)", category: "Modified Numeral", tokens: { idx: "CURVED", mid: "CURVED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index and Middle fingers spread in V-shape and curved like dual claws" },
         "flat_1": { name: "Flat 1 (MCP Bent Index)", category: "Numeral / Pointing", tokens: { idx: "HALF_BENT", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index bent 90° at MCP joint with PIP/DIP extended straight forward, others closed" },
-        "flatspread_5": { name: "Flat Spread 5", category: "Open Spread", tokens: { idx: "EXTENDED_SPREAD_L", mid: "EXTENDED", rng: "EXTENDED", pnk: "EXTENDED_SPREAD_R", thm: "THM_OUT_SPREAD" }, desc: "All 5 digits extended flat and spread wide with maximum radial abduction" },
+        "flatspread_5": { name: "Flat Spread 5", category: "Open Spread", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "EXTENDED_FLARE_WIDE_R", thm: "THM_OUT_SPREAD" }, desc: "All 5 digits extended flat and spread wide with maximum radial flare" },
         "open_8": { name: "Open 8 / Middle Bent", category: "Special", tokens: { idx: "EXTENDED", mid: "HALF_BENT", rng: "EXTENDED", pnk: "EXTENDED", thm: "THM_OPPOSE_O" }, desc: "Middle finger bent at MCP touching thumb; other digits extended" }
       },
 
@@ -5481,36 +5481,36 @@ const AIRPORT_LEXICON_30 = [
           jointL: new THREE.MeshStandardMaterial({ color: 0xff6d00, roughness: 0.88, metalness: 0.0 }),
           muscleL: new THREE.MeshStandardMaterial({ color: 0xff9100, roughness: 0.12, metalness: 0.04, transparent: true, opacity: 0.16, depthWrite: false }),
 
-          // 3. Multi-Finger Bright Matte Clay Contrasting (Velvety finish, high saturation, crystal-clear glove)
+          // 3. Multi-Finger Hyper-Vibrant Matte Clay (Pure velvety non-glossy clay, emissive depth, zero ghosting)
           fingers: {
             thm: {
-              bone: new THREE.MeshStandardMaterial({ color: 0xff9100, roughness: 0.90, metalness: 0.0 }), // Matte Clay Vibrant Amber Gold
-              joint: new THREE.MeshStandardMaterial({ color: 0xff6d00, roughness: 0.88, metalness: 0.0 }),
-              muscle: new THREE.MeshStandardMaterial({ color: 0xffe082, roughness: 0.10, metalness: 0.04, transparent: true, opacity: 0.10, depthWrite: false }) // crystal clear casing
+              bone: new THREE.MeshStandardMaterial({ color: 0xffaa00, emissive: 0xff7700, emissiveIntensity: 0.18, roughness: 0.98, metalness: 0.0 }), // Neon Amber Gold Clay
+              joint: new THREE.MeshStandardMaterial({ color: 0xff6600, roughness: 0.95, metalness: 0.0 }),
+              muscle: new THREE.MeshStandardMaterial({ color: 0xffaa00, transparent: true, opacity: 0.0, depthWrite: false, visible: false }) // zero ghosting on bones
             },
             idx: {
-              bone: new THREE.MeshStandardMaterial({ color: 0x00e5ff, roughness: 0.90, metalness: 0.0 }), // Matte Clay Electric Cyan
-              joint: new THREE.MeshStandardMaterial({ color: 0x00b0ff, roughness: 0.88, metalness: 0.0 }),
-              muscle: new THREE.MeshStandardMaterial({ color: 0x80d8ff, roughness: 0.10, metalness: 0.04, transparent: true, opacity: 0.10, depthWrite: false })
+              bone: new THREE.MeshStandardMaterial({ color: 0x00f0ff, emissive: 0x00aaff, emissiveIntensity: 0.18, roughness: 0.98, metalness: 0.0 }), // Electric Cyan Clay
+              joint: new THREE.MeshStandardMaterial({ color: 0x0077ff, roughness: 0.95, metalness: 0.0 }),
+              muscle: new THREE.MeshStandardMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.0, depthWrite: false, visible: false })
             },
             mid: {
-              bone: new THREE.MeshStandardMaterial({ color: 0xd500f9, roughness: 0.90, metalness: 0.0 }), // Matte Clay Amethyst Purple
-              joint: new THREE.MeshStandardMaterial({ color: 0xaa00ff, roughness: 0.88, metalness: 0.0 }),
-              muscle: new THREE.MeshStandardMaterial({ color: 0xea80fc, roughness: 0.10, metalness: 0.04, transparent: true, opacity: 0.10, depthWrite: false })
+              bone: new THREE.MeshStandardMaterial({ color: 0xe000ff, emissive: 0xaa00ee, emissiveIntensity: 0.18, roughness: 0.98, metalness: 0.0 }), // Electric Magenta/Purple Clay
+              joint: new THREE.MeshStandardMaterial({ color: 0x8800cc, roughness: 0.95, metalness: 0.0 }),
+              muscle: new THREE.MeshStandardMaterial({ color: 0xe000ff, transparent: true, opacity: 0.0, depthWrite: false, visible: false })
             },
             rng: {
-              bone: new THREE.MeshStandardMaterial({ color: 0x00e676, roughness: 0.90, metalness: 0.0 }), // Matte Clay Mint Emerald
-              joint: new THREE.MeshStandardMaterial({ color: 0x00c853, roughness: 0.88, metalness: 0.0 }),
-              muscle: new THREE.MeshStandardMaterial({ color: 0xb9f6ca, roughness: 0.10, metalness: 0.04, transparent: true, opacity: 0.10, depthWrite: false })
+              bone: new THREE.MeshStandardMaterial({ color: 0x00ff66, emissive: 0x00cc44, emissiveIntensity: 0.18, roughness: 0.98, metalness: 0.0 }), // Vivid Spring Green Clay
+              joint: new THREE.MeshStandardMaterial({ color: 0x00aa33, roughness: 0.95, metalness: 0.0 }),
+              muscle: new THREE.MeshStandardMaterial({ color: 0x00ff66, transparent: true, opacity: 0.0, depthWrite: false, visible: false })
             },
             pnk: {
-              bone: new THREE.MeshStandardMaterial({ color: 0xff1744, roughness: 0.90, metalness: 0.0 }), // Matte Clay Coral Crimson
-              joint: new THREE.MeshStandardMaterial({ color: 0xd50000, roughness: 0.88, metalness: 0.0 }),
-              muscle: new THREE.MeshStandardMaterial({ color: 0xff80ab, roughness: 0.10, metalness: 0.04, transparent: true, opacity: 0.10, depthWrite: false })
+              bone: new THREE.MeshStandardMaterial({ color: 0xff0055, emissive: 0xcc0033, emissiveIntensity: 0.18, roughness: 0.98, metalness: 0.0 }), // Vivid Neon Coral Rose Clay
+              joint: new THREE.MeshStandardMaterial({ color: 0xbb0022, roughness: 0.95, metalness: 0.0 }),
+              muscle: new THREE.MeshStandardMaterial({ color: 0xff0055, transparent: true, opacity: 0.0, depthWrite: false, visible: false })
             }
           },
-          carpalR: new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.88, metalness: 0.0 }), // Matte Porcelain
-          carpalL: new THREE.MeshStandardMaterial({ color: 0xffedd5, roughness: 0.88, metalness: 0.0 })  // Matte Terracotta Cream
+          carpalR: new THREE.MeshStandardMaterial({ color: 0xf4f4f5, roughness: 0.96, metalness: 0.0 }), // Pure Matte White Porcelain
+          carpalL: new THREE.MeshStandardMaterial({ color: 0xffedd5, roughness: 0.96, metalness: 0.0 })  // Pure Matte Warm Terracotta
         };
       },
 
@@ -6285,9 +6285,9 @@ const AIRPORT_LEXICON_30 = [
                 if ((fA.id === 'idx' && fB.id === 'mid') || (fA.id === 'mid' && fB.id === 'idx')) {
                   const isCrossedR = poseTokens.idx === "CROSSED_IDX_UNDER" || poseTokens.mid === "CROSSED_MID_OVER" || poseTokens.idx === "CROSSED_R";
                   if (isCrossedR) {
-                    // Index stays posterior (in back), Middle passes anterior (in front)
-                    idx.ikNodes[1].localRot.x = Math.max(idx.ikNodes[1].localRot.x, 0.12);
-                    mid.ikNodes[1].localRot.x = Math.min(mid.ikNodes[1].localRot.x, -0.08);
+                    // Index stays posterior (-Z in back), Middle passes anterior (+Z in front)
+                    idx.q.mcp_f = Math.min(idx.q.mcp_f, -0.12);
+                    mid.q.mcp_f = Math.max(mid.q.mcp_f, 0.14);
                     updateNodes(idx);
                     updateNodes(mid);
                     continue; // Intentional crossover: bypass lateral repulsion
@@ -6347,8 +6347,8 @@ const AIRPORT_LEXICON_30 = [
                         finger.q.mcp_a = Math.max(-0.55, Math.min(0.55, finger.q.mcp_a));
                       }
                       // Push thumb forward through the cleft so it stands out proudly
-                      thumb.q.mcp_f = Math.max(0.20, thumb.q.mcp_f);
-                      thumb.q.ip_f = Math.max(0.16, thumb.q.ip_f);
+                      thumb.q.pip_f = Math.max(0.18, thumb.q.pip_f);
+                      thumb.q.dip_f = Math.max(0.12, thumb.q.dip_f);
                     }
 
                     updateNodes(thumb);
@@ -6406,11 +6406,15 @@ const AIRPORT_LEXICON_30 = [
                   continue;
                 }
 
-                fLeft.q.mcp_a += 0.02 * sign * camL;
-                fRight.q.mcp_a -= 0.02 * sign * camR;
+                // If fingers are intentionally splaying outward as part of the target pose, do not fight the flare
+                const isTargetSplay = (fLeft.target_q && fRight.target_q && fLeft.target_q.mcp_a >= fRight.target_q.mcp_a);
+                if (!isTargetSplay) {
+                  fLeft.q.mcp_a += 0.02 * sign * camL;
+                  fRight.q.mcp_a -= 0.02 * sign * camR;
+                }
 
-                fLeft.q.mcp_a = Math.max(-15 * deg2rad * camL, Math.min(15 * deg2rad * camL, fLeft.q.mcp_a));
-                fRight.q.mcp_a = Math.max(-15 * deg2rad * camR, Math.min(15 * deg2rad * camR, fRight.q.mcp_a));
+                fLeft.q.mcp_a = Math.max(-36 * deg2rad, Math.min(36 * deg2rad, fLeft.q.mcp_a));
+                fRight.q.mcp_a = Math.max(-36 * deg2rad, Math.min(36 * deg2rad, fRight.q.mcp_a));
 
                 updateNodes(fLeft);
                 updateNodes(fRight);
