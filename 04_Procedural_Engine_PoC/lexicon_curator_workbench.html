@@ -395,6 +395,12 @@
       border-color: var(--accent-orange);
       background: var(--card-surface);
     }
+    .btn-emotion-preset.active {
+      color: #38bdf8 !important;
+      border-color: #0ea5e9 !important;
+      background: rgba(14, 165, 233, 0.18) !important;
+      box-shadow: 0 0 10px rgba(14, 165, 233, 0.35);
+    }
 
     /* BIOMECHANICAL HUD OVERLAY */
     #biomechanical-hud {
@@ -1006,6 +1012,15 @@
         <button class="view-cam-btn btn-lighting-preset" data-preset="studio" onclick="StudioLighting.setPreset('studio')" title="Focused Key/Rim Studio">🎬 STUDIO</button>
         <button class="view-cam-btn btn-lighting-preset" data-preset="clinical" onclick="StudioLighting.setPreset('clinical')" title="High-Clarity Surgical Laboratory">🔬 CLINICAL</button>
         <button class="view-cam-btn btn-lighting-preset" data-preset="stealth" onclick="StudioLighting.setPreset('stealth')" title="Moody Digital Twin Soundstage">🌌 STEALTH</button>
+      </div>
+
+      <!-- Facial Non-Manual Signals (NMS) & Emotion Presets -->
+      <div class="viewport-overlay-cluster" style="top: 74px;">
+        <button class="view-cam-btn btn-emotion-preset active" data-emotion="happy" onclick="StickmanEmotionEngine.setEmotion('happy')" title="Happy Grin with Teeth Grid (Celebration / Center Figure)">😄 HAPPY</button>
+        <button class="view-cam-btn btn-emotion-preset" data-emotion="surprised" onclick="StickmanEmotionEngine.setEmotion('surprised')" title="Surprised Open 'O' Mouth (Right Figure)">😮 SURPRISED</button>
+        <button class="view-cam-btn btn-emotion-preset" data-emotion="question" onclick="StickmanEmotionEngine.setEmotion('question')" title="Inquisitive Furrowed Brow (ASL WH-Grammar)">🤔 QUESTION</button>
+        <button class="view-cam-btn btn-emotion-preset" data-emotion="neutral" onclick="StickmanEmotionEngine.setEmotion('neutral')" title="Attentive Minimalist (Left Figure)">😐 NEUTRAL</button>
+        <button class="view-cam-btn btn-emotion-preset" data-emotion="wink" onclick="StickmanEmotionEngine.setEmotion('wink')" title="Playful Wink Affirmation">😉 WINK</button>
       </div>
 
       <!-- Biomechanical Telemetry HUD -->
@@ -3066,6 +3081,18 @@ const AIRPORT_LEXICON_30 = [
         const wristL = oriDef.euler(true);
 
         const ft = rec.fineTune;
+
+        // Auto-Sync Facial Non-Manual Signals (NMS) with Sign Semantics
+        if (typeof StickmanEmotionEngine !== 'undefined') {
+          const lem = (rec.lemma || rec.name || "").toLowerCase();
+          if (["welcome", "hello", "thank_you", "finish", "good", "airplane"].includes(lem)) {
+            StickmanEmotionEngine.setEmotion('happy');
+          } else if (["what", "what_1", "where", "ticket", "help", "information"].includes(lem)) {
+            StickmanEmotionEngine.setEmotion('question');
+          } else if (["delay", "cancelled", "no", "problem", "caution"].includes(lem)) {
+            StickmanEmotionEngine.setEmotion('surprised');
+          }
+        }
         const finalWristEulerR = [
           wristR[0] + (ft.rx || 0) * Math.PI / 180,
           wristR[1] + (ft.ry || 0) * Math.PI / 180,
@@ -4083,6 +4110,256 @@ const AIRPORT_LEXICON_30 = [
     });
 
 
+    // =========================================================================
+    // DYNAMIC 3D STICKMAN FACIAL EMOTION & NON-MANUAL SIGNALS (NMS) ENGINE
+    // Procedural Cartoon Expression Engine: Happy Teeth Grin, Surprised 'O', Inquisitive & Eye Blinking
+    // =========================================================================
+    const StickmanEmotionEngine = {
+      canvas: null,
+      ctx: null,
+      texture: null,
+      headMat: null,
+      currentEmotion: 'happy',
+      isBlinking: false,
+      blinkTimer: 0,
+      nextBlinkInterval: 3.5,
+      blinkDurationTimer: 0,
+
+      init() {
+        this.canvas = document.createElement('canvas');
+        this.canvas.width = 1024;
+        this.canvas.height = 512;
+        this.ctx = this.canvas.getContext('2d');
+        this.texture = new THREE.CanvasTexture(this.canvas);
+        this.texture.anisotropy = 4;
+
+        this.headMat = new THREE.MeshStandardMaterial({
+          color: 0xffffff,
+          map: this.texture,
+          roughness: 0.28,
+          metalness: 0.04
+        });
+
+        this.draw();
+      },
+
+      setEmotion(emotion) {
+        this.currentEmotion = emotion;
+        this.draw();
+        document.querySelectorAll('.btn-emotion-preset').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.emotion === emotion);
+        });
+      },
+
+      draw(isBlink = false) {
+        if (!this.ctx) return;
+        const ctx = this.ctx;
+        const w = this.canvas.width;
+        const h = this.canvas.height;
+
+        // Base porcelain white skin background
+        ctx.fillStyle = '#fcfcfd';
+        ctx.fillRect(0, 0, w, h);
+
+        // Front Face Center on Sphere UV (+Z anterior pole)
+        const cx = w * 0.25; // 256
+        const cy = h * 0.50; // 256
+
+        const eyeSpacing = 42;
+        const leftEyeX = cx - eyeSpacing;
+        const rightEyeX = cx + eyeSpacing;
+        const eyeY = cy - 28;
+
+        const em = this.currentEmotion;
+
+        // 1. Eyebrows
+        ctx.strokeStyle = '#18181b';
+        ctx.fillStyle = '#18181b';
+        ctx.lineWidth = 4.5;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        if (em === 'happy') {
+          // Cheerful arched brows
+          [-1, 1].forEach(side => {
+            const bx = cx + side * eyeSpacing;
+            ctx.beginPath();
+            ctx.arc(bx, eyeY - 26, 18, Math.PI * 1.15, Math.PI * 1.85);
+            ctx.stroke();
+          });
+        } else if (em === 'surprised') {
+          // High raised questioning brows
+          [-1, 1].forEach(side => {
+            const bx = cx + side * eyeSpacing;
+            ctx.beginPath();
+            ctx.arc(bx, eyeY - 32, 20, Math.PI * 1.15, Math.PI * 1.85);
+            ctx.stroke();
+          });
+        } else if (em === 'question') {
+          // ASL WH-Question: Furrowed brows angled down toward midline
+          ctx.beginPath();
+          ctx.moveTo(leftEyeX - 18, eyeY - 24);
+          ctx.lineTo(leftEyeX + 16, eyeY - 14);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.moveTo(rightEyeX - 16, eyeY - 14);
+          ctx.lineTo(rightEyeX + 18, eyeY - 24);
+          ctx.stroke();
+        } else if (em === 'wink') {
+          ctx.beginPath();
+          ctx.arc(leftEyeX, eyeY - 24, 18, Math.PI * 1.15, Math.PI * 1.85);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(rightEyeX, eyeY - 28, 18, Math.PI * 1.15, Math.PI * 1.85);
+          ctx.stroke();
+        } else {
+          // Neutral horizontal relaxed brows
+          [-1, 1].forEach(side => {
+            const bx = cx + side * eyeSpacing;
+            ctx.beginPath();
+            ctx.arc(bx, eyeY - 22, 22, Math.PI * 1.25, Math.PI * 1.75);
+            ctx.stroke();
+          });
+        }
+
+        // 2. Eyes
+        if (isBlink) {
+          // Natural blink: closed eye slit
+          [-1, 1].forEach(side => {
+            const ex = cx + side * eyeSpacing;
+            ctx.beginPath();
+            ctx.arc(ex, eyeY, 14, Math.PI * 0.15, Math.PI * 0.85);
+            ctx.stroke();
+          });
+        } else if (em === 'happy') {
+          // Cheerful happy curved crescent eyes (^  ^) matching center reference figure
+          [-1, 1].forEach(side => {
+            const ex = cx + side * eyeSpacing;
+            ctx.lineWidth = 5.5;
+            ctx.beginPath();
+            ctx.arc(ex, eyeY + 4, 14, Math.PI * 1.15, Math.PI * 1.85);
+            ctx.stroke();
+          });
+        } else if (em === 'wink') {
+          // Left winking (^), right round dot eye (•)
+          ctx.lineWidth = 5.5;
+          ctx.beginPath();
+          ctx.arc(leftEyeX, eyeY + 4, 14, Math.PI * 1.15, Math.PI * 1.85);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.arc(rightEyeX, eyeY, 8.5, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (em === 'surprised') {
+          // Wide open round surprised eyes matching right reference figure
+          [-1, 1].forEach(side => {
+            const ex = cx + side * eyeSpacing;
+            ctx.beginPath();
+            ctx.arc(ex, eyeY, 10.5, 0, Math.PI * 2);
+            ctx.fill();
+          });
+        } else {
+          // Solid black dot eyes matching left reference figure
+          [-1, 1].forEach(side => {
+            const ex = cx + side * eyeSpacing;
+            ctx.beginPath();
+            ctx.arc(ex, eyeY, 8.5, 0, Math.PI * 2);
+            ctx.fill();
+          });
+        }
+
+        // 3. Mouth
+        const mouthY = cy + 34;
+
+        if (em === 'happy') {
+          // Iconic Beaming Grin with Teeth Grid (Exact match to center reference character!)
+          const mw = 44; // half width
+          const mh = 36; // height
+          ctx.save();
+          ctx.fillStyle = '#ffffff';
+          ctx.strokeStyle = '#18181b';
+          ctx.lineWidth = 6;
+
+          // Outer D-shaped mouth outline
+          ctx.beginPath();
+          ctx.moveTo(cx - mw, mouthY);
+          ctx.quadraticCurveTo(cx, mouthY - 4, cx + mw, mouthY);
+          ctx.quadraticCurveTo(cx + mw * 0.95, mouthY + mh, cx, mouthY + mh);
+          ctx.quadraticCurveTo(cx - mw * 0.95, mouthY + mh, cx - mw, mouthY);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          // Clip to mouth interior to draw vertical tooth grid lines
+          ctx.clip();
+          ctx.lineWidth = 3.5;
+          [-26, -13, 0, 13, 26].forEach(tx => {
+            ctx.beginPath();
+            ctx.moveTo(cx + tx, mouthY - 10);
+            ctx.lineTo(cx + tx, mouthY + mh + 10);
+            ctx.stroke();
+          });
+          // Horizontal bite line
+          ctx.beginPath();
+          ctx.moveTo(cx - mw - 5, mouthY + mh * 0.5);
+          ctx.lineTo(cx + mw + 5, mouthY + mh * 0.5);
+          ctx.stroke();
+          ctx.restore();
+
+        } else if (em === 'surprised') {
+          // Open round 'O' mouth (Exact match to right reference character!)
+          ctx.fillStyle = '#18181b';
+          ctx.beginPath();
+          ctx.ellipse(cx, mouthY + 12, 13, 17, 0, 0, Math.PI * 2);
+          ctx.fill();
+
+        } else if (em === 'question') {
+          // Inquiring subtle open oval
+          ctx.fillStyle = '#18181b';
+          ctx.beginPath();
+          ctx.ellipse(cx, mouthY + 8, 10, 13, 0, 0, Math.PI * 2);
+          ctx.fill();
+
+        } else if (em === 'wink') {
+          // Playful smile curve
+          ctx.lineWidth = 5;
+          ctx.beginPath();
+          ctx.moveTo(cx - 28, mouthY - 2);
+          ctx.quadraticCurveTo(cx, mouthY + 22, cx + 32, mouthY + 6);
+          ctx.stroke();
+
+        } else {
+          // Neutral gentle smile (like left reference character)
+          ctx.lineWidth = 4.5;
+          ctx.beginPath();
+          ctx.moveTo(cx - 26, mouthY);
+          ctx.quadraticCurveTo(cx, mouthY + 14, cx + 26, mouthY);
+          ctx.stroke();
+        }
+
+        if (this.texture) this.texture.needsUpdate = true;
+      },
+
+      update(dt) {
+        this.blinkTimer += dt;
+        if (!this.isBlinking && this.blinkTimer > this.nextBlinkInterval) {
+          this.isBlinking = true;
+          this.blinkDurationTimer = 0;
+          this.draw(true); // Eyes closed blink
+        } else if (this.isBlinking) {
+          this.blinkDurationTimer += dt;
+          if (this.blinkDurationTimer > 0.12) {
+            this.isBlinking = false;
+            this.blinkTimer = 0;
+            this.nextBlinkInterval = 3.2 + Math.random() * 2.8;
+            this.draw(false); // Eyes open
+          }
+        }
+      }
+    };
+    window.StickmanEmotionEngine = StickmanEmotionEngine;
+
     // Pure Smooth White 3D Stick Figure Mannequin Materials (Classic Minimalist Character)
     const stickmanMat = new THREE.MeshStandardMaterial({
       color: 0xfcfcfd, // Pure clean porcelain white
@@ -4100,10 +4377,12 @@ const AIRPORT_LEXICON_30 = [
     });
 
     function buildSignerSilhouette(group) {
-      // 1. Pure Smooth Spherical Head (Iconic 3D White Stickman Head)
+      StickmanEmotionEngine.init();
+
+      // 1. Pure Smooth Spherical Head (Iconic 3D White Stickman Head with Dynamic Emotions)
       const headGeo = new THREE.SphereGeometry(5.2, 48, 36);
       headGeo.scale(0.96, 1.15, 1.02);
-      const headMesh = new THREE.Mesh(headGeo, stickmanMat);
+      const headMesh = new THREE.Mesh(headGeo, StickmanEmotionEngine.headMat);
       headMesh.position.set(0.0, 18.5, 0.6);
       headMesh.castShadow = true;
       headMesh.receiveShadow = true;
@@ -6703,6 +6982,11 @@ const AIRPORT_LEXICON_30 = [
 
       const dt = 0.016;
       signMotionClock += dt;
+
+      // Advance Dynamic Facial Emotion & Eye Blinking Clock
+      if (typeof StickmanEmotionEngine !== 'undefined' && StickmanEmotionEngine.update) {
+        StickmanEmotionEngine.update(dt);
+      }
 
       // Toggle static stickman left arm visibility and simulate natural resting mass
       if (window.staticLeftArmGroup && typeof handL !== 'undefined') {
