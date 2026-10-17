@@ -2993,6 +2993,41 @@ const AIRPORT_LEXICON_30 = [
         return new THREE.Vector3(0.0, 3.0, 0.0);
       },
 
+      // 2. Part-to-Part Target Contact Part Offset on Non-Dominant Base Hand (Hand L):
+      // Defines exactly which anatomical landmark of the left hand is touched (wrist, palm, fingers, forearm)
+      computeBaseContactPartOffset(part = "AUTO", baseHs = "flat_b") {
+        const p = (part || "AUTO").toUpperCase();
+        if (p === "DORSAL_WRIST" || p === "WRIST") {
+          return new THREE.Vector3(0.0, -0.3, -0.8); // Posterior back of wrist joint (e.g. TIME, WATCH)
+        }
+        if (p === "PALM_CENTER" || p === "PALM") {
+          return new THREE.Vector3(0.0, 2.8, 0.6); // Flat upward/forward palm center (e.g. READ, STOP, PAPER)
+        }
+        if (p === "INDEX_TIP") {
+          return new THREE.Vector3(-2.1, 9.4, 0.2); // Tip of non-dominant index finger (e.g. NAME)
+        }
+        if (p === "INDEX_EDGE") {
+          return new THREE.Vector3(-2.1, 5.0, 0.2); // Lateral radial edge of index finger (e.g. TRAIN)
+        }
+        if (p === "FINGERTIP_CLUSTER" || p === "FINGERTIPS") {
+          return new THREE.Vector3(0.0, 9.8, 0.2); // Distal tips of non-dominant fingers (e.g. MORE)
+        }
+        if (p === "THUMB_TIP") {
+          return new THREE.Vector3(-3.8, 4.2, 0.8); // Tip of non-dominant thumb
+        }
+        if (p === "FIST_TOP") {
+          return new THREE.Vector3(0.0, 2.5, -0.8); // Dorsal knuckles of closed fist (e.g. WORK)
+        }
+        if (p === "FOREARM_DORSAL" || p === "FOREARM") {
+          return new THREE.Vector3(0.0, -6.5, -0.5); // Mid-forearm dorsal shelf (e.g. NIGHT)
+        }
+
+        // AUTO heuristic based on base handshape:
+        if (baseHs === "s" || baseHs === "a") return new THREE.Vector3(0.0, 2.5, -0.8); // Fist top
+        if (baseHs === "1" || baseHs === "d") return new THREE.Vector3(-2.1, 7.0, 0.2); // Index finger
+        return new THREE.Vector3(0.0, 2.8, 0.6); // Default palm center
+      },
+
       // Universal Synthesize function: compiles ANY sign from 5 lexicons
       synthesize(recipe, immediate = false) {
         const cleanFineTune = { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 };
