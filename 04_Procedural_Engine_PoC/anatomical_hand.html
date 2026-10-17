@@ -5496,11 +5496,8 @@ const AIRPORT_LEXICON_30 = [
       },
 
       setMode(mode) {
-        this.currentMode = mode;
+        this.currentMode = mode || 'contrast';
         this.apply();
-        document.querySelectorAll('.btn-hand-color').forEach(btn => {
-          btn.classList.toggle('active', btn.dataset.color === mode);
-        });
       },
 
       apply() {
