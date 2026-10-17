@@ -5074,19 +5074,17 @@ const AIRPORT_LEXICON_30 = [
         const slerpFactor = (typeof isPlayingSignMotion !== 'undefined' && isPlayingSignMotion) ? 0.22 : 0.12;
         this.root.quaternion.slerp(this.targetWristQuat, slerpFactor * animSpeed);
 
-        // Soft-body Collision Repulsion (7 sample points per digit from original anatomical engine)
+        // Soft-body Collision Repulsion (5 sample points per digit along movable phalanges)
         for (let i = 0; i < this.fingerData.length; i++) {
           for (let j = i + 1; j < this.fingerData.length; j++) {
             let fA = this.fingerData[i], fB = this.fingerData[j];
-            let minSafeDist = (fA.isThumb ? 0.9 : 0.7) + (fB.isThumb ? 0.9 : 0.7);
+            let minSafeDist = (fA.isThumb ? 0.44 : 0.34) + (fB.isThumb ? 0.44 : 0.34);
             const getColPoints = (f) => {
-              const p0 = f.ikNodes[1].worldPos.clone();
               const p1 = f.ikNodes[2].worldPos.clone();
               const p2 = f.ikNodes[3].worldPos.clone();
               const p3 = f.ikNodes[3].getEffectorPos();
               return [
-                p0, p1, p2, p3,
-                new THREE.Vector3().lerpVectors(p0, p1, 0.5),
+                p1, p2, p3,
                 new THREE.Vector3().lerpVectors(p1, p2, 0.5),
                 new THREE.Vector3().lerpVectors(p2, p3, 0.5)
               ];
@@ -5099,8 +5097,8 @@ const AIRPORT_LEXICON_30 = [
                 if (dist < minSafeDist && dist > 0.001) {
                   let pen = minSafeDist - dist;
                   let pushDir = new THREE.Vector3().subVectors(pA, pB).normalize();
-                  let dampA = Math.max(0, 1.0 - fA.tgt.group.position.distanceTo(ptsA[3]) / 3.0);
-                  let dampB = Math.max(0, 1.0 - fB.tgt.group.position.distanceTo(ptsB[3]) / 3.0);
+                  let dampA = Math.max(0, 1.0 - fA.tgt.group.position.distanceTo(ptsA[1]) / 3.0);
+                  let dampB = Math.max(0, 1.0 - fB.tgt.group.position.distanceTo(ptsB[1]) / 3.0);
                   if (isDraggingTarget !== fA && dampA > 0) fA.tgt.group.position.add(pushDir.clone().multiplyScalar(pen * 0.12 * dampA));
                   if (isDraggingTarget !== fB && dampB > 0) fB.tgt.group.position.sub(pushDir.clone().multiplyScalar(pen * 0.12 * dampB));
                 }
@@ -5208,13 +5206,11 @@ const AIRPORT_LEXICON_30 = [
         };
 
         const getPoints = (f) => {
-          const p0 = f.ikNodes[1].worldPos.clone();
           const p1 = f.ikNodes[2].worldPos.clone();
           const p2 = f.ikNodes[3].worldPos.clone();
           const p3 = f.ikNodes[3].getEffectorPos();
           return [
-            p0, p1, p2, p3,
-            new THREE.Vector3().lerpVectors(p0, p1, 0.5),
+            p1, p2, p3,
             new THREE.Vector3().lerpVectors(p1, p2, 0.5),
             new THREE.Vector3().lerpVectors(p2, p3, 0.5)
           ];
@@ -5222,8 +5218,11 @@ const AIRPORT_LEXICON_30 = [
 
         for (let f of this.fingerData) updateNodes(f);
 
-        // Multi-pass iterative constraint solver (up to 10 iterations)
-        for (let iter = 0; iter < 10; iter++) {
+        // Multi-pass iterative constraint solver (calibrated for 73.5% scaled hand)
+        const MIN_DIST_FINGER = 0.68;
+        const MIN_DIST_THUMB = 0.78;
+
+        for (let iter = 0; iter < 5; iter++) {
           let hasCollision = false;
 
           for (let i = 0; i < this.fingerData.length; i++) {
@@ -5231,7 +5230,7 @@ const AIRPORT_LEXICON_30 = [
               const fA = this.fingerData[i];
               const fB = this.fingerData[j];
               const isThumbPair = fA.isThumb || fB.isThumb;
-              const minSafeDist = isThumbPair ? 1.62 : 1.42;
+              const minSafeDist = isThumbPair ? MIN_DIST_THUMB : MIN_DIST_FINGER;
 
               const ptsA = getPoints(fA);
               const ptsB = getPoints(fB);
@@ -5296,28 +5295,22 @@ const AIRPORT_LEXICON_30 = [
                       const thumbTip = thumb.ikNodes[3].getEffectorPos();
                       const fingerTip = finger.ikNodes[3].getEffectorPos();
                       const lateralDist = Math.abs(fingerTip.x - thumbTip.x);
-                      const minLateralClearance = 0.72; // thumb radius (0.42) + finger radius (0.30)
+                      const minLateralClearance = 0.65;
                       
                       if (lateralDist < minLateralClearance) {
                         const penetration = minLateralClearance - lateralDist;
-                        // Thumb exerts highest force to push through the finger gap
                         const pushForce = penetration * 0.65;
-                        // Fingers apply smaller restoring force to hold fist position
                         const restoringForce = 0.22;
                         const netDelta = pushForce * (1.0 - restoringForce);
 
                         if (isGapL) {
-                          // Push left finger radially
                           finger.q.mcp_a += sign * (-netDelta);
                         } else if (isGapR) {
-                          // Push right finger ulnarly
                           finger.q.mcp_a += sign * (netDelta);
                         }
-                        // Clamp finger abduction to avoid over-splaying (gap clamped to max 1.45 cm)
                         finger.q.mcp_a = Math.max(-0.25, Math.min(0.25, finger.q.mcp_a));
                       }
 
-                      // Thumb distal phalanx hooks forward (+Z) between the gap fingers
                       if (thumbTip.z < fingerTip.z + 0.25) {
                         thumb.q.pip_f = Math.max(0.2, thumb.q.pip_f - 0.03);
                         thumb.q.dip_f = Math.max(0.1, thumb.q.dip_f - 0.02);
@@ -5329,32 +5322,34 @@ const AIRPORT_LEXICON_30 = [
                     continue;
                   }
 
-                  const thumbTip = thumb.ikNodes[3].getEffectorPos();
-                  const thumbMid = thumb.ikNodes[2].worldPos;
-                  const fingerMid = finger.ikNodes[2].worldPos;
+                  // If thumb is intentionally wrapping over fingers in a fist (e.g. 1, S, A, E, V, bent_v, etc.)
+                  const isWrapPose = poseTokens.thm === "THM_WRAP_FRONT" || poseTokens.thm === "THM_WRAP_OVER";
+                  if (isWrapPose) {
+                    continue; // Thumb rests on dorsal surface of curled fingers; preserve fist closure
+                  }
 
-                  const isWrapped = (thumbTip.z >= fingerMid.z - 0.8) || (thumbMid.z >= fingerMid.z - 0.8);
+                  const thumbTip = thumb.ikNodes[3].getEffectorPos();
+                  const fingerMid = finger.ikNodes[2].worldPos;
+                  const isWrapped = (thumbTip.z >= fingerMid.z - 0.4);
 
                   if (isWrapped) {
-                    // Thumb is wrapped on the outside (+Z)
-                    thumb.q.mcp_f -= 0.08;
-                    thumb.q.pip_f = Math.max(0.1, thumb.q.pip_f - 0.04);
+                    thumb.q.mcp_f -= 0.03;
                   } else if (finger.q.mcp_f > 1.0 && finger.q.pip_f > 1.0) {
                     // Fingers clawing onto dorsal thumb surface ('E') or curled over tucked thumb
                     if (finger.ikNodes[3].getEffectorPos().y <= thumb.ikNodes[2].worldPos.y + 0.5) {
-                      finger.q.pip_f = Math.max(0.1, finger.q.pip_f - 0.05);
-                      finger.q.dip_f = Math.max(0.1, finger.q.dip_f - 0.05);
+                      finger.q.pip_f = Math.max(0.1, finger.q.pip_f - 0.03);
+                      finger.q.dip_f = Math.max(0.1, finger.q.dip_f - 0.03);
                     } else {
-                      thumb.q.mcp_f -= 0.03;
+                      thumb.q.mcp_f -= 0.02;
                       thumb.q.mcp_a += 0.02 * sign;
                     }
                   } else {
                     // Lateral separation
                     if (finger.id === 'idx') {
-                      if (sign === 1) thumb.q.mcp_a = Math.min(-0.35, thumb.q.mcp_a - 0.05);
-                      else thumb.q.mcp_a = Math.max(0.35, thumb.q.mcp_a + 0.05);
+                      if (sign === 1) thumb.q.mcp_a = Math.min(-0.35, thumb.q.mcp_a - 0.03);
+                      else thumb.q.mcp_a = Math.max(0.35, thumb.q.mcp_a + 0.03);
                     } else {
-                      thumb.q.mcp_f -= 0.05;
+                      thumb.q.mcp_f -= 0.02;
                     }
                   }
                   updateNodes(thumb);
@@ -5371,18 +5366,14 @@ const AIRPORT_LEXICON_30 = [
                 const camL = Math.max(0.08, 1.0 - 0.88 * Math.min(1.0, Math.max(0, fLeft.q.mcp_f) / (90 * deg2rad)));
                 const camR = Math.max(0.08, 1.0 - 0.88 * Math.min(1.0, Math.max(0, fRight.q.mcp_f) / (90 * deg2rad)));
 
-                fLeft.q.mcp_a += 0.03 * sign * camL;
-                fRight.q.mcp_a -= 0.03 * sign * camR;
-
-                // When fingers are flexed into a fist and collateral ligaments lock abduction,
-                // achieve clearance through subtle depth offset rather than lateral splay
-                if (camL < 0.40 && camR < 0.40) {
-                  if (fLeft.q.pip_f < fRight.q.pip_f) {
-                    fLeft.q.pip_f = Math.max(0.1, fLeft.q.pip_f - 0.02);
-                  } else {
-                    fRight.q.pip_f = Math.max(0.1, fRight.q.pip_f - 0.02);
-                  }
+                // In a fist (both adjacent fingers flexed), digits naturally rest flush side-by-side.
+                // Do NOT uncurl fingers in a fist!
+                if (camL < 0.35 && camR < 0.35) {
+                  continue;
                 }
+
+                fLeft.q.mcp_a += 0.02 * sign * camL;
+                fRight.q.mcp_a -= 0.02 * sign * camR;
 
                 fLeft.q.mcp_a = Math.max(-15 * deg2rad * camL, Math.min(15 * deg2rad * camL, fLeft.q.mcp_a));
                 fRight.q.mcp_a = Math.max(-15 * deg2rad * camR, Math.min(15 * deg2rad * camR, fRight.q.mcp_a));
@@ -6880,7 +6871,7 @@ const AIRPORT_LEXICON_30 = [
 
         handR.root.visible = true;
         handL.root.visible = false;
-        handR.targetRootPos.set(-8.5, 9.5, 14.0);
+        handR.targetRootPos.set(6.5, 9.5, 14.0);
         handR.root.position.copy(handR.targetRootPos);
         armR.update(handR.root.position, true);
         if (armR.Weff) handR.root.position.copy(armR.Weff);
@@ -7061,7 +7052,7 @@ const AIRPORT_LEXICON_30 = [
         const euler = oriDef.euler(false);
         handR.root.visible = true;
         handL.root.visible = false;
-        handR.targetRootPos.set(-8.5, 9.5, 14.0);
+        handR.targetRootPos.set(6.5, 9.5, 14.0);
         handR.root.position.copy(handR.targetRootPos);
         armR.update(handR.root.position, true);
         if (armR.Weff) handR.root.position.copy(armR.Weff);
@@ -7176,7 +7167,7 @@ const AIRPORT_LEXICON_30 = [
       executeAlphabetItem(item) {
         handR.root.visible = true;
         handL.root.visible = false;
-        handR.targetRootPos.set(-8.5, 9.5, 14.0);
+        handR.targetRootPos.set(6.5, 9.5, 14.0);
         handR.root.position.copy(handR.targetRootPos);
         armR.update(handR.root.position, true);
         if (armR.Weff) handR.root.position.copy(armR.Weff);
