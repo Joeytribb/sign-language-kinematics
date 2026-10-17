@@ -1147,7 +1147,7 @@
         <span class="num">02</span> HANDSHAPES (38)
       </button>
       <button class="cat-switch-btn" data-cat="locations" onclick="LexiconWorkbench.switchCategory('locations')">
-        <span class="num">03</span> LOCI (24)
+        <span class="num">03</span> LOCI (66)
       </button>
       <button class="cat-switch-btn" data-cat="orientations" onclick="LexiconWorkbench.switchCategory('orientations')">
         <span class="num">04</span> ORIENTATIONS (14)
@@ -1528,10 +1528,10 @@
     let animSpeed = 1.0;
 
     const FINGER_SPECS = [
-      { id: 'idx', name: 'Index', color: 0x38bdf8, baseR: [ 2.1, 4.9, 0], lengths: [2.25, 1.40, 0.85] },
-      { id: 'mid', name: 'Middle', color: 0xa855f7, baseR: [ 0.7, 5.0, 0], lengths: [2.40, 1.55, 0.95] },
-      { id: 'rng', name: 'Ring', color: 0x22c55e, baseR: [-0.7, 4.9, 0], lengths: [2.20, 1.40, 0.85] },
-      { id: 'pnk', name: 'Pinky', color: 0xef4444, baseR: [-2.0, 4.6, 0], lengths: [1.70, 1.05, 0.70] }
+      { id: 'idx', name: 'Index', color: 0x38bdf8, baseR: [-2.1, 4.9, 0], lengths: [2.25, 1.40, 0.85] },
+      { id: 'mid', name: 'Middle', color: 0xa855f7, baseR: [-0.7, 5.0, 0], lengths: [2.40, 1.55, 0.95] },
+      { id: 'rng', name: 'Ring', color: 0x22c55e, baseR: [ 0.7, 4.9, 0], lengths: [2.20, 1.40, 0.85] },
+      { id: 'pnk', name: 'Pinky', color: 0xef4444, baseR: [ 2.0, 4.6, 0], lengths: [1.70, 1.05, 0.70] }
     ];
     
     const LIM_F = {
@@ -2288,28 +2288,81 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
 
       // 2. 3D ANATOMICAL BODY & SPATIAL LOCI (24 Calibrated Target Anchor Points)
       locations: {
-        "crown": { name: "Crown (Top of Head)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.0, 24.0, 3.5), desc: "Apex of the head, clear of cranium" },
-        "forehead": { name: "Forehead (Frontal Bone)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.2, 19.8, 6.5), desc: "Upper cranial locus, in front of forehead (e.g. Father)" },
-        "temple": { name: "Temple (Parietal-Temporal)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 8.5, 20.5, 9.0), desc: "Lateral cranial locus beside head (e.g. Airplane, Hello)" },
-        "eyes": { name: "Eyes (Periorbital)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.8, 18.0, 6.8), desc: "Eye level forward signing locus (e.g. See)" },
-        "nose": { name: "Nose (Nasion)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 16.5, 7.2), desc: "Mid-facial locus, forward of nasal bridge" },
-        "cheek": { name: "Cheek (Zygomatic Arch)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 4.2, 16.2, 6.0), desc: "Lateral cheek locus, clear of cheekbone (e.g. Tomorrow, Deaf)" },
-        "ear": { name: "Ear (Auricle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 5.5, 18.0, 2.0), desc: "Lateral auricle locus, clear of ear" },
-        "mouth": { name: "Mouth (Lips / Labial)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 15.2, 6.8), desc: "Oral locus, in front of lips (e.g. Eat)" },
-        "chin": { name: "Chin (Mandible / Mental)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 14.2, 6.2), desc: "Base of jaw / chin locus (e.g. Water, Mother, Thank You)" },
-        "jaw": { name: "Jaw (Mandibular Angle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 3.8, 13.5, 5.2), desc: "Lateral lower mandibular angle locus" },
-        "throat": { name: "Throat (Larynx / Trachea)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 11.5, 5.5), desc: "Anterior laryngeal locus, forward of neck" },
-        "clavicle": { name: "Clavicle (Collarbone)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 5.2, 9.8, 6.5), desc: "Subclavicular locus, forward of collarbone" },
-        "sternum": { name: "Sternum (Chest Center)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.2, 5.0, 7.8), desc: "Chest center locus, in front of sternum (e.g. Me)" },
-        "heart": { name: "Heart (Left Upper Chest)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 3.8, 6.0, 7.6), desc: "Precordial chest locus, in front of pectoralis" },
+        // --- HEAD & CRANIAL LOCI ---
+        "crown": { name: "Crown (Top of Head)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.0, 24.0, 3.5), desc: "Apex of the head, sagittal midline clear of cranium" },
+        "forehead": { name: "Forehead (Frontal Center)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.2, 19.8, 6.5), desc: "Upper cranial locus, in front of frontal bone (e.g. Father)" },
+        "forehead_right": { name: "Forehead Right (Right Frontal)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(2.8, 19.8, 6.5), desc: "Right cranial locus, right frontal eminence" },
+        "forehead_left": { name: "Forehead Left (Left Frontal)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(-2.8, 19.8, 6.5), desc: "Left cranial locus, left frontal eminence" },
+        "temple_right": { name: "Temple Right (Right Parietal)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(8.5, 20.5, 9.0), desc: "Right lateral cranial locus beside head (e.g. Airplane, Hello)" },
+        "temple_left": { name: "Temple Left (Left Parietal)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(-8.5, 20.5, 9.0), desc: "Left lateral cranial locus beside head (contralateral / non-dominant reach)" },
+        "temple": { name: "Temple (Bilateral Symmetric)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 8.5, 20.5, 9.0), desc: "Bilateral cranial locus beside head (e.g. Airplane, Hello)" },
+
+        // --- FACIAL SENSORY LOCI ---
+        "eye_right": { name: "Eye Right (Right Periorbital)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(2.2, 18.0, 6.8), desc: "Right eye level forward locus (e.g. See)" },
+        "eye_left": { name: "Eye Left (Left Periorbital)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(-2.2, 18.0, 6.8), desc: "Left eye level forward locus" },
+        "eyes": { name: "Eyes (Bilateral Symmetric)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.8, 18.0, 6.8), desc: "Eye level forward signing locus (e.g. See)" },
+        "nose": { name: "Nose (Sagittal Nasion)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 16.5, 7.2), desc: "Mid-facial locus, forward of nasal bridge" },
+        "nose_right": { name: "Nose Right (Right Nasal Ala)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(1.2, 16.5, 7.0), desc: "Right lateral nasal ala / nostril" },
+        "nose_left": { name: "Nose Left (Left Nasal Ala)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(-1.2, 16.5, 7.0), desc: "Left lateral nasal ala / nostril" },
+        "cheek_right": { name: "Cheek Right (Right Zygomatic)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(4.2, 16.2, 6.0), desc: "Right lateral cheek locus, zygomatic arch (e.g. Tomorrow, Deaf)" },
+        "cheek_left": { name: "Cheek Left (Left Zygomatic)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(-4.2, 16.2, 6.0), desc: "Left lateral cheek locus, zygomatic arch" },
+        "cheek": { name: "Cheek (Bilateral Symmetric)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 4.2, 16.2, 6.0), desc: "Lateral cheek locus, clear of cheekbone (e.g. Tomorrow, Deaf)" },
+        "ear_right": { name: "Ear Right (Right Auricle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(5.5, 18.0, 2.0), desc: "Right lateral auricle locus, clear of right ear" },
+        "ear_left": { name: "Ear Left (Left Auricle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(-5.5, 18.0, 2.0), desc: "Left lateral auricle locus, clear of left ear" },
+        "ear": { name: "Ear (Bilateral Symmetric)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 5.5, 18.0, 2.0), desc: "Lateral auricle locus, clear of ear" },
+
+        // --- LOWER FACE & ORAL LOCI ---
+        "mouth": { name: "Mouth (Sagittal Labial)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 15.2, 6.8), desc: "Oral locus, in front of lips (e.g. Eat)" },
+        "mouth_corner_right": { name: "Mouth Corner Right (Commissure)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(1.8, 15.2, 6.6), desc: "Right angle of mouth / labial commissure" },
+        "mouth_corner_left": { name: "Mouth Corner Left (Commissure)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(-1.8, 15.2, 6.6), desc: "Left angle of mouth / labial commissure" },
+        "chin": { name: "Chin (Sagittal Mental)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 14.2, 6.2), desc: "Base of jaw / chin locus (e.g. Water, Mother, Thank You)" },
+        "chin_right": { name: "Chin Right (Right Mental Area)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(1.8, 14.2, 6.0), desc: "Right paramedian mental chin locus" },
+        "chin_left": { name: "Chin Left (Left Mental Area)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(-1.8, 14.2, 6.0), desc: "Left paramedian mental chin locus" },
+        "jaw_right": { name: "Jaw Right (Right Mandibular Angle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(3.8, 13.5, 5.2), desc: "Right lateral lower mandibular angle locus" },
+        "jaw_left": { name: "Jaw Left (Left Mandibular Angle)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(-3.8, 13.5, 5.2), desc: "Left lateral lower mandibular angle locus" },
+        "jaw": { name: "Jaw (Bilateral Symmetric)", category: "Head", coords: (isLeft, sign) => new THREE.Vector3(sign * 3.8, 13.5, 5.2), desc: "Lateral lower mandibular angle locus" },
+        "throat": { name: "Throat (Sagittal Trachea)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, 11.5, 5.5), desc: "Anterior laryngeal locus, forward of midline neck" },
+        "throat_right": { name: "Throat Right (Right Carotid)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(2.0, 11.5, 5.2), desc: "Right lateral cervical / carotid neck locus" },
+        "throat_left": { name: "Throat Left (Left Carotid)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(-2.0, 11.5, 5.2), desc: "Left lateral cervical / carotid neck locus" },
+
+        // --- TORSO & SHOULDER LOCI ---
+        "shoulder_right": { name: "Shoulder Right (Right Acromion)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(7.5, 9.8, 3.5), desc: "Right acromial shoulder locus, lateral to glenoid" },
+        "shoulder_left": { name: "Shoulder Left (Left Acromion)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(-7.5, 9.8, 3.5), desc: "Left acromial shoulder locus, lateral to glenoid (contralateral reach)" },
+        "shoulder": { name: "Shoulder (Bilateral Symmetric)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 7.5, 9.8, 3.5), desc: "Acromial shoulder locus, lateral to glenoid" },
+        "clavicle_right": { name: "Clavicle Right (Right Collarbone)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(5.2, 9.8, 6.5), desc: "Right subclavicular locus, forward of right collarbone" },
+        "clavicle_left": { name: "Clavicle Left (Left Collarbone)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(-5.2, 9.8, 6.5), desc: "Left subclavicular locus, forward of left collarbone" },
+        "clavicle": { name: "Clavicle (Bilateral Symmetric)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 5.2, 9.8, 6.5), desc: "Subclavicular locus, forward of collarbone" },
+        "chest_right": { name: "Chest Right (Right Upper Pectoral)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(3.8, 6.0, 7.6), desc: "Right pectoral chest locus, in front of right pectoralis" },
+        "chest_left": { name: "Chest Left (Left Precordial / Heart)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(-3.8, 6.0, 7.6), desc: "Left precordial chest locus (e.g. We end location, Pledge)" },
+        "heart": { name: "Heart (Left Upper Chest)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(-3.8, 6.0, 7.6), desc: "Precordial chest locus, in front of left pectoralis" },
+        "sternum": { name: "Sternum (Chest Center)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 1.2, 5.0, 7.8), desc: "Chest center locus, in front of sagittal sternum (e.g. Me)" },
+        "stomach_right": { name: "Stomach Right (Right Flank)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(3.5, -2.5, 7.2), desc: "Right hypochondriac / flank abdominal locus" },
+        "stomach_left": { name: "Stomach Left (Left Flank)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(-3.5, -2.5, 7.2), desc: "Left hypochondriac / flank abdominal locus" },
         "stomach": { name: "Stomach (Mid Abdomen)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 0.4, -2.5, 7.2), desc: "Epigastric abdominal locus, in front of torso" },
-        "shoulder": { name: "Shoulder (Acromion)", category: "Torso", coords: (isLeft, sign) => new THREE.Vector3(sign * 7.5, 9.8, 3.5), desc: "Acromial shoulder locus, lateral to glenoid" },
-        "passive_forearm": { name: "Passive Forearm Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-2.0, 6.0, 15.5) : new THREE.Vector3(2.0, 8.5, 15.5), desc: "Horizontal non-dominant forearm shelf in open conversational space (e.g. Night)" },
-        "passive_wrist": { name: "Passive Wrist Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-2.0, 6.0, 16.0) : new THREE.Vector3(2.0, 8.5, 16.0), desc: "Non-dominant dorsal wrist joint shelf in open conversational space (e.g. Work, Time)" },
-        "passive_palm": { name: "Passive Palm Shelf", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-2.0, 6.0, 16.0) : new THREE.Vector3(2.0, 8.5, 16.0), desc: "Flat upward/forward non-dominant palm shelf in open conversational space (e.g. Read, Paper)" },
+
+        // --- PASSIVE BASE SHELVES ---
+        "wrist_right": { name: "Wrist Shelf Right", category: "Passive Base", coords: (isLeft, sign) => new THREE.Vector3(2.0, 8.5, 16.0), desc: "Right wrist joint shelf in conversational space" },
+        "wrist_left": { name: "Wrist Shelf Left", category: "Passive Base", coords: (isLeft, sign) => new THREE.Vector3(-2.0, 6.0, 16.0), desc: "Left dorsal wrist joint shelf in conversational space (e.g. Time)" },
+        "passive_wrist": { name: "Passive Wrist Shelf (Base)", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-2.0, 6.0, 16.0) : new THREE.Vector3(2.0, 8.5, 16.0), desc: "Non-dominant dorsal wrist joint shelf in open conversational space (e.g. Work, Time)" },
+        "palm_right": { name: "Palm Shelf Right", category: "Passive Base", coords: (isLeft, sign) => new THREE.Vector3(2.0, 8.5, 16.0), desc: "Right upward/forward palm shelf in conversational space" },
+        "palm_left": { name: "Palm Shelf Left", category: "Passive Base", coords: (isLeft, sign) => new THREE.Vector3(-2.0, 6.0, 16.0), desc: "Left upward/forward palm shelf in conversational space (e.g. Read, Paper)" },
+        "passive_palm": { name: "Passive Palm Shelf (Base)", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-2.0, 6.0, 16.0) : new THREE.Vector3(2.0, 8.5, 16.0), desc: "Flat upward/forward non-dominant palm shelf in open conversational space (e.g. Read, Paper)" },
+        "forearm_right": { name: "Forearm Shelf Right", category: "Passive Base", coords: (isLeft, sign) => new THREE.Vector3(2.0, 8.5, 15.5), desc: "Right horizontal forearm shelf in conversational space" },
+        "forearm_left": { name: "Forearm Shelf Left", category: "Passive Base", coords: (isLeft, sign) => new THREE.Vector3(-2.0, 6.0, 15.5), desc: "Left horizontal forearm shelf in conversational space (e.g. Night)" },
+        "passive_forearm": { name: "Passive Forearm Shelf (Base)", category: "Passive Base", coords: (isLeft, sign) => isLeft ? new THREE.Vector3(-2.0, 6.0, 15.5) : new THREE.Vector3(2.0, 8.5, 15.5), desc: "Horizontal non-dominant forearm shelf in open conversational space (e.g. Night)" },
+
+        // --- NEUTRAL CONVERSATIONAL SPACE ---
+        "neutral_high_right": { name: "Neutral Space High (Right)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(15.0, 19.5, 22.5), desc: "High open conversational space, right arm reach" },
+        "neutral_high_left": { name: "Neutral Space High (Left)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(-15.0, 19.5, 22.5), desc: "High open conversational space, left arm reach" },
         "neutral_high": { name: "Neutral Space (High)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 15.0, 19.5, 22.5), desc: "High open conversational space (expanded arm reach)" },
+        "neutral_mid_right": { name: "Neutral Space Mid (Right)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(16.5, 8.0, 24.0), desc: "Wide open chest-level conversational space, right arm reach" },
+        "neutral_mid_left": { name: "Neutral Space Mid (Left)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(-16.5, 8.0, 24.0), desc: "Wide open chest-level conversational space, left arm reach" },
         "neutral_mid": { name: "Neutral Space (Mid / Chest)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 16.5, 8.0, 24.0), desc: "Wide open chest-level conversational space (expanded arm reach)" },
+        "neutral_low_right": { name: "Neutral Space Low (Right)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(15.0, -2.5, 23.0), desc: "Low open waist-level conversational space, right arm reach" },
+        "neutral_low_left": { name: "Neutral Space Low (Left)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(-15.0, -2.5, 23.0), desc: "Low open waist-level conversational space, left arm reach" },
         "neutral_low": { name: "Neutral Space (Low / Waist)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 15.0, -2.5, 23.0), desc: "Low open waist-level conversational space (expanded arm reach)" },
+        "neutral_far_right": { name: "Neutral Space Far (Right)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(8.5, 9.5, 27.5), desc: "Full extended forward deictic reach, right arm" },
+        "neutral_far_left": { name: "Neutral Space Far (Left)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(-8.5, 9.5, 27.5), desc: "Full extended forward deictic reach, left arm" },
         "neutral_far": { name: "Neutral Space (Far / Deictic)", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(sign * 8.5, 9.5, 27.5), desc: "Full extended forward deictic reach (e.g. You, That)" },
         "neutral_center": { name: "Neutral Midline Center", category: "Neutral Space", coords: (isLeft, sign) => new THREE.Vector3(0.0, 8.5, 23.0), desc: "Forward open sagittal midline in conversational space" }
       },
@@ -2399,11 +2452,11 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
 
       getLocusColor(key, cat) {
         const k = key.toLowerCase();
-        if (k.includes('head') || k.includes('forehead') || k.includes('temple')) return 0x8b5cf6; // Purple (Upper Cranial)
+        if (k.includes('head') || k.includes('forehead') || k.includes('temple') || k.includes('crown')) return 0x8b5cf6; // Purple (Upper Cranial)
         if (k.includes('eye') || k.includes('nose') || k.includes('ear') || k.includes('cheek')) return 0x06b6d4; // Cyan (Facial Sensory)
-        if (k.includes('mouth') || k.includes('chin') || k.includes('neck')) return 0xf59e0b; // Amber (Lower Face/Oral)
-        if (k.includes('clavicle') || k.includes('sternum') || k.includes('chest') || k.includes('stomach') || k.includes('shoulder')) return 0xec4899; // Rose (Torso)
-        if (k.includes('passive')) return 0x3b82f6; // Blue (Passive Arm/Hand)
+        if (k.includes('mouth') || k.includes('chin') || k.includes('jaw') || k.includes('throat') || k.includes('neck')) return 0xf59e0b; // Amber (Lower Face/Oral)
+        if (k.includes('clavicle') || k.includes('sternum') || k.includes('chest') || k.includes('heart') || k.includes('stomach') || k.includes('flank') || k.includes('shoulder')) return 0xec4899; // Rose (Torso)
+        if (k.includes('passive') || k.includes('wrist') || k.includes('palm') || k.includes('forearm')) return 0x3b82f6; // Blue (Passive Arm/Hand Shelves)
         return 0x10b981; // Emerald (Neutral Conversational Space)
       },
 
@@ -2416,7 +2469,27 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         const sphereGeo = new THREE.SphereGeometry(0.16, 12, 12);
         const ringGeo = new THREE.RingGeometry(0.40, 0.52, 32);
 
+        const aliasMap = {
+          "temple": "temple_right",
+          "eyes": "eye_right",
+          "cheek": "cheek_right",
+          "ear": "ear_right",
+          "jaw": "jaw_right",
+          "shoulder": "shoulder_right",
+          "clavicle": "clavicle_right",
+          "heart": "chest_left",
+          "passive_wrist": "wrist_left",
+          "passive_palm": "palm_left",
+          "passive_forearm": "forearm_left",
+          "neutral_high": "neutral_high_right",
+          "neutral_mid": "neutral_mid_right",
+          "neutral_low": "neutral_low_right",
+          "neutral_far": "neutral_far_right"
+        };
+
         for (let key in PARAMETRIC_LEXICONS.locations) {
+          if (aliasMap[key]) continue; // Primary nodes are initialized first
+
           const locDef = PARAMETRIC_LEXICONS.locations[key];
           const pos = locDef.coords(false, 1.0);
           const colorHex = this.getLocusColor(key, locDef.category);
@@ -2475,7 +2548,15 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           locusNode.add(sprite);
 
           this.group.add(locusNode);
-          this.spheres[key] = { node: locusNode, sphereMesh, ringMesh, sprite, sphereMat, ringMat, basePos: pos, baseColor: colorHex };
+          this.spheres[key] = { node: locusNode, sphereMesh, ringMesh, sprite, sphereMat, ringMat, basePos: pos.clone(), baseColor: colorHex };
+        }
+
+        // Link canonical aliases to their corresponding primary physical nodes
+        for (let aliasKey in aliasMap) {
+          const targetKey = aliasMap[aliasKey];
+          if (this.spheres[targetKey]) {
+            this.spheres[aliasKey] = this.spheres[targetKey];
+          }
         }
 
         scene.add(this.group);
@@ -3344,13 +3425,13 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         const eff = (recipe && (recipe.contactEffector || recipe.dominantContactPart) ? (recipe.contactEffector || recipe.dominantContactPart) : "AUTO").toUpperCase();
 
         if (eff === "NONE") return new THREE.Vector3(0, 0, 0);
-        if (eff === "INDEX_TIP") return new THREE.Vector3(sign * 2.1, 9.4, 0.2);
-        if (eff === "THUMB_TIP") return new THREE.Vector3(sign * 3.8, 4.2, 0.8);
-        if (eff === "FINGERTIPS") return new THREE.Vector3(sign * 0.7, 9.8, 0.2);
+        if (eff === "INDEX_TIP") return new THREE.Vector3(sign * -2.1, 9.4, 0.2);
+        if (eff === "THUMB_TIP") return new THREE.Vector3(sign * -3.8, 4.2, 0.8);
+        if (eff === "FINGERTIPS") return new THREE.Vector3(sign * -0.7, 9.8, 0.2);
         if (eff === "PALM") return new THREE.Vector3(0.0, 2.8, 0.5);
-        if (eff === "FIST_HEEL") return new THREE.Vector3(sign * -1.0, 0.5, 0.4);
-        if (eff === "BLADE" || eff === "ULNAR_EDGE") return new THREE.Vector3(sign * -2.0, 3.0, 0.0);
-        if (eff === "RADIAL_EDGE") return new THREE.Vector3(sign * 2.4, 3.5, 0.2);
+        if (eff === "FIST_HEEL") return new THREE.Vector3(sign * 1.0, 0.5, 0.4);
+        if (eff === "BLADE" || eff === "ULNAR_EDGE") return new THREE.Vector3(sign * 2.0, 3.0, 0.0);
+        if (eff === "RADIAL_EDGE") return new THREE.Vector3(sign * -2.4, 3.5, 0.2);
         if (eff === "KNUCKLES") return new THREE.Vector3(0.0, 4.9, 0.2);
 
         // AUTO Heuristic Resolution:
@@ -3405,16 +3486,16 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           return new THREE.Vector3(0.0, 2.8, 0.6); // Flat upward/forward palm center (e.g. READ, STOP, PAPER)
         }
         if (p === "INDEX_TIP") {
-          return new THREE.Vector3(-2.1, 9.4, 0.2); // Tip of non-dominant index finger (e.g. NAME)
+          return new THREE.Vector3(2.1, 9.4, 0.2); // Tip of non-dominant index finger (e.g. NAME)
         }
         if (p === "INDEX_EDGE") {
-          return new THREE.Vector3(-2.1, 5.0, 0.2); // Lateral radial edge of index finger (e.g. TRAIN)
+          return new THREE.Vector3(2.1, 5.0, 0.2); // Lateral radial edge of index finger (e.g. TRAIN)
         }
         if (p === "FINGERTIP_CLUSTER" || p === "FINGERTIPS") {
           return new THREE.Vector3(0.0, 9.8, 0.2); // Distal tips of non-dominant fingers (e.g. MORE)
         }
         if (p === "THUMB_TIP") {
-          return new THREE.Vector3(-3.8, 4.2, 0.8); // Tip of non-dominant thumb
+          return new THREE.Vector3(3.8, 4.2, 0.8); // Tip of non-dominant thumb
         }
         if (p === "FIST_TOP") {
           return new THREE.Vector3(0.0, 2.5, -0.8); // Dorsal knuckles of closed fist (e.g. WORK)
@@ -6040,14 +6121,14 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         carpalsGroup.name = "carpalCluster";
 
         const carpalDefs = [
-          { name: "scaphoid", pos: [sign * 0.85, -0.35, 0.12], scale: [0.55, 0.45, 0.48] }, // Articulates with Radius (Radial side / Thumb)
-          { name: "lunate", pos: [sign * 0.05, -0.30, 0.10], scale: [0.50, 0.48, 0.45] },   // Articulates with Radius
-          { name: "triquetrum", pos: [sign * -0.75, -0.28, 0.05], scale: [0.48, 0.44, 0.46] },// Articulates with Ulna (Ulnar side / Pinky)
-          { name: "pisiform", pos: [sign * -0.88, -0.15, 0.45], scale: [0.38, 0.38, 0.40] },  // Anterior palmar tubercle
-          { name: "trapezium", pos: [sign * 1.35, 0.05, 0.25], scale: [0.52, 0.46, 0.48] }, // MC I saddle joint
-          { name: "trapezoid", pos: [sign * 0.70, 0.10, 0.12], scale: [0.46, 0.44, 0.44] }, // MC II base
-          { name: "capitate", pos: [sign * 0.15, 0.20, 0.12], scale: [0.58, 0.60, 0.52] },  // Central keystone, MC III base
-          { name: "hamate", pos: [sign * -0.68, 0.15, 0.10], scale: [0.52, 0.54, 0.48] }      // MC IV & V base
+          { name: "scaphoid", pos: [sign * -0.85, -0.35, 0.12], scale: [0.55, 0.45, 0.48] }, // Articulates with Radius (Radial side / Thumb)
+          { name: "lunate", pos: [sign * -0.05, -0.30, 0.10], scale: [0.50, 0.48, 0.45] },   // Articulates with Radius
+          { name: "triquetrum", pos: [sign * 0.75, -0.28, 0.05], scale: [0.48, 0.44, 0.46] },// Articulates with Ulna (Ulnar side / Pinky)
+          { name: "pisiform", pos: [sign * 0.88, -0.15, 0.45], scale: [0.38, 0.38, 0.40] },  // Anterior palmar tubercle
+          { name: "trapezium", pos: [sign * -1.35, 0.05, 0.25], scale: [0.52, 0.46, 0.48] }, // MC I saddle joint
+          { name: "trapezoid", pos: [sign * -0.70, 0.10, 0.12], scale: [0.46, 0.44, 0.44] }, // MC II base
+          { name: "capitate", pos: [sign * -0.15, 0.20, 0.12], scale: [0.58, 0.60, 0.52] },  // Central keystone, MC III base
+          { name: "hamate", pos: [sign * 0.68, 0.15, 0.10], scale: [0.52, 0.54, 0.48] }      // MC IV & V base
         ];
 
         this.carpalMeshes = [];
@@ -6064,7 +6145,7 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         // Hamate hook (hamulus) protruding anteriorly on the ulnar side
         const hookGeo = new THREE.ConeGeometry(0.14, 0.35, 8);
         const hookMesh = new THREE.Mesh(hookGeo, carpalMat);
-        hookMesh.position.set(sign * -0.68, 0.22, 0.46);
+        hookMesh.position.set(sign * 0.68, 0.22, 0.46);
         hookMesh.rotation.x = Math.PI * 0.45;
         carpalsGroup.add(hookMesh);
         this.carpalMeshes.push(hookMesh);
@@ -6072,11 +6153,12 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
 
         // --- AUTHENTIC ANATOMICAL METACARPAL RAY ARCHITECTURE (Paul Jarrett Osteology) ---
         // Metacarpals converge tightly at the carpal base and splay outwards to the MCP knuckles
+        // Index & Thumb on medial side (-X for right hand), Pinky on lateral side (+X for right hand)
         const mcDefs = [
-          { id: 'idx', name: 'MC II', base: [ 1.2, 0.40, 0.10], head: [ 2.1, 4.9, 0.00], r: 0.28 },
-          { id: 'mid', name: 'MC III', base: [ 0.3, 0.50, 0.15], head: [ 0.7, 5.0, 0.05], r: 0.30 },
-          { id: 'rng', name: 'MC IV', base: [-0.4, 0.40, 0.08], head: [-0.7, 4.9, 0.00], r: 0.27 },
-          { id: 'pnk', name: 'MC V', base: [-1.1, 0.20, -0.05], head: [-2.0, 4.6, -0.05], r: 0.25 }
+          { id: 'idx', name: 'MC II', base: [-1.2, 0.40, 0.10], head: [-2.1, 4.9, 0.00], r: 0.28 },
+          { id: 'mid', name: 'MC III', base: [-0.3, 0.50, 0.15], head: [-0.7, 5.0, 0.05], r: 0.30 },
+          { id: 'rng', name: 'MC IV', base: [ 0.4, 0.40, 0.08], head: [ 0.7, 4.9, 0.00], r: 0.27 },
+          { id: 'pnk', name: 'MC V', base: [ 1.1, 0.20, -0.05], head: [ 2.0, 4.6, -0.05], r: 0.25 }
         ];
 
         this.metacarpalMeshes = {};
@@ -6117,7 +6199,7 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         const thenarGeo = new THREE.SphereGeometry(1.0, 12, 12);
         thenarGeo.scale(1.1, 1.45, 0.95);
         const thenarMesh = new THREE.Mesh(thenarGeo, muscleMat);
-        thenarMesh.position.set(sign * 1.8, 1.1, 0.45);
+        thenarMesh.position.set(sign * -1.8, 1.1, 0.45);
         thenarMesh.raycast = () => {};
         palmGroup.add(thenarMesh);
         this.thenarMuscleMesh = thenarMesh;
@@ -6131,7 +6213,7 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         });
 
         // Thumb (attaching to Trapezium carpal base at 1st Carpometacarpal CMC saddle joint - 3 authentic bones: MC I, Proximal Phalanx, Distal Phalanx)
-        const thumbBasePos = [sign * 1.4, -0.15, 0.30];
+        const thumbBasePos = [sign * -1.4, -0.15, 0.30];
         this.initFinger('thm', 'Thumb', 0xfb923c, thumbBasePos, L_T, true);
       }
 
@@ -6145,7 +6227,7 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         const ikBase = new IKNode(0); 
         ikBase.worldPos.fromArray(basePos);
 
-        const thumbEuler = new THREE.Euler(90*deg2rad, -sign * 90*deg2rad, 0, 'XYZ');
+        const thumbEuler = new THREE.Euler(90*deg2rad, sign * 90*deg2rad, 0, 'XYZ');
         if(isThumb) { 
           gBase.rotation.copy(thumbEuler); 
           ikBase.localRot.copy(thumbEuler); 
@@ -7525,7 +7607,7 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         );
       }
 
-      // 2. Audit All 24 Anatomical Body & Spatial Loci
+      // 2. Audit All 66 Anatomical Body & Spatial Loci
       for (let k in PARAMETRIC_LEXICONS.locations) {
         const loc = PARAMETRIC_LEXICONS.locations[k];
         const coords = loc.coords(false, 1.0);
@@ -7895,7 +7977,10 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           for (let locKey in this.overrides.locations) {
             const c = this.overrides.locations[locKey];
             if (PARAMETRIC_LEXICONS.locations[locKey]) {
-              PARAMETRIC_LEXICONS.locations[locKey].coords = (isLeft, sign) => new THREE.Vector3(sign * c.x, c.y, c.z);
+              const isExplicitSide = locKey.endsWith('_left') || locKey.endsWith('_right') || locKey.startsWith('wrist_') || locKey.startsWith('palm_') || locKey.startsWith('forearm_') || locKey === 'heart';
+              PARAMETRIC_LEXICONS.locations[locKey].coords = isExplicitSide
+                ? (isLeft, sign) => new THREE.Vector3(c.x, c.y, c.z)
+                : (isLeft, sign) => new THREE.Vector3(sign * c.x, c.y, c.z);
             }
           }
         }
@@ -8813,9 +8898,18 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         const slider = document.getElementById('slider-locus-' + axis);
         if (slider) slider.value = val;
 
-        locDef.coords = (isLeft, sign) => new THREE.Vector3(sign * currentPos.x, currentPos.y, currentPos.z);
+        const isExplicitSide = item.id.endsWith('_left') || item.id.endsWith('_right') || item.id.startsWith('wrist_') || item.id.startsWith('palm_') || item.id.startsWith('forearm_') || item.id === 'heart';
+        if (isExplicitSide) {
+          locDef.coords = (isLeft, sign) => new THREE.Vector3(currentPos.x, currentPos.y, currentPos.z);
+        } else {
+          locDef.coords = (isLeft, sign) => new THREE.Vector3(sign * currentPos.x, currentPos.y, currentPos.z);
+        }
+
         if (LociVisualizationEngine && LociVisualizationEngine.spheres[item.id]) {
           LociVisualizationEngine.spheres[item.id].node.position.copy(currentPos);
+          if (LociVisualizationEngine.spheres[item.id].basePos) {
+            LociVisualizationEngine.spheres[item.id].basePos.copy(currentPos);
+          }
         }
 
         handR.targetRootPos.copy(currentPos);
@@ -8829,7 +8923,10 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         this.markPending();
         const codeBlock = document.getElementById('recipe-code-block');
         if (codeBlock) {
-          codeBlock.innerText = '"' + item.id + '": { name: "' + locDef.name + '", coords: (isLeft, sign) => new THREE.Vector3(sign * ' + currentPos.x.toFixed(1) + ', ' + currentPos.y.toFixed(1) + ', ' + currentPos.z.toFixed(1) + ') }';
+          const coordStr = isExplicitSide
+            ? `(isLeft, sign) => new THREE.Vector3(${currentPos.x.toFixed(1)}, ${currentPos.y.toFixed(1)}, ${currentPos.z.toFixed(1)})`
+            : `(isLeft, sign) => new THREE.Vector3(sign * ${currentPos.x.toFixed(1)}, ${currentPos.y.toFixed(1)}, ${currentPos.z.toFixed(1)})`;
+          codeBlock.innerText = '"' + item.id + '": { name: "' + locDef.name + '", coords: ' + coordStr + ' }';
         }
       },
 
