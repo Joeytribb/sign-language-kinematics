@@ -3975,18 +3975,18 @@ const AIRPORT_LEXICON_30 = [
         let nx = dx / d, ny = dy / d, nz = dz / d;
 
         // --- SHOULDER MOVEMENT CONE (Two Regions) ---
-        // Neutral relaxed shoulder axis pointing slightly lateral, downward, and forward
-        const axSx = latSign * 0.15, axSy = -0.92, axSz = 0.35;
+        // Natural conversational signing axis oriented anteriorly (+Z) into conversational envelope
+        const axSx = -latSign * 0.25, axSy = 0.05, axSz = 0.96;
         const axLen = Math.sqrt(axSx*axSx + axSy*axSy + axSz*axSz);
         const uAxSx = axSx / axLen, uAxSy = axSy / axLen, uAxSz = axSz / axLen;
         const cosShoulder = THREE.MathUtils.clamp(nx * uAxSx + ny * uAxSy + nz * uAxSz, -1.0, 1.0);
         const degShoulder = Math.acos(cosShoulder) * rad2deg;
 
-        // Inner Region (0 to 45 deg): Ease of movement (frictionless, effortless transit)
-        // Extreme Region (45 to 95 deg): Progressive quadratic resistance barrier
-        if (degShoulder > 45.0) {
-          const penS = Math.min(1.0, (degShoulder - 45.0) / 50.0);
-          const resistFactor = penS * penS * 0.26; // Non-linear elastic restoring impedance
+        // Region 1: Inner Comfort Zone (0 to 70 deg): Full frontal conversational envelope, zero resistance
+        // Region 2: Extreme Region (> 70 deg or nz < 0): Progressive quadratic resistance for posterior hyperextension (behind back)
+        if (degShoulder > 70.0 || nz < 0.0) {
+          const penS = Math.min(1.0, Math.max(0.0, degShoulder - 70.0) / 40.0 + (nz < 0.0 ? -nz * 0.5 : 0.0));
+          const resistFactor = penS * penS * 0.28;
           nx = nx * (1.0 - resistFactor) + uAxSx * resistFactor;
           ny = ny * (1.0 - resistFactor) + uAxSy * resistFactor;
           nz = nz * (1.0 - resistFactor) + uAxSz * resistFactor;
@@ -3994,19 +3994,19 @@ const AIRPORT_LEXICON_30 = [
           nx /= nLen; ny /= nLen; nz /= nLen;
         }
 
-        // --- ELBOW MOVEMENT CONE (Two Regions: Interior Angle 40-105 deg comfort zone) ---
-        const dMin = 6.0;
+        // --- ELBOW MOVEMENT CONE (Two Regions: Interior Angle 25-140 deg comfort zone) ---
+        const dMin = 5.0;
         const dMax = 0.998 * (L1 + L2); // 29.94 units
         let dClamped = Math.max(dMin, Math.min(d, dMax));
 
         let currentElbowDeg = Math.round(180 - Math.acos(THREE.MathUtils.clamp((L1*L1 + L2*L2 - dClamped*dClamped) / (2.0 * L1 * L2), -1, 1)) * rad2deg);
-        // Extreme Region Resistance: Hyperextension lockout (<40 deg) or acute hyperflexion (>105 deg)
-        if (currentElbowDeg < 40.0) {
-          const penE = Math.min(1.0, (40.0 - currentElbowDeg) / 25.0);
-          dClamped -= penE * penE * 1.4; // Progressive resistance cushions lock-out
-        } else if (currentElbowDeg > 105.0) {
-          const penE = Math.min(1.0, (currentElbowDeg - 105.0) / 35.0);
-          dClamped += penE * penE * 1.1; // Progressive resistance cushions hyper-flexion
+        // Extreme Region Resistance: Hyperextension lockout (<25 deg) or acute hyperflexion (>140 deg)
+        if (currentElbowDeg < 25.0) {
+          const penE = Math.min(1.0, (25.0 - currentElbowDeg) / 20.0);
+          dClamped -= penE * penE * 1.2; // Progressive resistance cushions lock-out
+        } else if (currentElbowDeg > 140.0) {
+          const penE = Math.min(1.0, (currentElbowDeg - 140.0) / 30.0);
+          dClamped += penE * penE * 1.0; // Progressive resistance cushions hyper-flexion
         }
         dClamped = Math.max(dMin, Math.min(dClamped, dMax));
 
@@ -4022,26 +4022,26 @@ const AIRPORT_LEXICON_30 = [
         const h = Math.sqrt(Math.max(0, L1*L1 - dMid*dMid));
         const Cx = S.x + nx * dMid, Cy = S.y + ny * dMid, Cz = S.z + nz * dMid;
 
-        // 3. Zero-Allocation Orthonormal Swivel Basis (u, v)
-        // Project refDown (0, -1, 0) onto plane perpendicular to n
+        // 3. Zero-Allocation Orthonormal Swivel Basis (u, v) - Smooth & Continuous (No Flips)
         const dotDown = -ny;
-        let vpx = 0.0 - nx * dotDown, vpy = -1.0 - ny * dotDown, vpz = 0.0 - nz * dotDown;
+        let vpx = -nx * dotDown, vpy = -1.0 - ny * dotDown, vpz = -nz * dotDown;
         let vpLenSq = vpx*vpx + vpy*vpy + vpz*vpz;
         if (vpLenSq < 1e-4) {
           const dotAnt = nz;
-          vpx = 0.0 - nx * dotAnt; vpy = 0.0 - ny * dotAnt; vpz = 1.0 - nz * dotAnt;
+          vpx = -nx * dotAnt; vpy = -ny * dotAnt; vpz = 1.0 - nz * dotAnt;
           vpLenSq = vpx*vpx + vpy*vpy + vpz*vpz;
         }
         const vpLen = Math.sqrt(vpLenSq);
         const vx = vpx / vpLen, vy = vpy / vpLen, vz = vpz / vpLen; // Continuous downward basis v
 
-        // u = n x v
-        let ux = ny * vz - nz * vy;
-        let uy = nz * vx - nx * vz;
-        let uz = nx * vy - ny * vx;
-        const uLen = Math.sqrt(ux*ux + uy*uy + uz*uz);
-        ux /= uLen; uy /= uLen; uz /= uLen;
-        if (ux * latSign < 0) { ux = -ux; uy = -uy; uz = -uz; } // Continuous outward lateral basis u
+        // u = latSign * (n x v) - Guaranteed continuous lateral outward basis
+        let cx = ny * vz - nz * vy;
+        let cy = nz * vx - nx * vz;
+        let cz = nx * vy - ny * vx;
+        const cLen = Math.sqrt(cx*cx + cy*cy + cz*cz);
+        const ux = latSign * (cx / cLen);
+        const uy = latSign * (cy / cLen);
+        const uz = latSign * (cz / cLen);
 
         // 4. Zero-Allocation Anatomical Swivel Angle (psi) Optimization
         let bestPsi = (typeof this.currentPsi === 'number') ? this.currentPsi : 0.65;
@@ -4055,37 +4055,40 @@ const AIRPORT_LEXICON_30 = [
 
           let score = 0;
 
-          // Hard Anatomical Constraint 1: Ribcage Clearance
+          // Anatomical Constraint 1: Ribcage Clearance (Smooth Quadratic Barrier)
           const latDist = latSign * tEx;
-          if (latDist < 9.0) {
-            score -= (9.0 - latDist) * 80.0 + 500.0;
+          if (latDist < 9.5) {
+            score -= (9.5 - latDist) * (9.5 - latDist) * 40.0 + 300.0;
           } else {
             score += Math.min(latDist, 18.0) * 2.0;
           }
 
-          // Hard Anatomical Constraint 2: Posterior Coronal Clearance
-          if (tEz < -1.5) score -= (-1.5 - tEz) * 50.0;
-
-          // Hard Anatomical Constraint 3: Humeroulnar Hinge Flexion Direction (Pure Scalar)
-          const upx = tEx - S.x, upy = tEy - S.y, upz = tEz - S.z;
-          const fox = Weff.x - tEx, foy = Weff.y - tEy, foz = Weff.z - tEz;
-          const normY = upz * fox - upx * foz;
-          if (latSign * normY < -0.15) score -= 600.0;
-
-          // Gravity Hanging Angle
-          if (W.y < S.y + 4.0) {
-            if (tEy > S.y + 1.0) score -= (tEy - (S.y + 1.0)) * 30.0;
-            else score += (S.y - tEy) * 1.5;
+          // Anatomical Constraint 2: Posterior Coronal Clearance (Cannot enter coronal plane behind torso)
+          if (tEz < -1.0) {
+            score -= (-1.0 - tEz) * (-1.0 - tEz) * 30.0 + 200.0;
           }
 
-          // Natural Carrying Angle Comfort Cone (~35-50 deg outward & down)
-          const targetPsi = 0.65;
-          score -= Math.abs(psi - targetPsi) * 6.0;
+          // Gravity Hanging Tendency (Continuous downward pull)
+          score += (S.y - tEy) * 3.0;
+
+          // Dual-Region Swivel Carrying Cone
+          // Inner Region (0.35 to 0.90 rad): Natural relaxed carrying angle (zero resistance, comfort bonus)
+          if (psi >= 0.35 && psi <= 0.90) {
+            score += 5.0;
+          } else if (psi > 0.90) {
+            // Extreme Region: Flare abduction ("chicken-wing")
+            const penF = (psi - 0.90) / 0.85;
+            score -= penF * penF * 45.0;
+          } else {
+            // Extreme Region: Inward hugging
+            const penT = (0.35 - psi) / 0.65;
+            score -= penT * penT * 35.0;
+          }
 
           // Temporal Continuity Damping
           if (typeof this.currentPsi === 'number') {
             const dAngle = Math.atan2(Math.sin(psi - this.currentPsi), Math.cos(psi - this.currentPsi));
-            score -= Math.abs(dAngle) * 22.0;
+            score -= dAngle * dAngle * 30.0;
           }
 
           if (score > bestScore) {
@@ -4190,7 +4193,8 @@ const AIRPORT_LEXICON_30 = [
     // Formulated from functional anatomy & clinical kinesiology (Kapandji 1982, Ryu et al. 1991)
     const PhysiologicalWristEngine = {
       ROM: {
-        innerConeAngle: 30.0 * deg2rad, // Inner Region: Comfort Zone (zero resistance, fluid ease of movement)
+        innerConeAngle: 48.0 * deg2rad, // Inner Region: Comfort Zone (zero resistance, fluid ease of movement)
+        innerContactConeAngle: 62.0 * deg2rad, // Inner Region for body-contact signs (chest/chin contact)
         extremeConeAngle: 72.0 * deg2rad, // Extreme Region: Progressive ligamentous resistance zone
         maxForearmAngle: 75.0 * deg2rad  // Absolute anatomical boundary clamp
       },
@@ -4214,17 +4218,19 @@ const AIRPORT_LEXICON_30 = [
         const cosTheta = THREE.MathUtils.clamp(_scratchV2.dot(_scratchV1), -1.0, 1.0);
         const theta = Math.acos(cosTheta);
 
-        // Region 1: Inner Ease Zone (theta <= 30 deg / 0.52 rad)
+        const comfortCone = isBodyContact ? this.ROM.innerContactConeAngle : this.ROM.innerConeAngle;
+
+        // Region 1: Inner Ease Zone (theta <= comfortCone)
         // 100% free movement, zero resistance.
-        if (theta <= this.ROM.innerConeAngle) {
+        if (theta <= comfortCone) {
           return;
         }
 
-        // Region 2: Extreme Progressive Resistance Zone (30 deg < theta <= 72 deg)
+        // Region 2: Extreme Progressive Resistance Zone (comfortCone < theta <= 72 deg)
         // It becomes increasingly difficult to deflect and stay in this extreme region.
         // Viscoelastic restoring torque pulls the wrist back toward the comfort cone.
-        const penetration = Math.min(1.0, (theta - this.ROM.innerConeAngle) / (this.ROM.extremeConeAngle - this.ROM.innerConeAngle));
-        const restoreFactor = penetration * penetration * 0.45; // Progressive quadratic stiffness barrier
+        const penetration = Math.min(1.0, (theta - comfortCone) / (this.ROM.extremeConeAngle - comfortCone));
+        const restoreFactor = penetration * penetration * 0.38; // Progressive quadratic stiffness barrier
 
         // Orthogonal deviation vector
         _scratchV3.copy(_scratchV1).multiplyScalar(cosTheta);
@@ -4236,7 +4242,7 @@ const AIRPORT_LEXICON_30 = [
         _scratchV4.normalize();
 
         // Target angle with progressive spring pull back towards inner cone
-        const targetTheta = theta - (theta - this.ROM.innerConeAngle) * restoreFactor;
+        const targetTheta = theta - (theta - comfortCone) * restoreFactor;
         const clampedTheta = Math.min(targetTheta, this.ROM.maxForearmAngle);
 
         _scratchV5.copy(_scratchV1).multiplyScalar(Math.cos(clampedTheta))
