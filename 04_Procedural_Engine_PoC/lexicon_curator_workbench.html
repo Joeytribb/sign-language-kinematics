@@ -1274,7 +1274,7 @@
       rest: { f: 10*deg2rad, a: 0 }
     };
 
-    const L_T = [1.85, 1.30, 0.85];
+    const L_T = [2.20, 1.45, 1.00];
     const LIM_T_R = {
       cmc_f: [-60*deg2rad, 120*deg2rad], cmc_a: [-80*deg2rad, 60*deg2rad],
       mcp_f: [0*deg2rad, 80*deg2rad], ip_f:  [0*deg2rad, 90*deg2rad],
@@ -1308,22 +1308,22 @@
     };
 
     const THUMB_TOKENS = {
-      THM_REST_SIDE: { f1: -10, a1: -30, f2: 10, f3: 10, desc: "Resting straight on side of index" },
-      THM_NATURAL_REST: { f1: -18, a1: -28, f2: 24, f3: 18, desc: "Natural relaxed opposition" },
-      THM_WRAP_OVER: { f1: -12, a1: -36, f2: 45, f3: 65, desc: "Wrapped over closed fingers" },
-      THM_WRAP_FRONT: { f1: -16, a1: -42, f2: 45, f3: 65, desc: "Tight fist wrap across front" },
-      THM_FLAT_PALM: { f1: 0, a1: -28, f2: 65, f3: 60, desc: "Flat across lower palm" },
-      THM_OUT: { f1: -45, a1: -30, f2: 0, f3: 0, desc: "Extended 90° outward" },
-      THM_OUT_SPREAD: { f1: -60, a1: -30, f2: 0, f3: 0, desc: "Wide outward spread" },
-      THM_TUCK_M: { f1: 25, a1: -10, f2: 70, f3: 65, desc: "Tucked inside palm, poked between ring and pinky" },
-      THM_TUCK_N: { f1: 5, a1: -20, f2: 75, f3: 75, desc: "Tucked inside palm, poked between middle and ring" },
-      THM_TUCK_T: { f1: -25, a1: -30, f2: 75, f3: 70, desc: "Tucked inside palm, poked between index and middle" },
-      THM_PINCH_INDEX: { f1: -40, a1: -30, f2: 60, f3: 80, desc: "Pinching index fingertip" },
-      THM_PINCH_MID: { f1: -25, a1: -30, f2: 60, f3: 80, desc: "Touching middle fingertip" },
-      THM_CURVED: { f1: -30, a1: -30, f2: 40, f3: 40, desc: "C-shape opposing curve" },
-      THM_OPPOSE_O: { f1: -20, a1: -30, f2: 60, f3: 60, desc: "O-shape opposing circle" },
-      THM_BETWEEN_INDEX_MID: { f1: -30, a1: -30, f2: 50, f3: 80, desc: "Upward between index & mid" },
-      THM_HOLD_PINKY: { f1: 5, a1: -25, f2: 70, f3: 70, desc: "Holding pinky down" },
+      THM_REST_SIDE: { f1: -45, a1: -70, f2: 10, f3: 10, desc: "Resting straight on side of index" },
+      THM_NATURAL_REST: { f1: -30, a1: -65, f2: 24, f3: 18, desc: "Natural relaxed opposition" },
+      THM_WRAP_OVER: { f1: -25, a1: -65, f2: 30, f3: 60, desc: "Wrapped over closed fingers" },
+      THM_WRAP_FRONT: { f1: -16, a1: -60, f2: 30, f3: 65, desc: "Tight fist wrap across front" },
+      THM_FLAT_PALM: { f1: 0, a1: -70, f2: 60, f3: 60, desc: "Flat across lower palm" },
+      THM_OUT: { f1: -50, a1: -30, f2: 0, f3: 0, desc: "Extended 90° outward" },
+      THM_OUT_SPREAD: { f1: -65, a1: -30, f2: 0, f3: 0, desc: "Wide outward spread" },
+      THM_TUCK_T: { f1: -30, a1: -65, f2: 25, f3: 75, desc: "Tucked inside palm, poked between index and middle" },
+      THM_TUCK_N: { f1: 10, a1: -60, f2: 25, f3: 55, desc: "Tucked inside palm, poked between middle and ring" },
+      THM_TUCK_M: { f1: 45, a1: -50, f2: 20, f3: 20, desc: "Tucked inside palm, poked between ring and pinky" },
+      THM_PINCH_INDEX: { f1: -40, a1: -45, f2: 50, f3: 70, desc: "Pinching index fingertip" },
+      THM_PINCH_MID: { f1: -25, a1: -45, f2: 50, f3: 70, desc: "Touching middle fingertip" },
+      THM_CURVED: { f1: -30, a1: -40, f2: 40, f3: 40, desc: "C-shape opposing curve" },
+      THM_OPPOSE_O: { f1: -20, a1: -45, f2: 55, f3: 55, desc: "O-shape opposing circle" },
+      THM_BETWEEN_INDEX_MID: { f1: -30, a1: -45, f2: 40, f3: 70, desc: "Upward between index & mid" },
+      THM_HOLD_PINKY: { f1: 30, a1: -55, f2: 40, f3: 40, desc: "Holding pinky down" },
       THM_POINTING_DOWN: { f1: 0, a1: 60, f2: 0, f3: 0, desc: "Pointing down" }
     };
 
@@ -4652,8 +4652,7 @@ const AIRPORT_LEXICON_30 = [
           { id: 'idx', name: 'MC II', base: [ 1.2, 0.40, 0.10], head: [ 2.1, 4.9, 0.00], r: 0.28 },
           { id: 'mid', name: 'MC III', base: [ 0.3, 0.50, 0.15], head: [ 0.7, 5.0, 0.05], r: 0.30 },
           { id: 'rng', name: 'MC IV', base: [-0.4, 0.40, 0.08], head: [-0.7, 4.9, 0.00], r: 0.27 },
-          { id: 'pnk', name: 'MC V', base: [-1.1, 0.20, -0.05], head: [-2.0, 4.6, -0.05], r: 0.25 },
-          { id: 'thm', name: 'MC I', base: [ 1.4, -0.15, 0.30], head: [ 2.6, 1.8, 0.60], r: 0.32 }
+          { id: 'pnk', name: 'MC V', base: [-1.1, 0.20, -0.05], head: [-2.0, 4.6, -0.05], r: 0.25 }
         ];
 
         mcDefs.forEach(mc => {
@@ -4702,8 +4701,8 @@ const AIRPORT_LEXICON_30 = [
           this.initFinger(f.id, f.name, f.color, basePos, f.lengths, false);
         });
 
-        // Thumb (attaching directly to MC I knuckle head)
-        const thumbBasePos = [sign * 2.6, 1.8, 0.60];
+        // Thumb (attaching to Trapezium carpal base at 1st Carpometacarpal CMC saddle joint - 3 authentic bones: MC I, Proximal Phalanx, Distal Phalanx)
+        const thumbBasePos = [sign * 1.4, -0.15, 0.30];
         this.initFinger('thm', 'Thumb', 0xfb923c, thumbBasePos, L_T, true);
       }
 
@@ -4848,7 +4847,7 @@ const AIRPORT_LEXICON_30 = [
           let t = poseTokens[fid];
           let a = fid === 'thm' ? THUMB_TOKENS[t] : FINGER_TOKENS[t];
           if(a && f) {
-            const abd = (this.isLeft ? -a.a1 : a.a1) * deg2rad;
+            const abd = (fid === 'thm' ? (this.isLeft ? 1 : -1) : (this.isLeft ? -1 : 1)) * a.a1 * deg2rad;
             f.target_q = {
               mcp_f: a.f1 * deg2rad,
               mcp_a: abd,
@@ -4873,7 +4872,7 @@ const AIRPORT_LEXICON_30 = [
           }
         }
 
-        // Semantic Touch Resolver
+        // Semantic Touch Resolver (Direct FK Effector for Tucks/Rest; Contact snapping for Pinches & O)
         let thmData = this.fingerData.find(x => x.id === 'thm');
         if (poseTokens.thm === "THM_PINCH_INDEX") {
           thmData.restTarget.copy(targetDestinations['idx']);
@@ -4883,19 +4882,7 @@ const AIRPORT_LEXICON_30 = [
           targetDestinations['thm'].copy(targetDestinations['mid']);
         } else if (poseTokens.thm === "THM_OPPOSE_O") {
           thmData.restTarget.copy(targetDestinations['idx']);
-          thmData.restTarget.y -= 1.0;
-          targetDestinations['thm'].copy(thmData.restTarget);
-        } else if (poseTokens.thm === "THM_TUCK_M") {
-          thmData.restTarget.set(sign * 1.55, 2.35, 2.45);
-          targetDestinations['thm'].copy(thmData.restTarget);
-        } else if (poseTokens.thm === "THM_TUCK_N") {
-          thmData.restTarget.set(sign * 0.0, 2.35, 2.45);
-          targetDestinations['thm'].copy(thmData.restTarget);
-        } else if (poseTokens.thm === "THM_TUCK_T") {
-          thmData.restTarget.set(sign * -1.55, 2.35, 2.45);
-          targetDestinations['thm'].copy(thmData.restTarget);
-        } else if (poseTokens.thm === "THM_REST_SIDE") {
-          thmData.restTarget.set(sign * -3.6, 3.8, 0.2);
+          thmData.restTarget.y -= 0.6;
           targetDestinations['thm'].copy(thmData.restTarget);
         }
 
@@ -4914,7 +4901,7 @@ const AIRPORT_LEXICON_30 = [
             let t = poseTokens[fid];
             let a = fid === 'thm' ? THUMB_TOKENS[t] : FINGER_TOKENS[t];
             if (a && f) {
-              const abd = (this.isLeft ? -a.a1 : a.a1) * deg2rad;
+              const abd = (fid === 'thm' ? (this.isLeft ? 1 : -1) : (this.isLeft ? -1 : 1)) * a.a1 * deg2rad;
               f.q.mcp_f = a.f1 * deg2rad;
               f.q.mcp_a = abd;
               f.q.pip_f = a.f2 * deg2rad;
@@ -4985,7 +4972,7 @@ const AIRPORT_LEXICON_30 = [
           const f2 = (1.0 - easeU) * a0.f2 + easeU * a1.f2;
           const f3 = (1.0 - easeU) * a0.f3 + easeU * a1.f3;
 
-          const abd = (this.isLeft ? -a1_ang : a1_ang) * deg2rad;
+          const abd = (fid === 'thm' ? (this.isLeft ? 1 : -1) : (this.isLeft ? -1 : 1)) * a1_ang * deg2rad;
           f.target_q = {
             mcp_f: f1 * deg2rad,
             mcp_a: abd,
@@ -5310,11 +5297,6 @@ const AIRPORT_LEXICON_30 = [
                         }
                         finger.q.mcp_a = Math.max(-0.25, Math.min(0.25, finger.q.mcp_a));
                       }
-
-                      if (thumbTip.z < fingerTip.z + 0.25) {
-                        thumb.q.pip_f = Math.max(0.2, thumb.q.pip_f - 0.03);
-                        thumb.q.dip_f = Math.max(0.1, thumb.q.dip_f - 0.02);
-                      }
                     }
 
                     updateNodes(thumb);
@@ -5322,8 +5304,8 @@ const AIRPORT_LEXICON_30 = [
                     continue;
                   }
 
-                  // If thumb is intentionally wrapping over fingers in a fist (e.g. 1, S, A, E, V, bent_v, etc.)
-                  const isWrapPose = poseTokens.thm === "THM_WRAP_FRONT" || poseTokens.thm === "THM_WRAP_OVER";
+                  // If thumb is intentionally wrapping over fingers in a fist (e.g. 1, S, A, E, V, bent_v, etc.) or tucking
+                  const isWrapPose = poseTokens.thm === "THM_WRAP_FRONT" || poseTokens.thm === "THM_WRAP_OVER" || isTuckPose;
                   if (isWrapPose) {
                     continue; // Thumb rests on dorsal surface of curled fingers; preserve fist closure
                   }
