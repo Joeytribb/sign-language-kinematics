@@ -1000,6 +1000,14 @@
         <button class="view-cam-btn" data-cam="reset" onclick="LexiconWorkbench.setCameraPreset('reset')">RESET (0)</button>
       </div>
 
+      <!-- Studio Lighting Presets -->
+      <div class="viewport-overlay-cluster" style="top: 44px;">
+        <button class="view-cam-btn btn-lighting-preset active" data-preset="sun" onclick="StudioLighting.setPreset('sun')" title="World Sunlight + Sky Atmosphere">☀️ SUN</button>
+        <button class="view-cam-btn btn-lighting-preset" data-preset="studio" onclick="StudioLighting.setPreset('studio')" title="Focused Key/Rim Studio">🎬 STUDIO</button>
+        <button class="view-cam-btn btn-lighting-preset" data-preset="clinical" onclick="StudioLighting.setPreset('clinical')" title="High-Clarity Surgical Laboratory">🔬 CLINICAL</button>
+        <button class="view-cam-btn btn-lighting-preset" data-preset="stealth" onclick="StudioLighting.setPreset('stealth')" title="Moody Digital Twin Soundstage">🌌 STEALTH</button>
+      </div>
+
       <!-- Biomechanical Telemetry HUD -->
       <div id="biomechanical-hud">
         <div class="hud-row">
@@ -3636,9 +3644,10 @@ const AIRPORT_LEXICON_30 = [
     renderer.setSize(initDims.w, initDims.h);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFShadowMap;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.1;
+    renderer.toneMappingExposure = 1.18;
     container.appendChild(renderer.domElement);
 
     // Three.js r128 CapsuleGeometry Polyfill
@@ -3691,24 +3700,352 @@ const AIRPORT_LEXICON_30 = [
     document.getElementById('gizmo-container').appendChild(gizmoRenderer.domElement);
     const axesHelper = new THREE.AxesHelper(0.8); gizmoScene.add(axesHelper);
 
-    // Clinical 3-Point Surgical Studio Illumination with Precision Rim Backlighting
-    scene.add(new THREE.AmbientLight(0x0f172a, 0.45)); // Deep slate ambient fill
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.20); dirLight.position.set(18, 28, 22); dirLight.castShadow = true;
-    dirLight.shadow.mapSize.width = 1024; dirLight.shadow.mapSize.height = 1024;
-    dirLight.shadow.camera.near = 10; dirLight.shadow.camera.far = 70;
-    dirLight.shadow.camera.left = -26; dirLight.shadow.camera.right = 26;
-    dirLight.shadow.camera.top = 26; dirLight.shadow.camera.bottom = -26;
-    dirLight.shadow.bias = -0.0005;
-    scene.add(dirLight);
-    const fillLight = new THREE.DirectionalLight(0x94a3b8, 0.35); fillLight.position.set(-18, 12, 10); scene.add(fillLight);
-    
-    // Cool Cyan Surgical Rim Backlight: casts razor-sharp edge contours along phalanx bones and joints
-    const rimLight = new THREE.DirectionalLight(0x38bdf8, 0.60); rimLight.position.set(0, 16, -26); scene.add(rimLight);
+    // =========================================================================
+    // BIOMECHANICAL DIGITAL TWIN STUDIO ENVIRONMENT & CYCLORAMA BACKDROP
+    // Storytelling Stage: Vicon / Optical Mocap Soundstage with Calibrated Rings
+    // =========================================================================
+    function createStudioCycGeometry(width = 96, floorLength = 46, wallHeight = 50, radius = 16, yFloor = -19.05) {
+      const totalLen = floorLength + wallHeight;
+      const segmentsX = 28;
+      const segmentsY = 40;
+      const vertices = [];
+      const uvs = [];
+      const indices = [];
 
-    // Precision Engineering Metric Ground Plane (CAD / Vicon Motion Capture Stage Grid)
-    const gridHelper = new THREE.GridHelper(70, 70, 0x1e293b, 0x0f172a);
-    gridHelper.position.y = -19.0;
-    scene.add(gridHelper);
+      for (let iy = 0; iy <= segmentsY; iy++) {
+        const rawY = (iy / segmentsY) * totalLen;
+        let y, z;
+        if (rawY < floorLength) {
+          const u = rawY / floorLength;
+          y = yFloor;
+          z = 25 - u * 45;
+        } else if (rawY <= floorLength + radius) {
+          const t = (rawY - floorLength) / radius;
+          const ang = t * (Math.PI / 2);
+          y = yFloor + (1 - Math.cos(ang)) * radius;
+          z = -20 - Math.sin(ang) * radius;
+        } else {
+          const w = rawY - (floorLength + radius);
+          y = yFloor + radius + w;
+          z = -20 - radius;
+        }
+
+        for (let ix = 0; ix <= segmentsX; ix++) {
+          const x = -width / 2 + (ix / segmentsX) * width;
+          vertices.push(x, y, z);
+          uvs.push(ix / segmentsX, iy / segmentsY);
+        }
+      }
+
+      for (let iy = 0; iy < segmentsY; iy++) {
+        for (let ix = 0; ix < segmentsX; ix++) {
+          const a = iy * (segmentsX + 1) + ix;
+          const b = (iy + 1) * (segmentsX + 1) + ix;
+          const c = (iy + 1) * (segmentsX + 1) + (ix + 1);
+          const d = iy * (segmentsX + 1) + (ix + 1);
+          indices.push(a, b, d);
+          indices.push(b, c, d);
+        }
+      }
+
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+      geo.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+      geo.setIndex(indices);
+      geo.computeVertexNormals();
+      return geo;
+    }
+
+    const _sensorLeds = [];
+    window._sensorLeds = _sensorLeds;
+
+    function buildStudioEnvironment(scene) {
+      const studioGroup = new THREE.Group();
+      studioGroup.name = "studioEnvironment";
+
+      // 1. Seamless Studio Cyclorama (Infinity Cove Backdrop)
+      const cycGeo = createStudioCycGeometry(96, 46, 50, 16, -19.05);
+      const cycMat = new THREE.MeshStandardMaterial({
+        color: 0x0b0e14,
+        roughness: 0.90,
+        metalness: 0.05,
+        side: THREE.DoubleSide
+      });
+      const cycMesh = new THREE.Mesh(cycGeo, cycMat);
+      cycMesh.receiveShadow = true;
+      studioGroup.add(cycMesh);
+
+      // 2. Optical Motion Capture Stage Platform (Calibrated Circular Stage)
+      const stageGeo = new THREE.CylinderGeometry(28, 28.5, 0.30, 64);
+      const stageMat = new THREE.MeshStandardMaterial({
+        color: 0x121620,
+        roughness: 0.52,
+        metalness: 0.22
+      });
+      const stageMesh = new THREE.Mesh(stageGeo, stageMat);
+      stageMesh.position.y = -19.15;
+      stageMesh.receiveShadow = true;
+      studioGroup.add(stageMesh);
+
+      // Precision Optical Calibration Rings on Stage Floor
+      const ringMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.22, side: THREE.DoubleSide });
+      const ringGlowMat = new THREE.MeshBasicMaterial({ color: 0x0ea5e9, transparent: true, opacity: 0.55, side: THREE.DoubleSide });
+
+      [10, 20].forEach(r => {
+        const ringGeo = new THREE.RingGeometry(r - 0.08, r + 0.08, 64);
+        const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+        ringMesh.rotation.x = -Math.PI / 2;
+        ringMesh.position.y = -18.98;
+        studioGroup.add(ringMesh);
+      });
+
+      // Perimeter Stage Glowing Boundary Ring
+      const boundGeo = new THREE.RingGeometry(27.85, 28.15, 64);
+      const boundMesh = new THREE.Mesh(boundGeo, ringGlowMat);
+      boundMesh.rotation.x = -Math.PI / 2;
+      boundMesh.position.y = -18.98;
+      studioGroup.add(boundMesh);
+
+      // Calibrated Metric Crosshairs (X and Z axis reference vectors)
+      const axisMat = new THREE.LineBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.18 });
+      const axisGeoX = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-27, -18.97, 0), new THREE.Vector3(27, -18.97, 0)]);
+      const axisGeoZ = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, -18.97, -27), new THREE.Vector3(0, -18.97, 27)]);
+      studioGroup.add(new THREE.Line(axisGeoX, axisMat));
+      studioGroup.add(new THREE.Line(axisGeoZ, axisMat));
+
+      // Forward Orientation Arrow (Pointing at Interlocutor +Z)
+      const arrowShape = new THREE.Shape();
+      arrowShape.moveTo(0, 1.2);
+      arrowShape.lineTo(0.7, -0.6);
+      arrowShape.lineTo(0.2, -0.4);
+      arrowShape.lineTo(0.2, -1.2);
+      arrowShape.lineTo(-0.2, -1.2);
+      arrowShape.lineTo(-0.2, -0.4);
+      arrowShape.lineTo(-0.7, -0.6);
+      arrowShape.closePath();
+      const arrowGeo = new THREE.ShapeGeometry(arrowShape);
+      const arrowMesh = new THREE.Mesh(arrowGeo, new THREE.MeshBasicMaterial({ color: 0x0ea5e9, transparent: true, opacity: 0.45, side: THREE.DoubleSide }));
+      arrowMesh.rotation.x = -Math.PI / 2;
+      arrowMesh.position.set(0, -18.96, 24.5);
+      studioGroup.add(arrowMesh);
+
+      // 3. Overhead Soundstage Lighting Softbox Gantry (At Ceiling y=35)
+      const gantry = new THREE.Group();
+      gantry.position.set(0, 35, 4);
+
+      const gantryFrameGeo = new THREE.BoxGeometry(32, 1.0, 22);
+      const gantryFrameMat = new THREE.MeshStandardMaterial({ color: 0x1e2430, roughness: 0.35, metalness: 0.85 });
+      const gantryFrame = new THREE.Mesh(gantryFrameGeo, gantryFrameMat);
+      gantry.add(gantryFrame);
+
+      [-7, 7].forEach(offsetZ => {
+        const diffuserGeo = new THREE.BoxGeometry(28, 0.4, 6.5);
+        const diffuserMat = new THREE.MeshStandardMaterial({
+          color: 0xffffff,
+          emissive: 0xfff7ed,
+          emissiveIntensity: 0.70,
+          roughness: 0.2,
+          metalness: 0.1
+        });
+        const diffuser = new THREE.Mesh(diffuserGeo, diffuserMat);
+        diffuser.position.set(0, -0.4, offsetZ);
+        gantry.add(diffuser);
+      });
+
+      const cableMat = new THREE.LineBasicMaterial({ color: 0x475569, transparent: true, opacity: 0.5 });
+      [[-15, -10], [15, -10], [-15, 10], [15, 10]].forEach(([cx, cz]) => {
+        const cableGeo = new THREE.BufferGeometry().setFromPoints([
+          new THREE.Vector3(cx, 0, cz),
+          new THREE.Vector3(cx * 1.15, 45, cz * 1.15)
+        ]);
+        gantry.add(new THREE.Line(cableGeo, cableMat));
+      });
+      studioGroup.add(gantry);
+
+      // 4. Perimeter Optical Motion Capture Sensor Monoliths (The Lab Story)
+      const sensorPositions = [
+        [-30, -19.0, -15],
+        [30, -19.0, -15],
+        [-30, -19.0, 18],
+        [30, -19.0, 18]
+      ];
+
+      const columnGeo = new THREE.CylinderGeometry(0.35, 0.45, 26, 12);
+      const columnMat = new THREE.MeshStandardMaterial({ color: 0x1f2430, roughness: 0.6, metalness: 0.35 });
+      const camHeadGeo = new THREE.BoxGeometry(1.8, 1.3, 2.5);
+      const camHeadMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.3, metalness: 0.8 });
+      const ledGeo = new THREE.RingGeometry(0.35, 0.60, 16);
+
+      sensorPositions.forEach(sp => {
+        const sensorNode = new THREE.Group();
+        sensorNode.position.set(sp[0], sp[1] + 13, sp[2]);
+
+        const column = new THREE.Mesh(columnGeo, columnMat);
+        column.castShadow = true;
+        sensorNode.add(column);
+
+        const headGroup = new THREE.Group();
+        headGroup.position.set(0, 13, 0);
+        headGroup.lookAt(0, 8, 2);
+
+        const camHead = new THREE.Mesh(camHeadGeo, camHeadMat);
+        camHead.castShadow = true;
+        headGroup.add(camHead);
+
+        const ledMat = new THREE.MeshBasicMaterial({ color: 0x10b981, side: THREE.DoubleSide, transparent: true, opacity: 0.85 });
+        _sensorLeds.push(ledMat);
+        const ledRing = new THREE.Mesh(ledGeo, ledMat);
+        ledRing.position.set(0, 0, 1.26);
+        headGroup.add(ledRing);
+
+        sensorNode.add(headGroup);
+        studioGroup.add(sensorNode);
+      });
+
+      scene.add(studioGroup);
+      return studioGroup;
+    }
+    const studioEnvironment = buildStudioEnvironment(scene);
+
+    // =========================================================================
+    // HIGH-DYNAMIC-RANGE STUDIO & WORLD SUN LIGHTING RIG
+    // =========================================================================
+    const StudioLighting = {
+      sunLight: null,
+      hemiLight: null,
+      spotLight: null,
+      spotTarget: null,
+      rimUpper: null,
+      rimSide: null,
+      fillLight: null,
+      activePreset: 'sun',
+
+      init(scene) {
+        // 1. Natural Sun (Key Directional Light with Soft High-Resolution Shadows)
+        this.sunLight = new THREE.DirectionalLight(0xfff7ea, 1.45);
+        this.sunLight.position.set(24, 38, 28);
+        this.sunLight.castShadow = true;
+        this.sunLight.shadow.mapSize.width = 2048;
+        this.sunLight.shadow.mapSize.height = 2048;
+        this.sunLight.shadow.camera.near = 10;
+        this.sunLight.shadow.camera.far = 95;
+        this.sunLight.shadow.camera.left = -30;
+        this.sunLight.shadow.camera.right = 30;
+        this.sunLight.shadow.camera.top = 30;
+        this.sunLight.shadow.camera.bottom = -24;
+        this.sunLight.shadow.bias = -0.0004;
+        this.sunLight.shadow.radius = 2.2;
+        scene.add(this.sunLight);
+
+        // 2. Atmospheric Sky & Ground Bounce (Hemisphere Dome Illumination)
+        this.hemiLight = new THREE.HemisphereLight(0xdbeafe, 0x1e293b, 0.60);
+        this.hemiLight.position.set(0, 40, 0);
+        scene.add(this.hemiLight);
+
+        // 3. Focused Studio Key Spotlight (Surgical / Articulatory Clarity on Hands)
+        this.spotLight = new THREE.SpotLight(0xffffff, 1.25, 90, Math.PI / 4.8, 0.45, 1.4);
+        this.spotLight.position.set(5.0, 32.0, 32.0);
+        this.spotTarget = new THREE.Object3D();
+        this.spotTarget.position.set(3.5, 6.0, 4.0);
+        scene.add(this.spotTarget);
+        this.spotLight.target = this.spotTarget;
+        this.spotLight.castShadow = true;
+        this.spotLight.shadow.mapSize.width = 1024;
+        this.spotLight.shadow.mapSize.height = 1024;
+        this.spotLight.shadow.bias = -0.0003;
+        this.spotLight.shadow.radius = 1.8;
+        scene.add(this.spotLight);
+
+        // 4. Dual Studio Rim / Backlights (Cinematic Edge Separation & Silhouette Definition)
+        this.rimUpper = new THREE.DirectionalLight(0xffedd5, 0.85);
+        this.rimUpper.position.set(0, 26, -24);
+        scene.add(this.rimUpper);
+
+        this.rimSide = new THREE.DirectionalLight(0x38bdf8, 0.55);
+        this.rimSide.position.set(-22, 14, -18);
+        scene.add(this.rimSide);
+
+        // 5. Soft Lateral Shadow Fill
+        this.fillLight = new THREE.DirectionalLight(0x94a3b8, 0.35);
+        this.fillLight.position.set(-20, 10, 16);
+        scene.add(this.fillLight);
+      },
+
+      setPreset(preset) {
+        this.activePreset = preset;
+        if (preset === 'sun') {
+          this.sunLight.color.setHex(0xfff7ea);
+          this.sunLight.intensity = 1.50;
+          this.sunLight.position.set(24, 38, 28);
+          this.hemiLight.color.setHex(0xdbeafe);
+          this.hemiLight.groundColor.setHex(0x1e293b);
+          this.hemiLight.intensity = 0.65;
+          this.spotLight.color.setHex(0xfffaf0);
+          this.spotLight.intensity = 0.90;
+          this.rimUpper.color.setHex(0xffedd5);
+          this.rimUpper.intensity = 0.70;
+          this.rimSide.color.setHex(0x7dd3fc);
+          this.rimSide.intensity = 0.40;
+          this.fillLight.color.setHex(0x94a3b8);
+          this.fillLight.intensity = 0.35;
+          scene.background.setHex(0x0e1117);
+        } else if (preset === 'studio') {
+          this.sunLight.color.setHex(0xffffff);
+          this.sunLight.intensity = 1.10;
+          this.sunLight.position.set(18, 30, 24);
+          this.hemiLight.color.setHex(0x94a3b8);
+          this.hemiLight.groundColor.setHex(0x0f172a);
+          this.hemiLight.intensity = 0.40;
+          this.spotLight.color.setHex(0xffffff);
+          this.spotLight.intensity = 1.65;
+          this.rimUpper.color.setHex(0xffeedd);
+          this.rimUpper.intensity = 1.05;
+          this.rimSide.color.setHex(0x38bdf8);
+          this.rimSide.intensity = 0.75;
+          this.fillLight.color.setHex(0x64748b);
+          this.fillLight.intensity = 0.25;
+          scene.background.setHex(0x090b10);
+        } else if (preset === 'clinical') {
+          this.sunLight.color.setHex(0xf8fafc);
+          this.sunLight.intensity = 1.25;
+          this.sunLight.position.set(15, 34, 25);
+          this.hemiLight.color.setHex(0xf1f5f9);
+          this.hemiLight.groundColor.setHex(0x334155);
+          this.hemiLight.intensity = 0.85;
+          this.spotLight.color.setHex(0xffffff);
+          this.spotLight.intensity = 1.15;
+          this.rimUpper.color.setHex(0xe2e8f0);
+          this.rimUpper.intensity = 0.55;
+          this.rimSide.color.setHex(0x38bdf8);
+          this.rimSide.intensity = 0.45;
+          this.fillLight.color.setHex(0x94a3b8);
+          this.fillLight.intensity = 0.50;
+          scene.background.setHex(0x101520);
+        } else if (preset === 'stealth') {
+          this.sunLight.color.setHex(0x38bdf8);
+          this.sunLight.intensity = 0.60;
+          this.sunLight.position.set(20, 28, 20);
+          this.hemiLight.color.setHex(0x0284c7);
+          this.hemiLight.groundColor.setHex(0x020617);
+          this.hemiLight.intensity = 0.30;
+          this.spotLight.color.setHex(0x0ea5e9);
+          this.spotLight.intensity = 1.30;
+          this.rimUpper.color.setHex(0x38bdf8);
+          this.rimUpper.intensity = 1.25;
+          this.rimSide.color.setHex(0x06b6d4);
+          this.rimSide.intensity = 0.95;
+          this.fillLight.color.setHex(0x0f172a);
+          this.fillLight.intensity = 0.15;
+          scene.background.setHex(0x06080d);
+        }
+
+        document.querySelectorAll('.btn-lighting-preset').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.preset === preset);
+        });
+      }
+    };
+    StudioLighting.init(scene);
+    window.StudioLighting = StudioLighting;
 
     // ------------------------------------------------------------------------
     // ANATOMICAL MUSCULOSKELETAL AVATAR RIG & 2-BONE ARM LIMBS (NO WIREFRAME)
@@ -3768,6 +4105,8 @@ const AIRPORT_LEXICON_30 = [
       craniumGeo.scale(0.98, 1.22, 1.05);
       const craniumMesh = new THREE.Mesh(craniumGeo, silhouetteMat);
       craniumMesh.position.set(0.2, 19.5, -0.2);
+      craniumMesh.castShadow = true;
+      craniumMesh.receiveShadow = true;
       craniumMesh.raycast = () => {};
       group.add(craniumMesh);
 
@@ -3777,6 +4116,8 @@ const AIRPORT_LEXICON_30 = [
       const mandibleMesh = new THREE.Mesh(mandibleGeo, silhouetteMat);
       mandibleMesh.position.set(0.3, 15.5, 0.9);
       mandibleMesh.rotation.x = -0.15;
+      mandibleMesh.castShadow = true;
+      mandibleMesh.receiveShadow = true;
       mandibleMesh.raycast = () => {};
       group.add(mandibleMesh);
 
@@ -3786,6 +4127,8 @@ const AIRPORT_LEXICON_30 = [
         cheekGeo.scale(1.2, 0.9, 0.8);
         const cheekMesh = new THREE.Mesh(cheekGeo, silhouetteMat);
         cheekMesh.position.set(0.2 + side * 3.6, 16.5, 2.2);
+        cheekMesh.castShadow = true;
+        cheekMesh.receiveShadow = true;
         cheekMesh.raycast = () => {};
         group.add(cheekMesh);
       });
@@ -3795,6 +4138,8 @@ const AIRPORT_LEXICON_30 = [
       neckGeo.scale(0.95, 1.0, 0.92);
       const neckMesh = new THREE.Mesh(neckGeo, silhouetteMat);
       neckMesh.position.set(0.2, 12.0, -0.4);
+      neckMesh.castShadow = true;
+      neckMesh.receiveShadow = true;
       neckMesh.raycast = () => {};
       group.add(neckMesh);
 
@@ -3807,6 +4152,8 @@ const AIRPORT_LEXICON_30 = [
         ]);
         const clavicleGeo = new THREE.TubeGeometry(clavicleCurve, 20, 0.72, 12, false);
         const clavicleMesh = new THREE.Mesh(clavicleGeo, silhouetteBoneMat);
+        clavicleMesh.castShadow = true;
+        clavicleMesh.receiveShadow = true;
         clavicleMesh.raycast = () => {};
         group.add(clavicleMesh);
 
@@ -3815,6 +4162,8 @@ const AIRPORT_LEXICON_30 = [
         deltoidGeo.scale(1.0, 1.2, 1.05);
         const deltoidMesh = new THREE.Mesh(deltoidGeo, silhouetteMat);
         deltoidMesh.position.set(side * 15.5, 9.5, 0.0);
+        deltoidMesh.castShadow = true;
+        deltoidMesh.receiveShadow = true;
         deltoidMesh.raycast = () => {};
         group.add(deltoidMesh);
       });
@@ -3824,6 +4173,8 @@ const AIRPORT_LEXICON_30 = [
       sternumGeo.scale(1.3, 1.0, 0.45);
       const sternumMesh = new THREE.Mesh(sternumGeo, silhouetteBoneMat);
       sternumMesh.position.set(0.2, 5.8, 1.3);
+      sternumMesh.castShadow = true;
+      sternumMesh.receiveShadow = true;
       sternumMesh.raycast = () => {};
       group.add(sternumMesh);
 
@@ -3832,6 +4183,8 @@ const AIRPORT_LEXICON_30 = [
       thoraxGeo.scale(1.0, 1.0, 0.50);
       const thoraxMesh = new THREE.Mesh(thoraxGeo, silhouetteMat);
       thoraxMesh.position.set(0.0, 4.5, -0.6);
+      thoraxMesh.castShadow = true;
+      thoraxMesh.receiveShadow = true;
       thoraxMesh.raycast = () => {};
       group.add(thoraxMesh);
 
@@ -3840,6 +4193,8 @@ const AIRPORT_LEXICON_30 = [
       abdomenGeo.scale(1.0, 1.0, 0.48);
       const abdomenMesh = new THREE.Mesh(abdomenGeo, silhouetteMat);
       abdomenMesh.position.set(0.0, -10.25, -0.8);
+      abdomenMesh.castShadow = true;
+      abdomenMesh.receiveShadow = true;
       abdomenMesh.raycast = () => {};
       group.add(abdomenMesh);
     }
@@ -6179,6 +6534,14 @@ const AIRPORT_LEXICON_30 = [
 
       const dt = 0.016;
       signMotionClock += dt;
+
+      // Subtle pulse of motion capture optical tracking LEDs
+      if (window._sensorLeds && window._sensorLeds.length) {
+        const pulse = 0.60 + Math.sin(signMotionClock * 3.5) * 0.30;
+        for (let i = 0; i < window._sensorLeds.length; i++) {
+          window._sensorLeds[i].opacity = pulse;
+        }
+      }
 
       // Advance Single-Shot Signing Stroke Clock (Moves only once per click)
       if (isPlayingSignMotion && (currentMainTab === 'generator' || currentMainTab === 'words' || currentMainTab === 'lexicons')) {
