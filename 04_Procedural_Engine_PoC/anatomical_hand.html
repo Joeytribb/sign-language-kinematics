@@ -402,6 +402,42 @@
       box-shadow: 0 0 10px rgba(14, 165, 233, 0.35);
     }
 
+    /* PROTOTYPE EXPRESSION / HUMANIZATION NOTE */
+    .viewport-prototype-note {
+      position: absolute;
+      left: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(20, 21, 25, 0.88);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(14, 165, 233, 0.25);
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      line-height: 1.35;
+      color: #94a3b8;
+      z-index: 20;
+      max-width: 440px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      pointer-events: auto;
+    }
+    .prototype-note-tag {
+      background: rgba(14, 165, 233, 0.16);
+      color: #38bdf8;
+      border: 1px solid rgba(14, 165, 233, 0.4);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: 700;
+      font-size: 8px;
+      letter-spacing: 0.6px;
+      white-space: nowrap;
+    }
+    .prototype-note-msg {
+      color: #cbd5e1;
+    }
+
     /* BIOMECHANICAL HUD OVERLAY */
     #biomechanical-hud {
       position: absolute;
@@ -1021,6 +1057,12 @@
         <button class="view-cam-btn btn-emotion-preset" data-emotion="question" onclick="StickmanEmotionEngine.setEmotion('question')" title="Inquisitive Furrowed Brow (ASL WH-Grammar)">🤔 QUESTION</button>
         <button class="view-cam-btn btn-emotion-preset" data-emotion="neutral" onclick="StickmanEmotionEngine.setEmotion('neutral')" title="Attentive Minimalist (Left Figure)">😐 NEUTRAL</button>
         <button class="view-cam-btn btn-emotion-preset" data-emotion="wink" onclick="StickmanEmotionEngine.setEmotion('wink')" title="Playful Wink Affirmation">😉 WINK</button>
+      </div>
+
+      <!-- Humanization / Prototype Testing Note -->
+      <div class="viewport-prototype-note" style="top: 104px;">
+        <span class="prototype-note-tag">PROTOTYPE NOTE</span>
+        <span class="prototype-note-msg">Facial expressions are test placeholders to humanize the stick figure model. Final production system integrates photorealistic human digital twins with FACS micro-expressions.</span>
       </div>
 
       <!-- Biomechanical Telemetry HUD -->
@@ -4112,7 +4154,8 @@ const AIRPORT_LEXICON_30 = [
 
     // =========================================================================
     // DYNAMIC 3D STICKMAN FACIAL EMOTION & NON-MANUAL SIGNALS (NMS) ENGINE
-    // Procedural Cartoon Expression Engine: Happy Teeth Grin, Surprised 'O', Inquisitive & Eye Blinking
+    // NOTE: Exploratory testing / humanization prototype for stick figure mannequin.
+    // Production release utilizes photorealistic human digital twins with FACS micro-expressions.
     // =========================================================================
     const StickmanEmotionEngine = {
       canvas: null,
