@@ -368,27 +368,73 @@
     }
     #canvas-container:active { cursor: grabbing; }
 
-    /* VIEWPORT CORNER TOOLS */
-    .viewport-overlay-cluster {
+    /* COMPACT VIEWPORT CONTROL DOCKS */
+    .viewport-compact-dock {
       position: absolute;
-      top: 14px;
-      left: 16px;
       display: flex;
-      gap: 4px;
+      align-items: center;
+      gap: 5px;
+      background: rgba(18, 19, 23, 0.84);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 5px;
+      padding: 3px 6px;
       z-index: 20;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+    .dock-group {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .dock-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      color: var(--text-dim);
+      margin-right: 2px;
+      letter-spacing: 0.5px;
+    }
+    .dock-divider {
+      width: 1px;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.12);
+      margin: 0 3px;
+    }
+    .dock-prototype-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      cursor: help;
+    }
+    .dock-prototype-badge .proto-tag {
+      background: rgba(14, 165, 233, 0.18);
+      color: #38bdf8;
+      border: 1px solid rgba(14, 165, 233, 0.35);
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-weight: 700;
+      font-size: 7.5px;
+    }
+    .dock-prototype-badge .proto-txt {
+      color: #94a3b8;
+      font-size: 8px;
+      white-space: nowrap;
     }
     .view-cam-btn {
-      background: rgba(20, 21, 25, 0.85);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border-subtle);
+      background: rgba(25, 27, 32, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       color: var(--text-muted);
       font-family: var(--font-mono);
-      font-size: 9.5px;
+      font-size: 8.5px;
       font-weight: 600;
-      padding: 4px 8px;
-      border-radius: 4px;
+      padding: 2.5px 6px;
+      border-radius: 3.5px;
       cursor: pointer;
       transition: all 0.15s;
+      white-space: nowrap;
     }
     .view-cam-btn:hover, .view-cam-btn.active {
       color: var(--bone-white);
@@ -400,42 +446,6 @@
       border-color: #0ea5e9 !important;
       background: rgba(14, 165, 233, 0.18) !important;
       box-shadow: 0 0 10px rgba(14, 165, 233, 0.35);
-    }
-
-    /* PROTOTYPE EXPRESSION / HUMANIZATION NOTE */
-    .viewport-prototype-note {
-      position: absolute;
-      left: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(20, 21, 25, 0.88);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(14, 165, 233, 0.25);
-      border-radius: 5px;
-      padding: 5px 10px;
-      font-family: var(--font-mono);
-      font-size: 9px;
-      line-height: 1.35;
-      color: #94a3b8;
-      z-index: 20;
-      max-width: 440px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-      pointer-events: auto;
-    }
-    .prototype-note-tag {
-      background: rgba(14, 165, 233, 0.16);
-      color: #38bdf8;
-      border: 1px solid rgba(14, 165, 233, 0.4);
-      padding: 2px 6px;
-      border-radius: 3px;
-      font-weight: 700;
-      font-size: 8px;
-      letter-spacing: 0.6px;
-      white-space: nowrap;
-    }
-    .prototype-note-msg {
-      color: #cbd5e1;
     }
 
     /* BIOMECHANICAL HUD OVERLAY */
@@ -1033,36 +1043,40 @@
       <div id="canvas-container"></div>
       <div id="gizmo-container"></div>
 
-      <!-- Camera Presets -->
-      <div class="viewport-overlay-cluster">
-        <button class="view-cam-btn active" data-cam="front" onclick="LexiconWorkbench.setCameraPreset('front')">FRONT (1)</button>
-        <button class="view-cam-btn" data-cam="iso" onclick="LexiconWorkbench.setCameraPreset('iso')">3/4 ISO (2)</button>
-        <button class="view-cam-btn" data-cam="profile" onclick="LexiconWorkbench.setCameraPreset('profile')">PROFILE (3)</button>
-        <button class="view-cam-btn" data-cam="top" onclick="LexiconWorkbench.setCameraPreset('top')">TOP (4)</button>
-        <button class="view-cam-btn" data-cam="reset" onclick="LexiconWorkbench.setCameraPreset('reset')">RESET (0)</button>
+      <!-- Compact Top Viewport Control Dock -->
+      <div class="viewport-compact-dock" style="top: 10px; left: 14px;">
+        <div class="dock-group">
+          <span class="dock-label">CAM</span>
+          <button class="view-cam-btn active" data-cam="front" onclick="LexiconWorkbench.setCameraPreset('front')">FRONT</button>
+          <button class="view-cam-btn" data-cam="iso" onclick="LexiconWorkbench.setCameraPreset('iso')">ISO</button>
+          <button class="view-cam-btn" data-cam="profile" onclick="LexiconWorkbench.setCameraPreset('profile')">PROFILE</button>
+          <button class="view-cam-btn" data-cam="top" onclick="LexiconWorkbench.setCameraPreset('top')">TOP</button>
+          <button class="view-cam-btn" data-cam="reset" onclick="LexiconWorkbench.setCameraPreset('reset')" title="Reset Camera (0)">↺</button>
+        </div>
+        <div class="dock-divider"></div>
+        <div class="dock-group">
+          <span class="dock-label">LIGHT</span>
+          <button class="view-cam-btn btn-lighting-preset active" data-preset="sun" onclick="StudioLighting.setPreset('sun')" title="World Sunlight">☀️ SUN</button>
+          <button class="view-cam-btn btn-lighting-preset" data-preset="studio" onclick="StudioLighting.setPreset('studio')" title="Studio Key/Rim">🎬 STUDIO</button>
+          <button class="view-cam-btn btn-lighting-preset" data-preset="clinical" onclick="StudioLighting.setPreset('clinical')" title="Clinical Lab">🔬 CLINICAL</button>
+          <button class="view-cam-btn btn-lighting-preset" data-preset="stealth" onclick="StudioLighting.setPreset('stealth')" title="Stealth Soundstage">🌌 STEALTH</button>
+        </div>
       </div>
 
-      <!-- Studio Lighting Presets -->
-      <div class="viewport-overlay-cluster" style="top: 44px;">
-        <button class="view-cam-btn btn-lighting-preset active" data-preset="sun" onclick="StudioLighting.setPreset('sun')" title="World Sunlight + Sky Atmosphere">☀️ SUN</button>
-        <button class="view-cam-btn btn-lighting-preset" data-preset="studio" onclick="StudioLighting.setPreset('studio')" title="Focused Key/Rim Studio">🎬 STUDIO</button>
-        <button class="view-cam-btn btn-lighting-preset" data-preset="clinical" onclick="StudioLighting.setPreset('clinical')" title="High-Clarity Surgical Laboratory">🔬 CLINICAL</button>
-        <button class="view-cam-btn btn-lighting-preset" data-preset="stealth" onclick="StudioLighting.setPreset('stealth')" title="Moody Digital Twin Soundstage">🌌 STEALTH</button>
-      </div>
-
-      <!-- Facial Non-Manual Signals (NMS) & Emotion Presets -->
-      <div class="viewport-overlay-cluster" style="top: 74px;">
-        <button class="view-cam-btn btn-emotion-preset active" data-emotion="happy" onclick="StickmanEmotionEngine.setEmotion('happy')" title="Happy Grin with Teeth Grid (Celebration / Center Figure)">😄 HAPPY</button>
-        <button class="view-cam-btn btn-emotion-preset" data-emotion="surprised" onclick="StickmanEmotionEngine.setEmotion('surprised')" title="Surprised Open 'O' Mouth (Right Figure)">😮 SURPRISED</button>
-        <button class="view-cam-btn btn-emotion-preset" data-emotion="question" onclick="StickmanEmotionEngine.setEmotion('question')" title="Inquisitive Furrowed Brow (ASL WH-Grammar)">🤔 QUESTION</button>
-        <button class="view-cam-btn btn-emotion-preset" data-emotion="neutral" onclick="StickmanEmotionEngine.setEmotion('neutral')" title="Attentive Minimalist (Left Figure)">😐 NEUTRAL</button>
-        <button class="view-cam-btn btn-emotion-preset" data-emotion="wink" onclick="StickmanEmotionEngine.setEmotion('wink')" title="Playful Wink Affirmation">😉 WINK</button>
-      </div>
-
-      <!-- Humanization / Prototype Testing Note -->
-      <div class="viewport-prototype-note" style="top: 104px;">
-        <span class="prototype-note-tag">PROTOTYPE NOTE</span>
-        <span class="prototype-note-msg">Facial expressions are test placeholders to humanize the stick figure model. Final production system integrates photorealistic human digital twins with FACS micro-expressions.</span>
+      <div class="viewport-compact-dock" style="top: 38px; left: 14px;">
+        <div class="dock-group">
+          <span class="dock-label">EXPR</span>
+          <button class="view-cam-btn btn-emotion-preset active" data-emotion="happy" onclick="StickmanEmotionEngine.setEmotion('happy')" title="Happy Grin (Celebration / Center Figure)">😄 HAPPY</button>
+          <button class="view-cam-btn btn-emotion-preset" data-emotion="surprised" onclick="StickmanEmotionEngine.setEmotion('surprised')" title="Surprised 'O' (Right Figure)">😮 SURPRISED</button>
+          <button class="view-cam-btn btn-emotion-preset" data-emotion="question" onclick="StickmanEmotionEngine.setEmotion('question')" title="Inquisitive Brow (WH-Grammar)">🤔 QUESTION</button>
+          <button class="view-cam-btn btn-emotion-preset" data-emotion="neutral" onclick="StickmanEmotionEngine.setEmotion('neutral')" title="Neutral (Left Figure)">😐 NEUTRAL</button>
+          <button class="view-cam-btn btn-emotion-preset" data-emotion="wink" onclick="StickmanEmotionEngine.setEmotion('wink')" title="Wink Affirmation">😉 WINK</button>
+        </div>
+        <div class="dock-divider"></div>
+        <div class="dock-prototype-badge" title="Facial expressions are test placeholders to humanize the stick figure model. Final production system integrates photorealistic human digital twins with FACS micro-expressions.">
+          <span class="proto-tag">NOTE</span>
+          <span class="proto-txt">Stickman test expressions · Final: Photoreal human</span>
+        </div>
       </div>
 
       <!-- Biomechanical Telemetry HUD -->
@@ -1334,7 +1348,7 @@
     ];
     
     const LIM_F = {
-      mcp_f: [-10*deg2rad, 90*deg2rad], mcp_a: [-15*deg2rad, 15*deg2rad],
+      mcp_f: [-10*deg2rad, 90*deg2rad], mcp_a: [-34*deg2rad, 34*deg2rad],
       pip_f: [  0*deg2rad, 100*deg2rad], dip_f: [  0*deg2rad, 80*deg2rad],
       rest: { f: 10*deg2rad, a: 0 }
     };
@@ -1358,11 +1372,13 @@
       NATURAL_REST_MID: { f1: 22, a1: 0, f2: 32, f3: 20, desc: "Natural relaxed cascade curl" },
       NATURAL_REST_RNG: { f1: 28, a1: -4, f2: 44, f3: 28, desc: "Natural relaxed cascade curl" },
       NATURAL_REST_PNK: { f1: 34, a1: -8, f2: 54, f3: 34, desc: "Natural relaxed cascade curl" },
-      EXTENDED_SPREAD_L: { f1: 2, a1: 14, f2: 6, f3: 4, desc: "Extended abducted lateral" },
-      EXTENDED_SPREAD_R: { f1: 2, a1: -14, f2: 6, f3: 4, desc: "Extended abducted medial" },
-      EXTENDED_FORWARD: { f1: 65, a1: 0, f2: 0, f3: 0, desc: "Pointing forward (MCP 65°)" },
-      POINTING_DOWN: { f1: 90, a1: 0, f2: 90, f3: 0, desc: "Pointing straight down" },
-      CROSSED_R: { f1: 10, a1: -16, f2: 0, f3: 0, desc: "Crossed over neighbor finger with anterior clearance" },
+      EXTENDED_SPREAD_L: { f1: 2, a1: 22, f2: 4, f3: 2, desc: "Extended abducted lateral (+22° wide flare)" },
+      EXTENDED_SPREAD_R: { f1: 2, a1: -22, f2: 4, f3: 2, desc: "Extended abducted medial (-22° wide flare)" },
+      EXTENDED_FLARE_WIDE_L: { f1: 2, a1: 28, f2: 4, f3: 2, desc: "Extended wide flare lateral (+28°)" },
+      EXTENDED_FLARE_WIDE_R: { f1: 2, a1: -28, f2: 4, f3: 2, desc: "Extended wide flare medial (-28°)" },
+      CROSSED_IDX_UNDER: { f1: 6, a1: -12, f2: 2, f3: 2, desc: "Index finger straight passing posteriorly under middle" },
+      CROSSED_MID_OVER: { f1: -4, a1: 28, f2: 6, f3: 4, desc: "Middle finger crossing anteriorly over index finger in authentic ASL R" },
+      CROSSED_R: { f1: 6, a1: -12, f2: 2, f3: 2, desc: "Index under crossed middle (R)" },
       CLOSED: { f1: 90, a1: 0, f2: 90, f3: 80, desc: "Full fist closed" },
       CLOSED_OVER_THUMB: { f1: 85, a1: 0, f2: 75, f3: 50, desc: "Closed over tucked thumb" },
       CURVED: { f1: 45, a1: 0, f2: 45, f3: 45, desc: "C-shape curved arc" },
@@ -1380,9 +1396,9 @@
       THM_FLAT_PALM: { f1: 0, a1: -70, f2: 60, f3: 60, desc: "Flat across lower palm" },
       THM_OUT: { f1: -50, a1: -30, f2: 0, f3: 0, desc: "Extended 90° outward" },
       THM_OUT_SPREAD: { f1: -65, a1: -30, f2: 0, f3: 0, desc: "Wide outward spread" },
-      THM_TUCK_T: { f1: -30, a1: -65, f2: 25, f3: 75, desc: "Tucked inside palm, poked between index and middle" },
-      THM_TUCK_N: { f1: 10, a1: -60, f2: 25, f3: 55, desc: "Tucked inside palm, poked between middle and ring" },
-      THM_TUCK_M: { f1: 45, a1: -50, f2: 20, f3: 20, desc: "Tucked inside palm, poked between ring and pinky" },
+      THM_TUCK_T: { f1: -22, a1: -76, f2: 18, f3: 18, desc: "Tucked inside palm, pushed firmly through index-middle cleft" },
+      THM_TUCK_N: { f1: 16, a1: -74, f2: 18, f3: 15, desc: "Tucked inside palm, pushed firmly through middle-ring cleft" },
+      THM_TUCK_M: { f1: 46, a1: -68, f2: 16, f3: 12, desc: "Tucked inside palm, pushed firmly through ring-pinky cleft" },
       THM_PINCH_INDEX: { f1: -40, a1: -45, f2: 50, f3: 70, desc: "Pinching index fingertip" },
       THM_PINCH_MID: { f1: -25, a1: -45, f2: 50, f3: 70, desc: "Touching middle fingertip" },
       THM_CURVED: { f1: -30, a1: -40, f2: 40, f3: 40, desc: "C-shape opposing curve" },
@@ -1434,11 +1450,14 @@
           let flex = s.flexion;
           if(s.spread && flex === "EXTENDED") {
             if(f === "idx") flex = "EXTENDED_SPREAD_L";
-            else if(f === "pnk") flex = "EXTENDED_SPREAD_R";
+            else if(f === "pnk") flex = "EXTENDED_FLARE_WIDE_R";
             else if(f === "mid" && s.selected.length === 2) flex = "EXTENDED_SPREAD_R"; 
             else if(f === "rng" && s.selected.length === 3) flex = "EXTENDED_SPREAD_R";
           }
-          if(flex === "CROSSED_R" && f === "mid") flex = "EXTENDED";
+          if(flex === "CROSSED_R") {
+            if(f === "idx") flex = "CROSSED_IDX_UNDER";
+            else if(f === "mid") flex = "CROSSED_MID_OVER";
+          }
           c[f] = flex;
         });
 
@@ -1952,12 +1971,12 @@ const AIRPORT_LEXICON_30 = [
         "1": { name: "1-Handshape", category: "Numeral / Deictic", tokens: { idx: "EXTENDED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index extended straight, other digits curled tightly, thumb wrapped across" },
         "curved_1": { name: "Curved 1 / Hook", category: "Modified Numeral", tokens: { idx: "HOOK_BENT", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index curled 90° at PIP joint, other digits closed" },
         "bent_1": { name: "Bent 1", category: "Modified Numeral", tokens: { idx: "HOOK_BENT", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index bent hook, thumb folded over" },
-        "v": { name: "V / 2-Handshape", category: "Alphabetic / Numeral", tokens: { idx: "EXTENDED_SPREAD_L", mid: "EXTENDED_SPREAD_R", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index and Middle extended in spread V, ring/pinky closed" },
+        "v": { name: "V / 2-Handshape", category: "Alphabetic / Numeral", tokens: { idx: "EXTENDED_SPREAD_L", mid: "EXTENDED_SPREAD_R", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index and Middle extended in wide spread V (+44° total opening), ring/pinky closed" },
         "bent_v": { name: "Bent V / Double Hook", category: "Modified Numeral", tokens: { idx: "HOOK_BENT", mid: "HOOK_BENT", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index and Middle bent at PIP joints in spread hooks" },
-        "3": { name: "3-Handshape", category: "Numeral", tokens: { idx: "EXTENDED_SPREAD_L", mid: "EXTENDED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_OUT_SPREAD" }, desc: "Thumb, Index, Middle extended spread; Ring and Pinky closed" },
+        "3": { name: "3-Handshape", category: "Numeral", tokens: { idx: "EXTENDED_SPREAD_L", mid: "EXTENDED_SPREAD_R", rng: "CLOSED", pnk: "CLOSED", thm: "THM_OUT_SPREAD" }, desc: "Thumb, Index, Middle extended wide spread; Ring and Pinky closed" },
         "curved_3": { name: "Curved 3", category: "Numeral", tokens: { idx: "CURVED", mid: "CURVED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_CURVED" }, desc: "Thumb, Index, Middle curved claws" },
-        "4": { name: "4-Handshape", category: "Numeral", tokens: { idx: "EXTENDED_SPREAD_L", mid: "EXTENDED", rng: "EXTENDED", pnk: "EXTENDED_SPREAD_R", thm: "THM_FLAT_PALM" }, desc: "Four fingers extended spread; thumb folded flat across palm" },
-        "5": { name: "5-Handshape (Open)", category: "Numeral / Open", tokens: { idx: "EXTENDED_SPREAD_L", mid: "EXTENDED", rng: "EXTENDED", pnk: "EXTENDED_SPREAD_R", thm: "THM_OUT_SPREAD" }, desc: "All 5 digits extended wide spread" },
+        "4": { name: "4-Handshape", category: "Numeral", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "EXTENDED_FLARE_WIDE_R", thm: "THM_FLAT_PALM" }, desc: "Four fingers extended wide spread; thumb folded flat across palm" },
+        "5": { name: "5-Handshape (Open)", category: "Numeral / Open", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "EXTENDED_FLARE_WIDE_R", thm: "THM_OUT_SPREAD" }, desc: "All 5 digits extended in wide dynamic flare" },
         "curved_5": { name: "Curved 5 / Claw", category: "Open Curved", tokens: { idx: "CURVED", mid: "CURVED", rng: "CURVED", pnk: "CURVED", thm: "THM_CURVED" }, desc: "All 5 digits curved claw like grasping a sphere" },
         "stacked_5": { name: "Stacked 5", category: "Open", tokens: { idx: "EXTENDED", mid: "EXTENDED", rng: "EXTENDED", pnk: "EXTENDED", thm: "THM_OPPOSE_O" }, desc: "All fingers extended together, thumb opposed" },
         "a": { name: "A-Handshape", category: "Fist / Alphabetic", tokens: { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_REST_SIDE" }, desc: "Closed fist with thumb resting vertically against index lateral side" },
@@ -1982,9 +2001,9 @@ const AIRPORT_LEXICON_30 = [
         "flat_o": { name: "Flat O / Baby O", category: "Pinched Flat", tokens: { idx: "HALF_BENT", mid: "HALF_BENT", rng: "HALF_BENT", pnk: "HALF_BENT", thm: "THM_OPPOSE_O" }, desc: "Fingers bent at MCP, flat pads touching thumb (duck bill)" },
         "p": { name: "P-Handshape", category: "Downward / Alphabetic", tokens: { idx: "EXTENDED_FORWARD", mid: "POINTING_DOWN", rng: "CLOSED", pnk: "CLOSED", thm: "THM_BETWEEN_INDEX_MID" }, desc: "K-shape oriented downward (Index forward, Middle pointing down)" },
         "q": { name: "Q-Handshape", category: "Downward / Alphabetic", tokens: { idx: "POINTING_DOWN", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_POINTING_DOWN" }, desc: "G-shape oriented downward (Index and thumb pointing down)" },
-        "r": { name: "R-Handshape", category: "Crossed / Alphabetic", tokens: { idx: "CROSSED_R", mid: "EXTENDED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_OVER" }, desc: "Index and Middle extended crossed over each other" },
+        "r": { name: "R-Handshape", category: "Crossed / Alphabetic", tokens: { idx: "CROSSED_IDX_UNDER", mid: "CROSSED_MID_OVER", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_OVER" }, desc: "Middle finger crossed anteriorly over index finger in authentic ASL R" },
         "u": { name: "U-Handshape", category: "Pair / Alphabetic", tokens: { idx: "EXTENDED", mid: "EXTENDED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_FLAT_PALM" }, desc: "Index and Middle extended together straight side-by-side" },
-        "w": { name: "W-Handshape", category: "Numeral / Alphabetic", tokens: { idx: "EXTENDED_SPREAD_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "CLOSED", thm: "THM_HOLD_PINKY" }, desc: "Index, Middle, Ring extended spread in W-shape; Pinky held by thumb" },
+        "w": { name: "W-Handshape", category: "Numeral / Alphabetic", tokens: { idx: "EXTENDED_SPREAD_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "CLOSED", thm: "THM_HOLD_PINKY" }, desc: "Index, Middle, Ring extended wide spread in trident W-shape; Pinky held by thumb" },
         "x": { name: "X-Handshape", category: "Hook / Alphabetic", tokens: { idx: "HOOK_BENT", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_REST_SIDE" }, desc: "Index curled into hook/crook; others closed" },
         "y": { name: "Y-Handshape", category: "Horns / Alphabetic", tokens: { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "EXTENDED_SPREAD_R", thm: "THM_OUT_SPREAD" }, desc: "Thumb and Pinky extended out wide; middle three fingers curled in fist" },
         "ily": { name: "ILY (I Love You)", category: "Combined", tokens: { idx: "EXTENDED_SPREAD_L", mid: "CLOSED", rng: "CLOSED", pnk: "EXTENDED_SPREAD_R", thm: "THM_OUT_SPREAD" }, desc: "Thumb, Index, and Pinky extended; Middle and Ring closed" },
@@ -5454,44 +5473,44 @@ const AIRPORT_LEXICON_30 = [
           muscleMono: new THREE.MeshStandardMaterial({ color: 0xc8daf0, roughness: 0.22, metalness: 0.08, transparent: true, opacity: 0.28, depthWrite: false }),
 
           // 2. Dual Biaxial (Dominant Right: Cyan / Non-Dominant Left: Coral Amber)
-          boneR: new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.32, metalness: 0.04 }),
-          jointR: new THREE.MeshStandardMaterial({ color: 0x0ea5e9, roughness: 0.28, metalness: 0.06 }),
-          muscleR: new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.18, metalness: 0.08, transparent: true, opacity: 0.28, depthWrite: false }),
+          boneR: new THREE.MeshStandardMaterial({ color: 0x00e5ff, roughness: 0.90, metalness: 0.0 }),
+          jointR: new THREE.MeshStandardMaterial({ color: 0x00b0ff, roughness: 0.88, metalness: 0.0 }),
+          muscleR: new THREE.MeshStandardMaterial({ color: 0x00e5ff, roughness: 0.12, metalness: 0.04, transparent: true, opacity: 0.16, depthWrite: false }),
 
-          boneL: new THREE.MeshStandardMaterial({ color: 0xfb923c, roughness: 0.32, metalness: 0.04 }),
-          jointL: new THREE.MeshStandardMaterial({ color: 0xf97316, roughness: 0.28, metalness: 0.06 }),
-          muscleL: new THREE.MeshStandardMaterial({ color: 0xfb923c, roughness: 0.18, metalness: 0.08, transparent: true, opacity: 0.28, depthWrite: false }),
+          boneL: new THREE.MeshStandardMaterial({ color: 0xff9100, roughness: 0.90, metalness: 0.0 }),
+          jointL: new THREE.MeshStandardMaterial({ color: 0xff6d00, roughness: 0.88, metalness: 0.0 }),
+          muscleL: new THREE.MeshStandardMaterial({ color: 0xff9100, roughness: 0.12, metalness: 0.04, transparent: true, opacity: 0.16, depthWrite: false }),
 
-          // 3. Multi-Finger Contrasting (Thumb=Amber, Index=Cyan, Middle=Purple, Ring=Green, Pinky=Rose)
+          // 3. Multi-Finger Bright Matte Clay Contrasting (Velvety finish, high saturation, crystal-clear glove)
           fingers: {
             thm: {
-              bone: new THREE.MeshStandardMaterial({ color: 0xfbbf24, roughness: 0.32, metalness: 0.04 }),
-              joint: new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.26, metalness: 0.06 }),
-              muscle: new THREE.MeshStandardMaterial({ color: 0xfde68a, roughness: 0.20, metalness: 0.06, transparent: true, opacity: 0.26, depthWrite: false })
+              bone: new THREE.MeshStandardMaterial({ color: 0xff9100, roughness: 0.90, metalness: 0.0 }), // Matte Clay Vibrant Amber Gold
+              joint: new THREE.MeshStandardMaterial({ color: 0xff6d00, roughness: 0.88, metalness: 0.0 }),
+              muscle: new THREE.MeshStandardMaterial({ color: 0xffe082, roughness: 0.10, metalness: 0.04, transparent: true, opacity: 0.10, depthWrite: false }) // crystal clear casing
             },
             idx: {
-              bone: new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.32, metalness: 0.04 }),
-              joint: new THREE.MeshStandardMaterial({ color: 0x0ea5e9, roughness: 0.26, metalness: 0.06 }),
-              muscle: new THREE.MeshStandardMaterial({ color: 0xbae6fd, roughness: 0.20, metalness: 0.06, transparent: true, opacity: 0.26, depthWrite: false })
+              bone: new THREE.MeshStandardMaterial({ color: 0x00e5ff, roughness: 0.90, metalness: 0.0 }), // Matte Clay Electric Cyan
+              joint: new THREE.MeshStandardMaterial({ color: 0x00b0ff, roughness: 0.88, metalness: 0.0 }),
+              muscle: new THREE.MeshStandardMaterial({ color: 0x80d8ff, roughness: 0.10, metalness: 0.04, transparent: true, opacity: 0.10, depthWrite: false })
             },
             mid: {
-              bone: new THREE.MeshStandardMaterial({ color: 0xc084fc, roughness: 0.32, metalness: 0.04 }),
-              joint: new THREE.MeshStandardMaterial({ color: 0xa855f7, roughness: 0.26, metalness: 0.06 }),
-              muscle: new THREE.MeshStandardMaterial({ color: 0xe9d5ff, roughness: 0.20, metalness: 0.06, transparent: true, opacity: 0.26, depthWrite: false })
+              bone: new THREE.MeshStandardMaterial({ color: 0xd500f9, roughness: 0.90, metalness: 0.0 }), // Matte Clay Amethyst Purple
+              joint: new THREE.MeshStandardMaterial({ color: 0xaa00ff, roughness: 0.88, metalness: 0.0 }),
+              muscle: new THREE.MeshStandardMaterial({ color: 0xea80fc, roughness: 0.10, metalness: 0.04, transparent: true, opacity: 0.10, depthWrite: false })
             },
             rng: {
-              bone: new THREE.MeshStandardMaterial({ color: 0x34d399, roughness: 0.32, metalness: 0.04 }),
-              joint: new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.26, metalness: 0.06 }),
-              muscle: new THREE.MeshStandardMaterial({ color: 0xa7f3d0, roughness: 0.20, metalness: 0.06, transparent: true, opacity: 0.26, depthWrite: false })
+              bone: new THREE.MeshStandardMaterial({ color: 0x00e676, roughness: 0.90, metalness: 0.0 }), // Matte Clay Mint Emerald
+              joint: new THREE.MeshStandardMaterial({ color: 0x00c853, roughness: 0.88, metalness: 0.0 }),
+              muscle: new THREE.MeshStandardMaterial({ color: 0xb9f6ca, roughness: 0.10, metalness: 0.04, transparent: true, opacity: 0.10, depthWrite: false })
             },
             pnk: {
-              bone: new THREE.MeshStandardMaterial({ color: 0xfb7185, roughness: 0.32, metalness: 0.04 }),
-              joint: new THREE.MeshStandardMaterial({ color: 0xf43f5e, roughness: 0.26, metalness: 0.06 }),
-              muscle: new THREE.MeshStandardMaterial({ color: 0xfecdd3, roughness: 0.20, metalness: 0.06, transparent: true, opacity: 0.26, depthWrite: false })
+              bone: new THREE.MeshStandardMaterial({ color: 0xff1744, roughness: 0.90, metalness: 0.0 }), // Matte Clay Coral Crimson
+              joint: new THREE.MeshStandardMaterial({ color: 0xd50000, roughness: 0.88, metalness: 0.0 }),
+              muscle: new THREE.MeshStandardMaterial({ color: 0xff80ab, roughness: 0.10, metalness: 0.04, transparent: true, opacity: 0.10, depthWrite: false })
             }
           },
-          carpalR: new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.34, metalness: 0.03 }),
-          carpalL: new THREE.MeshStandardMaterial({ color: 0xffedd5, roughness: 0.34, metalness: 0.03 })
+          carpalR: new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.88, metalness: 0.0 }), // Matte Porcelain
+          carpalL: new THREE.MeshStandardMaterial({ color: 0xffedd5, roughness: 0.88, metalness: 0.0 })  // Matte Terracotta Cream
         };
       },
 
@@ -6262,15 +6281,16 @@ const AIRPORT_LEXICON_30 = [
               if (minDist < minSafeDist) {
                 hasCollision = true;
 
-                // CASE 1: CROSSED FINGERS ('R' - Index crossed over Middle)
+                // CASE 1: CROSSED FINGERS ('R' - Middle crossed over Index in authentic ASL)
                 if ((fA.id === 'idx' && fB.id === 'mid') || (fA.id === 'mid' && fB.id === 'idx')) {
-                  const crossed = (sign === 1) ? (idx.q.mcp_a < -0.05) : (idx.q.mcp_a > 0.05);
-                  if (crossed) {
-                    idx.q.mcp_f += 0.08;
-                    mid.q.mcp_f = Math.max(0, mid.q.mcp_f - 0.04);
+                  const isCrossedR = poseTokens.idx === "CROSSED_IDX_UNDER" || poseTokens.mid === "CROSSED_MID_OVER" || poseTokens.idx === "CROSSED_R";
+                  if (isCrossedR) {
+                    // Index stays posterior (in back), Middle passes anterior (in front)
+                    idx.ikNodes[1].localRot.x = Math.max(idx.ikNodes[1].localRot.x, 0.12);
+                    mid.ikNodes[1].localRot.x = Math.min(mid.ikNodes[1].localRot.x, -0.08);
                     updateNodes(idx);
                     updateNodes(mid);
-                    continue;
+                    continue; // Intentional crossover: bypass lateral repulsion
                   }
                 }
 
@@ -6306,17 +6326,17 @@ const AIRPORT_LEXICON_30 = [
                       }
                     }
 
-                    // 2. High-force penetration through the inter-finger gap
+                    // 2. High-force penetration through the inter-finger gap (push thumb tip proud)
                     if (isGapL || isGapR) {
                       const thumbTip = thumb.ikNodes[3].getEffectorPos();
                       const fingerTip = finger.ikNodes[3].getEffectorPos();
                       const lateralDist = Math.abs(fingerTip.x - thumbTip.x);
-                      const minLateralClearance = 0.65;
+                      const minLateralClearance = 0.92;
                       
                       if (lateralDist < minLateralClearance) {
                         const penetration = minLateralClearance - lateralDist;
-                        const pushForce = penetration * 0.65;
-                        const restoringForce = 0.22;
+                        const pushForce = penetration * 0.75;
+                        const restoringForce = 0.15;
                         const netDelta = pushForce * (1.0 - restoringForce);
 
                         if (isGapL) {
@@ -6324,8 +6344,11 @@ const AIRPORT_LEXICON_30 = [
                         } else if (isGapR) {
                           finger.q.mcp_a += sign * (netDelta);
                         }
-                        finger.q.mcp_a = Math.max(-0.25, Math.min(0.25, finger.q.mcp_a));
+                        finger.q.mcp_a = Math.max(-0.55, Math.min(0.55, finger.q.mcp_a));
                       }
+                      // Push thumb forward through the cleft so it stands out proudly
+                      thumb.q.mcp_f = Math.max(0.20, thumb.q.mcp_f);
+                      thumb.q.ip_f = Math.max(0.16, thumb.q.ip_f);
                     }
 
                     updateNodes(thumb);
@@ -8488,7 +8511,7 @@ const AIRPORT_LEXICON_30 = [
       },
 
       setCameraPreset(preset) {
-        document.querySelectorAll('.view-cam-btn').forEach(b => {
+        document.querySelectorAll('.view-cam-btn[data-cam]').forEach(b => {
           b.classList.toggle('active', b.dataset.cam === preset);
         });
         if (preset === 'front') {
