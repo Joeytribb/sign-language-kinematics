@@ -374,16 +374,51 @@
     /* ULTRA-COMPACT VIEWPORT MICRO-TOOLBAR */
     .viewport-compact-dock {
       position: absolute;
+      top: 10px;
+      left: 12px;
       display: flex;
       align-items: center;
       gap: 4px;
-      background: rgba(14, 15, 18, 0.88);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 4px;
-      padding: 2px 5px;
-      z-index: 20;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+      background: rgba(14, 16, 22, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 9999px;
+      padding: 3px 8px 3px 6px;
+      z-index: 50;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      transition: all 0.2s ease;
+    }
+    .dock-3d-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 9999px;
+      padding: 2px 7px;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 800;
+      color: #34d399;
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+    .dock-3d-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulse-telemetry-dot 1.8s infinite ease-in-out;
+    }
+    .dock-3d-badge .badge-sub {
+      color: #a7f3d0;
+      font-size: 7.5px;
+      font-weight: 700;
+      border-left: 1px solid rgba(16, 185, 129, 0.35);
+      padding-left: 4px;
+      margin-left: 1px;
     }
     .dock-group {
       display: flex;
@@ -401,11 +436,13 @@
     .dock-divider {
       width: 1px;
       height: 12px;
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.14);
       margin: 0 3px;
     }
     .dock-prototype-badge-bar {
       position: absolute;
+      top: 40px;
+      left: 12px;
       display: flex;
       align-items: center;
       gap: 5px;
@@ -438,9 +475,9 @@
       color: var(--text-muted);
       font-family: var(--font-mono);
       font-size: 8px;
-      font-weight: 600;
-      padding: 2px 5px;
-      border-radius: 3px;
+      font-weight: 700;
+      padding: 2.5px 6px;
+      border-radius: 4px;
       cursor: pointer;
       transition: all 0.15s;
       white-space: nowrap;
@@ -449,8 +486,155 @@
     }
     .view-cam-btn:hover, .view-cam-btn.active {
       color: var(--bone-white);
-      border-color: var(--accent-orange);
-      background: var(--card-surface);
+      border-color: #38bdf8;
+      background: rgba(14, 165, 233, 0.25);
+    }
+    .view-cam-btn.btn-auto-rotate.active {
+      background: rgba(16, 185, 129, 0.28) !important;
+      color: #34d399 !important;
+      border-color: #10b981 !important;
+    }
+
+    /* 3D INTERACTIVE GESTURE CALLOUT */
+    .gesture-3d-hint {
+      position: absolute;
+      bottom: 84px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 45;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(13, 16, 23, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      border-radius: 9999px;
+      padding: 6px 14px 6px 10px;
+      box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.7), 0 0 20px rgba(56, 189, 248, 0.2);
+      cursor: pointer;
+      user-select: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      animation: floatHint 3s ease-in-out infinite;
+    }
+    .gesture-3d-hint.dismissed {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(10px) scale(0.95);
+    }
+    @keyframes floatHint {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-4px); }
+    }
+    .gesture-3d-icon-box {
+      position: relative;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gesture-orbit-svg {
+      width: 30px;
+      height: 30px;
+      overflow: visible;
+    }
+    .gesture-spin-ring {
+      transform-origin: center;
+      animation: spinSlow 8s linear infinite;
+    }
+    @keyframes spinSlow {
+      100% { transform: rotate(360deg); }
+    }
+    .gesture-hand-cursor {
+      position: absolute;
+      font-size: 13px;
+      animation: handSwipe 2.4s ease-in-out infinite;
+    }
+    @keyframes handSwipe {
+      0%, 100% { transform: translateX(-6px) rotate(-10deg); }
+      50% { transform: translateX(6px) rotate(10deg); }
+    }
+    .gesture-text-cluster {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .gesture-head {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 800;
+      color: #38bdf8;
+      letter-spacing: 0.05em;
+    }
+    .gesture-head .gesture-tag {
+      background: rgba(244, 63, 94, 0.2);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      color: #fda4af;
+      font-size: 7.5px;
+      font-weight: 800;
+      padding: 0.5px 4px;
+      border-radius: 4px;
+    }
+    .gesture-desc {
+      font-size: 9.5px;
+      color: #e2e8f0;
+      font-weight: 500;
+    }
+    .gesture-desc b {
+      color: #ffffff;
+      font-weight: 700;
+    }
+    .gesture-dismiss-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #94a3b8;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-left: 2px;
+      transition: all 0.15s;
+    }
+    .gesture-dismiss-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+    }
+
+    /* Dynamic Island 3D Live Pill */
+    .island-3d-live-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 800;
+      padding: 1.5px 6px;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+    .live-dot-green {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 6px #10b981;
+      animation: pulse-live-dot 1.8s infinite ease-in-out;
+    }
+    @keyframes pulse-live-dot {
+      0%, 100% { transform: scale(0.9); opacity: 0.5; }
+      50% { transform: scale(1.2); opacity: 1; }
     }
     .btn-emotion-preset.active {
       color: #38bdf8 !important;
@@ -711,8 +895,8 @@
     body:not(.pro-mode) #zen-restore-btn,
     body:not(.pro-mode) #viewport-transport,
     body:not(.pro-mode) #biomechanical-hud,
-    body:not(.pro-mode) .viewport-compact-dock,
-    body:not(.pro-mode) .dock-prototype-badge-bar {
+    body:not(.pro-mode) .dock-prototype-badge-bar,
+    body:not(.pro-mode) .pro-only {
       display: none !important;
     }
 
@@ -2013,6 +2197,9 @@
             <div class="island-title-left">
               <span id="island-sign-lemma" class="island-sign-lemma">WATER</span>
               <span id="island-sign-cat" class="island-category-badge">BASIC SIGNS</span>
+              <span class="island-3d-live-pill" title="Live interactive 3D WebGL simulation. Click and drag canvas to rotate 360°, scroll to zoom!">
+                <span class="live-dot-green"></span> 3D REAL-TIME
+              </span>
             </div>
             <span id="island-item-counter" class="island-step-counter">1 / 30</span>
           </div>
@@ -2196,34 +2383,64 @@
         </div>
       </div>
 
-      <!-- Compact Top Viewport Micro-Dock -->
-      <div class="viewport-compact-dock" style="top: 8px; left: 10px;">
+      <!-- Compact Top Viewport 3D Micro-Dock -->
+      <div class="viewport-compact-dock">
+        <div class="dock-3d-badge" title="Real-time WebGL 3D Simulation Engine (60 FPS). Click & drag anywhere to rotate 360°, scroll to zoom.">
+          <span class="dock-3d-dot"></span>
+          <span>3D REAL-TIME</span>
+          <span class="badge-sub">NOT A VIDEO</span>
+        </div>
+        <div class="dock-divider"></div>
         <span class="dock-label">CAM</span>
         <button class="view-cam-btn active" data-cam="front" onclick="LexiconWorkbench.setCameraPreset('front')">FRONT</button>
-        <button class="view-cam-btn" data-cam="iso" onclick="LexiconWorkbench.setCameraPreset('iso')">ISO</button>
+        <button class="view-cam-btn" data-cam="iso" onclick="LexiconWorkbench.setCameraPreset('iso')">45° ISO</button>
         <button class="view-cam-btn" data-cam="profile" onclick="LexiconWorkbench.setCameraPreset('profile')">PROFILE</button>
         <button class="view-cam-btn" data-cam="top" onclick="LexiconWorkbench.setCameraPreset('top')">TOP</button>
+        <button id="btn-auto-rotate" class="view-cam-btn btn-auto-rotate" onclick="LexiconWorkbench.toggleAutoRotate()" title="Toggle Continuous 360° Camera Turntable Rotation">🔄 360° ORBIT</button>
         <button class="view-cam-btn" data-cam="reset" onclick="LexiconWorkbench.setCameraPreset('reset')" title="Reset Camera">↺</button>
-        <div class="dock-divider"></div>
-        <button class="view-cam-btn" onclick="LexiconWorkbench.toggleZenMode()" title="Full Viewport Mode (F / Z / ESC)">⛶ MAX</button>
-        <div class="dock-divider"></div>
-        <span class="dock-label">LIGHT</span>
-        <button class="view-cam-btn btn-lighting-preset active" data-preset="sun" onclick="StudioLighting.setPreset('sun')" title="Sunlight">☀️</button>
-        <button class="view-cam-btn btn-lighting-preset" data-preset="studio" onclick="StudioLighting.setPreset('studio')" title="Studio Key/Rim">🎬</button>
-        <button class="view-cam-btn btn-lighting-preset" data-preset="clinical" onclick="StudioLighting.setPreset('clinical')" title="Clinical Lab">🔬</button>
-        <button class="view-cam-btn btn-lighting-preset" data-preset="stealth" onclick="StudioLighting.setPreset('stealth')" title="Stealth Stage">🌌</button>
-        <div class="dock-divider"></div>
-        <span class="dock-label">EXPR</span>
-        <button class="view-cam-btn btn-emotion-preset active" data-emotion="happy" onclick="StickmanEmotionEngine.setEmotion('happy')" title="Happy Grin">😄</button>
-        <button class="view-cam-btn btn-emotion-preset" data-emotion="surprised" onclick="StickmanEmotionEngine.setEmotion('surprised')" title="Surprised">😮</button>
-        <button class="view-cam-btn btn-emotion-preset" data-emotion="question" onclick="StickmanEmotionEngine.setEmotion('question')" title="Question">🤔</button>
-        <button class="view-cam-btn btn-emotion-preset" data-emotion="neutral" onclick="StickmanEmotionEngine.setEmotion('neutral')" title="Neutral">😐</button>
-        <button class="view-cam-btn btn-emotion-preset" data-emotion="wink" onclick="StickmanEmotionEngine.setEmotion('wink')" title="Wink">😉</button>
+        <div class="dock-divider pro-only"></div>
+        <button class="view-cam-btn pro-only" onclick="LexiconWorkbench.toggleZenMode()" title="Full Viewport Mode (F / Z / ESC)">⛶ MAX</button>
+        <div class="dock-divider pro-only"></div>
+        <span class="dock-label pro-only">LIGHT</span>
+        <button class="view-cam-btn btn-lighting-preset active pro-only" data-preset="sun" onclick="StudioLighting.setPreset('sun')" title="Sunlight">☀️</button>
+        <button class="view-cam-btn btn-lighting-preset pro-only" data-preset="studio" onclick="StudioLighting.setPreset('studio')" title="Studio Key/Rim">🎬</button>
+        <button class="view-cam-btn btn-lighting-preset pro-only" data-preset="clinical" onclick="StudioLighting.setPreset('clinical')" title="Clinical Lab">🔬</button>
+        <button class="view-cam-btn btn-lighting-preset pro-only" data-preset="stealth" onclick="StudioLighting.setPreset('stealth')" title="Stealth Stage">🌌</button>
+        <div class="dock-divider pro-only"></div>
+        <span class="dock-label pro-only">EXPR</span>
+        <button class="view-cam-btn btn-emotion-preset active pro-only" data-emotion="happy" onclick="StickmanEmotionEngine.setEmotion('happy')" title="Happy Grin">😄</button>
+        <button class="view-cam-btn btn-emotion-preset pro-only" data-emotion="surprised" onclick="StickmanEmotionEngine.setEmotion('surprised')" title="Surprised">😮</button>
+        <button class="view-cam-btn btn-emotion-preset pro-only" data-emotion="question" onclick="StickmanEmotionEngine.setEmotion('question')" title="Question">🤔</button>
+        <button class="view-cam-btn btn-emotion-preset pro-only" data-emotion="neutral" onclick="StickmanEmotionEngine.setEmotion('neutral')" title="Neutral">😐</button>
+        <button class="view-cam-btn btn-emotion-preset pro-only" data-emotion="wink" onclick="StickmanEmotionEngine.setEmotion('wink')" title="Wink">😉</button>
       </div>
 
-      <div class="dock-prototype-badge-bar" style="top: 36px; left: 10px;" title="Facial expressions are test placeholders to humanize the stick figure model. Final production system integrates photorealistic human digital twins with FACS micro-expressions.">
+      <div class="dock-prototype-badge-bar pro-only" style="top: 40px; left: 12px;" title="Facial expressions are test placeholders to humanize the stick figure model. Final production system integrates photorealistic human digital twins with FACS micro-expressions.">
         <span class="proto-tag">NOTE</span>
         <span class="proto-txt">Stickman test expressions · Final: Photoreal human</span>
+      </div>
+
+      <!-- Interactive 3D Gesture Callout (Auto-dismisses on interaction or 5.5s) -->
+      <div id="gesture-3d-hint" class="gesture-3d-hint" onclick="LexiconWorkbench.dismiss3dHint()">
+        <div class="gesture-3d-icon-box">
+          <svg class="gesture-orbit-svg" viewBox="0 0 60 60" fill="none">
+            <ellipse cx="30" cy="30" rx="24" ry="12" stroke="rgba(56, 189, 248, 0.45)" stroke-width="2" stroke-dasharray="4 3" class="gesture-spin-ring"/>
+            <path d="M6 30 C6 20, 54 20, 54 30 C54 40, 6 40, 6 30" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+            <polygon points="50,26 56,30 50,34" fill="#38bdf8"/>
+          </svg>
+          <div class="gesture-hand-cursor">👆</div>
+        </div>
+        <div class="gesture-text-cluster">
+          <div class="gesture-head">
+            <span class="dock-3d-dot" style="width:5px; height:5px;"></span>
+            <span>REAL-TIME 3D SIMULATION</span>
+            <span class="gesture-tag">NOT A VIDEO</span>
+          </div>
+          <div class="gesture-desc">
+            <b>Click &amp; drag anywhere</b> to orbit 360&deg; &bull; <b>Scroll wheel</b> to zoom
+          </div>
+        </div>
+        <button class="gesture-dismiss-btn" onclick="event.stopPropagation(); LexiconWorkbench.dismiss3dHint();" title="Dismiss Hint">✕</button>
       </div>
 
       <!-- Biomechanical Telemetry HUD -->
@@ -5392,6 +5609,87 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
       camera.lookAt(controls.target);
     }
     controls.update();
+    const baseCameraPos = camera.position.clone();
+    let camTween = null;
+    let isUserOrbiting = false;
+    const targetParallaxOffset = new THREE.Vector3(0, 0, 0);
+    const currentParallaxOffset = new THREE.Vector3(0, 0, 0);
+
+    controls.addEventListener('start', () => {
+      isUserOrbiting = true;
+      if (camTween && camTween.raf) {
+        cancelAnimationFrame(camTween.raf);
+        camTween = null;
+      }
+      if (typeof LexiconWorkbench !== 'undefined' && LexiconWorkbench.dismiss3dHint) {
+        LexiconWorkbench.dismiss3dHint();
+      }
+    });
+
+    controls.addEventListener('end', () => {
+      isUserOrbiting = false;
+      baseCameraPos.copy(camera.position);
+      targetParallaxOffset.set(0, 0, 0);
+      currentParallaxOffset.set(0, 0, 0);
+    });
+
+    // Interactive mouse hover parallax over 3D canvas (immediate physical proof of 3D environment)
+    container.addEventListener('pointermove', (e) => {
+      if (typeof isDraggingMasterIndex !== 'undefined' && (isDraggingMasterIndex || isDraggingTarget)) return;
+      if (controls.state !== -1 || isUserOrbiting || controls.autoRotate) return;
+      const rect = container.getBoundingClientRect();
+      const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1; // -1 to 1
+      const ny = -(((e.clientY - rect.top) / rect.height) * 2 - 1); // -1 to 1
+      targetParallaxOffset.set(nx * 2.2, ny * 1.4, 0);
+    });
+
+    container.addEventListener('pointerleave', () => {
+      targetParallaxOffset.set(0, 0, 0);
+    });
+
+    container.addEventListener('wheel', () => {
+      if (typeof LexiconWorkbench !== 'undefined' && LexiconWorkbench.dismiss3dHint) {
+        LexiconWorkbench.dismiss3dHint();
+      }
+    }, { passive: true });
+
+    function smoothTransitionCamera(targetPos, targetLookAt, duration = 750, onComplete = null) {
+      if (camTween && camTween.raf) {
+        cancelAnimationFrame(camTween.raf);
+        camTween = null;
+      }
+      
+      const wasAutoRotate = controls.autoRotate;
+      controls.autoRotate = false;
+      
+      const startPos = camera.position.clone();
+      const startTarget = controls.target.clone();
+      const startTime = performance.now();
+      
+      function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(1.0, elapsed / duration);
+        const ease = progress < 0.5 
+          ? 4 * progress * progress * progress 
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+        
+        camera.position.lerpVectors(startPos, targetPos, ease);
+        controls.target.lerpVectors(startTarget, targetLookAt, ease);
+        camera.lookAt(controls.target);
+        controls.update();
+        
+        if (progress < 1.0) {
+          camTween = { raf: requestAnimationFrame(step) };
+        } else {
+          camTween = null;
+          baseCameraPos.copy(camera.position);
+          if (wasAutoRotate) controls.autoRotate = true;
+          if (typeof onComplete === 'function') onComplete();
+        }
+      }
+      camTween = { raf: requestAnimationFrame(step) };
+    }
+    window.smoothTransitionCamera = smoothTransitionCamera;
 
     const gizmoScene = new THREE.Scene();
     const gizmoCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10); gizmoCamera.position.set(0, 0, 5);
@@ -9015,6 +9313,15 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
       requestAnimationFrame(animate);
       controls.update();
 
+      // Dynamic 3D interactive cursor parallax (subtle perspective tilt gives immediate feedback of real-time 3D)
+      if (typeof isUserOrbiting !== 'undefined' && !isUserOrbiting && controls.state === -1 && !camTween && !controls.autoRotate) {
+        currentParallaxOffset.lerp(targetParallaxOffset, 0.08);
+        if (currentParallaxOffset.lengthSq() > 0.0001) {
+          camera.position.copy(baseCameraPos).add(currentParallaxOffset);
+          camera.lookAt(controls.target);
+        }
+      }
+
       const dt = 0.016;
       signMotionClock += dt;
 
@@ -9329,6 +9636,8 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         this.bindShortcuts();
         this.checkOnboardingFirstLaunch();
         this.setSpeed(0.25);
+        this.playIntroCameraSweep();
+        setTimeout(() => { this.dismiss3dHint(); }, 5500);
 
         const urlParams = new URLSearchParams(window.location.search);
         if (!urlParams.has('test')) {
@@ -11070,24 +11379,95 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         document.querySelectorAll('.view-cam-btn[data-cam]').forEach(b => {
           b.classList.toggle('active', b.dataset.cam === preset);
         });
-        if (preset === 'front') {
-          camera.position.set(5.5, 5.0, 68.0);
-          controls.target.set(5.5, 5.0, 0.0);
-        } else if (preset === 'iso') {
-          camera.position.set(38.0, 28.0, 56.0);
-          controls.target.set(5.5, 5.0, 0.0);
-        } else if (preset === 'profile') {
-          camera.position.set(68.0, 5.0, 0.0);
-          controls.target.set(5.5, 5.0, 0.0);
-        } else if (preset === 'top') {
-          camera.position.set(5.5, 72.0, 5.0);
-          controls.target.set(5.5, 5.0, 0.0);
-        } else if (preset === 'reset') {
-          camera.position.set(5.5, 5.0, 68.0);
-          controls.target.set(5.5, 5.0, 0.0);
+
+        const isEmbedded = (window.parent !== window) || window.location.search.includes('nomodal');
+        const targetPos = new THREE.Vector3();
+        const targetLook = new THREE.Vector3();
+
+        if (isEmbedded) {
+          targetLook.set(3.0, 8.5, 6.0);
+          if (preset === 'front') {
+            targetPos.set(3.0, 9.5, 40.0);
+          } else if (preset === 'iso') {
+            targetPos.set(24.0, 20.0, 32.0);
+          } else if (preset === 'profile') {
+            targetPos.set(38.0, 8.5, 6.0);
+          } else if (preset === 'top') {
+            targetPos.set(3.0, 48.0, 8.0);
+          } else if (preset === 'reset') {
+            targetPos.set(3.0, 9.5, 40.0);
+          }
+        } else {
+          targetLook.set(5.5, 5.0, 0.0);
+          if (preset === 'front') {
+            targetPos.set(5.5, 5.0, 68.0);
+          } else if (preset === 'iso') {
+            targetPos.set(38.0, 24.0, 56.0);
+          } else if (preset === 'profile') {
+            targetPos.set(68.0, 5.0, 0.0);
+          } else if (preset === 'top') {
+            targetPos.set(5.5, 72.0, 5.0);
+          } else if (preset === 'reset') {
+            targetPos.set(5.5, 5.0, 68.0);
+          }
         }
+
+        if (typeof smoothTransitionCamera === 'function') {
+          smoothTransitionCamera(targetPos, targetLook, 750, () => {
+            if (typeof baseCameraPos !== 'undefined') baseCameraPos.copy(camera.position);
+          });
+        } else {
+          camera.position.copy(targetPos);
+          controls.target.copy(targetLook);
+          camera.lookAt(controls.target);
+          controls.update();
+        }
+        this.dismiss3dHint();
+        this.showToast("Camera: " + preset.toUpperCase());
+      },
+
+      toggleAutoRotate() {
+        controls.autoRotate = !controls.autoRotate;
+        controls.autoRotateSpeed = 1.0;
+        const isAuto = controls.autoRotate;
+        document.querySelectorAll('.btn-auto-rotate').forEach(b => {
+          b.classList.toggle('active', isAuto);
+          b.innerHTML = isAuto ? '🔄 360° ORBITING' : '🔄 360° ORBIT';
+        });
+        this.showToast(isAuto ? "🔄 360° Turntable Orbit Active" : "⏸ 360° Orbit Paused");
+        this.dismiss3dHint();
+        return isAuto;
+      },
+
+      dismiss3dHint() {
+        const hint = document.getElementById('gesture-3d-hint');
+        if (hint && !hint.classList.contains('dismissed')) {
+          hint.classList.add('dismissed');
+          setTimeout(() => {
+            if (hint && hint.parentNode) hint.style.display = 'none';
+          }, 450);
+        }
+      },
+
+      playIntroCameraSweep() {
+        const camParams = new URLSearchParams(window.location.search);
+        if (camParams.has('camX') || camParams.has('targetX') || camParams.has('test')) return;
+        
+        const isEmbedded = (window.parent !== window) || camParams.has('nomodal');
+        const targetLook = isEmbedded ? new THREE.Vector3(3.0, 8.5, 6.0) : new THREE.Vector3(5.5, 5.0, 0.0);
+        const finalCamPos = isEmbedded ? new THREE.Vector3(3.0, 9.5, 40.0) : new THREE.Vector3(5.5, 5.0, 68.0);
+        const startCamPos = isEmbedded ? new THREE.Vector3(20.0, 16.0, 36.0) : new THREE.Vector3(32.0, 18.0, 60.0);
+        
+        camera.position.copy(startCamPos);
+        controls.target.copy(targetLook);
         camera.lookAt(controls.target);
         controls.update();
+        
+        if (typeof smoothTransitionCamera === 'function') {
+          smoothTransitionCamera(finalCamPos, targetLook, 2200, () => {
+            if (typeof baseCameraPos !== 'undefined') baseCameraPos.copy(camera.position);
+          });
+        }
       },
 
       copyActiveCode() {
@@ -11280,6 +11660,9 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
             this.setCameraPreset('top');
           } else if (e.key === '0') {
             this.setCameraPreset('reset');
+          } else if (e.key.toLowerCase() === 'o') {
+            e.preventDefault();
+            this.toggleAutoRotate();
           }
         });
       }

@@ -243,7 +243,9 @@
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                 </span>
-                <span class="text-xs font-mono font-bold tracking-tight text-white uppercase">60 FPS WebGL Digital Twin</span>
+                <span class="text-xs font-mono font-bold tracking-tight text-emerald-400 uppercase flex items-center gap-1.5">
+                  Live 3D WebGL Digital Twin &bull; Not a Video
+                </span>
                 <span id="active-sign-badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-500/15 text-sky-400 border border-sky-500/30 font-semibold transition-all">
                   👋 SIGN: HELLO (GREETING)
                 </span>
@@ -261,47 +263,84 @@
             </div>
 
             <!-- WebGL Iframe Embed -->
-            <div class="relative flex-1 w-full bg-[#0e0e11] min-h-[320px]">
+            <div class="relative flex-1 w-full bg-[#0e0e11] min-h-[340px]">
               <iframe id="hero-engine-frame" src="04_Procedural_Engine_PoC/anatomical_hand.html?nomodal" class="w-full h-full border-0 absolute inset-0" title="Live 3D Kinematics Synthesizer"></iframe>
-              <div class="absolute bottom-2.5 left-3 text-[10px] font-mono text-neutral-400 bg-black/60 px-2.5 py-1 rounded pointer-events-none border border-neutral-800/80 backdrop-blur-sm z-10 flex items-center gap-1.5">
-                <span>✦</span>
-                <span>Click &amp; drag to rotate 3D digital twin &bull; Scroll to zoom</span>
+              <div class="absolute top-3 left-3 pointer-events-none z-10 flex items-center gap-2">
+                <div class="px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-emerald-500/40 text-emerald-400 font-mono text-[10px] font-bold flex items-center gap-1.5 shadow-xl">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  REAL-TIME 3D SIMULATION &bull; NOT A VIDEO
+                </div>
+              </div>
+              <div class="absolute bottom-2.5 left-3 text-[10px] font-mono text-neutral-300 bg-black/80 px-3 py-1.5 rounded-lg pointer-events-none border border-neutral-700/80 backdrop-blur-md z-10 flex items-center gap-2 shadow-xl">
+                <span class="text-sky-400 font-bold text-xs">🔄</span>
+                <span><b>Click &amp; drag anywhere on canvas to rotate 360°</b> &bull; Scroll to zoom</span>
               </div>
             </div>
 
             <!-- Interactive Control Strip -->
-            <div class="p-3 bg-[#151515]/95 border-t border-neutral-800 flex flex-wrap items-center justify-between gap-2 z-10 text-xs">
-              <div class="flex items-center gap-1.5 overflow-x-auto py-0.5">
-                <span class="text-[10px] uppercase font-bold text-neutral-400 mr-1">Quick Signs:</span>
-                <button id="btn-sign-hello" onclick="playHeroSign('hello')" class="px-2.5 py-1 rounded bg-sky-600 text-white font-medium text-xs transition">
-                  👋 Hello
-                </button>
-                <button id="btn-sign-thankyou" onclick="playHeroSign('thankyou')" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-sky-600 text-neutral-200 hover:text-white font-medium text-xs transition">
-                  🙏 Thank You
-                </button>
-                <button id="btn-sign-water" onclick="playHeroSign('water')" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-sky-600 text-neutral-200 hover:text-white font-medium text-xs transition">
-                  💧 Water
-                </button>
-                <button id="btn-sign-mother" onclick="playHeroSign('mother')" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-sky-600 text-neutral-200 hover:text-white font-medium text-xs transition">
-                  👩 Mother
-                </button>
-                <button id="btn-sign-father" onclick="playHeroSign('father')" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-sky-600 text-neutral-200 hover:text-white font-medium text-xs transition">
-                  👨 Father
-                </button>
-                <button id="btn-sign-work" onclick="playHeroSign('work')" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-sky-600 text-neutral-200 hover:text-white font-medium text-xs transition">
-                  🔨 Work
-                </button>
-                <button id="btn-sign-me" onclick="playHeroSign('me')" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-sky-600 text-neutral-200 hover:text-white font-medium text-xs transition">
-                  👉 Me
-                </button>
-                <button id="btn-sign-you" onclick="playHeroSign('you')" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-sky-600 text-neutral-200 hover:text-white font-medium text-xs transition">
-                  🫵 You (Far Reach)
+            <div class="p-3 bg-[#151515]/95 border-t border-neutral-800 flex flex-col gap-2.5 z-10 text-xs">
+              <!-- 3D Camera Controls Row -->
+              <div class="flex items-center justify-between flex-wrap gap-2 pb-2 border-b border-neutral-800/80">
+                <div class="flex items-center gap-1.5 font-mono text-[11px] overflow-x-auto py-0.5">
+                  <span class="text-[10px] uppercase font-bold text-sky-400 flex items-center gap-1 mr-1">
+                    <span>🎥</span> 3D Camera:
+                  </span>
+                  <button id="hero-cam-front" onclick="setHeroCamera('front')" class="hero-cam-btn active px-2.5 py-1 rounded bg-sky-600 text-white font-semibold text-xs transition">
+                    Front View
+                  </button>
+                  <button id="hero-cam-iso" onclick="setHeroCamera('iso')" class="hero-cam-btn px-2.5 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 font-medium text-xs transition">
+                    45° Isometric
+                  </button>
+                  <button id="hero-cam-profile" onclick="setHeroCamera('profile')" class="hero-cam-btn px-2.5 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 font-medium text-xs transition">
+                    Side Profile
+                  </button>
+                  <button id="hero-cam-top" onclick="setHeroCamera('top')" class="hero-cam-btn px-2.5 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 font-medium text-xs transition">
+                    Top Down
+                  </button>
+                  <button id="hero-btn-auto-rotate" onclick="toggleHeroAutoRotate()" class="hero-cam-btn px-3 py-1 rounded bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 font-semibold text-xs transition flex items-center gap-1">
+                    <span>🔄</span> 360° Orbit (Turntable)
+                  </button>
+                </div>
+                <div class="text-[10px] font-mono text-neutral-400 flex items-center gap-1.5 hidden md:flex">
+                  <span>✦</span>
+                  <span>Live WebGL 60 FPS Engine &bull; Drag mouse to orbit in 3D</span>
+                </div>
+              </div>
+
+              <!-- Quick Signs & Ablation Row -->
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-1.5 overflow-x-auto py-0.5">
+                  <span class="text-[10px] uppercase font-bold text-neutral-400 mr-1">Quick Signs:</span>
+                  <button id="btn-sign-hello" onclick="playHeroSign('hello')" class="px-2.5 py-1 rounded bg-sky-600 text-white font-medium text-xs transition">
+                    👋 Hello
+                  </button>
+                  <button id="btn-sign-thankyou" onclick="playHeroSign('thankyou')" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-sky-600 text-neutral-200 hover:text-white font-medium text-xs transition">
+                    🙏 Thank You
+                  </button>
+                  <button id="btn-sign-water" onclick="playHeroSign('water')" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-sky-600 text-neutral-200 hover:text-white font-medium text-xs transition">
+                    💧 Water
+                  </button>
+                  <button id="btn-sign-mother" onclick="playHeroSign('mother')" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-sky-600 text-neutral-200 hover:text-white font-medium text-xs transition">
+                    👩 Mother
+                  </button>
+                  <button id="btn-sign-father" onclick="playHeroSign('father')" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-sky-600 text-neutral-200 hover:text-white font-medium text-xs transition">
+                    👨 Father
+                  </button>
+                  <button id="btn-sign-work" onclick="playHeroSign('work')" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-sky-600 text-neutral-200 hover:text-white font-medium text-xs transition">
+                    🔨 Work
+                  </button>
+                  <button id="btn-sign-me" onclick="playHeroSign('me')" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-sky-600 text-neutral-200 hover:text-white font-medium text-xs transition">
+                    👉 Me
+                  </button>
+                  <button id="btn-sign-you" onclick="playHeroSign('you')" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-sky-600 text-neutral-200 hover:text-white font-medium text-xs transition">
+                    🫵 You (Far Reach)
+                  </button>
+                </div>
+                
+                <button id="ablation-toggle-btn" onclick="const win = document.getElementById('hero-engine-frame').contentWindow; win.setAblationMode(!win.isAblationActive); this.innerText = win.isAblationActive ? '⚠️ Baseline Active (Ablation)' : '⚡ Ablation Test'; this.className = win.isAblationActive ? 'px-3 py-1.5 rounded bg-red-500/20 text-red-300 border border-red-500/40 text-xs font-bold font-mono transition' : 'px-3 py-1.5 rounded bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 border border-amber-500/30 text-xs font-bold font-mono transition';" class="px-3 py-1.5 rounded bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 border border-amber-500/30 text-xs font-bold font-mono transition">
+                  ⚡ Ablation Test
                 </button>
               </div>
-              
-              <button id="ablation-toggle-btn" onclick="const win = document.getElementById('hero-engine-frame').contentWindow; win.setAblationMode(!win.isAblationActive); this.innerText = win.isAblationActive ? '⚠️ Baseline Active (Ablation)' : '⚡ Ablation Test'; this.className = win.isAblationActive ? 'px-3 py-1.5 rounded bg-red-500/20 text-red-300 border border-red-500/40 text-xs font-bold font-mono transition' : 'px-3 py-1.5 rounded bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 border border-amber-500/30 text-xs font-bold font-mono transition';" class="px-3 py-1.5 rounded bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 border border-amber-500/30 text-xs font-bold font-mono transition">
-                ⚡ Ablation Test
-              </button>
             </div>
 
           </div>
@@ -1363,6 +1402,39 @@
       }
     }
 
+    let heroCameraConfigured = false;
+
+    function setHeroCamera(preset) {
+      const frame = document.getElementById('hero-engine-frame');
+      if (frame && frame.contentWindow && frame.contentWindow.LexiconWorkbench) {
+        frame.contentWindow.LexiconWorkbench.setCameraPreset(preset);
+      }
+      document.querySelectorAll('.hero-cam-btn').forEach(btn => {
+        if (btn.id === `hero-cam-${preset}`) {
+          btn.className = "hero-cam-btn active px-2.5 py-1 rounded bg-sky-600 text-white font-semibold text-xs transition";
+        } else if (btn.id !== 'hero-btn-auto-rotate') {
+          btn.className = "hero-cam-btn px-2.5 py-1 rounded bg-neutral-800 hover:bg-neutral-700 text-neutral-300 font-medium text-xs transition";
+        }
+      });
+    }
+
+    function toggleHeroAutoRotate() {
+      const frame = document.getElementById('hero-engine-frame');
+      if (frame && frame.contentWindow && frame.contentWindow.LexiconWorkbench) {
+        const isAuto = frame.contentWindow.LexiconWorkbench.toggleAutoRotate();
+        const btn = document.getElementById('hero-btn-auto-rotate');
+        if (btn) {
+          if (isAuto) {
+            btn.innerHTML = "<span>🔄</span> 360° Orbiting...";
+            btn.className = "hero-cam-btn active px-3 py-1 rounded bg-emerald-600 text-white font-bold text-xs transition flex items-center gap-1";
+          } else {
+            btn.innerHTML = "<span>🔄</span> 360° Orbit (Turntable)";
+            btn.className = "hero-cam-btn px-3 py-1 rounded bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 font-semibold text-xs transition flex items-center gap-1";
+          }
+        }
+      }
+    }
+
     function setupHeroEngine() {
       const frame = document.getElementById('hero-engine-frame');
       if (!frame) return;
@@ -1413,8 +1485,9 @@
             win.scene.background = new win.THREE.Color(0x0e0e11);
           }
 
-          // 4. Center and zoom camera onto full open-space anatomical signing envelope
-          if (win.controls && win.camera) {
+          // 4. Center and zoom camera onto full open-space anatomical signing envelope ONCE (protects user's manual 3D drag rotations)
+          if (win.controls && win.camera && !heroCameraConfigured) {
+            heroCameraConfigured = true;
             win.controls.target.set(3.0, 8.5, 6.0);
             win.camera.position.set(3.0, 9.5, 40.0);
             win.camera.lookAt(3.0, 8.5, 6.0);
@@ -1433,7 +1506,7 @@
 
       frame.addEventListener('load', configureHero);
       configureHero();
-      [100, 300, 600, 900, 1400, 2200, 3200].forEach(delay => setTimeout(configureHero, delay));
+      [150, 450, 950].forEach(delay => setTimeout(configureHero, delay));
     }
 
     // Keep bottom workspace iframe functional while dismissing modal and setting 40% speed
