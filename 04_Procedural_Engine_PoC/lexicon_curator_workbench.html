@@ -2075,6 +2075,576 @@
       pointer-events: none;
       z-index: 20;
     }
+
+    /* ========================================================================= */
+    /* AIRPORT ACCESSIBLE KIOSK MODE (14 CFR § 382.57 / IAD CONCOURSE C/D SIMULATOR) */
+    /* ========================================================================= */
+    body.kiosk-mode #dynamic-island {
+      display: none !important;
+    }
+    body.kiosk-mode #gesture-3d-hint {
+      display: none !important;
+    }
+    body.kiosk-mode .viewport-compact-dock {
+      top: 68px;
+    }
+
+    .kiosk-mode-pill-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.25) 0%, rgba(3, 105, 161, 0.35) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      color: #38bdf8;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      padding: 6px 13px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 0 14px rgba(2, 132, 199, 0.25);
+    }
+    .kiosk-mode-pill-btn:hover {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.45) 0%, rgba(3, 105, 161, 0.6) 100%);
+      color: #ffffff;
+      border-color: #38bdf8;
+      transform: translateY(-1px);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.45);
+    }
+    body.kiosk-mode .kiosk-mode-pill-btn,
+    .kiosk-mode-pill-btn.active {
+      background: #0284c7 !important;
+      color: #ffffff !important;
+      border-color: #38bdf8 !important;
+      box-shadow: 0 0 22px rgba(56, 189, 248, 0.6) !important;
+    }
+
+    .btn-kiosk-toggle.active {
+      background: #0284c7 !important;
+      color: #ffffff !important;
+      border-color: #38bdf8 !important;
+    }
+
+    #airport-kiosk-overlay {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 120;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    body.kiosk-mode #airport-kiosk-overlay {
+      display: flex;
+    }
+
+    /* Top Kiosk Header Bar */
+    .kiosk-header-bar {
+      pointer-events: auto;
+      height: 58px;
+      background: linear-gradient(180deg, rgba(8, 12, 22, 0.96) 0%, rgba(13, 19, 32, 0.90) 100%);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      color: #f1f5f9;
+      user-select: none;
+    }
+    .kiosk-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .kiosk-airport-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 12px rgba(2, 132, 199, 0.35);
+    }
+    .kiosk-title-cluster {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .kiosk-airport-title {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .kiosk-live-clock {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: #38bdf8;
+      font-weight: 700;
+      background: rgba(56, 189, 248, 0.12);
+      padding: 1px 7px;
+      border-radius: 4px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+    .kiosk-airport-sub {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: #94a3b8;
+      letter-spacing: 0.03em;
+    }
+    .kiosk-header-center {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .kiosk-compliance-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 9999px;
+      padding: 4px 12px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 800;
+      color: #34d399;
+      letter-spacing: 0.05em;
+    }
+    .kiosk-header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .kiosk-sorenson-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.22) 0%, rgba(220, 38, 38, 0.32) 100%);
+      border: 1px solid rgba(239, 68, 68, 0.55);
+      color: #fca5a5;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.25);
+    }
+    .kiosk-sorenson-btn:hover {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.38) 0%, rgba(220, 38, 38, 0.55) 100%);
+      color: #ffffff;
+      border-color: #ef4444;
+      transform: translateY(-1px);
+      box-shadow: 0 0 22px rgba(239, 68, 68, 0.45);
+    }
+    .kiosk-exit-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #cbd5e1;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .kiosk-exit-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+    }
+
+    /* Left Floating FIDS Panel */
+    .kiosk-fids-panel {
+      pointer-events: auto;
+      margin-top: 68px;
+      margin-left: 16px;
+      width: min(390px, calc(100vw - 32px));
+      max-height: calc(100vh - 230px);
+      overflow-y: auto;
+      background: rgba(10, 14, 24, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      user-select: none;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+    }
+    .kiosk-fids-panel::-webkit-scrollbar {
+      width: 4px;
+    }
+    .kiosk-fids-panel::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+    }
+
+    .fids-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 8px;
+    }
+    .fids-title {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      color: #38bdf8;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .fids-subtitle {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      color: #94a3b8;
+    }
+    .fids-card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .fids-card {
+      background: rgba(20, 27, 45, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+    .fids-card:hover {
+      background: rgba(30, 41, 68, 0.88);
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-1px);
+    }
+    .fids-card.active-flight {
+      background: rgba(24, 49, 83, 0.92);
+      border-color: #38bdf8;
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
+    }
+    .fids-card.active-flight::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: #38bdf8;
+    }
+    .fids-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .fids-flight-code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .fids-dest {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+    .fids-status-badge {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 9999px;
+      letter-spacing: 0.04em;
+    }
+    .badge-amber {
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      color: #fbbf24;
+      animation: pulse-telemetry-dot 1.6s infinite ease-in-out;
+    }
+    .badge-green {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.45);
+      color: #34d399;
+    }
+    .badge-red {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.45);
+      color: #f87171;
+    }
+    .badge-cyan {
+      background: rgba(6, 182, 212, 0.2);
+      border: 1px solid rgba(6, 182, 212, 0.45);
+      color: #22d3ee;
+    }
+    .fids-card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      color: #94a3b8;
+    }
+    .fids-gate-detail {
+      color: #38bdf8;
+      font-weight: 700;
+    }
+
+    /* Bottom Floating Bilingual Caption Ribbon */
+    .kiosk-caption-ribbon {
+      pointer-events: auto;
+      margin: 0 auto 16px auto;
+      width: min(960px, calc(100vw - 32px));
+      background: rgba(8, 12, 22, 0.94);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 16px;
+      padding: 12px 18px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      color: #f8fafc;
+      user-select: none;
+    }
+    .caption-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 6px;
+    }
+    .caption-channel-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 800;
+      color: #38bdf8;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .caption-telemetry-strip {
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .caption-telemetry-highlight {
+      color: #34d399;
+      font-weight: 700;
+    }
+    .caption-spoken-english {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.4;
+      font-weight: 500;
+      color: #ffffff;
+    }
+    .caption-gloss-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .caption-gloss-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #cbd5e1;
+      letter-spacing: 0.03em;
+      transition: all 0.2s ease;
+    }
+    .caption-gloss-tag.active {
+      background: rgba(56, 189, 248, 0.25);
+      border-color: #38bdf8;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+      transform: scale(1.05);
+    }
+
+    /* SORENSON VRS LIVE MODAL */
+    #sorenson-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .sorenson-modal-box {
+      width: min(640px, 94vw);
+      background: #0d121f;
+      border: 1px solid rgba(239, 68, 68, 0.45);
+      border-radius: 20px;
+      box-shadow: 0 25px 70px rgba(239, 68, 68, 0.25), 0 0 80px rgba(0,0,0,0.9);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .sorenson-modal-header {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.25) 0%, rgba(185, 28, 28, 0.15) 100%);
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(239, 68, 68, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .sorenson-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sorenson-logo-square {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #dc2626;
+      color: #ffffff;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    .sorenson-brand-text h3 {
+      font-size: 13px;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0;
+    }
+    .sorenson-brand-text p {
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      color: #fca5a5;
+      margin: 0;
+    }
+    .sorenson-modal-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      color: #e2e8f0;
+    }
+    .sorenson-video-feed {
+      height: 180px;
+      background: #030712;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .sorenson-live-indicator {
+      position: absolute;
+      top: 10px;
+      left: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 800;
+      color: #ef4444;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 2px 8px;
+      border-radius: 9999px;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+    .sorenson-live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ef4444;
+      box-shadow: 0 0 8px #ef4444;
+      animation: pulse-telemetry-dot 1.2s infinite ease-in-out;
+    }
+    .sorenson-strategic-box {
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 11px;
+      line-height: 1.5;
+      color: #93c5fd;
+    }
+    .sorenson-strategic-box strong {
+      color: #ffffff;
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11.5px;
+    }
+    .sorenson-modal-footer {
+      padding: 14px 20px;
+      background: #070a12;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: flex-end;
+    }
+    .sorenson-close-btn {
+      background: #ef4444;
+      color: #ffffff;
+      border: none;
+      border-radius: 9999px;
+      padding: 7px 18px;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .sorenson-close-btn:hover {
+      background: #dc2626;
+    }
   </style>
 </head>
 <body>
@@ -2176,6 +2746,10 @@
  
       <!-- Minimal Studio Top-Right Cluster -->
       <div id="top-right-studio-cluster">
+        <button id="btn-airport-kiosk-top" class="kiosk-mode-pill-btn" onclick="LexiconWorkbench.toggleKioskMode()" title="Toggle Washington Dulles (IAD) Airport Kiosk Simulator (14 CFR § 382.57 Compliance Demo)">
+          <span>✈️</span>
+          <span>AIRPORT KIOSK (14 CFR § 382.57)</span>
+        </button>
         <div class="engine-micro-telemetry" title="Biomechanical IK & Procedural Phonology Engine Status">
           <span class="telemetry-live-dot"></span>
           <span>24 DOF • 66 LOCI • IK SOLVER</span>
@@ -2381,6 +2955,182 @@
             </button>
           </div>
         </div>
+      <!-- AIRPORT ACCESSIBLE PASSENGER KIOSK OVERLAY (14 CFR § 382.57) -->
+      <div id="airport-kiosk-overlay">
+        <!-- Top Aviation Status Header -->
+        <div class="kiosk-header-bar">
+          <div class="kiosk-header-left">
+            <div class="kiosk-airport-badge">✈️</div>
+            <div class="kiosk-title-cluster">
+              <div class="kiosk-airport-title">
+                <span>WASHINGTON DULLES INTERNATIONAL AIRPORT (IAD)</span>
+                <span id="kiosk-live-clock" class="kiosk-live-clock">14:28:40 EST • UTC-5</span>
+              </div>
+              <div class="kiosk-airport-sub">
+                Metropolitan Washington Airports Authority (MWAA) • Concourse C/D Accessible Station #C14
+              </div>
+            </div>
+          </div>
+
+          <div class="kiosk-header-center">
+            <div class="kiosk-compliance-pill" title="Mandated under 14 CFR § 382.57: U.S. DOT Air Carrier Access Act Requires 25% of all Airport Kiosks to provide Accessible Information & Communications">
+              <span class="telemetry-live-dot" style="background:#10b981;"></span>
+              <span>14 CFR § 382.57 MANDATE COMPLIANT • TITLE III ADA</span>
+            </div>
+          </div>
+
+          <div class="kiosk-header-right">
+            <button class="kiosk-sorenson-btn" onclick="LexiconWorkbench.connectSorensonVRS()" title="Direct Emergency Escalation to Sorenson Video Relay Service (FCC Part 64 Certified Human Interpreter)">
+              <span>🧏</span>
+              <span>CONNECT TO SORENSON VRS</span>
+            </button>
+            <button class="kiosk-exit-btn" onclick="LexiconWorkbench.toggleKioskMode()" title="Exit Kiosk Mode and return to 3D Workbench">
+              ✕ EXIT KIOSK
+            </button>
+          </div>
+        </div>
+
+        <!-- Left Interactive FIDS Board -->
+        <div class="kiosk-fids-panel">
+          <div class="fids-header">
+            <div>
+              <div class="fids-title">
+                <span>✈️</span>
+                <span>CONCOURSE C/D FLIGHT ALERTS</span>
+              </div>
+              <div class="fids-subtitle">UNITED AIRLINES HUB • REAL-TIME FEED</div>
+            </div>
+            <span class="engine-micro-telemetry" style="padding:2px 7px; font-size:7.5px;">LIVE FEED</span>
+          </div>
+
+          <div class="fids-card-list">
+            <!-- Flight 1: UA 2482 Gate Change -->
+            <div class="fids-card active-flight" data-flight="gate_change" onclick="LexiconWorkbench.playKioskAnnouncement('gate_change')">
+              <div class="fids-card-top">
+                <span class="fids-flight-code">UA 2482</span>
+                <span class="fids-dest">CHICAGO O'HARE (ORD)</span>
+                <span class="fids-status-badge badge-amber">GATE CHANGE</span>
+              </div>
+              <div class="fids-card-bottom">
+                <span class="fids-gate-detail">GATE C14 ➔ D8 • TAKE AEROTRAIN</span>
+                <span>14:45 EST</span>
+              </div>
+            </div>
+
+            <!-- Flight 2: UA 1209 Boarding -->
+            <div class="fids-card" data-flight="boarding" onclick="LexiconWorkbench.playKioskAnnouncement('boarding')">
+              <div class="fids-card-top">
+                <span class="fids-flight-code">UA 1209</span>
+                <span class="fids-dest">SAN FRANCISCO (SFO)</span>
+                <span class="fids-status-badge badge-green">NOW BOARDING</span>
+              </div>
+              <div class="fids-card-bottom">
+                <span class="fids-gate-detail">GATE C3 • GROUPS 1-3</span>
+                <span>15:10 EST</span>
+              </div>
+            </div>
+
+            <!-- Flight 3: UA 1455 Weather Delay -->
+            <div class="fids-card" data-flight="delay" onclick="LexiconWorkbench.playKioskAnnouncement('delay')">
+              <div class="fids-card-top">
+                <span class="fids-flight-code">UA 1455</span>
+                <span class="fids-dest">DENVER INTL (DEN)</span>
+                <span class="fids-status-badge badge-red">WEATHER DELAY</span>
+              </div>
+              <div class="fids-card-bottom">
+                <span class="fids-gate-detail">GATE D12 • DELAYED 45 MIN</span>
+                <span>15:35 EST</span>
+              </div>
+            </div>
+
+            <!-- Card 4: MWAA Accessibility & Security -->
+            <div class="fids-card" data-flight="security" onclick="LexiconWorkbench.playKioskAnnouncement('security')">
+              <div class="fids-card-top">
+                <span class="fids-flight-code">MWAA IAD</span>
+                <span class="fids-dest">CONCOURSE C/D TRANSIT</span>
+                <span class="fids-status-badge badge-cyan">ASSIST ACTIVE</span>
+              </div>
+              <div class="fids-card-bottom">
+                <span class="fids-gate-detail">ALL GATES • 24/7 ASL ASSIST</span>
+                <span>ON DEMAND</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Bilingual Real-Time Caption Ribbon -->
+        <div class="kiosk-caption-ribbon">
+          <div class="caption-meta-row">
+            <div class="caption-channel-label">
+              <span class="telemetry-live-dot"></span>
+              <span>BROADCAST AUDIO &amp; ASL PHONOLOGY ENGINE</span>
+            </div>
+            <div class="caption-telemetry-strip">
+              <span>LATENCY: <strong class="caption-telemetry-highlight">4ms EDGE</strong></span>
+              <span>•</span>
+              <span>STREAM: <strong class="caption-telemetry-highlight">0.82 KB/s</strong></span>
+              <span>•</span>
+              <span>API CLOUD COST: <strong class="caption-telemetry-highlight">$0.00</strong></span>
+              <span>•</span>
+              <span>RATE: <strong class="caption-telemetry-highlight">60 FPS</strong></span>
+            </div>
+          </div>
+
+          <div id="kiosk-spoken-transcript" class="caption-spoken-english">
+            "Attention passengers on United Airlines Flight 2482 to Chicago O'Hare. Your departure gate has changed from Gate C14 to Gate D8. Please board the AeroTrain to Concourse D."
+          </div>
+
+          <div id="kiosk-gloss-stream" class="caption-gloss-row">
+            <span class="caption-gloss-tag active">[ATTENTION]</span>
+            <span class="caption-gloss-tag">[UNITED]</span>
+            <span class="caption-gloss-tag">[FLIGHT 2482]</span>
+            <span class="caption-gloss-tag">[CHICAGO]</span>
+            <span class="caption-gloss-tag">[GATE CHANGE]</span>
+            <span class="caption-gloss-tag">[C14 ➔ D8]</span>
+            <span class="caption-gloss-tag">[AEROTRAIN]</span>
+            <span class="caption-gloss-tag">[GO]</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SORENSON VRS LIVE ESCALATION MODAL -->
+      <div id="sorenson-modal">
+        <div class="sorenson-modal-box">
+          <div class="sorenson-modal-header">
+            <div class="sorenson-brand">
+              <div class="sorenson-logo-square">S</div>
+              <div class="sorenson-brand-text">
+                <h3>SORENSON VIDEO RELAY SERVICE (VRS)</h3>
+                <p>FCC PART 64 TELECOMMUNICATIONS RELAY SERVICE &bull; EMERGENCY HUMAN ESCALATION</p>
+              </div>
+            </div>
+            <button class="top-circle-btn" onclick="LexiconWorkbench.closeSorensonModal()" style="width:28px; height:28px;">✕</button>
+          </div>
+
+          <div class="sorenson-modal-body">
+            <div class="sorenson-video-feed">
+              <div class="sorenson-live-indicator">
+                <span class="sorenson-live-dot"></span>
+                <span>SECURE WEBRTC RELAY &bull; CALL ACTIVE</span>
+              </div>
+              <div style="text-align: center; color: #94a3b8; font-family: var(--font-mono); font-size: 11px;">
+                <div style="font-size: 32px; margin-bottom: 8px;">🧏‍♂️</div>
+                <div style="color: #f1f5f9; font-weight: 700; margin-bottom: 4px;">ROUTED TO RID-CERTIFIED ASL INTERPRETER #4092</div>
+                <div>Washington D.C. Regional Call Center &bull; High Definition 1080p Video</div>
+                <div style="font-size: 9px; color: #64748b; margin-top: 6px;">47 CFR § 64.604 Mandated Emergency Handoff Bridge</div>
+              </div>
+            </div>
+
+            <div class="sorenson-strategic-box">
+              <strong>STRATEGIC SYNERGY WITH SORENSON COMMUNICATIONS (ENABLE VENTURES / JIM SORENSON):</strong>
+              SAMMY is architected to <em>protect and amplify</em> Sorenson's core business, not compete with it. Automated digital twins solve the unstaffed 95% of airport infrastructure (routine flight announcements, boarding calls, wayfinding) where live human interpreters cannot be stationed 24/7. When a passenger requires complex assistance (lost luggage, flight cancellation, medical needs), SAMMY provides an instant one-touch handoff into Sorenson VRS, driving high-margin relay traffic to Sorenson's certified interpreter workforce.
+            </div>
+          </div>
+
+          <div class="sorenson-modal-footer">
+            <button class="sorenson-close-btn" onclick="LexiconWorkbench.closeSorensonModal()">✕ END CALL &amp; RETURN TO KIOSK</button>
+          </div>
+        </div>
       </div>
 
       <!-- Compact Top Viewport 3D Micro-Dock -->
@@ -2398,6 +3148,8 @@
         <button class="view-cam-btn" data-cam="top" onclick="LexiconWorkbench.setCameraPreset('top')">TOP</button>
         <button id="btn-auto-rotate" class="view-cam-btn btn-auto-rotate" onclick="LexiconWorkbench.toggleAutoRotate()" title="Toggle Continuous 360° Camera Turntable Rotation">🔄 360° ORBIT</button>
         <button class="view-cam-btn" data-cam="reset" onclick="LexiconWorkbench.setCameraPreset('reset')" title="Reset Camera">↺</button>
+        <div class="dock-divider"></div>
+        <button id="btn-airport-kiosk-dock" class="view-cam-btn btn-kiosk-toggle" onclick="LexiconWorkbench.toggleKioskMode()" title="Toggle Washington Dulles (IAD) Airport Kiosk Simulator (14 CFR § 382.57)">✈️ AIRPORT KIOSK</button>
         <div class="dock-divider pro-only"></div>
         <button class="view-cam-btn pro-only" onclick="LexiconWorkbench.toggleZenMode()" title="Full Viewport Mode (F / Z / ESC)">⛶ MAX</button>
         <div class="dock-divider pro-only"></div>
@@ -2980,6 +3732,111 @@
       }
     ];
     window.WELCOME_SEQUENCE = WELCOME_SEQUENCE;
+
+    // --- WASHINGTON DULLES (IAD) AIRPORT FLIGHT ANNOUNCEMENTS (14 CFR § 382.57 COMPLIANCE) ---
+    const AIRPORT_ANNOUNCEMENTS = {
+      gate_change: {
+        id: "gate_change",
+        code: "UA 2482",
+        destination: "CHICAGO O'HARE (ORD)",
+        statusType: "alert",
+        statusBadge: "GATE CHANGE",
+        badgeClass: "badge-amber",
+        detail: "GATE C14 ➔ D8 • TAKE AEROTRAIN",
+        time: "14:45 EST",
+        spokenEnglish: "Attention passengers on United Airlines Flight 2482 to Chicago O'Hare. Your departure gate has changed from Gate C14 to Gate D8. Please board the AeroTrain to Concourse D.",
+        aslGloss: ["[ATTENTION]", "[UNITED]", "[FLIGHT 2482]", "[CHICAGO]", "[GATE CHANGE]", "[C14 ➔ D8]", "[AEROTRAIN]", "[GO]"],
+        emotion: "surprised",
+        sequence: [
+          {
+            name: "ATTENTION PASSENGERS",
+            recipe: { name: "ATTENTION", handshape: "open_b", location: "neutral_high", orientation: "PALM_ANTERIOR", movement: "FORWARD_THRUST", bilateral: "BILATERAL_SYMMETRIC" }
+          },
+          {
+            name: "GATE CHANGE (C14 ➔ D8)",
+            recipe: { name: "CHANGE", handshape: "x", location: "neutral_mid", orientation: "PALM_MEDIAL", movement: "TWIST_WRIST", bilateral: "BILATERAL_SYMMETRIC" }
+          },
+          {
+            name: "BOARD AEROTRAIN TO D",
+            recipe: { name: "TRAIN", handshape: "h", location: "neutral_mid", orientation: "PALM_PRONE", movement: "RUB_BACK_FORTH", bilateral: "BILATERAL_SYMMETRIC" }
+          }
+        ]
+      },
+      boarding: {
+        id: "boarding",
+        code: "UA 1209",
+        destination: "SAN FRANCISCO (SFO)",
+        statusType: "success",
+        statusBadge: "NOW BOARDING",
+        badgeClass: "badge-green",
+        detail: "GATE C3 • GROUPS 1-3",
+        time: "15:10 EST",
+        spokenEnglish: "United Airlines Flight 1209 with nonstop service to San Francisco is now boarding at Gate C3. All passengers in Groups 1 through 3 may now board.",
+        aslGloss: ["[UNITED]", "[FLIGHT 1209]", "[SAN FRANCISCO]", "[NOW BOARDING]", "[GATE C3]", "[GROUPS 1-3]", "[WELCOME]"],
+        emotion: "happy",
+        sequence: [
+          {
+            name: "NOW BOARDING",
+            recipe: { name: "NOW", handshape: "y", location: "neutral_mid", orientation: "PALM_SUPINE", movement: "DROP_ACCENT", bilateral: "BILATERAL_SYMMETRIC" }
+          },
+          {
+            name: "FLIGHT TO SAN FRANCISCO",
+            recipe: { name: "AIRPLANE", handshape: "ily", location: "neutral_high", orientation: "PALM_PRONE", movement: "ARC_SAGITTAL", bilateral: "UNILATERAL" }
+          },
+          {
+            name: "GATE C3 BOARD",
+            recipe: { name: "ENTER", handshape: "open_b", location: "neutral_mid", orientation: "PALM_PRONE", movement: "FORWARD_THRUST", bilateral: "BILATERAL_SYMMETRIC" }
+          }
+        ]
+      },
+      delay: {
+        id: "delay",
+        code: "UA 1455",
+        destination: "DENVER INTL (DEN)",
+        statusType: "danger",
+        statusBadge: "WEATHER DELAY",
+        badgeClass: "badge-red",
+        detail: "GATE D12 • DELAYED 45 MIN",
+        time: "15:35 EST",
+        spokenEnglish: "United Airlines Flight 1455 to Denver is delayed approximately 45 minutes due to inclement weather conditions in Colorado. Estimated departure is now 16:20.",
+        aslGloss: ["[UNITED]", "[FLIGHT 1455]", "[DENVER]", "[DELAY 45 MIN]", "[WEATHER]", "[SNOW]", "[WAIT]"],
+        emotion: "neutral",
+        sequence: [
+          {
+            name: "DELAYED 45 MIN",
+            recipe: { name: "WAIT", handshape: "5", location: "neutral_mid", orientation: "PALM_SUPINE", movement: "WIGGLE_FINGERS", bilateral: "BILATERAL_SYMMETRIC" }
+          },
+          {
+            name: "INCLEMENT WEATHER",
+            recipe: { name: "WIND", handshape: "5", location: "chest", orientation: "PALM_MEDIAL", movement: "WAVE_5X", bilateral: "BILATERAL_SYMMETRIC" }
+          }
+        ]
+      },
+      security: {
+        id: "security",
+        code: "MWAA IAD",
+        destination: "TERMINAL CONCOURSE C/D",
+        statusType: "info",
+        statusBadge: "ACCESSIBILITY & ASSIST",
+        badgeClass: "badge-cyan",
+        detail: "ALL GATES • ASL KIOSK ACTIVE",
+        time: "CONTINUOUS",
+        spokenEnglish: "Welcome to Washington Dulles. For wheelchair assistance, accessible transit, or immediate certified ASL interpretation, press the Sorenson VRS button on this kiosk.",
+        aslGloss: ["[WELCOME]", "[WASHINGTON DULLES]", "[WHEELCHAIR ASSIST]", "[SORENSON VRS]", "[HUMAN INTERPRETER]"],
+        emotion: "happy",
+        sequence: [
+          {
+            name: "WELCOME TO DULLES",
+            recipe: { name: "WELCOME", handshape: "open_b", location: "neutral_mid", orientation: "PALM_SUPINE", movement: "PULL_INWARD", bilateral: "UNILATERAL" }
+          },
+          {
+            name: "ACCESSIBILITY ASSIST",
+            recipe: { name: "HELP", handshape: "10", location: "neutral_mid", orientation: "PALM_MEDIAL", movement: "TAP_2X", bilateral: "ASYMMETRIC_BASE", baseHandshape: "open_b" }
+          }
+        ]
+      }
+    };
+    window.AIRPORT_ANNOUNCEMENTS = AIRPORT_ANNOUNCEMENTS;
 
     // --- TOP 30 MOST USED ENGLISH WORDS (CORE CONVERSATIONAL ASL LEXICON) ---
 const TOP_30_ENGLISH_WORDS = [
@@ -6463,6 +7320,43 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         } catch(e) {
           console.warn("SoundEngine playback failed:", e);
         }
+      },
+
+      playAirportChime() {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          if (this.ctx.state === 'suspended') {
+            this.ctx.resume();
+          }
+
+          const now = this.ctx.currentTime;
+          // Classic 2-tone airport public address chime (F5 -> C5)
+          const tones = [
+            { freq: 698.46, start: 0.0, dur: 0.45, gain: 0.22 },   // F5
+            { freq: 523.25, start: 0.35, dur: 0.75, gain: 0.25 }  // C5
+          ];
+
+          tones.forEach(t => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(t.freq, now + t.start);
+
+            // Warm envelope: gentle attack, smooth exponential decay
+            gain.gain.setValueAtTime(0.0001, now + t.start);
+            gain.gain.exponentialRampToValueAtTime(t.gain, now + t.start + 0.035);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + t.start + t.dur);
+
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+
+            osc.start(now + t.start);
+            osc.stop(now + t.start + t.dur + 0.05);
+          });
+        } catch(e) {
+          console.warn("SoundEngine airport chime failed:", e);
+        }
       }
     };
     window.SoundEngine = SoundEngine;
@@ -9364,6 +10258,10 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           if (window.LexiconWorkbench && window.LexiconWorkbench.isInWelcomeSequence) {
             window.LexiconWorkbench.onWelcomePhraseFinished();
           }
+          // Auto-advance airport announcement if active
+          if (window.LexiconWorkbench && window.LexiconWorkbench.isInKioskAnnouncement) {
+            window.LexiconWorkbench.onKioskPhraseFinished();
+          }
         }
       }
       const strokeProgress = Math.min(1.0, strokeClock / STROKE_DURATION);
@@ -9629,6 +10527,13 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
       isInWelcomeSequence: false,
       welcomeIndex: 0,
       welcomeAutoTimer: null,
+      // Airport Kiosk State
+      isKioskMode: false,
+      isInKioskAnnouncement: false,
+      kioskActiveKey: null,
+      kioskStepIndex: 0,
+      kioskAutoTimer: null,
+      kioskClockTimer: null,
 
       init() {
         this.loadState();
@@ -9640,7 +10545,9 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         setTimeout(() => { this.dismiss3dHint(); }, 5500);
 
         const urlParams = new URLSearchParams(window.location.search);
-        if (!urlParams.has('test')) {
+        if (urlParams.has('kiosk')) {
+          this.toggleKioskMode(true);
+        } else if (!urlParams.has('test')) {
           this.startWelcomeSequence();
         }
         console.log("⚡ LexiconWorkbench initialized with Avatar Welcome Greeting & Pro Studio Guide (0.25x default speed).");
@@ -9662,6 +10569,179 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         }
         if (typeof onWindowResize === 'function') {
           setTimeout(() => { onWindowResize(); }, 60);
+        }
+      },
+
+      toggleKioskMode(forceState) {
+        if (forceState !== undefined) {
+          this.isKioskMode = forceState;
+        } else {
+          this.isKioskMode = !this.isKioskMode;
+        }
+
+        if (this.isKioskMode && this.isProMode) {
+          this.toggleProMode();
+        }
+
+        if (typeof SoundEngine !== 'undefined') {
+          SoundEngine.playSwish(this.isKioskMode);
+        }
+
+        document.body.classList.toggle('kiosk-mode', this.isKioskMode);
+
+        const btnTop = document.getElementById('btn-airport-kiosk-top');
+        if (btnTop) btnTop.classList.toggle('active', this.isKioskMode);
+        const btnDock = document.getElementById('btn-airport-kiosk-dock');
+        if (btnDock) btnDock.classList.toggle('active', this.isKioskMode);
+
+        if (this.isKioskMode) {
+          if (this.isInWelcomeSequence) {
+            this.isInWelcomeSequence = false;
+            if (this.welcomeAutoTimer) clearTimeout(this.welcomeAutoTimer);
+          }
+          this.startKioskClock();
+          setTimeout(() => {
+            if (this.isKioskMode) {
+              this.playKioskAnnouncement('gate_change');
+            }
+          }, 350);
+          this.showToast("✈️ Entered Airport Kiosk Mode (14 CFR § 382.57)");
+        } else {
+          this.isInKioskAnnouncement = false;
+          if (this.kioskAutoTimer) clearTimeout(this.kioskAutoTimer);
+          if (this.kioskClockTimer) clearInterval(this.kioskClockTimer);
+          this.showToast("Returned to 3D ASL Workbench");
+        }
+      },
+
+      startKioskClock() {
+        const updateClock = () => {
+          const clockEl = document.getElementById('kiosk-live-clock');
+          if (!clockEl) return;
+          const now = new Date();
+          const hours = String(now.getHours()).padStart(2, '0');
+          const mins = String(now.getMinutes()).padStart(2, '0');
+          const secs = String(now.getSeconds()).padStart(2, '0');
+          clockEl.innerText = `${hours}:${mins}:${secs} EST • UTC-5`;
+        };
+        updateClock();
+        if (this.kioskClockTimer) clearInterval(this.kioskClockTimer);
+        this.kioskClockTimer = setInterval(updateClock, 1000);
+      },
+
+      playKioskAnnouncement(key) {
+        if (!window.AIRPORT_ANNOUNCEMENTS || !window.AIRPORT_ANNOUNCEMENTS[key]) return;
+        const ann = window.AIRPORT_ANNOUNCEMENTS[key];
+        this.isInKioskAnnouncement = true;
+        this.kioskActiveKey = key;
+        this.kioskStepIndex = 0;
+
+        if (this.kioskAutoTimer) {
+          clearTimeout(this.kioskAutoTimer);
+          this.kioskAutoTimer = null;
+        }
+
+        // Trigger authentic airport public address chime
+        if (typeof SoundEngine !== 'undefined') {
+          SoundEngine.playAirportChime();
+        }
+
+        // Highlight selected flight card
+        document.querySelectorAll('.fids-card').forEach(card => {
+          card.classList.toggle('active-flight', card.dataset.flight === key);
+        });
+
+        // Update spoken transcript
+        const transcriptEl = document.getElementById('kiosk-spoken-transcript');
+        if (transcriptEl) transcriptEl.innerText = `"${ann.spokenEnglish}"`;
+
+        // Update gloss tokens
+        const glossStream = document.getElementById('kiosk-gloss-stream');
+        if (glossStream) {
+          glossStream.innerHTML = ann.aslGloss.map((token, idx) =>
+            `<span class="caption-gloss-tag ${idx === 0 ? 'active' : ''}" id="kiosk-gloss-${idx}">${token}</span>`
+          ).join(' ');
+        }
+
+        this.playKioskStep();
+      },
+
+      playKioskStep() {
+        if (!this.isInKioskAnnouncement || !this.kioskActiveKey) return;
+        const ann = window.AIRPORT_ANNOUNCEMENTS[this.kioskActiveKey];
+        if (!ann || !ann.sequence || !ann.sequence[this.kioskStepIndex]) return;
+
+        const step = ann.sequence[this.kioskStepIndex];
+
+        // Highlight matching gloss tokens
+        const glossTags = document.querySelectorAll('.caption-gloss-tag');
+        const tokenRatio = Math.min(ann.aslGloss.length - 1, Math.floor((this.kioskStepIndex / ann.sequence.length) * ann.aslGloss.length));
+        glossTags.forEach((t, i) => {
+          t.classList.toggle('active', i === tokenRatio);
+        });
+
+        if (ann.emotion && typeof StickmanEmotionEngine !== 'undefined') {
+          StickmanEmotionEngine.setEmotion(ann.emotion);
+        }
+
+        // Clean animation states
+        isPlayingSignMotion = false;
+        strokeClock = 0;
+        signMotionClock = 0;
+        if (typeof handR !== 'undefined' && handR) {
+          handR.animationQueue = [];
+          handR.isOscillating = false;
+        }
+        if (typeof handL !== 'undefined' && handL) {
+          handL.animationQueue = [];
+          handL.isOscillating = false;
+        }
+        if (typeof KinematicMovementSolver !== 'undefined') {
+          KinematicMovementSolver.activeWaypoints = null;
+          KinematicMovementSolver.currentRecipe = null;
+          KinematicMovementSolver.canonicalLoci = null;
+        }
+
+        const rec = { ...step.recipe };
+        this.activeWorkingRecipe = rec;
+        UniversalSignCompiler.synthesize(rec, false);
+
+        strokeClock = 0;
+        isPlayingSignMotion = true;
+      },
+
+      onKioskPhraseFinished() {
+        if (!this.isInKioskAnnouncement || !this.kioskActiveKey) return;
+        const ann = window.AIRPORT_ANNOUNCEMENTS[this.kioskActiveKey];
+        if (!ann) return;
+
+        if (this.kioskStepIndex < ann.sequence.length - 1) {
+          this.kioskStepIndex++;
+          if (this.kioskAutoTimer) clearTimeout(this.kioskAutoTimer);
+          this.kioskAutoTimer = setTimeout(() => {
+            if (this.isInKioskAnnouncement) {
+              this.playKioskStep();
+            }
+          }, 350);
+        } else {
+          console.log("✈️ Airport announcement finished:", ann.code);
+        }
+      },
+
+      connectSorensonVRS() {
+        const modal = document.getElementById('sorenson-modal');
+        if (modal) {
+          modal.style.display = 'flex';
+          if (typeof SoundEngine !== 'undefined') {
+            SoundEngine.playAirportChime();
+          }
+        }
+      },
+
+      closeSorensonModal() {
+        const modal = document.getElementById('sorenson-modal');
+        if (modal) {
+          modal.style.display = 'none';
         }
       },
 
@@ -11603,6 +12683,11 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
       bindShortcuts() {
         window.addEventListener('keydown', (e) => {
           if (e.key === 'Escape') {
+            const srm = document.getElementById('sorenson-modal');
+            if (srm && srm.style.display === 'flex') {
+              this.closeSorensonModal();
+              return;
+            }
             const pgm = document.getElementById('pro-guide-modal');
             if (pgm && pgm.style.display !== 'none') {
               this.closeProGuideModal();
@@ -11611,6 +12696,10 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
             const onb = document.getElementById('onboarding-modal');
             if (onb && onb.style.display !== 'none') {
               this.closeOnboardingModal(false);
+              return;
+            }
+            if (this.isKioskMode) {
+              this.toggleKioskMode(false);
               return;
             }
             if (this.isProMode) {
@@ -11623,7 +12712,10 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
             }
           }
           if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
-          if (e.key.toLowerCase() === 'p') {
+          if (e.key.toLowerCase() === 'k') {
+            e.preventDefault();
+            this.toggleKioskMode();
+          } else if (e.key.toLowerCase() === 'p') {
             e.preventDefault();
             this.toggleProMode();
           } else if (e.key.toLowerCase() === 'r') {

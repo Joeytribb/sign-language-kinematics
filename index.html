@@ -337,9 +337,14 @@
                   </button>
                 </div>
                 
-                <button id="ablation-toggle-btn" onclick="const win = document.getElementById('hero-engine-frame').contentWindow; win.setAblationMode(!win.isAblationActive); this.innerText = win.isAblationActive ? '⚠️ Baseline Active (Ablation)' : '⚡ Ablation Test'; this.className = win.isAblationActive ? 'px-3 py-1.5 rounded bg-red-500/20 text-red-300 border border-red-500/40 text-xs font-bold font-mono transition' : 'px-3 py-1.5 rounded bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 border border-amber-500/30 text-xs font-bold font-mono transition';" class="px-3 py-1.5 rounded bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 border border-amber-500/30 text-xs font-bold font-mono transition">
-                  ⚡ Ablation Test
-                </button>
+                <div class="flex items-center gap-2">
+                  <button id="hero-kiosk-toggle-btn" onclick="toggleHeroKioskMode()" class="px-3 py-1.5 rounded bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/40 text-xs font-bold font-mono transition flex items-center gap-1.5 shadow-lg shadow-sky-950/40" title="Toggle Airport Accessible Kiosk Simulator (14 CFR § 382.57 Mandate / Washington Dulles IAD Feed)">
+                    <span>✈️</span> Airport Kiosk (14 CFR § 382.57)
+                  </button>
+                  <button id="ablation-toggle-btn" onclick="const win = document.getElementById('hero-engine-frame').contentWindow; win.setAblationMode(!win.isAblationActive); this.innerText = win.isAblationActive ? '⚠️ Baseline Active (Ablation)' : '⚡ Ablation Test'; this.className = win.isAblationActive ? 'px-3 py-1.5 rounded bg-red-500/20 text-red-300 border border-red-500/40 text-xs font-bold font-mono transition' : 'px-3 py-1.5 rounded bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 border border-amber-500/30 text-xs font-bold font-mono transition';" class="px-3 py-1.5 rounded bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 border border-amber-500/30 text-xs font-bold font-mono transition">
+                    ⚡ Ablation Test
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -1430,6 +1435,24 @@
           } else {
             btn.innerHTML = "<span>🔄</span> 360° Orbit (Turntable)";
             btn.className = "hero-cam-btn px-3 py-1 rounded bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 font-semibold text-xs transition flex items-center gap-1";
+          }
+        }
+      }
+    }
+
+    function toggleHeroKioskMode() {
+      const frame = document.getElementById('hero-engine-frame');
+      if (frame && frame.contentWindow && frame.contentWindow.LexiconWorkbench) {
+        frame.contentWindow.LexiconWorkbench.toggleKioskMode();
+        const isKiosk = frame.contentWindow.LexiconWorkbench.isKioskMode;
+        const btn = document.getElementById('hero-kiosk-toggle-btn');
+        if (btn) {
+          if (isKiosk) {
+            btn.innerHTML = "<span>✈️</span> Kiosk Active (14 CFR § 382.57)";
+            btn.className = "px-3 py-1.5 rounded bg-sky-500 text-white font-bold font-mono text-xs transition flex items-center gap-1.5 shadow-lg shadow-sky-500/30";
+          } else {
+            btn.innerHTML = "<span>✈️</span> Airport Kiosk (14 CFR § 382.57)";
+            btn.className = "px-3 py-1.5 rounded bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/40 text-xs font-bold font-mono transition flex items-center gap-1.5 shadow-lg shadow-sky-950/40";
           }
         }
       }
