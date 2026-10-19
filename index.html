@@ -338,6 +338,10 @@
                 </div>
                 
                 <div class="flex items-center gap-2">
+                  <button id="hero-avatar-style-btn" onclick="toggleHeroAvatarStyle()" class="px-3 py-1.5 rounded bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-bold font-mono transition flex items-center gap-1.5 shadow-lg shadow-emerald-950/40" title="Toggle 3D Avatar Model: Realistic Human Agent (MWAA Uniform) / Clay Mannequin / Biomechanics Rig">
+                    <span id="hero-avatar-icon">👤</span>
+                    <span id="hero-avatar-label">Human Agent</span>
+                  </button>
                   <button id="hero-kiosk-toggle-btn" onclick="toggleHeroKioskMode()" class="px-3 py-1.5 rounded bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/40 text-xs font-bold font-mono transition flex items-center gap-1.5 shadow-lg shadow-sky-950/40" title="Toggle Airport Accessible Kiosk Simulator (14 CFR § 382.57 Mandate / Washington Dulles IAD Feed)">
                     <span>✈️</span> Airport Kiosk (14 CFR § 382.57)
                   </button>
@@ -1437,6 +1441,28 @@
             btn.className = "hero-cam-btn px-3 py-1 rounded bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 font-semibold text-xs transition flex items-center gap-1";
           }
         }
+      }
+    }
+
+    function toggleHeroAvatarStyle() {
+      const frame = document.getElementById('hero-engine-frame');
+      if (frame && frame.contentWindow && frame.contentWindow.AvatarStyleEngine) {
+        frame.contentWindow.AvatarStyleEngine.cycleStyle();
+        const style = frame.contentWindow.AvatarStyleEngine.currentStyle;
+        const icon = document.getElementById('hero-avatar-icon');
+        const label = document.getElementById('hero-avatar-label');
+        const labels = {
+          human: 'Human Agent',
+          stickman: 'Minimal Clay',
+          biomech: 'Biomech Lab'
+        };
+        const icons = {
+          human: '👤',
+          stickman: '🤖',
+          biomech: '🦴'
+        };
+        if (icon) icon.innerText = icons[style] || '👤';
+        if (label) label.innerText = labels[style] || 'Human Agent';
       }
     }
 
