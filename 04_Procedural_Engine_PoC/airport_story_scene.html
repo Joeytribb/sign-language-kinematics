@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAMMY // The Airport Narrative & Dyslexia Accessibility Experience</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <style>
+    :root {
+      --bg-space: #07090e;
+      --panel-bg: rgba(13, 17, 23, 0.88);
+      --panel-border: rgba(255, 255, 255, 0.12);
+      --accent-cyan: #38bdf8;
+      --accent-amber: #f59e0b;
+      --accent-emerald: #10b981;
+      --accent-rose: #f43f5e;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    body, html {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background-color: var(--bg-space);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text-main);
+    }
+
+    #webgl-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 1;
+    }
+
+    /* Top Cinematic Header */
+    .cinema-header {
+      position: absolute;
+      top: 20px; left: 24px; right: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .cinema-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      padding: 8px 16px;
+      border-radius: 999px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      pointer-events: auto;
+    }
+    .brand-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 10px var(--accent-emerald);
+      animation: pulse-dot 2s infinite ease-in-out;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.3); opacity: 1; }
+    }
+    .brand-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .brand-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      border-left: 1px solid rgba(255,255,255,0.15);
+      padding-left: 10px;
+    }
+
+    .top-controls {
+      display: flex;
+      gap: 8px;
+      pointer-events: auto;
+    }
+    .glass-btn {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(10px);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-btn:hover {
+      background: rgba(30, 41, 59, 0.95);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+    .glass-btn.active {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+    }
+    .glass-btn.danger-active {
+      background: rgba(244, 63, 94, 0.2);
+      border-color: var(--accent-rose);
+      color: var(--accent-rose);
+      box-shadow: 0 0 16px rgba(244, 63, 94, 0.25);
+    }
+
+    /* Live Dyslexia Telemetry Card (Floating PIP) */
+    .dyslexia-pip-card {
+      position: absolute;
+      top: 80px; left: 24px;
+      width: 380px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 16px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.6);
+      z-index: 10;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .pip-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 8px;
+    }
+    .pip-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-amber);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .pip-badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      background: rgba(245, 158, 11, 0.2);
+      color: var(--accent-amber);
+    }
+    .fids-board-preview {
+      background: #090d16;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 12px;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #38bdf8;
+      min-height: 110px;
+      position: relative;
+      overflow: hidden;
+    }
+    .fids-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .fids-row.highlight {
+      color: #f59e0b;
+      font-weight: bold;
+      background: rgba(245, 158, 11, 0.1);
+      padding: 0 4px;
+      border-radius: 4px;
+    }
+    .pip-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 10px;
+      line-height: 1.45;
+    }
+
+    /* Narrative Director Bottom Island */
+    .director-island {
+      position: absolute;
+      bottom: 24px; left: 50%;
+      transform: translateX(-50%);
+      width: min(880px, calc(100% - 48px));
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 18px;
+      padding: 16px 20px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.7);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .act-navigator {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .act-navigator::-webkit-scrollbar { display: none; }
+    .act-pill {
+      flex: 1;
+      min-width: 130px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .act-pill:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .act-pill.active {
+      background: rgba(56, 189, 248, 0.14);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.18);
+    }
+    .act-num {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .act-pill.active .act-num {
+      color: var(--accent-cyan);
+    }
+    .act-name {
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Narrative Playhead & Transport */
+    .transport-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .btn-play-pause {
+      background: #fff;
+      color: #000;
+      border: none;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      flex-shrink: 0;
+      transition: transform 0.15s ease, background 0.2s ease;
+      box-shadow: 0 4px 14px rgba(255,255,255,0.25);
+    }
+    .btn-play-pause:hover {
+      transform: scale(1.08);
+      background: #e2e8f0;
+    }
+
+    .timeline-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .timeline-scrubber {
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.15);
+      outline: none;
+      cursor: pointer;
+      position: relative;
+    }
+    .timeline-scrubber::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--accent-cyan);
+      border: 2px solid #fff;
+    }
+
+    .time-readout {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      font-family: monospace;
+      color: var(--text-muted);
+    }
+
+    /* Subtitle & Story Card */
+    .story-card-narrative {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #e2e8f0;
+      background: rgba(0,0,0,0.28);
+      padding: 10px 14px;
+      border-radius: 8px;
+      border-left: 3px solid var(--accent-cyan);
+    }
+    .story-card-narrative strong {
+      color: #fff;
+    }
+
+    /* Cinematic Letterbox Mask */
+    .letterbox {
+      position: absolute;
+      left: 0; right: 0;
+      height: 0px;
+      background: #000;
+      z-index: 5;
+      pointer-events: none;
+      transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .letterbox-top { top: 0; }
+    .letterbox-bottom { bottom: 0; }
+    .cinema-mode .letterbox { height: 40px; }
+
+    /* Audio Chime Notification Overlay */
+    .airport-chime-toast {
+      position: absolute;
+      top: 80px; right: 24px;
+      background: rgba(15, 23, 42, 0.94);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 12px 16px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.5);
+      z-index: 10;
+      transform: translateY(-20px);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .airport-chime-toast.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Dopamine Relief Bloom Effect */
+    #relief-bloom-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 65% 55%, rgba(56, 189, 248, 0.25) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 4;
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;
+    }
+  </style>
+</head>
+<body class="cinema-mode">
+
+  <div class="letterbox letterbox-top"></div>
+  <div class="letterbox letterbox-bottom"></div>
+  <div id="relief-bloom-overlay"></div>
+
+  <!-- Top Cinematic Header -->
+  <header class="cinema-header">
+    <div class="cinema-brand">
+      <div class="brand-dot"></div>
+      <div class="brand-title">SAMMY // 3D NARRATIVE CINEMA</div>
+      <div class="brand-subtitle">The Silent Gate Change & Dyslexia Relief Experience</div>
+    </div>
+
+    <div class="top-controls">
+      <button id="btn-toggle-dyslexia" class="glass-btn danger-active" onclick="toggleDyslexiaSimulation()">
+        <span id="dyslexia-icon">👁️</span>
+        <span id="dyslexia-text">Dyslexia Sim: ON</span>
+      </button>
+
+      <button id="btn-toggle-cam" class="glass-btn active" onclick="toggleCameraDirector()">
+        <span id="cam-icon">🎬</span>
+        <span id="cam-text">Director Cam</span>
+      </button>
+
+      <button id="btn-toggle-sound" class="glass-btn" onclick="toggleAudioMute()">
+        <span id="sound-icon">🔊</span>
+        <span>Sound FX</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Live Dyslexia Telemetry PIP -->
+  <div class="dyslexia-pip-card" id="dyslexia-card">
+    <div class="pip-header">
+      <div class="pip-title">
+        <span>✈️ Concourse FIDS Board</span>
+      </div>
+      <span class="pip-badge" id="pip-mode-label">DYSLEXIA ACTIVE</span>
+    </div>
+
+    <div class="fids-board-preview" id="fids-preview">
+      <!-- Live dynamic text rendered here with letter jitter -->
+    </div>
+
+    <div class="pip-desc" id="pip-desc">
+      <strong>Cognitive Sensory Overload:</strong> Letters swap positions, mirror (b↔d, p↔q), and skew. For neurodivergent or deaf travelers in high-stress transit, text boards alone are cognitive choke points.
+    </div>
+  </div>
+
+  <!-- Audio Chime Announcement Toast -->
+  <div class="airport-chime-toast" id="toast-announcement">
+    <span style="font-size: 18px;">📢</span>
+    <div>
+      <div style="font-weight: 700; color: #fff;">Audio-Only PA Announcement</div>
+      <div style="color: var(--text-muted); font-size: 11px;">"Attention Delta 1842: Immediate gate change to C28."</div>
+    </div>
+  </div>
+
+  <!-- Main 3D Canvas -->
+  <canvas id="webgl-canvas"></canvas>
+
+  <!-- Director Island Bottom Transport -->
+  <nav class="director-island">
+    <div class="act-navigator">
+      <div class="act-pill active" onclick="jumpToAct(1)" id="act-pill-1">
+        <span class="act-num">ACT 1 (0:00)</span>
+        <span class="act-name">1. Silent Gate Change</span>
+      </div>
+      <div class="act-pill" onclick="jumpToAct(2)" id="act-pill-2">
+        <span class="act-num">ACT 2 (0:12)</span>
+        <span class="act-name">2. The FIDS Struggle</span>
+      </div>
+      <div class="act-pill" onclick="jumpToAct(3)" id="act-pill-3">
+        <span class="act-num">ACT 3 (0:24)</span>
+        <span class="act-name">3. Sammy Wakes Up</span>
+      </div>
+      <div class="act-pill" onclick="jumpToAct(4)" id="act-pill-4">
+        <span class="act-num">ACT 4 (0:36)</span>
+        <span class="act-name">4. ASL Directional Sign</span>
+      </div>
+      <div class="act-pill" onclick="jumpToAct(5)" id="act-pill-5">
+        <span class="act-num">ACT 5 (0:48)</span>
+        <span class="act-name">5. Dopamine of Relief</span>
+      </div>
+    </div>
+
+    <div class="story-card-narrative" id="narrative-text">
+      <strong>Act 1: The Ambient Concourse.</strong> A Deaf passenger waits at Gate B14. An audio loudspeaker crackles with a sudden gate reassignment to Concourse C. Hearing travelers walk away, leaving the Deaf traveler stranded.
+    </div>
+
+    <div class="transport-bar">
+      <button class="btn-play-pause" id="btn-play" onclick="togglePlayPause()">❚❚</button>
+      <div class="timeline-container">
+        <input type="range" class="timeline-scrubber" id="scrubber" min="0" max="60" step="0.05" value="0" oninput="onScrub(parseFloat(this.value))" />
+        <div class="time-readout">
+          <span id="time-current">00:00</span>
+          <span id="time-total">01:00 (60s Cinematic Arc)</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <script>
+    // =========================================================================
+    // PROCEDURAL AUDIO SYNTHESIZER (ZERO EXTERNAL DEPENDENCY)
+    // =========================================================================
+    const SoundEngine = {
+      ctx: null,
+      isMuted: false,
+
+      init() {
+        if (this.ctx) return;
+        try {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        } catch(e) {}
+      },
+
+      playAirportChime() {
+        if (this.isMuted) return;
+        this.init();
+        if (!this.ctx) return;
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+
+        const now = this.ctx.currentTime;
+        const notes = [
+          { f: 440.0, t: 0.00, d: 0.6 }, // A4
+          { f: 554.37, t: 0.18, d: 0.6 }, // C#5
+          { f: 659.25, t: 0.36, d: 0.9 }  // E5
+        ];
+        notes.forEach(n => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(n.f, now + n.t);
+          gain.gain.setValueAtTime(0.0001, now + n.t);
+          gain.gain.exponentialRampToValueAtTime(0.18, now + n.t + 0.04);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + n.t + n.d);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + n.t);
+          osc.stop(now + n.t + n.d + 0.05);
+        });
+      },
+
+      playReliefSwish() {
+        if (this.isMuted) return;
+        this.init();
+        if (!this.ctx) return;
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+
+        const now = this.ctx.currentTime;
+        // Warm chord for dopamine / relief resolution
+        [261.63, 329.63, 392.00, 523.25].forEach((freq, i) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + i * 0.05);
+          gain.gain.setValueAtTime(0.0001, now + i * 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.12, now + i * 0.05 + 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.05 + 1.2);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + i * 0.05);
+          osc.stop(now + i * 0.05 + 1.3);
+        });
+      }
+    };
+
+    // =========================================================================
+    // DYSLEXIA & VISUAL SENSORY OVERLOAD GENERATOR
+    // =========================================================================
+    const DyslexiaEngine = {
+      enabled: true,
+      lastSwapTime: 0,
+
+      // Character flip & mirror substitutions representing developmental dyslexia & visual stress
+      mirrorPairs: {
+        'b': 'd', 'd': 'b',
+        'p': 'q', 'q': 'p',
+        'm': 'w', 'w': 'm',
+        'n': 'u', 'u': 'n',
+        's': 'z', 'z': 's'
+      },
+
+      scrambleWord(word) {
+        if (!this.enabled || word.length < 2) return word;
+        const chars = word.split('');
+
+        // 1. Swap adjacent letters with 25% probability
+        for (let i = 0; i < chars.length - 1; i++) {
+          if (Math.random() < 0.28) {
+            const tmp = chars[i];
+            chars[i] = chars[i + 1];
+            chars[i + 1] = tmp;
+            break;
+          }
+        }
+
+        // 2. Mirror letters with 18% probability
+        for (let i = 0; i < chars.length; i++) {
+          const low = chars[i].toLowerCase();
+          if (this.mirrorPairs[low] && Math.random() < 0.20) {
+            chars[i] = (chars[i] === chars[i].toUpperCase()) 
+              ? this.mirrorPairs[low].toUpperCase() 
+              : this.mirrorPairs[low];
+          }
+        }
+        return chars.join('');
+      },
+
+      renderText(rawText) {
+        if (!this.enabled) return rawText;
+        return rawText.split(' ').map(w => this.scrambleWord(w)).join(' ');
+      }
+    };
+
+    // =========================================================================
+    // THREE.JS SCENE, LIGHTING & SCANDINAVIAN LOW-POLY ENVIRONMENT
+    // =========================================================================
+    const canvas = document.getElementById('webgl-canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.05;
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0a0e17);
+    scene.fog = new THREE.FogExp2(0x0a0e17, 0.014);
+
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.5, 300);
+    camera.position.set(-8, 8, 42);
+
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.maxPolarAngle = Math.PI / 2 - 0.02;
+    controls.minDistance = 6;
+    controls.maxDistance = 120;
+    controls.target.set(-4, 6, 0);
+
+    // Studio & Concourse Lighting
+    const ambientLight = new THREE.AmbientLight(0xdbeafe, 0.65);
+    scene.add(ambientLight);
+
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.25);
+    keyLight.position.set(18, 32, 22);
+    keyLight.castShadow = true;
+    keyLight.shadow.mapSize.width = 2048;
+    keyLight.shadow.mapSize.height = 2048;
+    keyLight.shadow.bias = -0.0005;
+    scene.add(keyLight);
+
+    const fillLight = new THREE.DirectionalLight(0x38bdf8, 0.45);
+    fillLight.position.set(-22, 18, -14);
+    scene.add(fillLight);
+
+    // Modern Terminal Floor with Soft Studio Ring
+    const floorGeo = new THREE.PlaneGeometry(160, 160);
+    const floorMat = new THREE.MeshStandardMaterial({
+      color: 0x111827,
+      roughness: 0.42,
+      metalness: 0.12
+    });
+    const floor = new THREE.Mesh(floorGeo, floorMat);
+    floor.rotation.x = -Math.PI / 2;
+    floor.position.y = -18.5;
+    floor.receiveShadow = true;
+    scene.add(floor);
+
+    // Concentric Scandinavian Target Floor Ring
+    const ringGeo = new THREE.RingGeometry(24, 24.4, 64);
+    const ringMat = new THREE.MeshBasicMaterial({ color: 0x1e293b, side: THREE.DoubleSide });
+    const floorRing = new THREE.Mesh(ringGeo, ringMat);
+    floorRing.rotation.x = -Math.PI / 2;
+    floorRing.position.y = -18.48;
+    scene.add(floorRing);
+
+    // Concourse Architectural Pillars
+    const pillarMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.5, metalness: 0.1 });
+    [-28, 28].forEach(x => {
+      const colGeo = new THREE.CylinderGeometry(1.6, 1.8, 48, 24);
+      const col = new THREE.Mesh(colGeo, pillarMat);
+      col.position.set(x, 5.5, -12);
+      col.castShadow = true;
+      col.receiveShadow = true;
+      scene.add(col);
+    });
+
+    // Glass Terminal Window Wall (Airfield View)
+    const glassMat = new THREE.MeshPhysicalMaterial({
+      color: 0x1e293b,
+      roughness: 0.1,
+      metalness: 0.1,
+      transmission: 0.85,
+      transparent: true,
+      opacity: 0.35
+    });
+    const windowWall = new THREE.Mesh(new THREE.PlaneGeometry(120, 36), glassMat);
+    windowWall.position.set(0, 5, -28);
+    scene.add(windowWall);
+
+    // Distant Runway Lights
+    const runwayLightsGroup = new THREE.Group();
+    for (let i = -40; i <= 40; i += 8) {
+      const pMat = new THREE.MeshBasicMaterial({ color: (i % 16 === 0) ? 0x38bdf8 : 0xfbbf24 });
+      const p = new THREE.Mesh(new THREE.SphereGeometry(0.35, 12, 12), pMat);
+      p.position.set(i, -18.0, -42 - Math.random() * 20);
+      runwayLightsGroup.add(p);
+    }
+    scene.add(runwayLightsGroup);
+
+    // =========================================================================
+    // DYNAMIC 3D FIDS SPLIT-FLAP FLIGHT BOARD (SUSPENDED FROM CONCOURSE CEILING)
+    // =========================================================================
+    const fidsCanvas = document.createElement('canvas');
+    fidsCanvas.width = 1024;
+    fidsCanvas.height = 512;
+    const fidsCtx = fidsCanvas.getContext('2d');
+    const fidsTexture = new THREE.CanvasTexture(fidsCanvas);
+
+    const fidsMesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(22, 11),
+      new THREE.MeshStandardMaterial({
+        map: fidsTexture,
+        roughness: 0.25,
+        metalness: 0.05,
+        emissive: 0x111827,
+        emissiveIntensity: 0.4
+      })
+    );
+    fidsMesh.position.set(-14, 18, -4);
+    fidsMesh.rotation.y = 0.28;
+    fidsMesh.castShadow = true;
+    scene.add(fidsMesh);
+
+    // Suspension cables
+    [-9, 9].forEach(off => {
+      const cable = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.06, 0.06, 12, 8),
+        new THREE.MeshBasicMaterial({ color: 0x475569 })
+      );
+      cable.position.set(-14 + off, 24, -4);
+      scene.add(cable);
+    });
+
+    function updateFidsBoard(time) {
+      fidsCtx.fillStyle = '#060911';
+      fidsCtx.fillRect(0, 0, fidsCanvas.width, fidsCanvas.height);
+
+      // Header Banner
+      fidsCtx.fillStyle = '#0f172a';
+      fidsCtx.fillRect(0, 0, fidsCanvas.width, 70);
+      fidsCtx.fillStyle = '#38bdf8';
+      fidsCtx.font = 'bold 30px "Courier New", monospace';
+      fidsCtx.fillText("WASHINGTON DULLES INTL (IAD) // DEPARTURES", 36, 48);
+
+      // Column headers
+      fidsCtx.fillStyle = '#64748b';
+      fidsCtx.font = 'bold 22px "Courier New", monospace';
+      fidsCtx.fillText("FLIGHT", 36, 115);
+      fidsCtx.fillText("DESTINATION", 240, 115);
+      fidsCtx.fillText("GATE", 580, 115);
+      fidsCtx.fillText("TIME", 720, 115);
+      fidsCtx.fillText("STATUS", 860, 115);
+
+      // Dividing Line
+      fidsCtx.strokeStyle = '#1e293b';
+      fidsCtx.lineWidth = 2;
+      fidsCtx.beginPath();
+      fidsCtx.moveTo(24, 132);
+      fidsCtx.lineTo(1000, 132);
+      fidsCtx.stroke();
+
+      const flights = [
+        { fl: "DL 1842", dest: "HELSINKI", gate: (timelineTime < 12 ? "B14" : "C28"), time: "18:45", stat: (timelineTime < 12 ? "ON TIME" : "GATE CHANGED"), highlight: true },
+        { fl: "UA 920",  dest: "LONDON-LHR", gate: "B12", time: "18:50", stat: "BOARDING", highlight: false },
+        { fl: "AA 404",  dest: "PARIS-CDG",  gate: "B16", time: "19:10", stat: "ON TIME",  highlight: false },
+        { fl: "LH 418",  dest: "FRANKFURT",  gate: "B20", time: "19:25", stat: "DELAYED",  highlight: false },
+        { fl: "AF 027",  dest: "AMSTERDAM",  gate: "B24", time: "19:40", stat: "ON TIME",  highlight: false }
+      ];
+
+      let rowY = 180;
+      flights.forEach(f => {
+        let flTxt = f.fl;
+        let destTxt = f.dest;
+        let gateTxt = f.gate;
+        let statTxt = f.stat;
+
+        if (DyslexiaEngine.enabled) {
+          flTxt = DyslexiaEngine.renderText(flTxt);
+          destTxt = DyslexiaEngine.renderText(destTxt);
+          gateTxt = DyslexiaEngine.renderText(gateTxt);
+          statTxt = DyslexiaEngine.renderText(statTxt);
+        }
+
+        if (f.highlight) {
+          fidsCtx.fillStyle = (timelineTime >= 12) ? 'rgba(244, 63, 94, 0.22)' : 'rgba(56, 189, 248, 0.15)';
+          fidsCtx.fillRect(24, rowY - 30, 976, 44);
+        }
+
+        fidsCtx.fillStyle = f.highlight ? ((timelineTime >= 12) ? '#f43f5e' : '#38bdf8') : '#e2e8f0';
+        fidsCtx.font = 'bold 24px "Courier New", monospace';
+        fidsCtx.fillText(flTxt, 36, rowY);
+        fidsCtx.fillText(destTxt, 240, rowY);
+        fidsCtx.fillText(gateTxt, 580, rowY);
+        fidsCtx.fillText(f.time, 720, rowY);
+
+        fidsCtx.fillStyle = (statTxt.includes('CHANG') || statTxt.includes('DELA')) ? '#f59e0b' : (f.highlight ? '#38bdf8' : '#10b981');
+        fidsCtx.fillText(statTxt, 860, rowY);
+
+        rowY += 60;
+      });
+
+      fidsTexture.needsUpdate = true;
+
+      // Update PIP preview DOM element
+      const pip = document.getElementById('fids-preview');
+      if (pip) {
+        let pipHtml = '';
+        flights.forEach(f => {
+          let flTxt = DyslexiaEngine.enabled ? DyslexiaEngine.renderText(f.fl) : f.fl;
+          let gateTxt = DyslexiaEngine.enabled ? DyslexiaEngine.renderText(f.gate) : f.gate;
+          let statTxt = DyslexiaEngine.enabled ? DyslexiaEngine.renderText(f.stat) : f.stat;
+          pipHtml += `
+            <div class="fids-row ${f.highlight ? 'highlight' : ''}">
+              <span>${flTxt} ${f.dest.slice(0, 4)}</span>
+              <span>GATE ${gateTxt}</span>
+              <span>${statTxt}</span>
+            </div>
+          `;
+        });
+        pip.innerHTML = pipHtml;
+      }
+    }
+
+    // =========================================================================
+    // SAMMY CLAY MANNEQUIN & ACCESSIBLE KIOSK TERMINAL
+    // =========================================================================
+    // Kiosk Group placed down the concourse
+    const kioskGroup = new THREE.Group();
+    kioskGroup.position.set(26, -18.5, -12);
+    kioskGroup.scale.set(0.78, 0.78, 0.78);
+    kioskGroup.rotation.y = -0.55;
+    scene.add(kioskGroup);
+
+    // Kiosk Pedestal
+    const baseMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.35, metalness: 0.1 });
+    const pedestal = new THREE.Mesh(new THREE.CylinderGeometry(6.4, 7.2, 2.4, 32), baseMat);
+    pedestal.position.y = 1.2;
+    pedestal.receiveShadow = true;
+    kioskGroup.add(pedestal);
+
+    // Pedestal Glowing Blue Ring
+    const pedRing = new THREE.Mesh(
+      new THREE.RingGeometry(5.6, 6.2, 32),
+      new THREE.MeshBasicMaterial({ color: 0x38bdf8, side: THREE.DoubleSide })
+    );
+    pedRing.rotation.x = -Math.PI / 2;
+    pedRing.position.y = 2.45;
+    kioskGroup.add(pedRing);
+
+    // Kiosk Interactive Touch Screen Column
+    const screenMat = new THREE.MeshStandardMaterial({
+      color: 0x0f172a,
+      roughness: 0.2,
+      emissive: 0x0284c7,
+      emissiveIntensity: 0.35
+    });
+    const screenColumn = new THREE.Mesh(new THREE.BoxGeometry(6.0, 16, 1.4), screenMat);
+    screenColumn.position.set(0, 10, -5.5);
+    kioskGroup.add(screenColumn);
+
+    // Kiosk High-Resolution Visual Accessibility Screen
+    const kioskScreenCanvas = document.createElement('canvas');
+    kioskScreenCanvas.width = 512;
+    kioskScreenCanvas.height = 768;
+    const kioskScreenCtx = kioskScreenCanvas.getContext('2d');
+    const kioskScreenTexture = new THREE.CanvasTexture(kioskScreenCanvas);
+    const kioskDisplayMesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(5.4, 8.2),
+      new THREE.MeshBasicMaterial({ map: kioskScreenTexture })
+    );
+    kioskDisplayMesh.position.set(0, 12, -4.7);
+    kioskGroup.add(kioskDisplayMesh);
+
+    function updateKioskDisplay(isRelief = false) {
+      kioskScreenCtx.fillStyle = '#060911';
+      kioskScreenCtx.fillRect(0, 0, 512, 768);
+
+      // Header
+      kioskScreenCtx.fillStyle = '#0284c7';
+      kioskScreenCtx.fillRect(0, 0, 512, 90);
+      kioskScreenCtx.fillStyle = '#ffffff';
+      kioskScreenCtx.font = 'bold 32px -apple-system, sans-serif';
+      kioskScreenCtx.fillText("✈️ AIRPORT ASSISTANT", 36, 58);
+
+      // Card Body
+      if (isRelief) {
+        // High-Contrast Reassuring Gate Card
+        kioskScreenCtx.fillStyle = 'rgba(16, 185, 129, 0.15)';
+        kioskScreenCtx.strokeStyle = '#10b981';
+        kioskScreenCtx.lineWidth = 4;
+        kioskScreenCtx.roundRect(24, 120, 464, 460, 20);
+        kioskScreenCtx.fill();
+        kioskScreenCtx.stroke();
+
+        kioskScreenCtx.fillStyle = '#10b981';
+        kioskScreenCtx.font = 'bold 26px sans-serif';
+        kioskScreenCtx.fillText("GATE REASSIGNED", 48, 175);
+
+        kioskScreenCtx.fillStyle = '#ffffff';
+        kioskScreenCtx.font = 'bold 88px sans-serif';
+        kioskScreenCtx.fillText("C 28", 48, 275);
+
+        kioskScreenCtx.fillStyle = '#38bdf8';
+        kioskScreenCtx.font = 'bold 36px sans-serif';
+        kioskScreenCtx.fillText("➡️ CONCOURSE C", 48, 345);
+
+        kioskScreenCtx.fillStyle = '#94a3b8';
+        kioskScreenCtx.font = '22px sans-serif';
+        kioskScreenCtx.fillText("FLIGHT DL 1842 • TO HELSINKI", 48, 410);
+        kioskScreenCtx.fillText("WALK TIME: 6 MIN • BOARDS IN 35M", 48, 445);
+
+        // Lower Reassurance Banner
+        kioskScreenCtx.fillStyle = '#1e293b';
+        kioskScreenCtx.fillRect(24, 610, 464, 120);
+        kioskScreenCtx.fillStyle = '#f1f5f9';
+        kioskScreenCtx.font = 'bold 24px sans-serif';
+        kioskScreenCtx.fillText("Dignity in Motion.", 48, 660);
+        kioskScreenCtx.fillStyle = '#38bdf8';
+        kioskScreenCtx.font = '20px sans-serif';
+        kioskScreenCtx.fillText("Follow the blue overhead signs.", 48, 695);
+      } else {
+        // Waiting / Scanning Mode
+        kioskScreenCtx.fillStyle = '#94a3b8';
+        kioskScreenCtx.font = 'bold 28px sans-serif';
+        kioskScreenCtx.fillText("SCAN BOARDING PASS", 48, 220);
+        kioskScreenCtx.fillStyle = '#38bdf8';
+        kioskScreenCtx.font = '24px sans-serif';
+        kioskScreenCtx.fillText("TOUCH FOR ASL ASSISTANCE", 48, 280);
+      }
+      kioskScreenTexture.needsUpdate = true;
+    }
+    updateKioskDisplay(false);
+
+    // Pure Smooth Porcelain Clay Avatar (Sammy)
+    const stickmanMat = new THREE.MeshStandardMaterial({
+      color: 0xfcfcfd,
+      roughness: 0.28,
+      metalness: 0.04
+    });
+
+    const avatarGroup = new THREE.Group();
+    avatarGroup.position.set(0, 20.5, 0); // Positioned firmly on top of pedestal
+    kioskGroup.add(avatarGroup);
+
+    // Head with Dynamic Emotion Canvas
+    const faceCanvas = document.createElement('canvas');
+    faceCanvas.width = 1024;
+    faceCanvas.height = 1024;
+    const faceCtx = faceCanvas.getContext('2d');
+    const faceTexture = new THREE.CanvasTexture(faceCanvas);
+    const headMat = new THREE.MeshStandardMaterial({
+      color: 0xfcfcfd,
+      roughness: 0.28,
+      map: faceTexture
+    });
+
+    const headGeo = new THREE.SphereGeometry(4.8, 36, 28);
+    headGeo.scale(0.96, 1.15, 1.02);
+    const headMesh = new THREE.Mesh(headGeo, headMat);
+    headMesh.position.set(0, 18.5, 0.6);
+    headMesh.castShadow = true;
+    avatarGroup.add(headMesh);
+
+    // Slender Neck & Lathe Torso
+    const neckMesh = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 2.1, 3.2, 24), stickmanMat);
+    neckMesh.position.set(0, 12.0, 0.4);
+    avatarGroup.add(neckMesh);
+
+    const torsoPts = [
+      new THREE.Vector2(0.01, -7.2),
+      new THREE.Vector2(3.6, -6.8),
+      new THREE.Vector2(5.8, -4.5),
+      new THREE.Vector2(6.0, -1.5),
+      new THREE.Vector2(5.5, 1.5),
+      new THREE.Vector2(5.0, 4.5),
+      new THREE.Vector2(4.5, 7.5),
+      new THREE.Vector2(3.8, 9.5),
+      new THREE.Vector2(2.2, 10.5)
+    ];
+    const torsoMesh = new THREE.Mesh(new THREE.LatheGeometry(torsoPts, 32), stickmanMat);
+    torsoMesh.scale.set(1.15, 1.0, 0.88);
+    avatarGroup.add(torsoMesh);
+
+    // Limbs and Shoulders
+    [-1, 1].forEach(side => {
+      const sh = new THREE.Mesh(new THREE.SphereGeometry(1.7, 16, 16), stickmanMat);
+      sh.position.set(side * 7.2, 9.8, 0.5);
+      avatarGroup.add(sh);
+
+      // Standing Legs
+      const leg = new THREE.Mesh(new THREE.CylinderGeometry(1.6, 1.4, 14, 16), stickmanMat);
+      leg.position.set(side * 4.0, -11.5, 0.2);
+      avatarGroup.add(leg);
+    });
+
+    // Resting Left Arm
+    const leftArm = new THREE.Mesh(new THREE.CylinderGeometry(1.1, 0.9, 14, 16), stickmanMat);
+    leftArm.position.set(-7.5, 2.5, 0.5);
+    leftArm.rotation.z = 0.08;
+    avatarGroup.add(leftArm);
+
+    // Articulated Right Signing Arm (Shoulder -> Forearm -> 27-DOF Hand)
+    const rightArmGroup = new THREE.Group();
+    rightArmGroup.position.set(7.2, 9.8, 0.5);
+    avatarGroup.add(rightArmGroup);
+
+    const upperArm = new THREE.Mesh(new THREE.CylinderGeometry(1.15, 1.0, 11, 16), stickmanMat);
+    upperArm.position.y = -5.5;
+    rightArmGroup.add(upperArm);
+
+    const elbowPivot = new THREE.Group();
+    elbowPivot.position.y = -11.0;
+    rightArmGroup.add(elbowPivot);
+
+    const forearm = new THREE.Mesh(new THREE.CylinderGeometry(0.95, 0.8, 9.5, 16), stickmanMat);
+    forearm.position.y = -4.75;
+    elbowPivot.add(forearm);
+
+    // Hand Palm & Finger Hierarchy
+    const handGroup = new THREE.Group();
+    handGroup.position.y = -9.5;
+    elbowPivot.add(handGroup);
+
+    const palmMesh = new THREE.Mesh(new THREE.BoxGeometry(1.8, 2.2, 0.7), stickmanMat);
+    handGroup.add(palmMesh);
+
+    // Digits (Thumb, Index, Middle, Ring, Pinky)
+    const fingerMeshes = [];
+    [-0.6, -0.2, 0.2, 0.6].forEach((xOff, idx) => {
+      const fGroup = new THREE.Group();
+      fGroup.position.set(xOff, -1.2, 0);
+      handGroup.add(fGroup);
+      const fSegment = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.16, 2.2, 8), stickmanMat);
+      fSegment.position.y = -1.1;
+      fGroup.add(fSegment);
+      fingerMeshes.push(fGroup);
+    });
+
+    // Thumb
+    const thumbGroup = new THREE.Group();
+    thumbGroup.position.set(0.9, -0.3, 0.2);
+    handGroup.add(thumbGroup);
+    const thumbSegment = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.18, 1.8, 8), stickmanMat);
+    thumbSegment.position.y = -0.9;
+    thumbGroup.add(thumbSegment);
+
+    function updateSammyFace(emotion = 'happy', isBlink = false) {
+      const w = faceCanvas.width, h = faceCanvas.height;
+      faceCtx.fillStyle = '#fcfcfd';
+      faceCtx.fillRect(0, 0, w, h);
+
+      // Front Face Center on Sphere UV (+Z anterior pole is at U=0.25)
+      const cx = w * 0.25; // 256
+      const cy = h * 0.50; // 512
+      const eyeSpacing = 42;
+      const eyeY = cy - 28;
+
+      // Eyebrows
+      faceCtx.strokeStyle = '#18181b';
+      faceCtx.lineWidth = 5.5;
+      faceCtx.lineCap = 'round';
+      [-1, 1].forEach(side => {
+        const bx = cx + side * eyeSpacing;
+        faceCtx.beginPath();
+        if (emotion === 'inquisitive') {
+          faceCtx.arc(bx, eyeY - 26 + side * 8, 20, Math.PI * 1.15, Math.PI * 1.85);
+        } else {
+          faceCtx.arc(bx, eyeY - 26, 20, Math.PI * 1.15, Math.PI * 1.85);
+        }
+        faceCtx.stroke();
+      });
+
+      // Eyes
+      [-1, 1].forEach(side => {
+        const ex = cx + side * eyeSpacing;
+        if (isBlink) {
+          faceCtx.beginPath();
+          faceCtx.arc(ex, eyeY, 14, Math.PI * 0.15, Math.PI * 0.85);
+          faceCtx.stroke();
+        } else {
+          faceCtx.fillStyle = '#09090b';
+          faceCtx.beginPath();
+          faceCtx.arc(ex, eyeY, 10, 0, Math.PI * 2);
+          faceCtx.fill();
+
+          // Catchlights
+          faceCtx.fillStyle = '#ffffff';
+          faceCtx.beginPath();
+          faceCtx.arc(ex - 3, eyeY - 3, 3, 0, Math.PI * 2);
+          faceCtx.fill();
+        }
+      });
+
+      // Smiling Teeth Mouth
+      const mouthY = cy + 42;
+      const mw = 44, mh = 36;
+      faceCtx.save();
+      faceCtx.fillStyle = '#ffffff';
+      faceCtx.strokeStyle = '#18181b';
+      faceCtx.lineWidth = 5;
+      faceCtx.beginPath();
+      faceCtx.moveTo(cx - mw, mouthY);
+      faceCtx.quadraticCurveTo(cx, mouthY - 4, cx + mw, mouthY);
+      faceCtx.quadraticCurveTo(cx + mw * 0.95, mouthY + mh, cx, mouthY + mh);
+      faceCtx.quadraticCurveTo(cx - mw * 0.95, mouthY + mh, cx - mw, mouthY);
+      faceCtx.closePath();
+      faceCtx.fill();
+      faceCtx.stroke();
+      faceCtx.clip();
+
+      // Teeth separation
+      faceCtx.lineWidth = 2.5;
+      faceCtx.strokeStyle = '#d4d4d8';
+      [-22, -11, 0, 11, 22].forEach(tx => {
+        faceCtx.beginPath();
+        faceCtx.moveTo(cx + tx, mouthY - 10);
+        faceCtx.lineTo(cx + tx, mouthY + mh + 10);
+        faceCtx.stroke();
+      });
+      faceCtx.restore();
+
+      faceTexture.needsUpdate = true;
+    }
+    updateSammyFace('happy', false);
+
+    // =========================================================================
+    // PROPORTIONALLY MATCHED PASSENGER AT GATE B14
+    // =========================================================================
+    const passengerGroup = new THREE.Group();
+    passengerGroup.position.set(-18, -18.5, 10);
+    scene.add(passengerGroup);
+
+    // Gate Holdroom Bench
+    const benchMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.45 });
+    const benchSeat = new THREE.Mesh(new THREE.BoxGeometry(22, 1.2, 8.0), benchMat);
+    benchSeat.position.set(0, 6.0, 0);
+    benchSeat.castShadow = true;
+    passengerGroup.add(benchSeat);
+
+    // Bench Legs
+    [-9, 9].forEach(bx => {
+      const bLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 6.0, 12), benchMat);
+      bLeg.position.set(bx, 3.0, 0);
+      passengerGroup.add(bLeg);
+    });
+
+    // Gate B14 Identification Stanchion Sign
+    const signGroup = new THREE.Group();
+    signGroup.position.set(-28, -18.5, 8);
+    scene.add(signGroup);
+
+    const signPole = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 24, 16), baseMat);
+    signPole.position.y = 12;
+    signGroup.add(signPole);
+
+    const gateSignBoard = new THREE.Mesh(
+      new THREE.BoxGeometry(10, 4.5, 0.6),
+      new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.25 })
+    );
+    gateSignBoard.position.set(0, 22, 0);
+    signGroup.add(gateSignBoard);
+
+    // Seated Passenger (Porcelain Slate Clay, Anthropometrically Scaled to Sammy)
+    const travelerMat = new THREE.MeshStandardMaterial({ color: 0x475569, roughness: 0.32 });
+    
+    // Thighs extending horizontally
+    const pThighs = new THREE.Mesh(new THREE.BoxGeometry(7.2, 3.2, 8.5), travelerMat);
+    pThighs.position.set(0, 7.8, 3.0);
+    passengerGroup.add(pThighs);
+
+    // Shins extending vertically to floor
+    const pShins = new THREE.Mesh(new THREE.BoxGeometry(7.0, 7.0, 3.2), travelerMat);
+    pShins.position.set(0, 3.5, 6.2);
+    passengerGroup.add(pShins);
+
+    // Seated Torso
+    const pTorso = new THREE.Mesh(new THREE.CylinderGeometry(4.2, 4.6, 14, 20), travelerMat);
+    pTorso.position.set(0, 15.5, 0);
+    pTorso.castShadow = true;
+    passengerGroup.add(pTorso);
+
+    // Passenger Head
+    const pHead = new THREE.Mesh(new THREE.SphereGeometry(3.8, 24, 24), travelerMat);
+    pHead.position.set(0, 24.5, 0.5);
+    pHead.castShadow = true;
+    passengerGroup.add(pHead);
+
+    // Passenger Carry-on Suitcase
+    const bagMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.3 });
+    const bag = new THREE.Mesh(new THREE.BoxGeometry(4.5, 7.5, 3.2), bagMat);
+    bag.position.set(7.5, 3.75, 2.5);
+    bag.castShadow = true;
+    passengerGroup.add(bag);
+
+    // =========================================================================
+    // 60-SECOND CINEMATIC DIRECTOR TIMELINE & CAMERA SCRIPT
+    // =========================================================================
+    let timelineTime = 0.0;
+    let isPlaying = true;
+    let isDirectorCam = true;
+    const TOTAL_DURATION = 60.0;
+
+    const acts = [
+      {
+        id: 1, start: 0.0, end: 12.0,
+        title: "Act 1: The Silent Gate Change",
+        narrative: "<strong>Act 1: The Ambient Concourse.</strong> A Deaf passenger waits at Gate B14. An audio loudspeaker crackles with a sudden gate reassignment to Concourse C. Hearing travelers walk away, leaving the Deaf traveler stranded.",
+        camPos: new THREE.Vector3(-14, 4, 38),
+        camTarget: new THREE.Vector3(-16, 2, 8)
+      },
+      {
+        id: 2, start: 12.0, end: 24.0,
+        title: "Act 2: The FIDS Struggle & Dyslexia",
+        narrative: "<strong>Act 2: The FIDS Struggle.</strong> The traveler rushes to the Flight Board. Due to sensory stress and dyslexia, the dense text jumbles, swaps, and mirrors—multiplying travel anxiety and confusion.",
+        camPos: new THREE.Vector3(-14, 18, 10),
+        camTarget: new THREE.Vector3(-14, 18, -4)
+      },
+      {
+        id: 3, start: 24.0, end: 36.0,
+        title: "Act 3: Sammy Wakes Up",
+        narrative: "<strong>Act 3: The Encounter.</strong> Down the concourse, the Sammy kiosk detects the passenger. The Scandinavian porcelain clay avatar wakes up, smiles warmly, and welcomes them with an authentic ASL greeting wave.",
+        camPos: new THREE.Vector3(26, 11, 18),
+        camTarget: new THREE.Vector3(26, 11, -12)
+      },
+      {
+        id: 4, start: 36.0, end: 48.0,
+        title: "Act 4: Spatial ASL Directional Sign",
+        narrative: "<strong>Act 4: Clear Kinematics.</strong> Sammy executes the gate announcement in fluid ASL: 'FLIGHT DELTA 1842 GATE CHANGE C28'. Sammy extends his arm, pointing clearly rightward toward Concourse C.",
+        camPos: new THREE.Vector3(20, 10, 12),
+        camTarget: new THREE.Vector3(26, 10, -12)
+      },
+      {
+        id: 5, start: 48.0, end: 60.0,
+        title: "Act 5: Dopamine of Relief & Agency",
+        narrative: "<strong>Act 5: Cognitive Relief.</strong> With complete visual and spatial certainty, anxiety dissolves. The traveler smiles and walks confidently toward Gate C28. <em>Accessibility by Design. Dignity in Motion.</em>",
+        camPos: new THREE.Vector3(0, 10, 48),
+        camTarget: new THREE.Vector3(0, 2, 0)
+      }
+    ];
+
+    function getCurrentAct() {
+      return acts.find(a => timelineTime >= a.start && timelineTime < a.end) || acts[acts.length - 1];
+    }
+
+    function jumpToAct(actId) {
+      const act = acts.find(a => a.id === actId);
+      if (act) {
+        timelineTime = act.start;
+        updateDirector();
+      }
+    }
+
+    function togglePlayPause() {
+      isPlaying = !isPlaying;
+      document.getElementById('btn-play').innerText = isPlaying ? "❚❚" : "▶";
+    }
+
+    function onScrub(val) {
+      timelineTime = val;
+      updateDirector();
+    }
+
+    function toggleDyslexiaSimulation() {
+      DyslexiaEngine.enabled = !DyslexiaEngine.enabled;
+      const btn = document.getElementById('btn-toggle-dyslexia');
+      const badge = document.getElementById('pip-mode-label');
+      const text = document.getElementById('dyslexia-text');
+
+      if (DyslexiaEngine.enabled) {
+        btn.className = "glass-btn danger-active";
+        badge.innerText = "DYSLEXIA ACTIVE";
+        badge.style.background = "rgba(244, 63, 94, 0.2)";
+        badge.style.color = "var(--accent-rose)";
+        text.innerText = "Dyslexia Sim: ON";
+      } else {
+        btn.className = "glass-btn";
+        badge.innerText = "STANDARD TEXT";
+        badge.style.background = "rgba(16, 185, 129, 0.2)";
+        badge.style.color = "var(--accent-emerald)";
+        text.innerText = "Dyslexia Sim: OFF";
+      }
+      updateFidsBoard(timelineTime);
+    }
+
+    function toggleCameraDirector() {
+      isDirectorCam = !isDirectorCam;
+      const btn = document.getElementById('btn-toggle-cam');
+      const txt = document.getElementById('cam-text');
+      if (isDirectorCam) {
+        btn.classList.add('active');
+        txt.innerText = "Director Cam";
+      } else {
+        btn.classList.remove('active');
+        txt.innerText = "Free Orbit 3D";
+      }
+    }
+
+    function toggleAudioMute() {
+      SoundEngine.isMuted = !SoundEngine.isMuted;
+      const btn = document.getElementById('btn-toggle-sound');
+      btn.classList.toggle('active', !SoundEngine.isMuted);
+    }
+
+    let toastTriggered = false;
+    let reliefBloomTriggered = false;
+
+    function updateDirector() {
+      const act = getCurrentAct();
+
+      // Update Active Navigation Pill
+      document.querySelectorAll('.act-pill').forEach((p, idx) => {
+        p.classList.toggle('active', (idx + 1) === act.id);
+      });
+
+      // Update Narrative text
+      const narEl = document.getElementById('narrative-text');
+      if (narEl) narEl.innerHTML = act.narrative;
+
+      // Update Scrubber & Time
+      const scrubber = document.getElementById('scrubber');
+      if (scrubber) scrubber.value = timelineTime;
+      const tCur = document.getElementById('time-current');
+      if (tCur) {
+        const mins = Math.floor(timelineTime / 60);
+        const secs = Math.floor(timelineTime % 60);
+        tCur.innerText = `0${mins}:${secs < 10 ? '0' : ''}${secs}`;
+      }
+
+      // Audio PA Toast trigger in Act 1
+      const toast = document.getElementById('toast-announcement');
+      if (timelineTime >= 3.0 && timelineTime <= 10.0) {
+        if (!toastTriggered) {
+          toastTriggered = true;
+          toast.classList.add('visible');
+          SoundEngine.playAirportChime();
+        }
+      } else {
+        toastTriggered = false;
+        toast.classList.remove('visible');
+      }
+
+      // Dopamine Relief Bloom in Act 5
+      const bloom = document.getElementById('relief-bloom-overlay');
+      if (timelineTime >= 48.0) {
+        if (!reliefBloomTriggered) {
+          reliefBloomTriggered = true;
+          SoundEngine.playReliefSwish();
+        }
+        bloom.style.opacity = '1';
+      } else {
+        reliefBloomTriggered = false;
+        bloom.style.opacity = '0';
+      }
+
+      // Update Kiosk Display (Card blooms in Acts 4 & 5)
+      updateKioskDisplay(timelineTime >= 36.0);
+    }
+
+    // =========================================================================
+    // ANIMATION & KINEMATICS LOOP
+    // =========================================================================
+    const currentCamTarget = new THREE.Vector3(-6, 4, 0);
+    let clock = 0;
+    function animate() {
+      requestAnimationFrame(animate);
+
+      if (isDirectorCam) {
+        controls.enabled = false;
+        const act = getCurrentAct();
+        camera.position.lerp(act.camPos, 0.06);
+        currentCamTarget.lerp(act.camTarget, 0.06);
+        camera.lookAt(currentCamTarget);
+      } else {
+        controls.enabled = true;
+        controls.update();
+      }
+
+      const dt = 0.016;
+      clock += dt;
+
+      if (isPlaying) {
+        timelineTime += dt;
+        if (timelineTime >= TOTAL_DURATION) {
+          timelineTime = 0.0;
+        }
+        updateDirector();
+      }
+
+      // Animate Sammy's Kinematics based on timeline time
+      // Act 3 (Greeting Wave): Arm sweeps side to side
+      if (timelineTime >= 24.0 && timelineTime < 34.0) {
+        rightArmGroup.rotation.z = -1.6 + Math.sin(clock * 6.0) * 0.45;
+        elbowPivot.rotation.z = -0.55;
+        handGroup.rotation.y = Math.sin(clock * 6.0) * 0.45;
+        updateSammyFace('happy', (clock % 3.5 < 0.15));
+      } 
+      // Act 4 (Directional Pointing toward Concourse C): Arm points forward and right
+      else if (timelineTime >= 34.0 && timelineTime < 48.0) {
+        rightArmGroup.rotation.x = -0.45;
+        rightArmGroup.rotation.z = -1.2;
+        rightArmGroup.rotation.y = 0.85; // Pointing rightward
+        elbowPivot.rotation.z = -0.2;
+        // Extend index finger, curl others
+        fingerMeshes.forEach((f, i) => {
+          f.rotation.x = (i === 1) ? 0.0 : 1.35; // Index straight, others curled
+        });
+        updateSammyFace('happy', (clock % 4.0 < 0.15));
+      } 
+      // Rest Pose
+      else {
+        rightArmGroup.rotation.set(0, 0, 0.12);
+        elbowPivot.rotation.set(0, 0, 0.05);
+        fingerMeshes.forEach(f => f.rotation.x = 0.1);
+        updateSammyFace('happy', (clock % 4.5 < 0.15));
+      }
+
+      // Periodic Dyslexia Board Redraw (every 0.18s to mimic active saccadic letter drift)
+      if (clock - DyslexiaEngine.lastSwapTime > 0.18) {
+        DyslexiaEngine.lastSwapTime = clock;
+        updateFidsBoard(clock);
+      }
+
+      renderer.render(scene, camera);
+    }
+    updateFidsBoard(0);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('act')) {
+      const aId = parseInt(urlParams.get('act'), 10);
+      jumpToAct(aId);
+      const act = getCurrentAct();
+      camera.position.copy(act.camPos);
+      currentCamTarget.copy(act.camTarget);
+      camera.lookAt(currentCamTarget);
+    } else if (urlParams.has('time')) {
+      timelineTime = parseFloat(urlParams.get('time'));
+      updateDirector();
+      const act = getCurrentAct();
+      camera.position.copy(act.camPos);
+      currentCamTarget.copy(act.camTarget);
+      camera.lookAt(currentCamTarget);
+    }
+
+    animate();
+
+    // Window resize handling
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
