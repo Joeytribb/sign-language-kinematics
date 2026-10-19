@@ -17,9 +17,10 @@
 !/04_Procedural_Engine_PoC/lexicon_curator_workbench.html
 !/04_Procedural_Engine_PoC/anatomical_hand_single_hand_v1_backup.html
 !/04_Procedural_Engine_PoC/visitor-telemetry.js
-!/04_Procedural_Engine_PoC/ref_images/
-/04_Procedural_Engine_PoC/ref_images/*
 !/04_Procedural_Engine_PoC/ref_images/*.png
+!/04_Procedural_Engine_PoC/sources/
+/04_Procedural_Engine_PoC/sources/*
+!/04_Procedural_Engine_PoC/sources/*.*
 
 # Whitelist publication PDFs
 !/Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf

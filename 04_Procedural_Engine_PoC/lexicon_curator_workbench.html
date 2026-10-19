@@ -6,7 +6,6 @@
   <title>Top 30 Most Used English Words | ASL Procedural Kinematics Workbench</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -2130,32 +2129,24 @@
 
     #airport-kiosk-overlay {
       display: none;
-      position: fixed !important;
-      inset: 0 !important;
-      width: 100vw !important;
-      height: 100vh !important;
-      pointer-events: none !important;
-      z-index: 99999 !important;
-      overflow: hidden !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 120;
+      flex-direction: column;
+      justify-content: space-between;
     }
     body.kiosk-mode #airport-kiosk-overlay {
-      display: block !important;
-    }
-    body.kiosk-mode #dynamic-island,
-    body.kiosk-mode #top-right-studio-cluster,
-    body.kiosk-mode .viewport-compact-dock {
-      display: none !important;
+      display: flex;
     }
 
     /* Top Kiosk Header Bar */
     .kiosk-header-bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 58px;
       pointer-events: auto;
-      z-index: 20;
+      height: 58px;
       background: linear-gradient(180deg, rgba(8, 12, 22, 0.96) 0%, rgba(13, 19, 32, 0.90) 100%);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
@@ -2283,13 +2274,11 @@
 
     /* Left Floating FIDS Panel */
     .kiosk-fids-panel {
-      position: absolute;
-      top: 70px;
-      left: 16px;
       pointer-events: auto;
-      z-index: 20;
+      margin-top: 68px;
+      margin-left: 16px;
       width: min(390px, calc(100vw - 32px));
-      max-height: calc(100vh - 220px);
+      max-height: calc(100vh - 230px);
       overflow-y: auto;
       background: rgba(10, 14, 24, 0.88);
       backdrop-filter: blur(20px);
@@ -2436,12 +2425,8 @@
 
     /* Bottom Floating Bilingual Caption Ribbon */
     .kiosk-caption-ribbon {
-      position: absolute;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
       pointer-events: auto;
-      z-index: 20;
+      margin: 0 auto 16px auto;
       width: min(960px, calc(100vw - 32px));
       background: rgba(8, 12, 22, 0.94);
       backdrop-filter: blur(24px);
@@ -2518,95 +2503,18 @@
       transform: scale(1.05);
     }
 
-    /* Responsive Compact Styles for Embedded Iframes & Small Heights */
-    @media (max-height: 520px) {
-      .kiosk-header-bar {
-        height: 42px;
-        padding: 0 10px;
-      }
-      .kiosk-airport-badge {
-        width: 26px;
-        height: 26px;
-        font-size: 13px;
-      }
-      .kiosk-airport-title {
-        font-size: 11px;
-      }
-      .kiosk-live-clock {
-        font-size: 9px;
-        padding: 1px 4px;
-      }
-      .kiosk-airport-sub {
-        display: none;
-      }
-      .kiosk-compliance-pill {
-        display: none;
-      }
-      .kiosk-sorenson-btn {
-        padding: 4px 8px;
-        font-size: 9px;
-      }
-      .kiosk-exit-btn {
-        padding: 4px 8px;
-        font-size: 9px;
-      }
-      .kiosk-fids-panel {
-        top: 48px;
-        left: 8px;
-        width: min(290px, calc(100vw - 16px));
-        max-height: calc(100vh - 120px);
-        padding: 8px;
-        gap: 6px;
-      }
-      .fids-header {
-        padding-bottom: 4px;
-      }
-      .fids-title {
-        font-size: 9.5px;
-      }
-      .fids-card {
-        padding: 5px 8px;
-        gap: 3px;
-      }
-      .fids-flight-code {
-        font-size: 10px;
-      }
-      .fids-dest {
-        font-size: 9.5px;
-      }
-      .fids-card-bottom {
-        font-size: 7.5px;
-      }
-      .kiosk-caption-ribbon {
-        bottom: 6px;
-        padding: 6px 12px;
-        gap: 4px;
-        width: calc(100vw - 16px);
-      }
-      .caption-meta-row {
-        display: none;
-      }
-      .caption-spoken-english {
-        font-size: 11px;
-        line-height: 1.25;
-      }
-      .caption-gloss-tag {
-        font-size: 8px;
-        padding: 1px 5px;
-      }
-    }
-
     /* SORENSON VRS LIVE MODAL */
     #sorenson-modal {
       display: none;
-      position: fixed !important;
-      inset: 0 !important;
-      width: 100vw !important;
-      height: 100vh !important;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      z-index: 100000 !important;
+      z-index: 2000;
       align-items: center;
       justify-content: center;
       padding: 20px;
@@ -2838,10 +2746,6 @@
  
       <!-- Minimal Studio Top-Right Cluster -->
       <div id="top-right-studio-cluster">
-        <button id="btn-avatar-style-top" class="kiosk-mode-pill-btn" onclick="AvatarStyleEngine.cycleStyle()" title="Toggle 3D Avatar Model: Realistic Human Agent (MWAA Uniform) / Clay Mannequin / Biomechanics Rig">
-          <span id="avatar-style-icon-top">👤</span>
-          <span id="avatar-style-label-top">HUMAN AGENT</span>
-        </button>
         <button id="btn-airport-kiosk-top" class="kiosk-mode-pill-btn" onclick="LexiconWorkbench.toggleKioskMode()" title="Toggle Washington Dulles (IAD) Airport Kiosk Simulator (14 CFR § 382.57 Compliance Demo)">
           <span>✈️</span>
           <span>AIRPORT KIOSK (14 CFR § 382.57)</span>
@@ -3053,6 +2957,184 @@
         </div>
       </div>
 
+      <!-- AIRPORT ACCESSIBLE PASSENGER KIOSK OVERLAY (14 CFR § 382.57) -->
+      <div id="airport-kiosk-overlay">
+        <!-- Top Aviation Status Header -->
+        <div class="kiosk-header-bar">
+          <div class="kiosk-header-left">
+            <div class="kiosk-airport-badge">✈️</div>
+            <div class="kiosk-title-cluster">
+              <div class="kiosk-airport-title">
+                <span>WASHINGTON DULLES INTERNATIONAL AIRPORT (IAD)</span>
+                <span id="kiosk-live-clock" class="kiosk-live-clock">14:28:40 EST • UTC-5</span>
+              </div>
+              <div class="kiosk-airport-sub">
+                Metropolitan Washington Airports Authority (MWAA) • Concourse C/D Accessible Station #C14
+              </div>
+            </div>
+          </div>
+
+          <div class="kiosk-header-center">
+            <div class="kiosk-compliance-pill" title="Mandated under 14 CFR § 382.57: U.S. DOT Air Carrier Access Act Requires 25% of all Airport Kiosks to provide Accessible Information & Communications">
+              <span class="telemetry-live-dot" style="background:#10b981;"></span>
+              <span>14 CFR § 382.57 MANDATE COMPLIANT • TITLE III ADA</span>
+            </div>
+          </div>
+
+          <div class="kiosk-header-right">
+            <button class="kiosk-sorenson-btn" onclick="LexiconWorkbench.connectSorensonVRS()" title="Direct Emergency Escalation to Sorenson Video Relay Service (FCC Part 64 Certified Human Interpreter)">
+              <span>🧏</span>
+              <span>CONNECT TO SORENSON VRS</span>
+            </button>
+            <button class="kiosk-exit-btn" onclick="LexiconWorkbench.toggleKioskMode()" title="Exit Kiosk Mode and return to 3D Workbench">
+              ✕ EXIT KIOSK
+            </button>
+          </div>
+        </div>
+
+        <!-- Left Interactive FIDS Board -->
+        <div class="kiosk-fids-panel">
+          <div class="fids-header">
+            <div>
+              <div class="fids-title">
+                <span>✈️</span>
+                <span>CONCOURSE C/D FLIGHT ALERTS</span>
+              </div>
+              <div class="fids-subtitle">UNITED AIRLINES HUB • REAL-TIME FEED</div>
+            </div>
+            <span class="engine-micro-telemetry" style="padding:2px 7px; font-size:7.5px;">LIVE FEED</span>
+          </div>
+
+          <div class="fids-card-list">
+            <!-- Flight 1: UA 2482 Gate Change -->
+            <div class="fids-card active-flight" data-flight="gate_change" onclick="LexiconWorkbench.playKioskAnnouncement('gate_change')">
+              <div class="fids-card-top">
+                <span class="fids-flight-code">UA 2482</span>
+                <span class="fids-dest">CHICAGO O'HARE (ORD)</span>
+                <span class="fids-status-badge badge-amber">GATE CHANGE</span>
+              </div>
+              <div class="fids-card-bottom">
+                <span class="fids-gate-detail">GATE C14 ➔ D8 • TAKE AEROTRAIN</span>
+                <span>14:45 EST</span>
+              </div>
+            </div>
+
+            <!-- Flight 2: UA 1209 Boarding -->
+            <div class="fids-card" data-flight="boarding" onclick="LexiconWorkbench.playKioskAnnouncement('boarding')">
+              <div class="fids-card-top">
+                <span class="fids-flight-code">UA 1209</span>
+                <span class="fids-dest">SAN FRANCISCO (SFO)</span>
+                <span class="fids-status-badge badge-green">NOW BOARDING</span>
+              </div>
+              <div class="fids-card-bottom">
+                <span class="fids-gate-detail">GATE C3 • GROUPS 1-3</span>
+                <span>15:10 EST</span>
+              </div>
+            </div>
+
+            <!-- Flight 3: UA 1455 Weather Delay -->
+            <div class="fids-card" data-flight="delay" onclick="LexiconWorkbench.playKioskAnnouncement('delay')">
+              <div class="fids-card-top">
+                <span class="fids-flight-code">UA 1455</span>
+                <span class="fids-dest">DENVER INTL (DEN)</span>
+                <span class="fids-status-badge badge-red">WEATHER DELAY</span>
+              </div>
+              <div class="fids-card-bottom">
+                <span class="fids-gate-detail">GATE D12 • DELAYED 45 MIN</span>
+                <span>15:35 EST</span>
+              </div>
+            </div>
+
+            <!-- Card 4: MWAA Accessibility & Security -->
+            <div class="fids-card" data-flight="security" onclick="LexiconWorkbench.playKioskAnnouncement('security')">
+              <div class="fids-card-top">
+                <span class="fids-flight-code">MWAA IAD</span>
+                <span class="fids-dest">CONCOURSE C/D TRANSIT</span>
+                <span class="fids-status-badge badge-cyan">ASSIST ACTIVE</span>
+              </div>
+              <div class="fids-card-bottom">
+                <span class="fids-gate-detail">ALL GATES • 24/7 ASL ASSIST</span>
+                <span>ON DEMAND</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Bilingual Real-Time Caption Ribbon -->
+        <div class="kiosk-caption-ribbon">
+          <div class="caption-meta-row">
+            <div class="caption-channel-label">
+              <span class="telemetry-live-dot"></span>
+              <span>BROADCAST AUDIO &amp; ASL PHONOLOGY ENGINE</span>
+            </div>
+            <div class="caption-telemetry-strip">
+              <span>LATENCY: <strong class="caption-telemetry-highlight">4ms EDGE</strong></span>
+              <span>•</span>
+              <span>STREAM: <strong class="caption-telemetry-highlight">0.82 KB/s</strong></span>
+              <span>•</span>
+              <span>API CLOUD COST: <strong class="caption-telemetry-highlight">$0.00</strong></span>
+              <span>•</span>
+              <span>RATE: <strong class="caption-telemetry-highlight">60 FPS</strong></span>
+            </div>
+          </div>
+
+          <div id="kiosk-spoken-transcript" class="caption-spoken-english">
+            "Attention passengers on United Airlines Flight 2482 to Chicago O'Hare. Your departure gate has changed from Gate C14 to Gate D8. Please board the AeroTrain to Concourse D."
+          </div>
+
+          <div id="kiosk-gloss-stream" class="caption-gloss-row">
+            <span class="caption-gloss-tag active">[ATTENTION]</span>
+            <span class="caption-gloss-tag">[UNITED]</span>
+            <span class="caption-gloss-tag">[FLIGHT 2482]</span>
+            <span class="caption-gloss-tag">[CHICAGO]</span>
+            <span class="caption-gloss-tag">[GATE CHANGE]</span>
+            <span class="caption-gloss-tag">[C14 ➔ D8]</span>
+            <span class="caption-gloss-tag">[AEROTRAIN]</span>
+            <span class="caption-gloss-tag">[GO]</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SORENSON VRS LIVE ESCALATION MODAL -->
+      <div id="sorenson-modal">
+        <div class="sorenson-modal-box">
+          <div class="sorenson-modal-header">
+            <div class="sorenson-brand">
+              <div class="sorenson-logo-square">S</div>
+              <div class="sorenson-brand-text">
+                <h3>SORENSON VIDEO RELAY SERVICE (VRS)</h3>
+                <p>FCC PART 64 TELECOMMUNICATIONS RELAY SERVICE &bull; EMERGENCY HUMAN ESCALATION</p>
+              </div>
+            </div>
+            <button class="top-circle-btn" onclick="LexiconWorkbench.closeSorensonModal()" style="width:28px; height:28px;">✕</button>
+          </div>
+
+          <div class="sorenson-modal-body">
+            <div class="sorenson-video-feed">
+              <div class="sorenson-live-indicator">
+                <span class="sorenson-live-dot"></span>
+                <span>SECURE WEBRTC RELAY &bull; CALL ACTIVE</span>
+              </div>
+              <div style="text-align: center; color: #94a3b8; font-family: var(--font-mono); font-size: 11px;">
+                <div style="font-size: 32px; margin-bottom: 8px;">🧏‍♂️</div>
+                <div style="color: #f1f5f9; font-weight: 700; margin-bottom: 4px;">ROUTED TO RID-CERTIFIED ASL INTERPRETER #4092</div>
+                <div>Washington D.C. Regional Call Center &bull; High Definition 1080p Video</div>
+                <div style="font-size: 9px; color: #64748b; margin-top: 6px;">47 CFR § 64.604 Mandated Emergency Handoff Bridge</div>
+              </div>
+            </div>
+
+            <div class="sorenson-strategic-box">
+              <strong>STRATEGIC SYNERGY WITH SORENSON COMMUNICATIONS (ENABLE VENTURES / JIM SORENSON):</strong>
+              SAMMY is architected to <em>protect and amplify</em> Sorenson's core business, not compete with it. Automated digital twins solve the unstaffed 95% of airport infrastructure (routine flight announcements, boarding calls, wayfinding) where live human interpreters cannot be stationed 24/7. When a passenger requires complex assistance (lost luggage, flight cancellation, medical needs), SAMMY provides an instant one-touch handoff into Sorenson VRS, driving high-margin relay traffic to Sorenson's certified interpreter workforce.
+            </div>
+          </div>
+
+          <div class="sorenson-modal-footer">
+            <button class="sorenson-close-btn" onclick="LexiconWorkbench.closeSorensonModal()">✕ END CALL &amp; RETURN TO KIOSK</button>
+          </div>
+        </div>
+      </div>
+
       <!-- Compact Top Viewport 3D Micro-Dock -->
       <div class="viewport-compact-dock">
         <div class="dock-3d-badge" title="Real-time WebGL 3D Simulation Engine (60 FPS). Click & drag anywhere to rotate 360°, scroll to zoom.">
@@ -3069,7 +3151,6 @@
         <button id="btn-auto-rotate" class="view-cam-btn btn-auto-rotate" onclick="LexiconWorkbench.toggleAutoRotate()" title="Toggle Continuous 360° Camera Turntable Rotation">🔄 360° ORBIT</button>
         <button class="view-cam-btn" data-cam="reset" onclick="LexiconWorkbench.setCameraPreset('reset')" title="Reset Camera">↺</button>
         <div class="dock-divider"></div>
-        <button id="dock-avatar-style-btn" class="view-cam-btn" onclick="AvatarStyleEngine.cycleStyle()" title="Toggle Avatar Model: Realistic Human Agent (MWAA Uniform) / Clay Mannequin / Biomechanics Rig">👤 HUMAN</button>
         <button id="btn-airport-kiosk-dock" class="view-cam-btn btn-kiosk-toggle" onclick="LexiconWorkbench.toggleKioskMode()" title="Toggle Washington Dulles (IAD) Airport Kiosk Simulator (14 CFR § 382.57)">✈️ AIRPORT KIOSK</button>
         <div class="dock-divider pro-only"></div>
         <button class="view-cam-btn pro-only" onclick="LexiconWorkbench.toggleZenMode()" title="Full Viewport Mode (F / Z / ESC)">⛶ MAX</button>
@@ -3088,9 +3169,9 @@
         <button class="view-cam-btn btn-emotion-preset pro-only" data-emotion="wink" onclick="StickmanEmotionEngine.setEmotion('wink')" title="Wink">😉</button>
       </div>
 
-      <div class="dock-prototype-badge-bar pro-only" style="top: 40px; left: 12px;" title="Procedural Digital Twin (Agent Sammy) with MWAA Airport Attendant Uniform, living facial anatomy, and 27-DOF biomechanical IK rig.">
-        <span class="proto-tag">AVATAR</span>
-        <span class="proto-txt">3D Digital Twin (Agent Sammy) · MWAA Uniform &amp; Biomechanical IK</span>
+      <div class="dock-prototype-badge-bar pro-only" style="top: 40px; left: 12px;" title="Facial expressions are test placeholders to humanize the stick figure model. Final production system integrates photorealistic human digital twins with FACS micro-expressions.">
+        <span class="proto-tag">NOTE</span>
+        <span class="proto-txt">Stickman test expressions · Final: Photoreal human</span>
       </div>
 
       <!-- Interactive 3D Gesture Callout (Auto-dismisses on interaction or 5.5s) -->
@@ -3406,184 +3487,6 @@
             <!-- Dynamically populated -->
           </tbody>
         </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- AIRPORT ACCESSIBLE PASSENGER KIOSK OVERLAY (14 CFR § 382.57) -->
-  <div id="airport-kiosk-overlay">
-    <!-- Top Aviation Status Header -->
-    <div class="kiosk-header-bar">
-      <div class="kiosk-header-left">
-        <div class="kiosk-airport-badge">✈️</div>
-        <div class="kiosk-title-cluster">
-          <div class="kiosk-airport-title">
-            <span>WASHINGTON DULLES INTERNATIONAL AIRPORT (IAD)</span>
-            <span id="kiosk-live-clock" class="kiosk-live-clock">14:45:12 EST • UTC-5</span>
-          </div>
-          <div class="kiosk-airport-sub">
-            Metropolitan Washington Airports Authority (MWAA) • Concourse C/D Accessible Station #C14
-          </div>
-        </div>
-      </div>
-
-      <div class="kiosk-header-center">
-        <div class="kiosk-compliance-pill" title="Mandated under 14 CFR § 382.57: U.S. DOT Air Carrier Access Act Requires 25% of all Airport Kiosks to provide Accessible Information & Communications">
-          <span class="telemetry-live-dot" style="background:#10b981;"></span>
-          <span>14 CFR § 382.57 MANDATE COMPLIANT • TITLE III ADA</span>
-        </div>
-      </div>
-
-      <div class="kiosk-header-right">
-        <button class="kiosk-sorenson-btn" onclick="LexiconWorkbench.connectSorensonVRS()" title="Direct Emergency Escalation to Sorenson Video Relay Service (FCC Part 64 Certified Human Interpreter)">
-          <span>🧏</span>
-          <span>CONNECT TO SORENSON VRS</span>
-        </button>
-        <button class="kiosk-exit-btn" onclick="LexiconWorkbench.toggleKioskMode()" title="Exit Kiosk Mode and return to 3D Workbench">
-          ✕ EXIT KIOSK
-        </button>
-      </div>
-    </div>
-
-    <!-- Left Interactive FIDS Board -->
-    <div class="kiosk-fids-panel">
-      <div class="fids-header">
-        <div>
-          <div class="fids-title">
-            <span>✈️</span>
-            <span>CONCOURSE C/D FLIGHT ALERTS</span>
-          </div>
-          <div class="fids-subtitle">UNITED AIRLINES HUB • REAL-TIME FEED</div>
-        </div>
-        <span class="engine-micro-telemetry" style="padding:2px 7px; font-size:7.5px;">LIVE FEED</span>
-      </div>
-
-      <div class="fids-card-list">
-        <!-- Flight 1: UA 2482 Gate Change -->
-        <div class="fids-card active-flight" data-flight="gate_change" onclick="LexiconWorkbench.playKioskAnnouncement('gate_change')">
-          <div class="fids-card-top">
-            <span class="fids-flight-code">UA 2482</span>
-            <span class="fids-dest">CHICAGO O'HARE (ORD)</span>
-            <span class="fids-status-badge badge-amber">GATE CHANGE</span>
-          </div>
-          <div class="fids-card-bottom">
-            <span class="fids-gate-detail">GATE C14 ➔ D8 • TAKE AEROTRAIN</span>
-            <span>14:45 EST</span>
-          </div>
-        </div>
-
-        <!-- Flight 2: UA 1209 Boarding -->
-        <div class="fids-card" data-flight="boarding" onclick="LexiconWorkbench.playKioskAnnouncement('boarding')">
-          <div class="fids-card-top">
-            <span class="fids-flight-code">UA 1209</span>
-            <span class="fids-dest">SAN FRANCISCO (SFO)</span>
-            <span class="fids-status-badge badge-green">NOW BOARDING</span>
-          </div>
-          <div class="fids-card-bottom">
-            <span class="fids-gate-detail">GATE C3 • GROUPS 1-3</span>
-            <span>15:10 EST</span>
-          </div>
-        </div>
-
-        <!-- Flight 3: UA 1455 Weather Delay -->
-        <div class="fids-card" data-flight="delay" onclick="LexiconWorkbench.playKioskAnnouncement('delay')">
-          <div class="fids-card-top">
-            <span class="fids-flight-code">UA 1455</span>
-            <span class="fids-dest">DENVER INTL (DEN)</span>
-            <span class="fids-status-badge badge-red">WEATHER DELAY</span>
-          </div>
-          <div class="fids-card-bottom">
-            <span class="fids-gate-detail">GATE D12 • DELAYED 45 MIN</span>
-            <span>15:35 EST</span>
-          </div>
-        </div>
-
-        <!-- Card 4: MWAA Accessibility & Security -->
-        <div class="fids-card" data-flight="security" onclick="LexiconWorkbench.playKioskAnnouncement('security')">
-          <div class="fids-card-top">
-            <span class="fids-flight-code">MWAA IAD</span>
-            <span class="fids-dest">CONCOURSE C/D TRANSIT</span>
-            <span class="fids-status-badge badge-cyan">ASSIST ACTIVE</span>
-          </div>
-          <div class="fids-card-bottom">
-            <span class="fids-gate-detail">ALL GATES • 24/7 ASL ASSIST</span>
-            <span>ON DEMAND</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bottom Bilingual Real-Time Caption Ribbon -->
-    <div class="kiosk-caption-ribbon">
-      <div class="caption-meta-row">
-        <div class="caption-channel-label">
-          <span class="telemetry-live-dot"></span>
-          <span>BROADCAST AUDIO &amp; ASL PHONOLOGY ENGINE</span>
-        </div>
-        <div class="caption-telemetry-strip">
-          <span>LATENCY: <strong class="caption-telemetry-highlight">4ms EDGE</strong></span>
-          <span>•</span>
-          <span>STREAM: <strong class="caption-telemetry-highlight">0.82 KB/s</strong></span>
-          <span>•</span>
-          <span>API CLOUD COST: <strong class="caption-telemetry-highlight">$0.00</strong></span>
-          <span>•</span>
-          <span>RATE: <strong class="caption-telemetry-highlight">60 FPS</strong></span>
-        </div>
-      </div>
-
-      <div id="kiosk-spoken-transcript" class="caption-spoken-english">
-        "Attention passengers on United Airlines Flight 2482 to Chicago O'Hare. Your departure gate has changed from Gate C14 to Gate D8. Please board the AeroTrain to Concourse D."
-      </div>
-
-      <div id="kiosk-gloss-stream" class="caption-gloss-row">
-        <span class="caption-gloss-tag active">[ATTENTION]</span>
-        <span class="caption-gloss-tag">[UNITED]</span>
-        <span class="caption-gloss-tag">[FLIGHT 2482]</span>
-        <span class="caption-gloss-tag">[CHICAGO]</span>
-        <span class="caption-gloss-tag">[GATE CHANGE]</span>
-        <span class="caption-gloss-tag">[C14 ➔ D8]</span>
-        <span class="caption-gloss-tag">[AEROTRAIN]</span>
-        <span class="caption-gloss-tag">[GO]</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- SORENSON VRS LIVE ESCALATION MODAL -->
-  <div id="sorenson-modal">
-    <div class="sorenson-modal-box">
-      <div class="sorenson-modal-header">
-        <div class="sorenson-brand">
-          <div class="sorenson-logo-square">S</div>
-          <div class="sorenson-brand-text">
-            <h3>SORENSON VIDEO RELAY SERVICE (VRS)</h3>
-            <p>FCC PART 64 TELECOMMUNICATIONS RELAY SERVICE &bull; EMERGENCY HUMAN ESCALATION</p>
-          </div>
-        </div>
-        <button class="top-circle-btn" onclick="LexiconWorkbench.closeSorensonModal()" style="width:28px; height:28px;">✕</button>
-      </div>
-
-      <div class="sorenson-modal-body">
-        <div class="sorenson-video-feed">
-          <div class="sorenson-live-indicator">
-            <span class="sorenson-live-dot"></span>
-            <span>SECURE WEBRTC RELAY &bull; CALL ACTIVE</span>
-          </div>
-          <div style="text-align: center; color: #94a3b8; font-family: var(--font-mono); font-size: 11px;">
-            <div style="font-size: 32px; margin-bottom: 8px;">🧏‍♂️</div>
-            <div style="color: #f1f5f9; font-weight: 700; margin-bottom: 4px;">ROUTED TO RID-CERTIFIED ASL INTERPRETER #4092</div>
-            <div>Washington D.C. Regional Call Center &bull; High Definition 1080p Video</div>
-            <div style="font-size: 9px; color: #64748b; margin-top: 6px;">47 CFR § 64.604 Mandated Emergency Handoff Bridge</div>
-          </div>
-        </div>
-
-        <div class="sorenson-strategic-box">
-          <strong>STRATEGIC SYNERGY WITH SORENSON COMMUNICATIONS (ENABLE VENTURES / JIM SORENSON):</strong>
-          SAMMY is architected to <em>protect and amplify</em> Sorenson's core business, not compete with it. Automated digital twins solve the unstaffed 95% of airport infrastructure (routine flight announcements, boarding calls, wayfinding) where live human interpreters cannot be stationed 24/7. When a passenger requires complex assistance (lost luggage, flight cancellation, medical needs), SAMMY provides an instant one-touch handoff into Sorenson VRS, driving high-margin relay traffic to Sorenson's certified interpreter workforce.
-        </div>
-      </div>
-
-      <div class="sorenson-modal-footer">
-        <button class="sorenson-close-btn" onclick="LexiconWorkbench.closeSorensonModal()">✕ END CALL &amp; RETURN TO KIOSK</button>
       </div>
     </div>
   </div>
@@ -4837,11 +4740,11 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           item.sprite.material.opacity = 0.0;
           item.sphereMat.color.setHex(item.baseColor);
           item.sphereMat.emissive.setHex(item.baseColor);
-          item.sphereMat.emissiveIntensity = 0.35;
-          item.sphereMat.opacity = 0.65;
-          item.ringMat.color.setHex(item.baseColor);
-          item.ringMat.opacity = 0.35;
+          item.sphereMat.emissiveIntensity = 0.0;
+          item.sphereMat.opacity = 0.15;
+          item.ringMat.opacity = 0.0;
           item.node.scale.set(1.0, 1.0, 1.0);
+          item._wasHighlighted = false;
         }
       },
 
@@ -4866,17 +4769,24 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
             item.sprite.material.opacity = 0.0;
             item.sphereMat.color.setHex(item.baseColor);
             item.sphereMat.emissive.setHex(item.baseColor);
-            item.sphereMat.emissiveIntensity = 0.35;
-            item.sphereMat.opacity = 0.65;
-            item.ringMat.color.setHex(item.baseColor);
-            item.ringMat.opacity = 0.35;
+            item.sphereMat.emissiveIntensity = 0.0;
+            item.sphereMat.opacity = 0.15;
+            item.ringMat.opacity = 0.0;
             item.node.scale.set(1.0, 1.0, 1.0);
+            item._wasHighlighted = false;
           }
         }
       },
 
       update(time, effR, wristR, effL, wristL) {
         if (!this.group || !this.visible) return;
+
+        const isEditingLoci = (typeof LexiconWorkbench !== 'undefined' && LexiconWorkbench.isProMode && LexiconWorkbench.currentCategory === 'locations');
+        if (!isEditingLoci && !isPlayingSignMotion) {
+          this.group.visible = false;
+          return;
+        }
+        this.group.visible = true;
 
         // Multi-point proximity detection: checks both fingertips and wrists of both hands
         let nearestKey = null;
@@ -7047,7 +6957,6 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
       texture: null,
       headMat: null,
       currentEmotion: 'happy',
-      style: 'human', // 'human' (photorealistic human digital twin) | 'stickman' (minimalist clay)
       isBlinking: false,
       blinkTimer: 0,
       nextBlinkInterval: 3.5,
@@ -7064,8 +6973,8 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         this.headMat = new THREE.MeshStandardMaterial({
           color: 0xffffff,
           map: this.texture,
-          roughness: 0.38,
-          metalness: 0.02
+          roughness: 0.28,
+          metalness: 0.04
         });
 
         this.draw();
@@ -7097,382 +7006,223 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         const ctx = this.ctx;
         const w = this.canvas.width;
         const h = this.canvas.height;
-        const cx = w * 0.25; // 256 (+Z anterior pole on sphere UV)
+
+        // Base porcelain white skin background
+        ctx.fillStyle = '#fcfcfd';
+        ctx.fillRect(0, 0, w, h);
+
+        // Front Face Center on Sphere UV (+Z anterior pole)
+        const cx = w * 0.25; // 256
         const cy = h * 0.50; // 256
-        const eyeSpacing = 44;
+
+        const eyeSpacing = 42;
         const leftEyeX = cx - eyeSpacing;
         const rightEyeX = cx + eyeSpacing;
-        const eyeY = cy - 24;
+        const eyeY = cy - 28;
+
         const em = this.currentEmotion;
 
-        if (this.style === 'human') {
-          // --- PHOTOREALISTIC HUMAN DIGITAL TWIN FACIAL ENGINE ---
-          // Base natural warm human skin tone
-          ctx.fillStyle = '#f2ceba';
-          ctx.fillRect(0, 0, w, h);
+        // 1. Eyebrows
+        ctx.strokeStyle = '#18181b';
+        ctx.fillStyle = '#18181b';
+        ctx.lineWidth = 4.5;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
 
-          // Subtle radial skin illumination & cheek highlights
-          const gradFace = ctx.createRadialGradient(cx, cy, 30, cx, cy, 180);
-          gradFace.addColorStop(0, 'rgba(255, 238, 228, 0.55)');
-          gradFace.addColorStop(0.6, 'rgba(242, 206, 186, 0.25)');
-          gradFace.addColorStop(1, 'rgba(215, 172, 148, 0.45)');
-          ctx.fillStyle = gradFace;
-          ctx.fillRect(0, 0, w, h);
-
-          // Natural cheek blush
-          [-1, 1].forEach(side => {
-            const chX = cx + side * 58;
-            const chY = cy + 18;
-            const gradCheek = ctx.createRadialGradient(chX, chY, 4, chX, chY, 38);
-            gradCheek.addColorStop(0, 'rgba(235, 140, 130, 0.32)');
-            gradCheek.addColorStop(1, 'rgba(235, 140, 130, 0)');
-            ctx.fillStyle = gradCheek;
-            ctx.beginPath();
-            ctx.arc(chX, chY, 38, 0, Math.PI * 2);
-            ctx.fill();
-          });
-
-          // 1. Natural Feathered Arched Eyebrows
-          ctx.strokeStyle = '#261a15';
-          ctx.fillStyle = '#261a15';
-          ctx.lineCap = 'round';
-          ctx.lineJoin = 'round';
-
+        if (em === 'happy') {
+          // Cheerful arched brows
           [-1, 1].forEach(side => {
             const bx = cx + side * eyeSpacing;
-            let by = eyeY - 24;
-            let arch = -12;
-            let tilt = side * 3;
-
-            if (em === 'surprised') { by -= 10; arch = -16; }
-            else if (em === 'happy') { by -= 4; arch = -14; }
-            else if (em === 'question') { by -= 2; tilt = -side * 6; arch = -8; }
-            else if (em === 'emphatic') { by += 4; tilt = side * 5; arch = -6; }
-            else if (em === 'somber') { tilt = -side * 8; }
-
             ctx.beginPath();
-            ctx.lineWidth = 5.5;
-            ctx.moveTo(bx - side * 18, by + tilt);
-            ctx.quadraticCurveTo(bx, by + arch, bx + side * 18, by - tilt * 0.5);
+            ctx.arc(bx, eyeY - 26, 18, Math.PI * 1.15, Math.PI * 1.85);
             ctx.stroke();
-
-            // Hair strand micro-feathering
-            ctx.lineWidth = 2.2;
-            for (let i = -14; i <= 14; i += 4) {
-              const hx = bx + i;
-              const hy = by + arch * (1 - Math.pow(i / 16, 2)) * 0.7;
-              ctx.beginPath();
-              ctx.moveTo(hx, hy + 3);
-              ctx.lineTo(hx + side * 2.5, hy - 4);
-              ctx.stroke();
-            }
           });
+        } else if (em === 'surprised') {
+          // High raised questioning brows
+          [-1, 1].forEach(side => {
+            const bx = cx + side * eyeSpacing;
+            ctx.beginPath();
+            ctx.arc(bx, eyeY - 32, 20, Math.PI * 1.15, Math.PI * 1.85);
+            ctx.stroke();
+          });
+        } else if (em === 'question') {
+          // ASL WH-Question: Furrowed brows angled down toward midline
+          ctx.beginPath();
+          ctx.moveTo(leftEyeX - 18, eyeY - 24);
+          ctx.lineTo(leftEyeX + 16, eyeY - 14);
+          ctx.stroke();
 
-          // 2. Realistic Eyes (Sclera + Limbal Ring + Iris Gradient + Catchlights)
+          ctx.beginPath();
+          ctx.moveTo(rightEyeX - 16, eyeY - 14);
+          ctx.lineTo(rightEyeX + 18, eyeY - 24);
+          ctx.stroke();
+        } else if (em === 'emphatic') {
+          // Strong focused intense horizontal brows
+          ctx.lineWidth = 5.5;
+          ctx.beginPath();
+          ctx.moveTo(leftEyeX - 18, eyeY - 18);
+          ctx.lineTo(leftEyeX + 18, eyeY - 19);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(rightEyeX - 18, eyeY - 19);
+          ctx.lineTo(rightEyeX + 18, eyeY - 18);
+          ctx.stroke();
+        } else if (em === 'somber') {
+          // Empathetic / somber brows (inner raised, outer drooping)
+          ctx.beginPath();
+          ctx.moveTo(leftEyeX - 18, eyeY - 15);
+          ctx.lineTo(leftEyeX + 16, eyeY - 24);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(rightEyeX - 16, eyeY - 24);
+          ctx.lineTo(rightEyeX + 18, eyeY - 15);
+          ctx.stroke();
+        } else if (em === 'wink') {
+          ctx.beginPath();
+          ctx.arc(leftEyeX, eyeY - 24, 18, Math.PI * 1.15, Math.PI * 1.85);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(rightEyeX, eyeY - 28, 18, Math.PI * 1.15, Math.PI * 1.85);
+          ctx.stroke();
+        } else {
+          // Neutral horizontal relaxed brows
+          [-1, 1].forEach(side => {
+            const bx = cx + side * eyeSpacing;
+            ctx.beginPath();
+            ctx.arc(bx, eyeY - 22, 22, Math.PI * 1.25, Math.PI * 1.75);
+            ctx.stroke();
+          });
+        }
+
+        // 2. Eyes
+        if (isBlink) {
+          // Natural blink: closed eye slit
           [-1, 1].forEach(side => {
             const ex = cx + side * eyeSpacing;
-
-            if (isBlink || (em === 'wink' && side === -1)) {
-              // Smooth closed eyelid with eyelash line
-              ctx.lineWidth = 3.5;
-              ctx.strokeStyle = '#2b1b14';
-              ctx.beginPath();
-              ctx.moveTo(ex - 16, eyeY + 2);
-              ctx.quadraticCurveTo(ex, eyeY + 8, ex + 16, eyeY + 2);
-              ctx.stroke();
-
-              ctx.lineWidth = 1.5;
-              ctx.strokeStyle = 'rgba(150, 95, 75, 0.45)';
-              ctx.beginPath();
-              ctx.moveTo(ex - 14, eyeY - 6);
-              ctx.quadraticCurveTo(ex, eyeY - 4, ex + 14, eyeY - 5);
-              ctx.stroke();
-            } else {
-              ctx.save();
-              ctx.beginPath();
-              ctx.moveTo(ex - 18, eyeY);
-              ctx.quadraticCurveTo(ex, eyeY - 14, ex + 18, eyeY);
-              ctx.quadraticCurveTo(ex, eyeY + 12, ex - 18, eyeY);
-              ctx.closePath();
-
-              // Human sclera
-              ctx.fillStyle = '#fcf8f6';
-              ctx.fill();
-
-              // Pink tear duct corner
-              const ductX = (side === -1) ? ex + 17 : ex - 17;
-              ctx.fillStyle = '#efa8a5';
-              ctx.beginPath();
-              ctx.arc(ductX, eyeY, 3.5, 0, Math.PI * 2);
-              ctx.fill();
-
-              ctx.clip();
-
-              // Gaze shifts
-              let gazeY = 0, gazeX = 0;
-              if (em === 'question') { gazeY = -1.5; gazeX = side * 1.5; }
-              else if (em === 'happy') { gazeY = -1; }
-
-              const irisX = ex + gazeX;
-              const irisY = eyeY + gazeY;
-
-              // Iris with Limbal Ring & Deep Gradient
-              const irisGrad = ctx.createRadialGradient(irisX, irisY, 2, irisX, irisY, 11);
-              irisGrad.addColorStop(0, '#60a5fa');   // Luminous cerulean core
-              irisGrad.addColorStop(0.55, '#2563eb'); // Deep oceanic blue
-              irisGrad.addColorStop(0.85, '#1d4ed8');
-              irisGrad.addColorStop(1, '#0f172a');   // Dark limbal ring
-              ctx.fillStyle = irisGrad;
-              ctx.beginPath();
-              ctx.arc(irisX, irisY, 10.5, 0, Math.PI * 2);
-              ctx.fill();
-
-              // Pupil
-              ctx.fillStyle = '#09090b';
-              ctx.beginPath();
-              ctx.arc(irisX, irisY, 4.2, 0, Math.PI * 2);
-              ctx.fill();
-
-              // Living Specular Catchlights (Giving the digital twin consciousness & focus)
-              ctx.fillStyle = '#ffffff';
-              ctx.beginPath();
-              ctx.arc(irisX - 3.0, irisY - 3.0, 2.2, 0, Math.PI * 2);
-              ctx.fill();
-              ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-              ctx.beginPath();
-              ctx.arc(irisX + 2.8, irisY + 2.8, 1.2, 0, Math.PI * 2);
-              ctx.fill();
-
-              ctx.restore();
-
-              // Upper Lash Line
-              ctx.lineWidth = 3.6;
-              ctx.strokeStyle = '#231510';
-              ctx.beginPath();
-              ctx.moveTo(ex - 19, eyeY);
-              ctx.quadraticCurveTo(ex, eyeY - 14, ex + 19, eyeY);
-              ctx.stroke();
-
-              // Upper Eyelid Crease
-              ctx.lineWidth = 1.6;
-              ctx.strokeStyle = 'rgba(145, 90, 70, 0.45)';
-              ctx.beginPath();
-              ctx.moveTo(ex - 16, eyeY - 8);
-              ctx.quadraticCurveTo(ex, eyeY - 18, ex + 16, eyeY - 7);
-              ctx.stroke();
-            }
-          });
-
-          // 3. Subtle Nose Bridge & Soft Nostril Shadows
-          const noseY = cy + 6;
-          ctx.fillStyle = 'rgba(185, 125, 100, 0.25)';
-          ctx.beginPath();
-          ctx.ellipse(cx, noseY + 8, 11, 4, 0, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = 'rgba(95, 45, 30, 0.45)';
-          [-1, 1].forEach(side => {
             ctx.beginPath();
-            ctx.arc(cx + side * 6.5, noseY + 8, 1.8, 0, Math.PI * 2);
-            ctx.fill();
-          });
-
-          // 4. Natural Rosy Human Lips
-          const mouthY = cy + 36;
-          if (em === 'happy') {
-            const mw = 32;
-            const mh = 18;
-
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(cx - mw * 0.85, mouthY);
-            ctx.quadraticCurveTo(cx, mouthY - 3, cx + mw * 0.85, mouthY);
-            ctx.quadraticCurveTo(cx, mouthY + mh, cx - mw * 0.85, mouthY);
-            ctx.closePath();
-            ctx.fillStyle = '#451a1a';
-            ctx.fill();
-            ctx.clip();
-
-            ctx.fillStyle = '#fdfdfd';
-            ctx.fillRect(cx - mw * 0.8, mouthY - 4, mw * 1.6, 9);
-            ctx.strokeStyle = 'rgba(0,0,0,0.12)';
-            ctx.lineWidth = 1;
-            [-10, 0, 10].forEach(tx => {
-              ctx.beginPath();
-              ctx.moveTo(cx + tx, mouthY);
-              ctx.lineTo(cx + tx, mouthY + 7);
-              ctx.stroke();
-            });
-            ctx.restore();
-
-            // Upper lip with Cupid's bow
-            ctx.fillStyle = '#c76e73';
-            ctx.beginPath();
-            ctx.moveTo(cx - mw, mouthY);
-            ctx.quadraticCurveTo(cx - mw * 0.4, mouthY - 5, cx - 4, mouthY - 4);
-            ctx.lineTo(cx, mouthY - 2.5);
-            ctx.lineTo(cx + 4, mouthY - 4);
-            ctx.quadraticCurveTo(cx + mw * 0.4, mouthY - 5, cx + mw, mouthY);
-            ctx.quadraticCurveTo(cx, mouthY + 1, cx - mw, mouthY);
-            ctx.closePath();
-            ctx.fill();
-
-            // Lower lip
-            ctx.fillStyle = '#d67c82';
-            ctx.beginPath();
-            ctx.moveTo(cx - mw, mouthY);
-            ctx.quadraticCurveTo(cx, mouthY + mh + 4, cx + mw, mouthY);
-            ctx.quadraticCurveTo(cx, mouthY + mh - 2, cx - mw, mouthY);
-            ctx.closePath();
-            ctx.fill();
-
-          } else if (em === 'question' || em === 'surprised') {
-            ctx.save();
-            ctx.fillStyle = '#4a1d1d';
-            ctx.beginPath();
-            ctx.ellipse(cx, mouthY + 5, 8, 11, 0, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.clip();
-            ctx.fillStyle = '#fdfdfd';
-            ctx.fillRect(cx - 7, mouthY, 14, 5);
-            ctx.restore();
-
-            ctx.strokeStyle = '#c76e73';
-            ctx.lineWidth = 3.5;
-            ctx.beginPath();
-            ctx.ellipse(cx, mouthY + 5, 9.5, 12.5, 0, 0, Math.PI * 2);
+            ctx.arc(ex, eyeY, 14, Math.PI * 0.15, Math.PI * 0.85);
             ctx.stroke();
-
-          } else {
-            const mw = 28;
-            ctx.fillStyle = '#bf6a6f';
+          });
+        } else if (em === 'happy') {
+          // Cheerful happy curved crescent eyes (^  ^) matching center reference figure
+          [-1, 1].forEach(side => {
+            const ex = cx + side * eyeSpacing;
+            ctx.lineWidth = 5.5;
             ctx.beginPath();
-            ctx.moveTo(cx - mw, mouthY);
-            ctx.quadraticCurveTo(cx - mw * 0.4, mouthY - 4, cx - 3, mouthY - 3);
-            ctx.lineTo(cx, mouthY - 1.8);
-            ctx.lineTo(cx + 3, mouthY - 3);
-            ctx.quadraticCurveTo(cx + mw * 0.4, mouthY - 4, cx + mw, mouthY);
-            ctx.quadraticCurveTo(cx, mouthY + 1.5, cx - mw, mouthY);
-            ctx.closePath();
-            ctx.fill();
+            ctx.arc(ex, eyeY + 4, 14, Math.PI * 1.15, Math.PI * 1.85);
+            ctx.stroke();
+          });
+        } else if (em === 'wink') {
+          // Left winking (^), right round dot eye (•)
+          ctx.lineWidth = 5.5;
+          ctx.beginPath();
+          ctx.arc(leftEyeX, eyeY + 4, 14, Math.PI * 1.15, Math.PI * 1.85);
+          ctx.stroke();
 
-            ctx.fillStyle = '#cb757a';
+          ctx.beginPath();
+          ctx.arc(rightEyeX, eyeY, 8.5, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (em === 'surprised') {
+          // Wide open round surprised eyes matching right reference figure
+          [-1, 1].forEach(side => {
+            const ex = cx + side * eyeSpacing;
             ctx.beginPath();
-            ctx.moveTo(cx - mw, mouthY);
-            ctx.quadraticCurveTo(cx, mouthY + 10, cx + mw, mouthY);
-            ctx.quadraticCurveTo(cx, mouthY + 2, cx - mw, mouthY);
-            ctx.closePath();
+            ctx.arc(ex, eyeY, 10.5, 0, Math.PI * 2);
             ctx.fill();
+          });
+        } else {
+          // Solid black dot eyes matching left reference figure
+          [-1, 1].forEach(side => {
+            const ex = cx + side * eyeSpacing;
+            ctx.beginPath();
+            ctx.arc(ex, eyeY, 8.5, 0, Math.PI * 2);
+            ctx.fill();
+          });
+        }
 
-            ctx.fillStyle = '#8f464b';
-            [-1, 1].forEach(side => {
-              ctx.beginPath();
-              ctx.arc(cx + side * mw, mouthY, 1.4, 0, Math.PI * 2);
-              ctx.fill();
-            });
-          }
+        // 3. Mouth
+        const mouthY = cy + 34;
+
+        if (em === 'happy') {
+          // Iconic Beaming Grin with Teeth Grid (Exact match to center reference character!)
+          const mw = 44; // half width
+          const mh = 36; // height
+          ctx.save();
+          ctx.fillStyle = '#ffffff';
+          ctx.strokeStyle = '#18181b';
+          ctx.lineWidth = 6;
+
+          // Outer D-shaped mouth outline
+          ctx.beginPath();
+          ctx.moveTo(cx - mw, mouthY);
+          ctx.quadraticCurveTo(cx, mouthY - 4, cx + mw, mouthY);
+          ctx.quadraticCurveTo(cx + mw * 0.95, mouthY + mh, cx, mouthY + mh);
+          ctx.quadraticCurveTo(cx - mw * 0.95, mouthY + mh, cx - mw, mouthY);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          // Clip to mouth interior to draw vertical tooth grid lines
+          ctx.clip();
+          ctx.lineWidth = 3.5;
+          [-26, -13, 0, 13, 26].forEach(tx => {
+            ctx.beginPath();
+            ctx.moveTo(cx + tx, mouthY - 10);
+            ctx.lineTo(cx + tx, mouthY + mh + 10);
+            ctx.stroke();
+          });
+          // Horizontal bite line
+          ctx.beginPath();
+          ctx.moveTo(cx - mw - 5, mouthY + mh * 0.5);
+          ctx.lineTo(cx + mw + 5, mouthY + mh * 0.5);
+          ctx.stroke();
+          ctx.restore();
+
+        } else if (em === 'surprised') {
+          // Open round 'O' mouth (Exact match to right reference character!)
+          ctx.fillStyle = '#18181b';
+          ctx.beginPath();
+          ctx.ellipse(cx, mouthY + 12, 13, 17, 0, 0, Math.PI * 2);
+          ctx.fill();
+
+        } else if (em === 'question') {
+          // Inquiring subtle open oval
+          ctx.fillStyle = '#18181b';
+          ctx.beginPath();
+          ctx.ellipse(cx, mouthY + 8, 10, 13, 0, 0, Math.PI * 2);
+          ctx.fill();
+
+        } else if (em === 'emphatic') {
+          // Resolute firm horizontal mouth line
+          ctx.lineWidth = 5.5;
+          ctx.beginPath();
+          ctx.moveTo(cx - 24, mouthY + 10);
+          ctx.lineTo(cx + 24, mouthY + 10);
+          ctx.stroke();
+
+        } else if (em === 'somber') {
+          // Downturned somber mouth curve
+          ctx.lineWidth = 4.5;
+          ctx.beginPath();
+          ctx.moveTo(cx - 24, mouthY + 18);
+          ctx.quadraticCurveTo(cx, mouthY + 6, cx + 24, mouthY + 18);
+          ctx.stroke();
+
+        } else if (em === 'wink') {
+          // Playful smile curve
+          ctx.lineWidth = 5;
+          ctx.beginPath();
+          ctx.moveTo(cx - 28, mouthY - 2);
+          ctx.quadraticCurveTo(cx, mouthY + 22, cx + 32, mouthY + 6);
+          ctx.stroke();
 
         } else {
-          // --- CLASSIC SCANDINAVIAN MINIMALIST CLAY STICKMAN FACE ---
-          ctx.fillStyle = '#fcfcfd';
-          ctx.fillRect(0, 0, w, h);
-
-          ctx.strokeStyle = '#18181b';
-          ctx.fillStyle = '#18181b';
+          // Neutral gentle smile (like left reference character)
           ctx.lineWidth = 4.5;
-          ctx.lineCap = 'round';
-          ctx.lineJoin = 'round';
-
-          if (em === 'happy') {
-            [-1, 1].forEach(side => {
-              const bx = cx + side * eyeSpacing;
-              ctx.beginPath();
-              ctx.arc(bx, eyeY - 26, 18, Math.PI * 1.15, Math.PI * 1.85);
-              ctx.stroke();
-            });
-          } else if (em === 'surprised') {
-            [-1, 1].forEach(side => {
-              const bx = cx + side * eyeSpacing;
-              ctx.beginPath();
-              ctx.arc(bx, eyeY - 32, 20, Math.PI * 1.15, Math.PI * 1.85);
-              ctx.stroke();
-            });
-          } else if (em === 'question') {
-            ctx.beginPath();
-            ctx.moveTo(leftEyeX - 18, eyeY - 24);
-            ctx.lineTo(leftEyeX + 16, eyeY - 14);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(rightEyeX - 16, eyeY - 14);
-            ctx.lineTo(rightEyeX + 18, eyeY - 24);
-            ctx.stroke();
-          } else {
-            [-1, 1].forEach(side => {
-              const bx = cx + side * eyeSpacing;
-              ctx.beginPath();
-              ctx.arc(bx, eyeY - 22, 22, Math.PI * 1.25, Math.PI * 1.75);
-              ctx.stroke();
-            });
-          }
-
-          if (isBlink) {
-            [-1, 1].forEach(side => {
-              const ex = cx + side * eyeSpacing;
-              ctx.beginPath();
-              ctx.arc(ex, eyeY, 14, Math.PI * 0.15, Math.PI * 0.85);
-              ctx.stroke();
-            });
-          } else if (em === 'happy') {
-            [-1, 1].forEach(side => {
-              const ex = cx + side * eyeSpacing;
-              ctx.lineWidth = 5.5;
-              ctx.beginPath();
-              ctx.arc(ex, eyeY + 4, 14, Math.PI * 1.15, Math.PI * 1.85);
-              ctx.stroke();
-            });
-          } else {
-            [-1, 1].forEach(side => {
-              const ex = cx + side * eyeSpacing;
-              ctx.beginPath();
-              ctx.arc(ex, eyeY, 8.5, 0, Math.PI * 2);
-              ctx.fill();
-            });
-          }
-
-          const mouthY = cy + 34;
-          if (em === 'happy') {
-            const mw = 44, mh = 36;
-            ctx.save();
-            ctx.fillStyle = '#ffffff';
-            ctx.strokeStyle = '#18181b';
-            ctx.lineWidth = 6;
-            ctx.beginPath();
-            ctx.moveTo(cx - mw, mouthY);
-            ctx.quadraticCurveTo(cx, mouthY - 4, cx + mw, mouthY);
-            ctx.quadraticCurveTo(cx + mw * 0.95, mouthY + mh, cx, mouthY + mh);
-            ctx.quadraticCurveTo(cx - mw * 0.95, mouthY + mh, cx - mw, mouthY);
-            ctx.closePath();
-            ctx.fill();
-            ctx.stroke();
-            ctx.clip();
-            ctx.lineWidth = 3.5;
-            [-26, -13, 0, 13, 26].forEach(tx => {
-              ctx.beginPath();
-              ctx.moveTo(cx + tx, mouthY - 10);
-              ctx.lineTo(cx + tx, mouthY + mh + 10);
-              ctx.stroke();
-            });
-            ctx.beginPath();
-            ctx.moveTo(cx - mw - 5, mouthY + mh * 0.5);
-            ctx.lineTo(cx + mw + 5, mouthY + mh * 0.5);
-            ctx.stroke();
-            ctx.restore();
-          } else {
-            ctx.lineWidth = 4.5;
-            ctx.beginPath();
-            ctx.moveTo(cx - 26, mouthY);
-            ctx.quadraticCurveTo(cx, mouthY + 14, cx + 26, mouthY);
-            ctx.stroke();
-          }
+          ctx.beginPath();
+          ctx.moveTo(cx - 26, mouthY);
+          ctx.quadraticCurveTo(cx, mouthY + 14, cx + 26, mouthY);
+          ctx.stroke();
         }
 
         if (this.texture) this.texture.needsUpdate = true;
@@ -7483,14 +7233,14 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         if (!this.isBlinking && this.blinkTimer > this.nextBlinkInterval) {
           this.isBlinking = true;
           this.blinkDurationTimer = 0;
-          this.draw(true);
+          this.draw(true); // Eyes closed blink
         } else if (this.isBlinking) {
           this.blinkDurationTimer += dt;
           if (this.blinkDurationTimer > 0.12) {
             this.isBlinking = false;
             this.blinkTimer = 0;
             this.nextBlinkInterval = 3.2 + Math.random() * 2.8;
-            this.draw(false);
+            this.draw(false); // Eyes open
           }
         }
       }
@@ -7627,7 +7377,6 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
       metalness: 0.04,
       flatShading: false
     });
-    window.stickmanMat = stickmanMat;
 
     const stickmanAccentMat = new THREE.MeshStandardMaterial({
       color: 0x38bdf8,
@@ -7637,62 +7386,10 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
       metalness: 0.4
     });
 
-    // --- PHOTOREALISTIC HUMAN DIGITAL TWIN MATERIALS (AIRPORT AGENT SAMMY) ---
-    const humanSkinMat = new THREE.MeshStandardMaterial({
-      color: 0xf0cbb5, // Warm natural human skin
-      roughness: 0.48,
-      metalness: 0.0,
-      emissive: 0x3d2319,
-      emissiveIntensity: 0.06
-    });
-    window.humanSkinMat = humanSkinMat;
-
-    const uniformBlazerMat = new THREE.MeshStandardMaterial({
-      color: 0x1e293b, // Tailored airline navy blazer wool
-      roughness: 0.68,
-      metalness: 0.02
-    });
-    window.uniformBlazerMat = uniformBlazerMat;
-
-    const shirtWhiteMat = new THREE.MeshStandardMaterial({
-      color: 0xf8fafc, // Crisp collared dress shirt
-      roughness: 0.35,
-      metalness: 0.0
-    });
-    window.shirtWhiteMat = shirtWhiteMat;
-
-    const tieBurgundyMat = new THREE.MeshStandardMaterial({
-      color: 0x881337, // Rich silk burgundy tie
-      roughness: 0.30,
-      metalness: 0.15
-    });
-    window.tieBurgundyMat = tieBurgundyMat;
-
-    const badgeGoldMat = new THREE.MeshStandardMaterial({
-      color: 0xf59e0b, // Golden metallic MWAA airport badge
-      roughness: 0.22,
-      metalness: 0.85
-    });
-    window.badgeGoldMat = badgeGoldMat;
-
-    const hairDarkMat = new THREE.MeshStandardMaterial({
-      color: 0x221a16, // Natural dark espresso hair
-      roughness: 0.75,
-      metalness: 0.02
-    });
-    window.hairDarkMat = hairDarkMat;
-
-    const shoesBlackMat = new THREE.MeshStandardMaterial({
-      color: 0x09090b, // Polished Oxford leather dress shoes
-      roughness: 0.20,
-      metalness: 0.08
-    });
-    window.shoesBlackMat = shoesBlackMat;
-
     function buildSignerSilhouette(group) {
       StickmanEmotionEngine.init();
 
-      // 1. Pure Smooth Head (Supports Photorealistic Human Face + Cartoon Emotions)
+      // 1. Pure Smooth Spherical Head (Iconic 3D White Stickman Head with Dynamic Emotions)
       const headGeo = new THREE.SphereGeometry(5.2, 48, 36);
       headGeo.scale(0.96, 1.15, 1.02);
       const headMesh = new THREE.Mesh(headGeo, StickmanEmotionEngine.headMat);
@@ -7703,253 +7400,142 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
       group.add(headMesh);
       window.headMesh = headMesh;
 
-      // 1B. Human Head Features (3D Sculpted Hair, 3D Nose, 3D Ears)
-      const humanHeadFeaturesGroup = new THREE.Group();
-      humanHeadFeaturesGroup.name = "humanHeadFeaturesGroup";
-
-      // 3D Sculpted Hair (Crown Volume)
-      const hairCrownGeo = new THREE.SphereGeometry(5.35, 32, 24, 0, Math.PI * 2, 0, Math.PI * 0.58);
-      hairCrownGeo.scale(0.98, 1.14, 1.05);
-      const hairCrown = new THREE.Mesh(hairCrownGeo, hairDarkMat);
-      hairCrown.position.set(0, 0.7, -0.15);
-      humanHeadFeaturesGroup.add(hairCrown);
-
-      // Styled side-part swoosh over forehead
-      const swooshCurve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(-3.8, 3.2, 3.2),
-        new THREE.Vector3(-1.0, 4.2, 3.6),
-        new THREE.Vector3(2.5, 3.6, 3.4),
-        new THREE.Vector3(4.2, 2.0, 2.8)
-      ]);
-      const swooshMesh = new THREE.Mesh(new THREE.TubeGeometry(swooshCurve, 20, 0.75, 12, false), hairDarkMat);
-      humanHeadFeaturesGroup.add(swooshMesh);
-
-      // Sideburns
-      [-1, 1].forEach(side => {
-        const sbCurve = new THREE.CatmullRomCurve3([
-          new THREE.Vector3(side * 4.6, 1.5, 0.8),
-          new THREE.Vector3(side * 4.7, -0.8, 0.6)
-        ]);
-        const sbMesh = new THREE.Mesh(new THREE.TubeGeometry(sbCurve, 8, 0.45, 10, false), hairDarkMat);
-        humanHeadFeaturesGroup.add(sbMesh);
-      });
-
-      // 3D Anatomical Nose (Bridge, Dorsal Ridge, and Nostril Bulbs)
-      const noseCurve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(0, 0.8, 4.8),
-        new THREE.Vector3(0, -0.4, 5.35),
-        new THREE.Vector3(0, -1.3, 5.45)
-      ]);
-      const noseBridge = new THREE.Mesh(new THREE.TubeGeometry(noseCurve, 12, 0.48, 12, false), humanSkinMat);
-      humanHeadFeaturesGroup.add(noseBridge);
-
-      [-1, 1].forEach(side => {
-        const alarGeo = new THREE.SphereGeometry(0.38, 12, 12);
-        alarGeo.scale(1.0, 0.8, 1.1);
-        const alarMesh = new THREE.Mesh(alarGeo, humanSkinMat);
-        alarMesh.position.set(side * 0.55, -1.35, 5.15);
-        humanHeadFeaturesGroup.add(alarMesh);
-      });
-
-      // 3D Anatomical Ears
-      [-1, 1].forEach(side => {
-        const earGeo = new THREE.TorusGeometry(0.95, 0.28, 12, 20, Math.PI * 1.35);
-        earGeo.scale(0.85, 1.35, 0.65);
-        const earMesh = new THREE.Mesh(earGeo, humanSkinMat);
-        earMesh.position.set(side * 4.85, -0.4, 0.2);
-        earMesh.rotation.set(0, side * 0.35, side * -0.15);
-        humanHeadFeaturesGroup.add(earMesh);
-      });
-
-      headMesh.add(humanHeadFeaturesGroup);
-      window.humanHeadFeaturesGroup = humanHeadFeaturesGroup;
-
       // 2. Slender Neck Column
       const neckGeo = new THREE.CylinderGeometry(1.65, 2.3, 3.2, 32);
-      const neckMesh = new THREE.Mesh(neckGeo, humanSkinMat);
+      const neckMesh = new THREE.Mesh(neckGeo, stickmanMat);
       neckMesh.position.set(0.0, 12.0, 0.4);
       neckMesh.castShadow = true;
       neckMesh.receiveShadow = true;
       neckMesh.raycast = () => {};
       group.add(neckMesh);
-      window.neckMesh = neckMesh;
 
-      // 3. Torso (Uniform Blazer)
+      // 3. Smooth Pear-Shaped Stickman Torso (Continuous Organic Curves from Chest to Hips)
       const torsoCurve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(0.01, -7.2, 0.0),
+        new THREE.Vector3(0.01, -7.2, 0.0), // Crotch base
         new THREE.Vector3(3.8, -6.8, 0.0),
-        new THREE.Vector3(6.0, -4.5, 0.0),
-        new THREE.Vector3(6.2, -1.5, 0.0),
+        new THREE.Vector3(6.0, -4.5, 0.0), // Hips
+        new THREE.Vector3(6.2, -1.5, 0.0), // Belly / Waist
         new THREE.Vector3(5.7, 1.5, 0.0),
-        new THREE.Vector3(5.2, 4.5, 0.0),
-        new THREE.Vector3(4.8, 7.5, 0.0),
-        new THREE.Vector3(4.0, 9.5, 0.0),
-        new THREE.Vector3(2.3, 10.5, 0.0)
+        new THREE.Vector3(5.2, 4.5, 0.0),  // Lower chest
+        new THREE.Vector3(4.8, 7.5, 0.0),  // Upper chest
+        new THREE.Vector3(4.0, 9.5, 0.0),  // Clavicle level
+        new THREE.Vector3(2.3, 10.5, 0.0)  // Neck base
       ]);
       const torsoPts = torsoCurve.getPoints(36).map(p => new THREE.Vector2(p.x, p.y));
       const torsoGeo = new THREE.LatheGeometry(torsoPts, 40);
       torsoGeo.scale(1.18, 1.0, 0.88);
-      const torsoMesh = new THREE.Mesh(torsoGeo, uniformBlazerMat);
+      const torsoMesh = new THREE.Mesh(torsoGeo, stickmanMat);
       torsoMesh.position.set(0.0, 0.0, 0.2);
       torsoMesh.castShadow = true;
       torsoMesh.receiveShadow = true;
       torsoMesh.raycast = () => {};
       group.add(torsoMesh);
-      window.torsoMesh = torsoMesh;
 
-      // 3B. Uniform Clothing Details (Collar, Tie, Lapels, Badge)
-      const uniformClothingGroup = new THREE.Group();
-      uniformClothingGroup.name = "uniformClothingGroup";
-
-      // White Collared Shirt V-tips
+      // 4. Natural Proportional Shoulders (Directly adjacent to neck and torso, no wide pipes)
       [-1, 1].forEach(side => {
-        const collarCurve = new THREE.CatmullRomCurve3([
-          new THREE.Vector3(side * 1.2, 11.2, 1.8),
-          new THREE.Vector3(side * 2.8, 9.8, 2.2),
-          new THREE.Vector3(side * 1.6, 8.6, 2.6)
-        ]);
-        const collarMesh = new THREE.Mesh(new THREE.TubeGeometry(collarCurve, 10, 0.38, 10, false), shirtWhiteMat);
-        uniformClothingGroup.add(collarMesh);
-      });
-
-      // Silk Burgundy Tie
-      const tieCurve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(0, 9.6, 2.3),
-        new THREE.Vector3(0, 6.8, 2.6),
-        new THREE.Vector3(0, 3.2, 2.4),
-        new THREE.Vector3(0, 1.0, 2.1)
-      ]);
-      const tieGeo = new THREE.TubeGeometry(tieCurve, 14, 0.62, 10, false);
-      tieGeo.scale(1.4, 1.0, 0.35);
-      const tieMesh = new THREE.Mesh(tieGeo, tieBurgundyMat);
-      uniformClothingGroup.add(tieMesh);
-
-      // Gold Tie Clip
-      const tieClip = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.18, 0.25), badgeGoldMat);
-      tieClip.position.set(0, 5.2, 2.65);
-      uniformClothingGroup.add(tieClip);
-
-      // Tailored Blazer Lapels
-      [-1, 1].forEach(side => {
-        const lapelCurve = new THREE.CatmullRomCurve3([
-          new THREE.Vector3(side * 2.6, 10.4, 1.8),
-          new THREE.Vector3(side * 4.2, 7.8, 2.2),
-          new THREE.Vector3(side * 2.0, 3.2, 2.8)
-        ]);
-        const lapelMesh = new THREE.Mesh(new THREE.TubeGeometry(lapelCurve, 14, 0.82, 12, false), uniformBlazerMat);
-        uniformClothingGroup.add(lapelMesh);
-      });
-
-      // Gold MWAA Airport Attendant Badge on left chest
-      const badgeGeo = new THREE.BoxGeometry(1.8, 1.1, 0.25);
-      const badgeMesh = new THREE.Mesh(badgeGeo, badgeGoldMat);
-      badgeMesh.position.set(3.4, 6.6, 2.8);
-      badgeMesh.rotation.set(-0.15, 0.35, -0.08);
-      uniformClothingGroup.add(badgeMesh);
-
-      group.add(uniformClothingGroup);
-      window.uniformClothingGroup = uniformClothingGroup;
-
-      // 4. Natural Proportional Shoulders
-      window.shoulderMeshes = [];
-      window.clavicleMeshes = [];
-      [-1, 1].forEach(side => {
+        // Deltoid Shoulder Condyle
         const shoulderGeo = new THREE.SphereGeometry(1.85, 24, 24);
         shoulderGeo.scale(1.0, 1.05, 1.0);
-        const shoulderMesh = new THREE.Mesh(shoulderGeo, uniformBlazerMat);
+        const shoulderMesh = new THREE.Mesh(shoulderGeo, stickmanMat);
         shoulderMesh.position.set(side * 7.5, 9.8, 0.5);
-        shoulderMesh.castShadow = true; shoulderMesh.receiveShadow = true; shoulderMesh.raycast = () => {};
+        shoulderMesh.castShadow = true;
+        shoulderMesh.receiveShadow = true;
+        shoulderMesh.raycast = () => {};
         group.add(shoulderMesh);
-        window.shoulderMeshes.push(shoulderMesh);
 
+        // Clavicular Slope Bridge (Smooth gentle slope from neck base to shoulder)
         const bridgeCurve = new THREE.CatmullRomCurve3([
           new THREE.Vector3(side * 1.8, 11.0, 0.4),
           new THREE.Vector3(side * 4.8, 10.4, 0.45),
           new THREE.Vector3(side * 7.5, 9.8, 0.5)
         ]);
         const bridgeGeo = new THREE.TubeGeometry(bridgeCurve, 16, 1.45, 16, false);
-        const bridgeMesh = new THREE.Mesh(bridgeGeo, uniformBlazerMat);
-        bridgeMesh.castShadow = true; bridgeMesh.receiveShadow = true; bridgeMesh.raycast = () => {};
+        const bridgeMesh = new THREE.Mesh(bridgeGeo, stickmanMat);
+        bridgeMesh.castShadow = true;
+        bridgeMesh.receiveShadow = true;
+        bridgeMesh.raycast = () => {};
         group.add(bridgeMesh);
-        window.clavicleMeshes.push(bridgeMesh);
       });
 
-      // 5. Standing Legs & Shoes
-      window.legMeshes = [];
-      window.footMeshes = [];
+      // 5. Full Standing Stickman Legs & Feet (Grounded on Turntable Floor at Y = -19.05)
       [-1, 1].forEach(side => {
+        // Leg Column
         const legCurve = new THREE.CatmullRomCurve3([
           new THREE.Vector3(side * 4.2, -6.5, 0.2),
           new THREE.Vector3(side * 4.2, -12.5, 0.2),
           new THREE.Vector3(side * 4.2, -17.5, 0.4)
         ]);
         const legGeo = new THREE.TubeGeometry(legCurve, 16, 1.75, 16, false);
-        const legMesh = new THREE.Mesh(legGeo, uniformBlazerMat);
-        legMesh.castShadow = true; legMesh.receiveShadow = true; legMesh.raycast = () => {};
+        const legMesh = new THREE.Mesh(legGeo, stickmanMat);
+        legMesh.castShadow = true;
+        legMesh.receiveShadow = true;
+        legMesh.raycast = () => {};
         group.add(legMesh);
-        window.legMeshes.push(legMesh);
 
+        // Cute Rounded Shoe Foot (Firmly resting on mocap turntable)
         const footGeo = new THREE.SphereGeometry(1.9, 24, 20);
         footGeo.scale(0.95, 0.62, 1.85);
-        const footMesh = new THREE.Mesh(footGeo, shoesBlackMat);
+        const footMesh = new THREE.Mesh(footGeo, stickmanMat);
         footMesh.position.set(side * 4.2, -18.65, 1.35);
-        footMesh.castShadow = true; footMesh.receiveShadow = true; footMesh.raycast = () => {};
+        footMesh.castShadow = true;
+        footMesh.receiveShadow = true;
+        footMesh.raycast = () => {};
         group.add(footMesh);
-        window.footMeshes.push(footMesh);
       });
 
-      // 6. Natural Resting Left Arm
+      // 6. Natural Resting Left Arm (Hanging with passive mass and relaxed resting finger drape)
       const staticLeftArmGroup = new THREE.Group();
       staticLeftArmGroup.name = "staticLeftArm";
 
+      // Upper arm hanging naturally along the flank
       const armUpperCurve = new THREE.CatmullRomCurve3([
         new THREE.Vector3(-7.5, 9.8, 0.5),
         new THREE.Vector3(-7.9, 4.2, 0.6),
         new THREE.Vector3(-7.9, -1.2, 0.8)
       ]);
       const armUpperGeo = new THREE.TubeGeometry(armUpperCurve, 14, 1.25, 16, false);
-      const armUpperMesh = new THREE.Mesh(armUpperGeo, uniformBlazerMat);
+      const armUpperMesh = new THREE.Mesh(armUpperGeo, stickmanMat);
       armUpperMesh.castShadow = true; armUpperMesh.receiveShadow = true; armUpperMesh.raycast = () => {};
       staticLeftArmGroup.add(armUpperMesh);
 
-      const elbowSphere = new THREE.Mesh(new THREE.SphereGeometry(1.30, 18, 18), uniformBlazerMat);
+      // Relaxed Elbow joint sphere
+      const elbowSphere = new THREE.Mesh(new THREE.SphereGeometry(1.30, 18, 18), stickmanMat);
       elbowSphere.position.set(-7.9, -1.2, 0.8);
       elbowSphere.castShadow = true; elbowSphere.receiveShadow = true; elbowSphere.raycast = () => {};
       staticLeftArmGroup.add(elbowSphere);
 
+      // Forearm with slight natural carrying angle towards thigh
       const forearmCurve = new THREE.CatmullRomCurve3([
         new THREE.Vector3(-7.9, -1.2, 0.8),
         new THREE.Vector3(-7.6, -6.0, 1.3),
         new THREE.Vector3(-7.2, -10.5, 1.8)
       ]);
       const forearmGeo = new THREE.TubeGeometry(forearmCurve, 14, 1.15, 16, false);
-      const forearmMesh = new THREE.Mesh(forearmGeo, uniformBlazerMat);
+      const forearmMesh = new THREE.Mesh(forearmGeo, stickmanMat);
       forearmMesh.castShadow = true; forearmMesh.receiveShadow = true; forearmMesh.raycast = () => {};
       staticLeftArmGroup.add(forearmMesh);
 
-      // White Shirt Cuff Peeking Out
-      const cuffGeo = new THREE.CylinderGeometry(1.22, 1.25, 0.9, 16);
-      const cuffMesh = new THREE.Mesh(cuffGeo, shirtWhiteMat);
-      cuffMesh.position.set(-7.25, -9.8, 1.75);
-      cuffMesh.rotation.set(0.18, 0.25, -0.12);
-      staticLeftArmGroup.add(cuffMesh);
-
-      const wristSphere = new THREE.Mesh(new THREE.SphereGeometry(1.10, 16, 16), humanSkinMat);
+      // Relaxed Wrist condyle
+      const wristSphere = new THREE.Mesh(new THREE.SphereGeometry(1.10, 16, 16), stickmanMat);
       wristSphere.position.set(-7.2, -10.5, 1.8);
       wristSphere.castShadow = true; wristSphere.receiveShadow = true; wristSphere.raycast = () => {};
       staticLeftArmGroup.add(wristSphere);
 
+      // Natural Human Hand in Functional Resting Pose (Position of Rest)
       const handRestGroup = new THREE.Group();
       handRestGroup.position.set(-7.2, -10.5, 1.8);
+      // Slight inward pronation facing the thigh
       handRestGroup.rotation.set(0.18, 0.25, -0.12);
 
+      // Palm body
       const palmRestGeo = new THREE.SphereGeometry(1.25, 18, 18);
       palmRestGeo.scale(0.85, 1.25, 0.75);
-      const palmRestMesh = new THREE.Mesh(palmRestGeo, humanSkinMat);
+      const palmRestMesh = new THREE.Mesh(palmRestGeo, stickmanMat);
       palmRestMesh.position.set(0.0, -0.9, 0.0);
       palmRestMesh.castShadow = true; palmRestMesh.receiveShadow = true; palmRestMesh.raycast = () => {};
       handRestGroup.add(palmRestMesh);
 
+      // Relaxed Finger Rays (Cascading passive flexion under gravity)
       const fingerRestOffsets = [
         { name: "index", x: 0.35, len: 2.5, curlX: 0.35, curlZ: 0.08 },
         { name: "middle", x: 0.10, len: 2.7, curlX: 0.48, curlZ: 0.04 },
@@ -7957,7 +7543,6 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
         { name: "pinky", x: -0.42, len: 2.1, curlX: 0.70, curlZ: -0.12 }
       ];
 
-      const fMeshes = [];
       fingerRestOffsets.forEach(f => {
         const fCurve = new THREE.CatmullRomCurve3([
           new THREE.Vector3(f.x, -1.8, 0.1),
@@ -7965,34 +7550,25 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           new THREE.Vector3(f.x + f.curlZ, -1.8 - f.len, f.curlX * 1.2)
         ]);
         const fGeo = new THREE.TubeGeometry(fCurve, 10, 0.28, 10, false);
-        const fMesh = new THREE.Mesh(fGeo, humanSkinMat);
+        const fMesh = new THREE.Mesh(fGeo, stickmanMat);
         fMesh.castShadow = true; fMesh.receiveShadow = true; fMesh.raycast = () => {};
         handRestGroup.add(fMesh);
-        fMeshes.push(fMesh);
       });
 
+      // Relaxed Thumb (Resting gently semi-opposed against index side)
       const thumbCurve = new THREE.CatmullRomCurve3([
         new THREE.Vector3(0.55, -0.5, 0.15),
         new THREE.Vector3(0.75, -1.2, 0.45),
         new THREE.Vector3(0.55, -2.0, 0.65)
       ]);
       const thumbGeo = new THREE.TubeGeometry(thumbCurve, 10, 0.32, 10, false);
-      const thumbMesh = new THREE.Mesh(thumbGeo, humanSkinMat);
+      const thumbMesh = new THREE.Mesh(thumbGeo, stickmanMat);
       thumbMesh.castShadow = true; thumbMesh.receiveShadow = true; thumbMesh.raycast = () => {};
       handRestGroup.add(thumbMesh);
 
       staticLeftArmGroup.add(handRestGroup);
       group.add(staticLeftArmGroup);
       window.staticLeftArmGroup = staticLeftArmGroup;
-
-      window.staticLeftArmMeshes = {
-        upper: armUpperMesh,
-        elbow: elbowSphere,
-        forearm: forearmMesh,
-        cuff: cuffMesh,
-        wrist: wristSphere,
-        hand: [palmRestMesh, ...fMeshes, thumbMesh]
-      };
     }
     buildSignerSilhouette(silhouetteGroup);
     
@@ -8835,7 +8411,7 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
     // Distinctive contrasting palettes across fingers and dominant (Right) vs non-dominant (Left) hands
     // =========================================================================
     const HandColorEngine = {
-      currentMode: 'skin', // 'skin' | 'contrast' | 'dual' | 'mono'
+      currentMode: 'contrast', // 'contrast' | 'dual' | 'mono'
       materials: null,
 
       init() {
@@ -8854,62 +8430,41 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           jointL: new THREE.MeshStandardMaterial({ color: 0xff6d00, roughness: 0.88, metalness: 0.0 }),
           muscleL: new THREE.MeshStandardMaterial({ color: 0xff9100, roughness: 0.12, metalness: 0.04, transparent: true, opacity: 0.16, depthWrite: false }),
 
-          // 3. Multi-Finger Hyper-Vibrant Matte Clay
+          // 3. Multi-Finger Hyper-Vibrant Matte Clay (Pure velvety non-glossy clay, emissive depth, zero ghosting)
           fingers: {
             thm: {
-              bone: new THREE.MeshStandardMaterial({ color: 0xffaa00, emissive: 0xff7700, emissiveIntensity: 0.18, roughness: 0.98, metalness: 0.0 }),
+              bone: new THREE.MeshStandardMaterial({ color: 0xffaa00, emissive: 0xff7700, emissiveIntensity: 0.18, roughness: 0.98, metalness: 0.0 }), // Neon Amber Gold Clay
               joint: new THREE.MeshStandardMaterial({ color: 0xff6600, roughness: 0.95, metalness: 0.0 }),
-              muscle: new THREE.MeshStandardMaterial({ color: 0xffaa00, transparent: true, opacity: 0.0, depthWrite: false, visible: false })
+              muscle: new THREE.MeshStandardMaterial({ color: 0xffaa00, transparent: true, opacity: 0.0, depthWrite: false, visible: false }) // zero ghosting on bones
             },
             idx: {
-              bone: new THREE.MeshStandardMaterial({ color: 0x00f0ff, emissive: 0x00aaff, emissiveIntensity: 0.18, roughness: 0.98, metalness: 0.0 }),
+              bone: new THREE.MeshStandardMaterial({ color: 0x00f0ff, emissive: 0x00aaff, emissiveIntensity: 0.18, roughness: 0.98, metalness: 0.0 }), // Electric Cyan Clay
               joint: new THREE.MeshStandardMaterial({ color: 0x0077ff, roughness: 0.95, metalness: 0.0 }),
               muscle: new THREE.MeshStandardMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.0, depthWrite: false, visible: false })
             },
             mid: {
-              bone: new THREE.MeshStandardMaterial({ color: 0xe000ff, emissive: 0xaa00ee, emissiveIntensity: 0.18, roughness: 0.98, metalness: 0.0 }),
+              bone: new THREE.MeshStandardMaterial({ color: 0xe000ff, emissive: 0xaa00ee, emissiveIntensity: 0.18, roughness: 0.98, metalness: 0.0 }), // Electric Magenta/Purple Clay
               joint: new THREE.MeshStandardMaterial({ color: 0x8800cc, roughness: 0.95, metalness: 0.0 }),
               muscle: new THREE.MeshStandardMaterial({ color: 0xe000ff, transparent: true, opacity: 0.0, depthWrite: false, visible: false })
             },
             rng: {
-              bone: new THREE.MeshStandardMaterial({ color: 0x00ff66, emissive: 0x00cc44, emissiveIntensity: 0.18, roughness: 0.98, metalness: 0.0 }),
+              bone: new THREE.MeshStandardMaterial({ color: 0x00ff66, emissive: 0x00cc44, emissiveIntensity: 0.18, roughness: 0.98, metalness: 0.0 }), // Vivid Spring Green Clay
               joint: new THREE.MeshStandardMaterial({ color: 0x00aa33, roughness: 0.95, metalness: 0.0 }),
               muscle: new THREE.MeshStandardMaterial({ color: 0x00ff66, transparent: true, opacity: 0.0, depthWrite: false, visible: false })
             },
             pnk: {
-              bone: new THREE.MeshStandardMaterial({ color: 0xff0055, emissive: 0xcc0033, emissiveIntensity: 0.18, roughness: 0.98, metalness: 0.0 }),
+              bone: new THREE.MeshStandardMaterial({ color: 0xff0055, emissive: 0xcc0033, emissiveIntensity: 0.18, roughness: 0.98, metalness: 0.0 }), // Vivid Neon Coral Rose Clay
               joint: new THREE.MeshStandardMaterial({ color: 0xbb0022, roughness: 0.95, metalness: 0.0 }),
               muscle: new THREE.MeshStandardMaterial({ color: 0xff0055, transparent: true, opacity: 0.0, depthWrite: false, visible: false })
             }
           },
-          carpalR: new THREE.MeshStandardMaterial({ color: 0xf4f4f5, roughness: 0.96, metalness: 0.0 }),
-          carpalL: new THREE.MeshStandardMaterial({ color: 0xffedd5, roughness: 0.96, metalness: 0.0 }),
-
-          // 4. Photorealistic Human Skin Materials
-          skinHand: new THREE.MeshStandardMaterial({
-            color: 0xf0cbb5,
-            roughness: 0.48,
-            metalness: 0.0,
-            emissive: 0x3d2319,
-            emissiveIntensity: 0.06
-          }),
-          skinJoint: new THREE.MeshStandardMaterial({
-            color: 0xdeaa91,
-            roughness: 0.50,
-            metalness: 0.0
-          }),
-          skinMuscle: new THREE.MeshStandardMaterial({
-            color: 0xf0cbb5,
-            roughness: 0.45,
-            metalness: 0.0,
-            transparent: false,
-            opacity: 1.0
-          })
+          carpalR: new THREE.MeshStandardMaterial({ color: 0xf4f4f5, roughness: 0.96, metalness: 0.0 }), // Pure Matte White Porcelain
+          carpalL: new THREE.MeshStandardMaterial({ color: 0xffedd5, roughness: 0.96, metalness: 0.0 })  // Pure Matte Warm Terracotta
         };
       },
 
       setMode(mode) {
-        this.currentMode = mode || 'skin';
+        this.currentMode = mode || 'contrast';
         this.apply();
       },
 
@@ -8927,28 +8482,12 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           if (!hand) return;
 
           // Soft tissue & muscles
-          let palmMat;
-          if (mode === 'skin') {
-            palmMat = mats.skinMuscle;
-          } else if (mode === 'mono') {
-            palmMat = mats.muscleMono;
-          } else {
-            palmMat = isLeft ? mats.muscleL : mats.muscleR;
-          }
+          const palmMat = (mode === 'mono') ? mats.muscleMono : (isLeft ? mats.muscleL : mats.muscleR);
           if (hand.palmarMuscleMesh) hand.palmarMuscleMesh.material = palmMat;
           if (hand.thenarMuscleMesh) hand.thenarMuscleMesh.material = palmMat;
 
           // Carpals
-          let carpalMat;
-          if (mode === 'skin') {
-            carpalMat = mats.skinHand;
-          } else if (mode === 'mono') {
-            carpalMat = mats.boneMono;
-          } else if (mode === 'dual') {
-            carpalMat = isLeft ? mats.boneL : mats.boneR;
-          } else {
-            carpalMat = isLeft ? mats.carpalL : mats.carpalR;
-          }
+          const carpalMat = (mode === 'mono') ? mats.boneMono : (mode === 'dual' ? (isLeft ? mats.boneL : mats.boneR) : (isLeft ? mats.carpalL : mats.carpalR));
           if (hand.carpalMeshes) {
             hand.carpalMeshes.forEach(m => { m.material = carpalMat; });
           }
@@ -8956,10 +8495,7 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           // Metacarpals & Condyles
           if (hand.metacarpalMeshes) {
             Object.entries(hand.metacarpalMeshes).forEach(([id, mc]) => {
-              if (mode === 'skin') {
-                mc.shaft.material = mats.skinHand;
-                mc.condyle.material = mats.skinJoint;
-              } else if (mode === 'contrast') {
+              if (mode === 'contrast') {
                 mc.shaft.material = isLeft ? mats.carpalL : mats.carpalR;
                 if (mats.fingers[id]) mc.condyle.material = mats.fingers[id].joint;
               } else if (mode === 'dual') {
@@ -8976,10 +8512,7 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           if (hand.fingerMeshMap) {
             Object.entries(hand.fingerMeshMap).forEach(([id, fData]) => {
               let bMat, mMat;
-              if (mode === 'skin') {
-                bMat = mats.skinHand;
-                mMat = mats.skinMuscle;
-              } else if (mode === 'contrast') {
+              if (mode === 'contrast') {
                 bMat = mats.fingers[id] ? mats.fingers[id].bone : (isLeft ? mats.boneL : mats.boneR);
                 mMat = mats.fingers[id] ? mats.fingers[id].muscle : palmMat;
               } else if (mode === 'dual') {
@@ -9001,24 +8534,9 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
 
           // Arm limb
           if (arm) {
-            let armBoneMat, armJointMat, armMuscMat;
-            if (mode === 'skin') {
-              armBoneMat = window.uniformBlazerMat || mats.skinHand;
-              armJointMat = window.uniformBlazerMat || mats.skinJoint;
-              armMuscMat = window.uniformBlazerMat || mats.skinMuscle;
-            } else if (mode === 'mono') {
-              armBoneMat = mats.boneMono;
-              armJointMat = mats.jointMono;
-              armMuscMat = mats.muscleMono;
-            } else if (mode === 'dual') {
-              armBoneMat = isLeft ? mats.boneL : mats.boneR;
-              armJointMat = isLeft ? mats.jointL : mats.jointR;
-              armMuscMat = isLeft ? mats.muscleL : mats.muscleR;
-            } else {
-              armBoneMat = isLeft ? mats.carpalL : mats.carpalR;
-              armJointMat = isLeft ? mats.jointL : mats.jointR;
-              armMuscMat = isLeft ? mats.muscleL : mats.muscleR;
-            }
+            const armBoneMat = (mode === 'mono') ? mats.boneMono : (mode === 'dual' ? (isLeft ? mats.boneL : mats.boneR) : (isLeft ? mats.carpalL : mats.carpalR));
+            const armJointMat = (mode === 'mono') ? mats.jointMono : (isLeft ? mats.jointL : mats.jointR);
+            const armMuscMat = (mode === 'mono') ? mats.muscleMono : (isLeft ? mats.muscleL : mats.muscleR);
 
             if (arm.humerusBone) arm.humerusBone.material = armBoneMat;
             if (arm.radiusBone) arm.radiusBone.material = armBoneMat;
@@ -9042,166 +8560,13 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           const restHandGroup = window.staticLeftArmGroup.children.find(c => c.children && c.children.length >= 5);
           if (restHandGroup) {
             restHandGroup.children.forEach(c => {
-              c.material = (mode === 'skin') ? mats.skinHand : ((mode === 'mono') ? stickmanMat : mats.muscleL);
+              c.material = (mode === 'mono') ? stickmanMat : mats.muscleL;
             });
           }
         }
       }
     };
     window.HandColorEngine = HandColorEngine;
-
-    // =========================================================================
-    // AVATAR STYLE ENGINE (PHOTOREALISTIC HUMAN AGENT / CLAY / BIOMECHANICS)
-    // =========================================================================
-    const AvatarStyleEngine = {
-      currentStyle: 'human', // 'human' | 'stickman' | 'biomech'
-      styles: ['human', 'stickman', 'biomech'],
-
-      init() {
-        this.setStyle('human');
-      },
-
-      setStyle(style) {
-        if (!this.styles.includes(style)) return;
-        this.currentStyle = style;
-
-        // 1. StickmanEmotionEngine style & redraw
-        if (typeof StickmanEmotionEngine !== 'undefined') {
-          StickmanEmotionEngine.style = (style === 'human') ? 'human' : 'stickman';
-          StickmanEmotionEngine.draw();
-        }
-
-        // 2. Toggle 3D Sculpted Human Features
-        const showHuman = (style === 'human');
-        if (window.humanHeadFeaturesGroup) {
-          window.humanHeadFeaturesGroup.visible = showHuman;
-        }
-        if (window.uniformClothingGroup) {
-          window.uniformClothingGroup.visible = showHuman;
-        }
-
-        // 3. Body & Clothing Materials
-        if (showHuman) {
-          if (window.torsoMesh && window.uniformBlazerMat) window.torsoMesh.material = window.uniformBlazerMat;
-          if (window.neckMesh && window.humanSkinMat) window.neckMesh.material = window.humanSkinMat;
-          if (window.legMeshes && window.uniformBlazerMat) window.legMeshes.forEach(m => m.material = window.uniformBlazerMat);
-          if (window.footMeshes && window.shoesBlackMat) window.footMeshes.forEach(m => m.material = window.shoesBlackMat);
-          if (window.shoulderMeshes && window.uniformBlazerMat) window.shoulderMeshes.forEach(m => m.material = window.uniformBlazerMat);
-          if (window.clavicleMeshes && window.uniformBlazerMat) window.clavicleMeshes.forEach(m => m.material = window.uniformBlazerMat);
-          if (window.staticLeftArmMeshes) {
-            if (window.uniformBlazerMat) {
-              window.staticLeftArmMeshes.upper.material = window.uniformBlazerMat;
-              window.staticLeftArmMeshes.elbow.material = window.uniformBlazerMat;
-              window.staticLeftArmMeshes.forearm.material = window.uniformBlazerMat;
-            }
-            if (window.staticLeftArmMeshes.cuff) window.staticLeftArmMeshes.cuff.visible = true;
-            if (window.humanSkinMat) {
-              window.staticLeftArmMeshes.wrist.material = window.humanSkinMat;
-              window.staticLeftArmMeshes.hand.forEach(m => m.material = window.humanSkinMat);
-            }
-          }
-          if (typeof HandColorEngine !== 'undefined') {
-            HandColorEngine.setMode('skin');
-          }
-        } else if (style === 'stickman') {
-          if (window.torsoMesh && window.stickmanMat) window.torsoMesh.material = window.stickmanMat;
-          if (window.neckMesh && window.stickmanMat) window.neckMesh.material = window.stickmanMat;
-          if (window.legMeshes && window.stickmanMat) window.legMeshes.forEach(m => m.material = window.stickmanMat);
-          if (window.footMeshes && window.stickmanMat) window.footMeshes.forEach(m => m.material = window.stickmanMat);
-          if (window.shoulderMeshes && window.stickmanMat) window.shoulderMeshes.forEach(m => m.material = window.stickmanMat);
-          if (window.clavicleMeshes && window.stickmanMat) window.clavicleMeshes.forEach(m => m.material = window.stickmanMat);
-          if (window.staticLeftArmMeshes) {
-            if (window.stickmanMat) {
-              window.staticLeftArmMeshes.upper.material = window.stickmanMat;
-              window.staticLeftArmMeshes.elbow.material = window.stickmanMat;
-              window.staticLeftArmMeshes.forearm.material = window.stickmanMat;
-              window.staticLeftArmMeshes.wrist.material = window.stickmanMat;
-              window.staticLeftArmMeshes.hand.forEach(m => m.material = window.stickmanMat);
-            }
-            if (window.staticLeftArmMeshes.cuff) window.staticLeftArmMeshes.cuff.visible = false;
-          }
-          if (typeof HandColorEngine !== 'undefined') {
-            HandColorEngine.setMode('mono');
-          }
-        } else if (style === 'biomech') {
-          if (window.torsoMesh && window.stickmanMat) window.torsoMesh.material = window.stickmanMat;
-          if (window.neckMesh && window.stickmanMat) window.neckMesh.material = window.stickmanMat;
-          if (window.legMeshes && window.stickmanMat) window.legMeshes.forEach(m => m.material = window.stickmanMat);
-          if (window.footMeshes && window.stickmanMat) window.footMeshes.forEach(m => m.material = window.stickmanMat);
-          if (window.shoulderMeshes && window.stickmanMat) window.shoulderMeshes.forEach(m => m.material = window.stickmanMat);
-          if (window.clavicleMeshes && window.stickmanMat) window.clavicleMeshes.forEach(m => m.material = window.stickmanMat);
-          if (window.staticLeftArmMeshes && window.staticLeftArmMeshes.cuff) {
-            window.staticLeftArmMeshes.cuff.visible = false;
-          }
-          if (typeof HandColorEngine !== 'undefined') {
-            HandColorEngine.setMode('contrast');
-          }
-        }
-
-        this.updateUI();
-      },
-
-      cycleStyle() {
-        const idx = this.styles.indexOf(this.currentStyle);
-        const nextStyle = this.styles[(idx + 1) % this.styles.length];
-        this.setStyle(nextStyle);
-        if (typeof SoundEngine !== 'undefined') {
-          SoundEngine.playSwish(true);
-        }
-        if (typeof LexiconWorkbench !== 'undefined' && LexiconWorkbench.showToast) {
-          const names = {
-            human: '👤 Avatar: Realistic Human Agent (MWAA Uniform)',
-            stickman: '🤖 Avatar: Minimalist Clay Mannequin',
-            biomech: '🦴 Avatar: Biomechanical Kinematics Lab'
-          };
-          LexiconWorkbench.showToast(names[nextStyle]);
-        }
-      },
-
-      updateUI() {
-        const icons = { human: '👤', stickman: '🤖', biomech: '🦴' };
-        const labels = { human: 'HUMAN AGENT', stickman: 'MINIMAL CLAY', biomech: 'BIOMECH LAB' };
-        
-        const topIcon = document.getElementById('avatar-style-icon-top');
-        const topLabel = document.getElementById('avatar-style-label-top');
-        if (topIcon) topIcon.innerText = icons[this.currentStyle];
-        if (topLabel) topLabel.innerText = labels[this.currentStyle];
-
-        const dockBtn = document.getElementById('dock-avatar-style-btn');
-        if (dockBtn) dockBtn.innerText = `${icons[this.currentStyle]} ${labels[this.currentStyle]}`;
-      },
-
-      loadCustomGLB(fileOrUrl) {
-        if (!THREE.GLTFLoader) {
-          alert("GLTFLoader is initializing. Please try again.");
-          return;
-        }
-        const loader = new THREE.GLTFLoader();
-        const onLoad = (gltf) => {
-          if (window.customAvatarModel) {
-            scene.remove(window.customAvatarModel);
-          }
-          const model = gltf.scene || gltf.scenes[0];
-          model.position.set(0, -18.5, 0);
-          model.scale.set(12, 12, 12);
-          scene.add(model);
-          window.customAvatarModel = model;
-          if (typeof LexiconWorkbench !== 'undefined') {
-            LexiconWorkbench.showToast("✓ Custom 3D Avatar Loaded Successfully!");
-          }
-        };
-        if (typeof fileOrUrl === 'string') {
-          loader.load(fileOrUrl, onLoad, undefined, (err) => console.error("GLTF load error:", err));
-        } else if (fileOrUrl instanceof File) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            loader.parse(e.target.result, '', onLoad, (err) => console.error("GLTF parse error:", err));
-          };
-          reader.readAsArrayBuffer(fileOrUrl);
-        }
-      }
-    };
-    window.AvatarStyleEngine = AvatarStyleEngine;
 
     // --- ANATOMICAL HAND RIG ---
     class AnatomicalHand {
@@ -11181,9 +10546,6 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
 
       init() {
         this.loadState();
-        if (typeof AvatarStyleEngine !== 'undefined') {
-          AvatarStyleEngine.init();
-        }
         this.switchCategory('signs', 0);
         this.bindShortcuts();
         this.checkOnboardingFirstLaunch();
@@ -11198,12 +10560,6 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           this.startWelcomeSequence();
         }
         console.log("⚡ LexiconWorkbench initialized with Avatar Welcome Greeting & Pro Studio Guide (0.25x default speed).");
-      },
-
-      cycleAvatarStyle() {
-        if (typeof AvatarStyleEngine !== 'undefined') {
-          AvatarStyleEngine.cycleStyle();
-        }
       },
 
       toggleProMode() {
@@ -11242,15 +10598,6 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
 
         document.body.classList.toggle('kiosk-mode', this.isKioskMode);
 
-        const overlay = document.getElementById('airport-kiosk-overlay');
-        if (overlay) overlay.style.display = this.isKioskMode ? 'block' : 'none';
-        const island = document.getElementById('dynamic-island');
-        if (island) island.style.display = this.isKioskMode ? 'none' : '';
-        const topCluster = document.getElementById('top-right-studio-cluster');
-        if (topCluster) topCluster.style.display = this.isKioskMode ? 'none' : '';
-        const dock = document.querySelector('.viewport-compact-dock');
-        if (dock) dock.style.display = this.isKioskMode ? 'none' : '';
-
         const btnTop = document.getElementById('btn-airport-kiosk-top');
         if (btnTop) btnTop.classList.toggle('active', this.isKioskMode);
         const btnDock = document.getElementById('btn-airport-kiosk-dock');
@@ -11272,7 +10619,6 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           this.isInKioskAnnouncement = false;
           if (this.kioskAutoTimer) clearTimeout(this.kioskAutoTimer);
           if (this.kioskClockTimer) clearInterval(this.kioskClockTimer);
-          this.closeSorensonModal();
           this.showToast("Returned to 3D ASL Workbench");
         }
       },
@@ -11585,6 +10931,7 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
 
       checkOnboardingFirstLaunch() {
         try {
+          if (new URLSearchParams(window.location.search).has('no_modal')) return;
           const seen = localStorage.getItem('ASL_LEXICON_ONBOARDING_SEEN');
           if (!seen) {
             this.openOnboardingModal();
@@ -13359,11 +12706,6 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
             const onb = document.getElementById('onboarding-modal');
             if (onb && onb.style.display !== 'none') {
               this.closeOnboardingModal(false);
-              return;
-            }
-            const sm = document.getElementById('sorenson-modal');
-            if (sm && sm.style.display !== 'none' && sm.style.display !== '') {
-              this.closeSorensonModal();
               return;
             }
             if (this.isKioskMode) {
