@@ -2645,6 +2645,8 @@
     .sorenson-close-btn:hover {
       background: #dc2626;
     }
+
+
   </style>
 </head>
 <body>
@@ -2796,6 +2798,7 @@
             <span id="island-badge-orientation" class="micro-badge">ORI: PALM_MEDIAL</span>
             <span id="island-badge-movement" class="micro-badge">MOV: REPEATED_CONTACT</span>
             <span id="island-badge-bilateral" class="micro-badge">UNILATERAL</span>
+            <span id="island-badge-calibration" class="micro-badge" style="color:#00e599; border-color:rgba(0,229,153,0.35); display:inline-flex; align-items:center; gap:3px;"><span style="color:#00e599;">&#9889;</span> MOCAP CALIBRATED</span>
           </div>
         </div>
 
@@ -4395,6 +4398,188 @@ const TOP_30_ENGLISH_WORDS = [
     }
   }
 ];
+
+// Newly Calibrated High-Frequency Travel & Assistance Signs
+TOP_30_ENGLISH_WORDS.push(
+  {
+    lemma: "airplane",
+    name: "AIRPLANE",
+    category: "Airport & Travel",
+    signType: "OneHanded",
+    desc: "Flight transport (English: airplane). Dominant ILY/Y-handshape held in neutral space and thrusts smoothly forward-upward along takeoff vector.",
+    recipe: {
+      handshape: "3",
+      location: "neutral_high",
+      orientation: "PALM_PRONE",
+      movement: "LINEAR_FORWARD",
+      bilateral: "UNILATERAL",
+      contactEffector: "NONE",
+      fineTune: { ox: 0, oy: 2.0, oz: 3.5, rx: -35, ry: -76, rz: 42 }
+    }
+  },
+  {
+    lemma: "arrive",
+    name: "ARRIVE",
+    category: "Airport & Travel",
+    signType: "Asymmetric Base",
+    desc: "Arrival at destination (English: arrive). Non-dominant flat base palm holds supine; dominant open-B hand arcs down and lands into base palm.",
+    recipe: {
+      handshape: "open_b",
+      location: "neutral_mid",
+      orientation: "PALM_MEDIAL",
+      movement: "ARC_CORONAL",
+      bilateral: "ASYMMETRIC_BASE",
+      baseHandshape: "open_b",
+      baseLocation: "neutral_low",
+      baseOrientation: "PALM_SUPINE",
+      contactEffector: "PALM_BASE",
+      fineTune: { ox: 0, oy: -1.5, oz: 2.0, rx: 25, ry: -20, rz: 1 }
+    }
+  },
+  {
+    lemma: "ticket",
+    name: "TICKET",
+    category: "Airport & Travel",
+    signType: "Asymmetric Base",
+    desc: "Travel document & boarding pass (English: ticket). Non-dominant flat palm vertical; dominant bent-V fingers insert and grip between non-dominant index and middle fingers.",
+    recipe: {
+      handshape: "bent_v",
+      location: "neutral_mid",
+      orientation: "PALM_MEDIAL",
+      movement: "TAP_2X",
+      bilateral: "ASYMMETRIC_BASE",
+      baseHandshape: "open_b",
+      baseLocation: "neutral_mid",
+      baseOrientation: "PALM_MEDIAL",
+      contactEffector: "INDEX_TIP",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 2, ry: -14, rz: -13 }
+    }
+  },
+  {
+    lemma: "water",
+    name: "WATER",
+    category: "Passenger Needs",
+    signType: "OneHanded",
+    desc: "Hydration request (English: water). Dominant 3/W-handshape index edge taps against the chin twice.",
+    recipe: {
+      handshape: "3",
+      location: "chin",
+      orientation: "PALM_MEDIAL",
+      movement: "TAP_2X",
+      bilateral: "UNILATERAL",
+      contactEffector: "INDEX_TIP",
+      fineTune: { ox: 0, oy: 0.5, oz: 0, rx: 19, ry: -45, rz: -5 }
+    }
+  },
+  {
+    lemma: "money",
+    name: "MONEY",
+    category: "Transactions",
+    signType: "Asymmetric Base",
+    desc: "Currency & payment (English: money). Non-dominant flat palm supine; dominant flat-O hand taps repeatedly into palm.",
+    recipe: {
+      handshape: "flat_o",
+      location: "neutral_mid",
+      orientation: "PALM_SUPINE",
+      movement: "TAP_2X",
+      bilateral: "ASYMMETRIC_BASE",
+      baseHandshape: "open_b",
+      baseLocation: "neutral_low",
+      baseOrientation: "PALM_SUPINE",
+      contactEffector: "PALM_BASE",
+      fineTune: { ox: 0, oy: -1.0, oz: 0, rx: -126, ry: 59, rz: -107 }
+    }
+  },
+  {
+    lemma: "where",
+    name: "WHERE",
+    category: "Wayfinding & Inquiries",
+    signType: "OneHanded",
+    desc: "Location query (English: where). Dominant index finger extended pointing upright in neutral space and oscillates side to side.",
+    recipe: {
+      handshape: "1",
+      location: "neutral_mid",
+      orientation: "PALM_ANTERIOR",
+      movement: "LINEAR_LATERAL",
+      bilateral: "UNILATERAL",
+      contactEffector: "NONE",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: -21, ry: -50, rz: -11 }
+    }
+  },
+  {
+    lemma: "check",
+    name: "CHECK",
+    category: "Airport & Travel",
+    signType: "Asymmetric Base",
+    desc: "Boarding pass & security verification (English: check). Non-dominant flat palm held vertical; dominant bent-index finger draws decisive verification mark downwards.",
+    recipe: {
+      handshape: "1",
+      location: "neutral_mid",
+      orientation: "PALM_PRONE",
+      movement: "VERTICAL_DROP",
+      bilateral: "ASYMMETRIC_BASE",
+      baseHandshape: "open_b",
+      baseLocation: "neutral_mid",
+      baseOrientation: "PALM_MEDIAL",
+      contactEffector: "INDEX_TIP",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 29, ry: -22, rz: -8 }
+    }
+  },
+  {
+    lemma: "stop",
+    name: "STOP",
+    category: "Wayfinding & Safety",
+    signType: "Asymmetric Base",
+    desc: "Halt or gate hold (English: stop). Non-dominant flat palm supine; dominant open-B hand chops decisively straight down onto palm.",
+    recipe: {
+      handshape: "open_b",
+      location: "neutral_mid",
+      orientation: "PALM_MEDIAL",
+      movement: "VERTICAL_DROP",
+      bilateral: "ASYMMETRIC_BASE",
+      baseHandshape: "open_b",
+      baseLocation: "neutral_low",
+      baseOrientation: "PALM_SUPINE",
+      contactEffector: "PALM_BASE",
+      fineTune: { ox: 0, oy: -1.5, oz: 0, rx: 15, ry: -49, rz: -3 }
+    }
+  },
+  {
+    lemma: "door",
+    name: "DOOR",
+    category: "Airport & Travel",
+    signType: "Symmetrical",
+    desc: "Airport gate or exit door (English: door). Both open-B hands held side-by-side with index edges touching; dominant hand pivots open like a door.",
+    recipe: {
+      handshape: "open_b",
+      location: "neutral_mid",
+      orientation: "PALM_POSTERIOR",
+      movement: "GATE_OPEN",
+      bilateral: "ASYMMETRIC_BASE",
+      baseHandshape: "open_b",
+      baseLocation: "neutral_mid",
+      baseOrientation: "PALM_POSTERIOR",
+      contactEffector: "NONE",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: -20, ry: -69, rz: 10 }
+    }
+  },
+  {
+    lemma: "bathroom",
+    name: "BATHROOM",
+    category: "Passenger Needs",
+    signType: "OneHanded",
+    desc: "Restroom query (English: bathroom). Dominant T-handshape (thumb under index) shakes rapidly side-to-side in neutral space.",
+    recipe: {
+      handshape: "t",
+      location: "neutral_mid",
+      orientation: "PALM_ANTERIOR",
+      movement: "FOREARM_TWIST",
+      bilateral: "UNILATERAL",
+      contactEffector: "NONE",
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 9, ry: -56, rz: 1 }
+    }
+  }
+);
 
 const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
 
