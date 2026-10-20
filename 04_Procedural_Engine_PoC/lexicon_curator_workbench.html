@@ -656,14 +656,23 @@
 
         const model = gltf.scene;
         const wrapper = new THREE.Group();
-        // Exact mathematical alignment for upright height and camera facing
-        wrapper.rotation.set(Math.PI / 2, 0, 0);
-        wrapper.position.set(-0.20, 0.09, -0.35);
+        // Exact anatomical alignment: rotated 180 deg to face front camera, grounded at Y=0, centered at X=0, Z=0
+        wrapper.rotation.set(0, Math.PI, 0);
+        wrapper.position.set(0.20, -0.30, -0.15);
         wrapper.add(model);
 
         model.traverse(function(c) {
-          if (c.isSkinnedMesh || c.isMesh) {
+          if (c.isSkinnedMesh) {
             c.frustumCulled = false;
+            c.castShadow = true;
+            c.receiveShadow = true;
+            c.material = new THREE.MeshStandardMaterial({
+              color: 0x38bdf8,
+              roughness: 0.35,
+              metalness: 0.15,
+              skinning: true
+            });
+          } else if (c.isMesh) {
             c.castShadow = true;
             c.receiveShadow = true;
             c.material = new THREE.MeshStandardMaterial({
