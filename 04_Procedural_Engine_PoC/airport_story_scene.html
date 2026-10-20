@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SAMMY // The Airport Narrative & Dyslexia Accessibility Experience</title>
+  <title>SAMMY // Grand 3D Airport Narrative Cinema & Dyslexia Accessibility Portal</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <style>
     :root {
       --bg-space: #07090e;
-      --panel-bg: rgba(13, 17, 23, 0.88);
-      --panel-border: rgba(255, 255, 255, 0.12);
+      --panel-bg: rgba(13, 17, 23, 0.90);
+      --panel-border: rgba(255, 255, 255, 0.14);
       --accent-cyan: #38bdf8;
       --accent-amber: #f59e0b;
       --accent-emerald: #10b981;
@@ -51,22 +51,22 @@
       gap: 12px;
       background: var(--panel-bg);
       border: 1px solid var(--panel-border);
-      padding: 8px 16px;
+      padding: 8px 18px;
       border-radius: 999px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.55);
       pointer-events: auto;
     }
     .brand-dot {
       width: 10px; height: 10px;
       border-radius: 50%;
       background: var(--accent-emerald);
-      box-shadow: 0 0 10px var(--accent-emerald);
+      box-shadow: 0 0 12px var(--accent-emerald);
       animation: pulse-dot 2s infinite ease-in-out;
     }
     @keyframes pulse-dot {
       0%, 100% { transform: scale(1); opacity: 0.9; }
-      50% { transform: scale(1.3); opacity: 1; }
+      50% { transform: scale(1.35); opacity: 1; }
     }
     .brand-title {
       font-size: 13px;
@@ -78,7 +78,7 @@
     .brand-subtitle {
       font-size: 12px;
       color: var(--text-muted);
-      border-left: 1px solid rgba(255,255,255,0.15);
+      border-left: 1px solid rgba(255,255,255,0.18);
       padding-left: 10px;
     }
 
@@ -99,7 +99,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .glass-btn:hover {
@@ -114,10 +114,21 @@
       box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
     }
     .glass-btn.danger-active {
-      background: rgba(244, 63, 94, 0.2);
+      background: rgba(244, 63, 94, 0.22);
       border-color: var(--accent-rose);
       color: var(--accent-rose);
-      box-shadow: 0 0 16px rgba(244, 63, 94, 0.25);
+      box-shadow: 0 0 16px rgba(244, 63, 94, 0.28);
+    }
+    .glass-btn.portal-btn {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(56, 189, 248, 0.25));
+      border-color: var(--accent-emerald);
+      color: #fff;
+      font-weight: 700;
+      box-shadow: 0 0 18px rgba(16, 185, 129, 0.3);
+    }
+    .glass-btn.portal-btn:hover {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.4), rgba(56, 189, 248, 0.4));
+      transform: scale(1.04);
     }
 
     /* Live Dyslexia Telemetry Card (Floating PIP) */
@@ -130,7 +141,7 @@
       border-radius: 14px;
       padding: 16px;
       backdrop-filter: blur(16px);
-      box-shadow: 0 16px 36px rgba(0,0,0,0.6);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.65);
       z-index: 10;
       transition: transform 0.3s ease, opacity 0.3s ease;
     }
@@ -197,7 +208,7 @@
       position: absolute;
       bottom: 24px; left: 50%;
       transform: translateX(-50%);
-      width: min(880px, calc(100% - 48px));
+      width: min(920px, calc(100% - 48px));
       background: var(--panel-bg);
       border: 1px solid var(--panel-border);
       border-radius: 18px;
@@ -219,7 +230,7 @@
     .act-navigator::-webkit-scrollbar { display: none; }
     .act-pill {
       flex: 1;
-      min-width: 130px;
+      min-width: 140px;
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
       padding: 8px 12px;
@@ -324,7 +335,7 @@
       font-size: 13px;
       line-height: 1.5;
       color: #e2e8f0;
-      background: rgba(0,0,0,0.28);
+      background: rgba(0,0,0,0.32);
       padding: 10px 14px;
       border-radius: 8px;
       border-left: 3px solid var(--accent-cyan);
@@ -333,21 +344,7 @@
       color: #fff;
     }
 
-    /* Cinematic Letterbox Mask */
-    .letterbox {
-      position: absolute;
-      left: 0; right: 0;
-      height: 0px;
-      background: #000;
-      z-index: 5;
-      pointer-events: none;
-      transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .letterbox-top { top: 0; }
-    .letterbox-bottom { bottom: 0; }
-    .cinema-mode .letterbox { height: 40px; }
-
-    /* Audio Chime Notification Overlay */
+    /* Audio Chime Notification Toast */
     .airport-chime-toast {
       position: absolute;
       top: 80px; right: 24px;
@@ -376,26 +373,89 @@
     #relief-bloom-overlay {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(circle at 65% 55%, rgba(56, 189, 248, 0.25) 0%, transparent 65%);
+      background: radial-gradient(circle at 65% 55%, rgba(56, 189, 248, 0.30) 0%, transparent 70%);
       pointer-events: none;
       z-index: 4;
       opacity: 0;
       transition: opacity 1.2s ease-in-out;
     }
+
+    /* =========================================================================
+       SEAMLESS FULL PORTAL OVERLAY CONTAINER (LIVE KIOSK EMBED)
+       ========================================================================= */
+    #full-portal-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: #000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+    }
+    #full-portal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .portal-top-bar {
+      height: 48px;
+      background: rgba(15, 23, 42, 0.96);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      backdrop-filter: blur(12px);
+      z-index: 101;
+    }
+    .portal-back-btn, .portal-tab-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .portal-back-btn:hover, .portal-tab-btn:hover {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+    .portal-badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--accent-emerald);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    #portal-frame {
+      flex: 1;
+      width: 100%;
+      border: none;
+      background: #07090e;
+    }
   </style>
 </head>
-<body class="cinema-mode">
+<body>
 
-  <div class="letterbox letterbox-top"></div>
-  <div class="letterbox letterbox-bottom"></div>
   <div id="relief-bloom-overlay"></div>
 
   <!-- Top Cinematic Header -->
   <header class="cinema-header">
     <div class="cinema-brand">
       <div class="brand-dot"></div>
-      <div class="brand-title">SAMMY // 3D NARRATIVE CINEMA</div>
-      <div class="brand-subtitle">The Silent Gate Change & Dyslexia Relief Experience</div>
+      <div class="brand-title">SAMMY // 3D AIRPORT NARRATIVE CINEMA</div>
+      <div class="brand-subtitle">The Silent Gate Change, Crowd Chaos & Dyslexia Relief Experience</div>
     </div>
 
     <div class="top-controls">
@@ -412,6 +472,10 @@
       <button id="btn-toggle-sound" class="glass-btn" onclick="toggleAudioMute()">
         <span id="sound-icon">🔊</span>
         <span>Sound FX</span>
+      </button>
+
+      <button class="glass-btn portal-btn" onclick="enterFullPortal()">
+        <span>⚡ Launch Live Sammy Kiosk</span>
       </button>
     </div>
   </header>
@@ -439,7 +503,7 @@
     <span style="font-size: 18px;">📢</span>
     <div>
       <div style="font-weight: 700; color: #fff;">Audio-Only PA Announcement</div>
-      <div style="color: var(--text-muted); font-size: 11px;">"Attention Delta 1842: Immediate gate change to C28."</div>
+      <div style="color: var(--text-muted); font-size: 11px;">"Attention Delta 1842 to Helsinki: Immediate gate change from B14 to C28."</div>
     </div>
   </div>
 
@@ -451,28 +515,28 @@
     <div class="act-navigator">
       <div class="act-pill active" onclick="jumpToAct(1)" id="act-pill-1">
         <span class="act-num">ACT 1 (0:00)</span>
-        <span class="act-name">1. Silent Gate Change</span>
+        <span class="act-name">1. Grand Concourse Chaos</span>
       </div>
       <div class="act-pill" onclick="jumpToAct(2)" id="act-pill-2">
         <span class="act-num">ACT 2 (0:12)</span>
-        <span class="act-name">2. The FIDS Struggle</span>
+        <span class="act-name">2. Passenger in Distress</span>
       </div>
       <div class="act-pill" onclick="jumpToAct(3)" id="act-pill-3">
         <span class="act-num">ACT 3 (0:24)</span>
-        <span class="act-name">3. Sammy Wakes Up</span>
+        <span class="act-name">3. The FIDS Struggle</span>
       </div>
       <div class="act-pill" onclick="jumpToAct(4)" id="act-pill-4">
         <span class="act-num">ACT 4 (0:36)</span>
-        <span class="act-name">4. ASL Directional Sign</span>
+        <span class="act-name">4. Sammy Kiosk ASL Sign</span>
       </div>
       <div class="act-pill" onclick="jumpToAct(5)" id="act-pill-5">
         <span class="act-num">ACT 5 (0:48)</span>
-        <span class="act-name">5. Dopamine of Relief</span>
+        <span class="act-name">5. Dopamine & Seamless Portal</span>
       </div>
     </div>
 
     <div class="story-card-narrative" id="narrative-text">
-      <strong>Act 1: The Ambient Concourse.</strong> A Deaf passenger waits at Gate B14. An audio loudspeaker crackles with a sudden gate reassignment to Concourse C. Hearing travelers walk away, leaving the Deaf traveler stranded.
+      <strong>Act 1: Grand Concourse & Crowds.</strong> An expansive international terminal bustling with traveling crowds, boarding queues, and distant taxiing jets. The general chaos of transit unfolds.
     </div>
 
     <div class="transport-bar">
@@ -481,13 +545,54 @@
         <input type="range" class="timeline-scrubber" id="scrubber" min="0" max="60" step="0.05" value="0" oninput="onScrub(parseFloat(this.value))" />
         <div class="time-readout">
           <span id="time-current">00:00</span>
-          <span id="time-total">01:00 (60s Cinematic Arc)</span>
+          <span id="time-total">01:00 (60s Narrative Arc)</span>
         </div>
       </div>
     </div>
   </nav>
 
+  <!-- Seamless Full Portal Overlay Container -->
+  <div id="full-portal-overlay">
+    <div class="portal-top-bar">
+      <button class="portal-back-btn" onclick="exitFullPortal()">
+        <span>↩ Return to 3D Story Cinema</span>
+      </button>
+      <div class="portal-badge">
+        <span>⚡ LIVE SAMMY 27-DOF ACCESSIBILITY KIOSK PORTAL</span>
+      </div>
+      <button class="portal-tab-btn" onclick="window.open('anatomical_hand.html?no_modal=1&kiosk=1', '_blank')">
+        <span>Open in Dedicated Window ↗</span>
+      </button>
+    </div>
+    <iframe id="portal-frame" src="about:blank"></iframe>
+  </div>
+
   <script>
+    // =========================================================================
+    // SEAMLESS FULL PORTAL TRANSITION SYSTEM
+    // =========================================================================
+    function enterFullPortal() {
+      const overlay = document.getElementById('full-portal-overlay');
+      const frame = document.getElementById('portal-frame');
+      if (overlay && frame) {
+        if (!frame.src || frame.src === 'about:blank' || frame.src.indexOf('anatomical_hand.html') === -1) {
+          frame.src = 'anatomical_hand.html?no_modal=1&kiosk=1';
+        }
+        overlay.classList.add('active');
+        isPlaying = false;
+        document.getElementById('btn-play').innerText = "▶";
+      }
+    }
+
+    function exitFullPortal() {
+      const overlay = document.getElementById('full-portal-overlay');
+      if (overlay) {
+        overlay.classList.remove('active');
+        isPlaying = true;
+        document.getElementById('btn-play').innerText = "❚❚";
+      }
+    }
+
     // =========================================================================
     // PROCEDURAL AUDIO SYNTHESIZER (ZERO EXTERNAL DEPENDENCY)
     // =========================================================================
@@ -561,7 +666,6 @@
       enabled: true,
       lastSwapTime: 0,
 
-      // Character flip & mirror substitutions representing developmental dyslexia & visual stress
       mirrorPairs: {
         'b': 'd', 'd': 'b',
         'p': 'q', 'q': 'p',
@@ -574,9 +678,9 @@
         if (!this.enabled || word.length < 2) return word;
         const chars = word.split('');
 
-        // 1. Swap adjacent letters with 25% probability
+        // 1. Swap adjacent letters with 30% probability
         for (let i = 0; i < chars.length - 1; i++) {
-          if (Math.random() < 0.28) {
+          if (Math.random() < 0.30) {
             const tmp = chars[i];
             chars[i] = chars[i + 1];
             chars[i + 1] = tmp;
@@ -584,10 +688,10 @@
           }
         }
 
-        // 2. Mirror letters with 18% probability
+        // 2. Mirror letters with 22% probability
         for (let i = 0; i < chars.length; i++) {
           const low = chars[i].toLowerCase();
-          if (this.mirrorPairs[low] && Math.random() < 0.20) {
+          if (this.mirrorPairs[low] && Math.random() < 0.22) {
             chars[i] = (chars[i] === chars[i].toUpperCase()) 
               ? this.mirrorPairs[low].toUpperCase() 
               : this.mirrorPairs[low];
@@ -603,7 +707,7 @@
     };
 
     // =========================================================================
-    // THREE.JS SCENE, LIGHTING & SCANDINAVIAN LOW-POLY ENVIRONMENT
+    // THREE.JS SCENE, GRAND ARCHITECTURE & LIGHTING
     // =========================================================================
     const canvas = document.getElementById('webgl-canvas');
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
@@ -615,42 +719,42 @@
     renderer.toneMappingExposure = 1.05;
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0a0e17);
-    scene.fog = new THREE.FogExp2(0x0a0e17, 0.014);
+    scene.background = new THREE.Color(0x060911);
+    scene.fog = new THREE.FogExp2(0x060911, 0.009);
 
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.5, 300);
-    camera.position.set(-8, 8, 42);
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.5, 500);
+    camera.position.set(0, 36, 75); // Initial Grand Cathedral Wide Shot
 
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.maxPolarAngle = Math.PI / 2 - 0.02;
-    controls.minDistance = 6;
-    controls.maxDistance = 120;
-    controls.target.set(-4, 6, 0);
+    controls.minDistance = 4;
+    controls.maxDistance = 180;
+    controls.target.set(0, 6, 0);
 
     // Studio & Concourse Lighting
-    const ambientLight = new THREE.AmbientLight(0xdbeafe, 0.65);
+    const ambientLight = new THREE.AmbientLight(0xdbeafe, 0.60);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.25);
-    keyLight.position.set(18, 32, 22);
-    keyLight.castShadow = true;
-    keyLight.shadow.mapSize.width = 2048;
-    keyLight.shadow.mapSize.height = 2048;
-    keyLight.shadow.bias = -0.0005;
-    scene.add(keyLight);
+    const sunKeyLight = new THREE.DirectionalLight(0xfff5eb, 1.35);
+    sunKeyLight.position.set(35, 60, 40);
+    sunKeyLight.castShadow = true;
+    sunKeyLight.shadow.mapSize.width = 2048;
+    sunKeyLight.shadow.mapSize.height = 2048;
+    sunKeyLight.shadow.bias = -0.0005;
+    scene.add(sunKeyLight);
 
-    const fillLight = new THREE.DirectionalLight(0x38bdf8, 0.45);
-    fillLight.position.set(-22, 18, -14);
-    scene.add(fillLight);
+    const concourseCyanFill = new THREE.DirectionalLight(0x38bdf8, 0.45);
+    concourseCyanFill.position.set(-35, 25, -20);
+    scene.add(concourseCyanFill);
 
-    // Modern Terminal Floor with Soft Studio Ring
-    const floorGeo = new THREE.PlaneGeometry(160, 160);
+    // Grand Concourse Granite Floor
+    const floorGeo = new THREE.PlaneGeometry(320, 240);
     const floorMat = new THREE.MeshStandardMaterial({
-      color: 0x111827,
-      roughness: 0.42,
-      metalness: 0.12
+      color: 0x0f172a,
+      roughness: 0.35,
+      metalness: 0.15
     });
     const floor = new THREE.Mesh(floorGeo, floorMat);
     floor.rotation.x = -Math.PI / 2;
@@ -658,47 +762,193 @@
     floor.receiveShadow = true;
     scene.add(floor);
 
-    // Concentric Scandinavian Target Floor Ring
-    const ringGeo = new THREE.RingGeometry(24, 24.4, 64);
-    const ringMat = new THREE.MeshBasicMaterial({ color: 0x1e293b, side: THREE.DoubleSide });
-    const floorRing = new THREE.Mesh(ringGeo, ringMat);
-    floorRing.rotation.x = -Math.PI / 2;
-    floorRing.position.y = -18.48;
-    scene.add(floorRing);
+    // Grand Polished Concourse Center Walkway Path
+    const pathGeo = new THREE.PlaneGeometry(28, 220);
+    const pathMat = new THREE.MeshStandardMaterial({
+      color: 0x1e293b,
+      roughness: 0.22,
+      metalness: 0.25
+    });
+    const centerPath = new THREE.Mesh(pathGeo, pathMat);
+    centerPath.rotation.x = -Math.PI / 2;
+    centerPath.position.set(4, -18.48, 0);
+    centerPath.receiveShadow = true;
+    scene.add(centerPath);
 
-    // Concourse Architectural Pillars
-    const pillarMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.5, metalness: 0.1 });
-    [-28, 28].forEach(x => {
-      const colGeo = new THREE.CylinderGeometry(1.6, 1.8, 48, 24);
-      const col = new THREE.Mesh(colGeo, pillarMat);
-      col.position.set(x, 5.5, -12);
-      col.castShadow = true;
-      col.receiveShadow = true;
-      scene.add(col);
+    // Massive Vaulted Ceiling Arches (Low-Poly Cathedral Roof)
+    const roofCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(-90, 48, 0),
+      new THREE.Vector3(-45, 62, 0),
+      new THREE.Vector3(0, 68, 0),
+      new THREE.Vector3(45, 62, 0),
+      new THREE.Vector3(90, 48, 0)
+    ]);
+    const archMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.4 });
+    [-70, -35, 0, 35, 70].forEach(z => {
+      const archGeo = new THREE.TubeGeometry(roofCurve, 24, 1.6, 8, false);
+      const arch = new THREE.Mesh(archGeo, archMat);
+      arch.position.z = z;
+      scene.add(arch);
+    });
+
+    // Ceiling Skylights / Luminous Panels
+    [-50, -15, 20, 55].forEach(z => {
+      const lightPanel = new THREE.Mesh(
+        new THREE.PlaneGeometry(24, 16),
+        new THREE.MeshBasicMaterial({ color: 0xe2e8f0, side: THREE.DoubleSide })
+      );
+      lightPanel.rotation.x = Math.PI / 2;
+      lightPanel.position.set(0, 67, z);
+      scene.add(lightPanel);
     });
 
     // Glass Terminal Window Wall (Airfield View)
     const glassMat = new THREE.MeshPhysicalMaterial({
       color: 0x1e293b,
-      roughness: 0.1,
+      roughness: 0.08,
       metalness: 0.1,
-      transmission: 0.85,
+      transmission: 0.88,
       transparent: true,
       opacity: 0.35
     });
-    const windowWall = new THREE.Mesh(new THREE.PlaneGeometry(120, 36), glassMat);
-    windowWall.position.set(0, 5, -28);
+    const windowWall = new THREE.Mesh(new THREE.PlaneGeometry(280, 55), glassMat);
+    windowWall.position.set(0, 9, -50);
     scene.add(windowWall);
 
-    // Distant Runway Lights
-    const runwayLightsGroup = new THREE.Group();
-    for (let i = -40; i <= 40; i += 8) {
-      const pMat = new THREE.MeshBasicMaterial({ color: (i % 16 === 0) ? 0x38bdf8 : 0xfbbf24 });
-      const p = new THREE.Mesh(new THREE.SphereGeometry(0.35, 12, 12), pMat);
-      p.position.set(i, -18.0, -42 - Math.random() * 20);
-      runwayLightsGroup.add(p);
+    // Airfield Tarmac & Distant Jets
+    const tarmacGeo = new THREE.PlaneGeometry(320, 160);
+    const tarmacMat = new THREE.MeshStandardMaterial({ color: 0x090d16, roughness: 0.8 });
+    const tarmac = new THREE.Mesh(tarmacGeo, tarmacMat);
+    tarmac.rotation.x = -Math.PI / 2;
+    tarmac.position.set(0, -18.6, -110);
+    scene.add(tarmac);
+
+    // Low-Poly Taxiing Commercial Airliner
+    const jetGroup = new THREE.Group();
+    jetGroup.position.set(-50, -14, -85);
+    scene.add(jetGroup);
+
+    const jetBody = new THREE.Mesh(new THREE.CylinderGeometry(2.4, 2.4, 28, 16), new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.3 }));
+    jetBody.rotation.z = Math.PI / 2;
+    jetGroup.add(jetBody);
+
+    const jetWing = new THREE.Mesh(new THREE.BoxGeometry(32, 0.4, 6), new THREE.MeshStandardMaterial({ color: 0x94a3b8 }));
+    jetWing.position.set(0, 0, 0);
+    jetGroup.add(jetWing);
+
+    const jetTail = new THREE.Mesh(new THREE.BoxGeometry(0.5, 7, 5), new THREE.MeshStandardMaterial({ color: 0x0284c7 }));
+    jetTail.position.set(-12, 3.5, 0);
+    jetGroup.add(jetTail);
+
+    // Red Anti-Collision Flashing Beacon on Jet
+    const beaconLight = new THREE.PointLight(0xf43f5e, 1.5, 40);
+    beaconLight.position.set(0, 4.5, 0);
+    jetGroup.add(beaconLight);
+
+    // Runway Centerline Lights
+    const runwayLights = new THREE.Group();
+    for (let i = -100; i <= 100; i += 12) {
+      const p = new THREE.Mesh(
+        new THREE.SphereGeometry(0.35, 8, 8),
+        new THREE.MeshBasicMaterial({ color: (i % 24 === 0) ? 0x38bdf8 : 0x10b981 })
+      );
+      p.position.set(i, -18.0, -115);
+      runwayLights.add(p);
     }
-    scene.add(runwayLightsGroup);
+    scene.add(runwayLights);
+
+    // Concourse Overhead Gate Signboards
+    const gateSignMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.2 });
+    [
+      { label: "GATE B10", x: -44, z: 20 },
+      { label: "GATE B12", x: -32, z: 12 },
+      { label: "GATE B14", x: -20, z: 6 },
+      { label: "GATE B16", x: -8,  z: 0 }
+    ].forEach(g => {
+      const gBox = new THREE.Mesh(new THREE.BoxGeometry(8, 2.8, 0.5), gateSignMat);
+      gBox.position.set(g.x, 16, g.z);
+      scene.add(gBox);
+
+      const gPost = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 10, 8), archMat);
+      gPost.position.set(g.x, 21, g.z);
+      scene.add(gPost);
+    });
+
+    // Overhead Concourse Directional Sign
+    const overheadConcourseSign = new THREE.Mesh(
+      new THREE.BoxGeometry(20, 3.2, 0.6),
+      new THREE.MeshStandardMaterial({ color: 0x0f172a, emissive: 0x0284c7, emissiveIntensity: 0.35 })
+    );
+    overheadConcourseSign.position.set(8, 22, -18);
+    scene.add(overheadConcourseSign);
+
+    // =========================================================================
+    // DYNAMIC PASSENGER CROWD SIMULATION (QUEUES, CROWDS & THE PANIC RUSH)
+    // =========================================================================
+    const crowdGroup = new THREE.Group();
+    scene.add(crowdGroup);
+
+    const passengerColors = [0x334155, 0x475569, 0x64748b, 0x0284c7, 0xf59e0b, 0x1e293b];
+    function createPassengerMesh(colorHex) {
+      const p = new THREE.Group();
+      const pMat = new THREE.MeshStandardMaterial({ color: colorHex, roughness: 0.35 });
+      const torso = new THREE.Mesh(new THREE.CylinderGeometry(1.6, 1.8, 7.5, 12), pMat);
+      torso.position.y = 8.5;
+      torso.castShadow = true;
+      p.add(torso);
+
+      const head = new THREE.Mesh(new THREE.SphereGeometry(1.5, 14, 14), pMat);
+      head.position.y = 13.5;
+      p.add(head);
+
+      const legL = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.5, 8.5, 8), pMat);
+      legL.position.set(-0.8, 4.25, 0);
+      p.add(legL);
+      const legR = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.5, 8.5, 8), pMat);
+      legR.position.set(0.8, 4.25, 0);
+      p.add(legR);
+
+      // Wheeled Rollaboard Suitcase
+      const bag = new THREE.Mesh(new THREE.BoxGeometry(2.0, 3.4, 1.5), new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.3 }));
+      bag.position.set(2.4, 2.0, -1.2);
+      bag.castShadow = true;
+      p.add(bag);
+
+      return p;
+    }
+
+    // 1. Boarding Queue at Gate B12 (6 passengers lined up)
+    const queuePassengers = [];
+    for (let i = 0; i < 6; i++) {
+      const qp = createPassengerMesh(passengerColors[i % passengerColors.length]);
+      qp.position.set(-32 - i * 3.5, -18.5, 12 - i * 1.5);
+      qp.rotation.y = Math.PI / 4;
+      crowdGroup.add(qp);
+      queuePassengers.push(qp);
+    }
+
+    // 2. Concourse Rushing Walkers (12 travelers traversing along walkway)
+    const walkers = [];
+    for (let i = 0; i < 12; i++) {
+      const wp = createPassengerMesh(passengerColors[i % passengerColors.length]);
+      const startX = -60 + i * 11;
+      const startZ = -15 + (i % 3) * 8;
+      const speed = 0.18 + Math.random() * 0.14;
+      const dir = (i % 2 === 0) ? 1 : -1;
+      wp.position.set(startX, -18.5, startZ);
+      wp.rotation.y = (dir === 1) ? Math.PI / 2 : -Math.PI / 2;
+      crowdGroup.add(wp);
+      walkers.push({ mesh: wp, speed, dir, baseZ: startZ });
+    }
+
+    // 3. Gate B14 Departing Hearing Passengers (Reacting to the audio PA announcement)
+    const gateB14Crowd = [];
+    [-4, 4, -8, 8].forEach((xOff, idx) => {
+      const gp = createPassengerMesh(passengerColors[idx % passengerColors.length]);
+      gp.position.set(-20 + xOff, -18.5, 6 + (idx % 2) * 4);
+      crowdGroup.add(gp);
+      gateB14Crowd.push({ mesh: gp, startX: -20 + xOff, startZ: 6 + (idx % 2) * 4, isDeparting: false });
+    });
 
     // =========================================================================
     // DYNAMIC 3D FIDS SPLIT-FLAP FLIGHT BOARD (SUSPENDED FROM CONCOURSE CEILING)
@@ -710,7 +960,7 @@
     const fidsTexture = new THREE.CanvasTexture(fidsCanvas);
 
     const fidsMesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(22, 11),
+      new THREE.PlaneGeometry(24, 12),
       new THREE.MeshStandardMaterial({
         map: fidsTexture,
         roughness: 0.25,
@@ -719,18 +969,17 @@
         emissiveIntensity: 0.4
       })
     );
-    fidsMesh.position.set(-14, 18, -4);
-    fidsMesh.rotation.y = 0.28;
+    fidsMesh.position.set(-6, 20, -10);
     fidsMesh.castShadow = true;
     scene.add(fidsMesh);
 
     // Suspension cables
-    [-9, 9].forEach(off => {
+    [-10, 10].forEach(off => {
       const cable = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.06, 0.06, 12, 8),
+        new THREE.CylinderGeometry(0.08, 0.08, 16, 8),
         new THREE.MeshBasicMaterial({ color: 0x475569 })
       );
-      cable.position.set(-14 + off, 24, -4);
+      cable.position.set(-6 + off, 28, -10);
       scene.add(cable);
     });
 
@@ -743,7 +992,7 @@
       fidsCtx.fillRect(0, 0, fidsCanvas.width, 70);
       fidsCtx.fillStyle = '#38bdf8';
       fidsCtx.font = 'bold 30px "Courier New", monospace';
-      fidsCtx.fillText("WASHINGTON DULLES INTL (IAD) // DEPARTURES", 36, 48);
+      fidsCtx.fillText("WASHINGTON DULLES INTL (IAD) // FLIGHT DEPARTURES", 36, 48);
 
       // Column headers
       fidsCtx.fillStyle = '#64748b';
@@ -785,7 +1034,7 @@
         }
 
         if (f.highlight) {
-          fidsCtx.fillStyle = (timelineTime >= 12) ? 'rgba(244, 63, 94, 0.22)' : 'rgba(56, 189, 248, 0.15)';
+          fidsCtx.fillStyle = (timelineTime >= 12) ? 'rgba(244, 63, 94, 0.24)' : 'rgba(56, 189, 248, 0.15)';
           fidsCtx.fillRect(24, rowY - 30, 976, 44);
         }
 
@@ -827,10 +1076,9 @@
     // =========================================================================
     // SAMMY CLAY MANNEQUIN & ACCESSIBLE KIOSK TERMINAL
     // =========================================================================
-    // Kiosk Group placed down the concourse
     const kioskGroup = new THREE.Group();
-    kioskGroup.position.set(26, -18.5, -12);
-    kioskGroup.scale.set(0.78, 0.78, 0.78);
+    kioskGroup.position.set(24, -18.5, -14);
+    kioskGroup.scale.set(0.85, 0.85, 0.85);
     kioskGroup.rotation.y = -0.55;
     scene.add(kioskGroup);
 
@@ -888,7 +1136,7 @@
       // Card Body
       if (isRelief) {
         // High-Contrast Reassuring Gate Card
-        kioskScreenCtx.fillStyle = 'rgba(16, 185, 129, 0.15)';
+        kioskScreenCtx.fillStyle = 'rgba(16, 185, 129, 0.16)';
         kioskScreenCtx.strokeStyle = '#10b981';
         kioskScreenCtx.lineWidth = 4;
         kioskScreenCtx.roundRect(24, 120, 464, 460, 20);
@@ -920,7 +1168,7 @@
         kioskScreenCtx.fillText("Dignity in Motion.", 48, 660);
         kioskScreenCtx.fillStyle = '#38bdf8';
         kioskScreenCtx.font = '20px sans-serif';
-        kioskScreenCtx.fillText("Follow the blue overhead signs.", 48, 695);
+        kioskScreenCtx.fillText("Touch anywhere to launch portal.", 48, 695);
       } else {
         // Waiting / Scanning Mode
         kioskScreenCtx.fillStyle = '#94a3b8';
@@ -942,7 +1190,7 @@
     });
 
     const avatarGroup = new THREE.Group();
-    avatarGroup.position.set(0, 20.5, 0); // Positioned firmly on top of pedestal
+    avatarGroup.position.set(0, 20.5, 0); // Firmly on pedestal
     kioskGroup.add(avatarGroup);
 
     // Head with Dynamic Emotion Canvas
@@ -1027,7 +1275,7 @@
     const palmMesh = new THREE.Mesh(new THREE.BoxGeometry(1.8, 2.2, 0.7), stickmanMat);
     handGroup.add(palmMesh);
 
-    // Digits (Thumb, Index, Middle, Ring, Pinky)
+    // Digits
     const fingerMeshes = [];
     [-0.6, -0.2, 0.2, 0.6].forEach((xOff, idx) => {
       const fGroup = new THREE.Group();
@@ -1127,10 +1375,10 @@
     updateSammyFace('happy', false);
 
     // =========================================================================
-    // PROPORTIONALLY MATCHED PASSENGER AT GATE B14
+    // THE DEAF PASSENGER IN DISTRESS (SEATED AT GATE B14)
     // =========================================================================
     const passengerGroup = new THREE.Group();
-    passengerGroup.position.set(-18, -18.5, 10);
+    passengerGroup.position.set(-20, -18.5, 6);
     scene.add(passengerGroup);
 
     // Gate Holdroom Bench
@@ -1140,55 +1388,119 @@
     benchSeat.castShadow = true;
     passengerGroup.add(benchSeat);
 
-    // Bench Legs
     [-9, 9].forEach(bx => {
       const bLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 6.0, 12), benchMat);
       bLeg.position.set(bx, 3.0, 0);
       passengerGroup.add(bLeg);
     });
 
-    // Gate B14 Identification Stanchion Sign
-    const signGroup = new THREE.Group();
-    signGroup.position.set(-28, -18.5, 8);
-    scene.add(signGroup);
-
-    const signPole = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 24, 16), baseMat);
-    signPole.position.y = 12;
-    signGroup.add(signPole);
-
-    const gateSignBoard = new THREE.Mesh(
-      new THREE.BoxGeometry(10, 4.5, 0.6),
-      new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.25 })
-    );
-    gateSignBoard.position.set(0, 22, 0);
-    signGroup.add(gateSignBoard);
-
-    // Seated Passenger (Porcelain Slate Clay, Anthropometrically Scaled to Sammy)
+    // Seated Deaf Passenger Figure (Distinct Porcelain Slate with expressive posture)
     const travelerMat = new THREE.MeshStandardMaterial({ color: 0x475569, roughness: 0.32 });
     
-    // Thighs extending horizontally
     const pThighs = new THREE.Mesh(new THREE.BoxGeometry(7.2, 3.2, 8.5), travelerMat);
     pThighs.position.set(0, 7.8, 3.0);
     passengerGroup.add(pThighs);
 
-    // Shins extending vertically to floor
     const pShins = new THREE.Mesh(new THREE.BoxGeometry(7.0, 7.0, 3.2), travelerMat);
     pShins.position.set(0, 3.5, 6.2);
     passengerGroup.add(pShins);
 
-    // Seated Torso
     const pTorso = new THREE.Mesh(new THREE.CylinderGeometry(4.2, 4.6, 14, 20), travelerMat);
     pTorso.position.set(0, 15.5, 0);
     pTorso.castShadow = true;
     passengerGroup.add(pTorso);
 
-    // Passenger Head
-    const pHead = new THREE.Mesh(new THREE.SphereGeometry(3.8, 24, 24), travelerMat);
+    // Expressive clay face canvas for Deaf passenger
+    const tFaceCanvas = document.createElement('canvas');
+    tFaceCanvas.width = 512;
+    tFaceCanvas.height = 512;
+    const tFaceCtx = tFaceCanvas.getContext('2d');
+    const tFaceTexture = new THREE.CanvasTexture(tFaceCanvas);
+
+    function drawTravelerFace(isWorried = true) {
+      tFaceCtx.fillStyle = '#475569'; // Matches traveler slate clay body
+      tFaceCtx.fillRect(0, 0, 512, 512);
+
+      const cx = 512 * 0.25; // Anterior face pole on sphere UV
+      const cy = 256;
+      const eyeSpacing = 38;
+      const eyeY = cy - 20;
+
+      // Worried arched eyebrows angled upward toward center
+      tFaceCtx.strokeStyle = '#1e293b';
+      tFaceCtx.lineWidth = 5;
+      tFaceCtx.lineCap = 'round';
+      [-1, 1].forEach(side => {
+        const bx = cx + side * eyeSpacing;
+        tFaceCtx.beginPath();
+        // Inner brow elevated, outer brow downward
+        tFaceCtx.moveTo(bx - side * 16, eyeY - 26);
+        tFaceCtx.quadraticCurveTo(bx, eyeY - 34, bx + side * 14, eyeY - 22);
+        tFaceCtx.stroke();
+      });
+
+      // Wide, alert eyes
+      [-1, 1].forEach(side => {
+        const ex = cx + side * eyeSpacing;
+        tFaceCtx.fillStyle = '#0f172a';
+        tFaceCtx.beginPath();
+        tFaceCtx.arc(ex, eyeY, 9, 0, Math.PI * 2);
+        tFaceCtx.fill();
+
+        // White highlight
+        tFaceCtx.fillStyle = '#ffffff';
+        tFaceCtx.beginPath();
+        tFaceCtx.arc(ex - 2, eyeY - 3, 2.8, 0, Math.PI * 2);
+        tFaceCtx.fill();
+      });
+
+      // Small concerned / parted mouth
+      tFaceCtx.strokeStyle = '#1e293b';
+      tFaceCtx.lineWidth = 4;
+      tFaceCtx.beginPath();
+      tFaceCtx.arc(cx, cy + 34, 14, Math.PI * 1.1, Math.PI * 1.9); // Slight frown curve
+      tFaceCtx.stroke();
+
+      tFaceTexture.needsUpdate = true;
+    }
+    drawTravelerFace(true);
+
+    const pHeadMat = new THREE.MeshStandardMaterial({ map: tFaceTexture, roughness: 0.32 });
+    const pHead = new THREE.Mesh(new THREE.SphereGeometry(3.8, 24, 24), pHeadMat);
     pHead.position.set(0, 24.5, 0.5);
     pHead.castShadow = true;
     passengerGroup.add(pHead);
 
-    // Passenger Carry-on Suitcase
+    // Left Arm (Resting on left knee)
+    const pLeftArm = new THREE.Mesh(new THREE.CylinderGeometry(1.2, 1.0, 10, 12), travelerMat);
+    pLeftArm.position.set(-4.6, 12.0, 3.5);
+    pLeftArm.rotation.x = -0.55;
+    passengerGroup.add(pLeftArm);
+
+    // Right Arm Group (Checking watch at chest/lap level)
+    const pRightArmGroup = new THREE.Group();
+    pRightArmGroup.position.set(4.6, 17.5, 0.5);
+    passengerGroup.add(pRightArmGroup);
+
+    const pRightUpperArm = new THREE.Mesh(new THREE.CylinderGeometry(1.2, 1.0, 7.5, 12), travelerMat);
+    pRightUpperArm.position.set(0, -3.75, 0);
+    pRightArmGroup.add(pRightUpperArm);
+
+    const pRightForearm = new THREE.Mesh(new THREE.CylinderGeometry(1.0, 0.9, 7.0, 12), travelerMat);
+    pRightForearm.position.set(-1.8, -6.8, 3.2);
+    pRightForearm.rotation.x = 1.25;
+    pRightForearm.rotation.z = -0.75;
+    pRightArmGroup.add(pRightForearm);
+
+    // Wristwatch with glowing cyan dial
+    const watchDial = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.85, 0.85, 0.4, 16),
+      new THREE.MeshStandardMaterial({ color: 0x38bdf8, emissive: 0x0284c7, emissiveIntensity: 0.6 })
+    );
+    watchDial.position.set(-2.8, -6.0, 5.0);
+    watchDial.rotation.x = 1.25;
+    pRightArmGroup.add(watchDial);
+
     const bagMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, roughness: 0.3 });
     const bag = new THREE.Mesh(new THREE.BoxGeometry(4.5, 7.5, 3.2), bagMat);
     bag.position.set(7.5, 3.75, 2.5);
@@ -1206,38 +1518,38 @@
     const acts = [
       {
         id: 1, start: 0.0, end: 12.0,
-        title: "Act 1: The Silent Gate Change",
-        narrative: "<strong>Act 1: The Ambient Concourse.</strong> A Deaf passenger waits at Gate B14. An audio loudspeaker crackles with a sudden gate reassignment to Concourse C. Hearing travelers walk away, leaving the Deaf traveler stranded.",
-        camPos: new THREE.Vector3(-14, 4, 38),
-        camTarget: new THREE.Vector3(-16, 2, 8)
+        title: "Act 1: Grand Concourse Chaos",
+        narrative: "<strong>Act 1: Grand Concourse & Crowds.</strong> An expansive international terminal bustling with traveling crowds, boarding queues, and distant taxiing jets. The general chaos of transit unfolds.",
+        camPos: new THREE.Vector3(0, 34, 75),
+        camTarget: new THREE.Vector3(0, 4, -10)
       },
       {
         id: 2, start: 12.0, end: 24.0,
-        title: "Act 2: The FIDS Struggle & Dyslexia",
-        narrative: "<strong>Act 2: The FIDS Struggle.</strong> The traveler rushes to the Flight Board. Due to sensory stress and dyslexia, the dense text jumbles, swaps, and mirrors—multiplying travel anxiety and confusion.",
-        camPos: new THREE.Vector3(-14, 18, 10),
-        camTarget: new THREE.Vector3(-14, 18, -4)
+        title: "Act 2: Passenger in Distress",
+        narrative: "<strong>Act 2: The Silent Gate Change.</strong> The audio PA chimes with an urgent gate change to C28. Hearing travelers scramble and leave, leaving our Deaf passenger isolated, distressed, and glancing at their watch.",
+        camPos: new THREE.Vector3(-5, 9, 36),
+        camTarget: new THREE.Vector3(-20, 2, 6)
       },
       {
         id: 3, start: 24.0, end: 36.0,
-        title: "Act 3: Sammy Wakes Up",
-        narrative: "<strong>Act 3: The Encounter.</strong> Down the concourse, the Sammy kiosk detects the passenger. The Scandinavian porcelain clay avatar wakes up, smiles warmly, and welcomes them with an authentic ASL greeting wave.",
-        camPos: new THREE.Vector3(26, 11, 18),
-        camTarget: new THREE.Vector3(26, 11, -12)
+        title: "Act 3: The FIDS Struggle & Dyslexia",
+        narrative: "<strong>Act 3: The FIDS Struggle.</strong> The traveler looks up at the towering flight board. Under high sensory stress, the text jumbles, swaps, and mirrors—multiplying cognitive overload and helplessness.",
+        camPos: new THREE.Vector3(6, 21, 6),
+        camTarget: new THREE.Vector3(-6, 20, -10)
       },
       {
         id: 4, start: 36.0, end: 48.0,
-        title: "Act 4: Spatial ASL Directional Sign",
-        narrative: "<strong>Act 4: Clear Kinematics.</strong> Sammy executes the gate announcement in fluid ASL: 'FLIGHT DELTA 1842 GATE CHANGE C28'. Sammy extends his arm, pointing clearly rightward toward Concourse C.",
-        camPos: new THREE.Vector3(20, 10, 12),
-        camTarget: new THREE.Vector3(26, 10, -12)
+        title: "Act 4: Sammy Kiosk ASL Sign",
+        narrative: "<strong>Act 4: The Encounter & Clear ASL.</strong> Down the concourse, the Sammy kiosk detects the passenger. The Scandinavian avatar wakes up, greets them, and signs: 'FLIGHT DL 1842 GATE CHANGE C28' with clear directional pointing.",
+        camPos: new THREE.Vector3(20, 11, 14),
+        camTarget: new THREE.Vector3(24, 10, -14)
       },
       {
         id: 5, start: 48.0, end: 60.0,
-        title: "Act 5: Dopamine of Relief & Agency",
-        narrative: "<strong>Act 5: Cognitive Relief.</strong> With complete visual and spatial certainty, anxiety dissolves. The traveler smiles and walks confidently toward Gate C28. <em>Accessibility by Design. Dignity in Motion.</em>",
-        camPos: new THREE.Vector3(0, 10, 48),
-        camTarget: new THREE.Vector3(0, 2, 0)
+        title: "Act 5: Dopamine & Seamless Portal",
+        narrative: "<strong>Act 5: Cognitive Relief & Portal Zoom.</strong> Anxiety dissolves into absolute visual certainty. The camera pushes directly into the kiosk screen, seamlessly unlocking the full interactive Sammy 27-DOF workbench.",
+        camPos: new THREE.Vector3(23.5, 11.2, -8.5), // Camera zooms in on the screen
+        camTarget: new THREE.Vector3(24, 11.2, -14)
       }
     ];
 
@@ -1306,6 +1618,7 @@
 
     let toastTriggered = false;
     let reliefBloomTriggered = false;
+    let portalAutoTriggered = false;
 
     function updateDirector() {
       const act = getCurrentAct();
@@ -1329,9 +1642,9 @@
         tCur.innerText = `0${mins}:${secs < 10 ? '0' : ''}${secs}`;
       }
 
-      // Audio PA Toast trigger in Act 1
+      // Audio PA Toast trigger in Act 2
       const toast = document.getElementById('toast-announcement');
-      if (timelineTime >= 3.0 && timelineTime <= 10.0) {
+      if (timelineTime >= 13.0 && timelineTime <= 22.0) {
         if (!toastTriggered) {
           toastTriggered = true;
           toast.classList.add('visible');
@@ -1350,9 +1663,16 @@
           SoundEngine.playReliefSwish();
         }
         bloom.style.opacity = '1';
+
+        // Seamless zoom into full portal at 54 seconds
+        if (timelineTime >= 54.0 && !portalAutoTriggered) {
+          portalAutoTriggered = true;
+          enterFullPortal();
+        }
       } else {
         reliefBloomTriggered = false;
         bloom.style.opacity = '0';
+        portalAutoTriggered = false;
       }
 
       // Update Kiosk Display (Card blooms in Acts 4 & 5)
@@ -1362,16 +1682,17 @@
     // =========================================================================
     // ANIMATION & KINEMATICS LOOP
     // =========================================================================
-    const currentCamTarget = new THREE.Vector3(-6, 4, 0);
+    const currentCamTarget = new THREE.Vector3(0, 4, -10);
     let clock = 0;
+
     function animate() {
       requestAnimationFrame(animate);
 
       if (isDirectorCam) {
         controls.enabled = false;
         const act = getCurrentAct();
-        camera.position.lerp(act.camPos, 0.06);
-        currentCamTarget.lerp(act.camTarget, 0.06);
+        camera.position.lerp(act.camPos, 0.05);
+        currentCamTarget.lerp(act.camTarget, 0.05);
         camera.lookAt(currentCamTarget);
       } else {
         controls.enabled = true;
@@ -1389,21 +1710,66 @@
         updateDirector();
       }
 
-      // Animate Sammy's Kinematics based on timeline time
-      // Act 3 (Greeting Wave): Arm sweeps side to side
-      if (timelineTime >= 24.0 && timelineTime < 34.0) {
+      // 1. Animate Crowds & Walking Travellers
+      walkers.forEach(w => {
+        w.mesh.position.x += w.speed * w.dir;
+        if (w.mesh.position.x > 85) w.mesh.position.x = -85;
+        if (w.mesh.position.x < -85) w.mesh.position.x = 85;
+      });
+
+      // 2. Animate Queue at Gate B12 (subtle weight shifts)
+      queuePassengers.forEach((qp, idx) => {
+        qp.position.y = -18.5 + Math.sin(clock * 2.5 + idx) * 0.12;
+      });
+
+      // 3. Animate Hearing Passengers departing Gate B14 in Act 2
+      if (timelineTime >= 14.0 && timelineTime < 26.0) {
+        const rushProgress = Math.min(1.0, (timelineTime - 14.0) / 8.0);
+        gateB14Crowd.forEach((gp, idx) => {
+          gp.mesh.position.x = gp.startX + rushProgress * (35 + idx * 8);
+          gp.mesh.position.z = gp.startZ - rushProgress * 15;
+          gp.mesh.rotation.y = Math.PI / 2;
+        });
+      } else if (timelineTime < 14.0) {
+        gateB14Crowd.forEach(gp => {
+          gp.mesh.position.set(gp.startX, -18.5, gp.startZ);
+          gp.mesh.rotation.y = 0;
+        });
+      }
+
+      // 4. Animate Deaf Passenger in Distress (Head turning, looking around, glancing at wristwatch)
+      if (timelineTime >= 12.0 && timelineTime < 24.0) {
+        // Head looks down at watch, then looks left and right in distress
+        const watchLookFactor = Math.sin(clock * 1.8);
+        if (watchLookFactor > 0.3) {
+          pHead.rotation.x = 0.35; // Looking down at watch
+          pHead.rotation.y = 0.25;
+        } else {
+          pHead.rotation.x = -0.05;
+          pHead.rotation.y = Math.sin(clock * 3.2) * 0.55; // Looking left and right
+        }
+        pTorso.rotation.z = Math.sin(clock * 1.5) * 0.04;
+        pRightArmGroup.rotation.x = -0.3 + Math.sin(clock * 1.8) * 0.15; // Arm moves watch closer to eye
+      } else {
+        pHead.rotation.set(0, 0, 0);
+        pTorso.rotation.set(0, 0, 0);
+        pRightArmGroup.rotation.set(0, 0, 0);
+      }
+
+      // 5. Animate Sammy's Kinematics based on timeline time
+      // Act 4 (Greeting Wave): Arm sweeps side to side
+      if (timelineTime >= 36.0 && timelineTime < 42.0) {
         rightArmGroup.rotation.z = -1.6 + Math.sin(clock * 6.0) * 0.45;
         elbowPivot.rotation.z = -0.55;
         handGroup.rotation.y = Math.sin(clock * 6.0) * 0.45;
         updateSammyFace('happy', (clock % 3.5 < 0.15));
       } 
       // Act 4 (Directional Pointing toward Concourse C): Arm points forward and right
-      else if (timelineTime >= 34.0 && timelineTime < 48.0) {
+      else if (timelineTime >= 42.0 && timelineTime < 48.0) {
         rightArmGroup.rotation.x = -0.45;
         rightArmGroup.rotation.z = -1.2;
         rightArmGroup.rotation.y = 0.85; // Pointing rightward
         elbowPivot.rotation.z = -0.2;
-        // Extend index finger, curl others
         fingerMeshes.forEach((f, i) => {
           f.rotation.x = (i === 1) ? 0.0 : 1.35; // Index straight, others curled
         });
@@ -1417,6 +1783,11 @@
         updateSammyFace('happy', (clock % 4.5 < 0.15));
       }
 
+      // 6. Animate Airplane Beacon & Taxiing Jet
+      beaconLight.intensity = (clock % 1.2 < 0.15) ? 2.5 : 0.0;
+      jetGroup.position.x += 0.08;
+      if (jetGroup.position.x > 90) jetGroup.position.x = -90;
+
       // Periodic Dyslexia Board Redraw (every 0.18s to mimic active saccadic letter drift)
       if (clock - DyslexiaEngine.lastSwapTime > 0.18) {
         DyslexiaEngine.lastSwapTime = clock;
@@ -1425,6 +1796,7 @@
 
       renderer.render(scene, camera);
     }
+
     updateFidsBoard(0);
 
     const urlParams = new URLSearchParams(window.location.search);
