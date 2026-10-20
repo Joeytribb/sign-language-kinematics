@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,6 +6,7 @@
   <title>Top 30 Most Used English Words | ASL Procedural Kinematics Workbench</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="mocap_retargeted_trajectories.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -4406,15 +4407,15 @@ TOP_30_ENGLISH_WORDS.push(
     name: "AIRPLANE",
     category: "Airport & Travel",
     signType: "OneHanded",
-    desc: "Flight transport (English: airplane). Dominant ILY/Y-handshape held in neutral space and thrusts smoothly forward-upward along takeoff vector.",
+    desc: "Flight transport (English: airplane). Dominant ILY-handshape held in neutral space and thrusts smoothly forward-upward along takeoff vector.",
     recipe: {
-      handshape: "3",
-      location: "neutral_high",
+      handshape: "ily",
+      location: "temple_right",
       orientation: "PALM_PRONE",
       movement: "LINEAR_FORWARD",
       bilateral: "UNILATERAL",
       contactEffector: "NONE",
-      fineTune: { ox: 0, oy: 2.0, oz: 3.5, rx: -35, ry: -76, rz: 42 }
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
@@ -4433,7 +4434,7 @@ TOP_30_ENGLISH_WORDS.push(
       baseLocation: "neutral_low",
       baseOrientation: "PALM_SUPINE",
       contactEffector: "PALM_BASE",
-      fineTune: { ox: 0, oy: -1.5, oz: 2.0, rx: 25, ry: -20, rz: 1 }
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
@@ -4452,7 +4453,7 @@ TOP_30_ENGLISH_WORDS.push(
       baseLocation: "neutral_mid",
       baseOrientation: "PALM_MEDIAL",
       contactEffector: "INDEX_TIP",
-      fineTune: { ox: 0, oy: 0, oz: 0, rx: 2, ry: -14, rz: -13 }
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
@@ -4460,15 +4461,15 @@ TOP_30_ENGLISH_WORDS.push(
     name: "WATER",
     category: "Passenger Needs",
     signType: "OneHanded",
-    desc: "Hydration request (English: water). Dominant 3/W-handshape index edge taps against the chin twice.",
+    desc: "Hydration request (English: water). Dominant canonical W-handshape index edge taps against the chin twice.",
     recipe: {
-      handshape: "3",
+      handshape: "w",
       location: "chin",
       orientation: "PALM_MEDIAL",
       movement: "TAP_2X",
       bilateral: "UNILATERAL",
       contactEffector: "INDEX_TIP",
-      fineTune: { ox: 0, oy: 0.5, oz: 0, rx: 19, ry: -45, rz: -5 }
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
@@ -4487,7 +4488,7 @@ TOP_30_ENGLISH_WORDS.push(
       baseLocation: "neutral_low",
       baseOrientation: "PALM_SUPINE",
       contactEffector: "PALM_BASE",
-      fineTune: { ox: 0, oy: -1.0, oz: 0, rx: -126, ry: 59, rz: -107 }
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
@@ -4503,7 +4504,7 @@ TOP_30_ENGLISH_WORDS.push(
       movement: "LINEAR_LATERAL",
       bilateral: "UNILATERAL",
       contactEffector: "NONE",
-      fineTune: { ox: 0, oy: 0, oz: 0, rx: -21, ry: -50, rz: -11 }
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
@@ -4513,7 +4514,7 @@ TOP_30_ENGLISH_WORDS.push(
     signType: "Asymmetric Base",
     desc: "Boarding pass & security verification (English: check). Non-dominant flat palm held vertical; dominant bent-index finger draws decisive verification mark downwards.",
     recipe: {
-      handshape: "1",
+      handshape: "curved_1",
       location: "neutral_mid",
       orientation: "PALM_PRONE",
       movement: "VERTICAL_DROP",
@@ -4522,7 +4523,7 @@ TOP_30_ENGLISH_WORDS.push(
       baseLocation: "neutral_mid",
       baseOrientation: "PALM_MEDIAL",
       contactEffector: "INDEX_TIP",
-      fineTune: { ox: 0, oy: 0, oz: 0, rx: 29, ry: -22, rz: -8 }
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
@@ -4541,7 +4542,7 @@ TOP_30_ENGLISH_WORDS.push(
       baseLocation: "neutral_low",
       baseOrientation: "PALM_SUPINE",
       contactEffector: "PALM_BASE",
-      fineTune: { ox: 0, oy: -1.5, oz: 0, rx: 15, ry: -49, rz: -3 }
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
@@ -4560,7 +4561,7 @@ TOP_30_ENGLISH_WORDS.push(
       baseLocation: "neutral_mid",
       baseOrientation: "PALM_POSTERIOR",
       contactEffector: "NONE",
-      fineTune: { ox: 0, oy: 0, oz: 0, rx: -20, ry: -69, rz: 10 }
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   },
   {
@@ -4576,7 +4577,7 @@ TOP_30_ENGLISH_WORDS.push(
       movement: "FOREARM_TWIST",
       bilateral: "UNILATERAL",
       contactEffector: "NONE",
-      fineTune: { ox: 0, oy: 0, oz: 0, rx: 9, ry: -56, rz: 1 }
+      fineTune: { ox: 0, oy: 0, oz: 0, rx: 0, ry: 0, rz: 0 }
     }
   }
 );
@@ -5561,9 +5562,9 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
           handL.targetWristQuat.setFromEuler(new THREE.Euler(1.35, -Math.PI + easeInOut * 0.45, 0.0));
           currentPhase = easeInOut;
         } else if (lem === "airplane" || lem.includes("airplane")) {
-          // Authentic ASL AIRPLANE: double forward-upward wing flutter beside/above head
-          const pBase = wp.pContact;
-          const pDisp = new THREE.Vector3(0.0, 1.2, 2.6);
+          // Authentic ASL AIRPLANE: double forward-upward wing flutter beside/above head (calibrated from 125-ch MoCap)
+          const pBase = new THREE.Vector3(7.5, 14.5, 14.0);
+          const pDisp = new THREE.Vector3(0.8, 1.8, 3.2);
           let pulseFactor = 0;
           if (u < 0.45) {
             pulseFactor = Math.sin((u / 0.45) * Math.PI);
@@ -5573,8 +5574,232 @@ const TOP50_ASLLEX = TOP_30_ENGLISH_WORDS;
             pulseFactor = 0;
           }
           targetR.copy(pBase).addScaledVector(pDisp, pulseFactor);
-          const qWings = new THREE.Quaternion().setFromEuler(new THREE.Euler(1.35, 0.0, -0.15 + pulseFactor * 0.08));
+          const qWings = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.65, -0.30, 0.25 + pulseFactor * 0.12));
           handR.targetWristQuat.copy(qWings);
+          targetL.set(-8.5, -6.0, 12.0);
+          handL.targetWristQuat.setFromEuler(new THREE.Euler(0, 0, 0));
+          currentPhase = u;
+        } else if (lem === "water") {
+          // Authentic ASL WATER: Canonical 'W' handshape held upright at chin; index finger edge double-taps against chin
+          const pChin = new THREE.Vector3(2.2, 13.5, 9.8);
+          const pPrep = new THREE.Vector3(3.2, 13.0, 14.0);
+          let tapPos = new THREE.Vector3();
+          let isTap = false;
+          if (u < 0.35) {
+            const t = u / 0.35;
+            tapPos.lerpVectors(pPrep, pChin, t * t);
+          } else if (u < 0.48) {
+            tapPos.copy(pChin);
+            isTap = true;
+          } else if (u < 0.65) {
+            const t = (u - 0.48) / 0.17;
+            const rebound = pChin.clone().add(new THREE.Vector3(0.5, 0.2, 1.8));
+            tapPos.lerpVectors(pChin, rebound, Math.sin(t * Math.PI * 0.5));
+          } else if (u < 0.82) {
+            const t = (u - 0.65) / 0.17;
+            const rebound = pChin.clone().add(new THREE.Vector3(0.5, 0.2, 1.8));
+            tapPos.lerpVectors(rebound, pChin, t * t);
+          } else {
+            tapPos.copy(pChin);
+            isTap = true;
+          }
+          targetR.copy(tapPos);
+          const qWater = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.15, -1.25, 0.10));
+          handR.targetWristQuat.copy(qWater);
+          targetL.set(-8.5, -6.0, 12.0);
+          handL.targetWristQuat.setFromEuler(new THREE.Euler(0, 0, 0));
+          currentPhase = u;
+          isContactInstant = isTap;
+        } else if (lem === "help") {
+          // Authentic ASL HELP: Bilateral asymmetric base.
+          // Non-dominant left palm holds supine flat platform.
+          // Dominant right A-fist sits on palm. BOTH hands rise together +8cm!
+          const easeRise = u < 0.5 ? 2.0 * u * u : -1.0 + (4.0 - 2.0 * u) * u;
+          const yRise = easeRise * 7.5;
+          const zForward = easeRise * 2.0;
+
+          // Non-dominant flat base palm
+          targetL.set(-2.0, 3.5 + yRise, 15.0 + zForward);
+          const qBaseL = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.20, 0.0, 1.55));
+          handL.targetWristQuat.copy(qBaseL);
+
+          // Dominant A-fist on palm
+          targetR.set(1.5, 6.2 + yRise, 15.0 + zForward);
+          const qFistR = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.25, -1.35, 0.0));
+          handR.targetWristQuat.copy(qFistR);
+
+          currentPhase = easeRise;
+          isContactInstant = true;
+        } else if (lem === "arrive") {
+          // Authentic ASL ARRIVE: Non-dominant palm holds supine platform;
+          // dominant open-B hand swoops down along coronal arc and lands firmly onto base palm.
+          targetL.set(-2.0, 4.0, 16.0);
+          const qBaseL = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.25, 0.15, 1.45));
+          handL.targetWristQuat.copy(qBaseL);
+
+          const pStart = new THREE.Vector3(6.5, 12.5, 13.0);
+          const pLand = new THREE.Vector3(0.5, 5.2, 16.0);
+          let pCur = new THREE.Vector3();
+          if (u < 0.65) {
+            const t = u / 0.65;
+            const easeArc = t < 0.5 ? 2.0 * t * t : -1.0 + (4.0 - 2.0 * t) * t;
+            pCur.lerpVectors(pStart, pLand, easeArc);
+            pCur.y += Math.sin(t * Math.PI) * 2.8;
+          } else {
+            pCur.copy(pLand);
+            isContactInstant = true;
+          }
+          targetR.copy(pCur);
+          const qLand = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.35, -0.85, 0.30));
+          handR.targetWristQuat.copy(qLand);
+          currentPhase = u;
+        } else if (lem === "ticket") {
+          // Authentic ASL TICKET: Non-dominant flat palm vertical (transit pass/paper);
+          // Dominant bent-V inserts and double-clips against the upper index edge.
+          targetL.set(-2.8, 6.5, 16.0);
+          const qTicketL = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.0, 0.0, 1.57));
+          handL.targetWristQuat.copy(qTicketL);
+
+          const pClip = new THREE.Vector3(-0.8, 7.8, 16.0);
+          const pPre = new THREE.Vector3(2.5, 8.5, 16.0);
+          let pCur = new THREE.Vector3();
+          let isClip = false;
+          if (u < 0.35) {
+            const t = u / 0.35;
+            pCur.lerpVectors(pPre, pClip, t * t);
+          } else if (u < 0.48) {
+            pCur.copy(pClip);
+            isClip = true;
+          } else if (u < 0.65) {
+            const t = (u - 0.48) / 0.17;
+            const rebound = pClip.clone().add(new THREE.Vector3(1.4, 0.3, 0.0));
+            pCur.lerpVectors(pClip, rebound, Math.sin(t * Math.PI * 0.5));
+          } else if (u < 0.82) {
+            const t = (u - 0.65) / 0.17;
+            const rebound = pClip.clone().add(new THREE.Vector3(1.4, 0.3, 0.0));
+            pCur.lerpVectors(rebound, pClip, t * t);
+          } else {
+            pCur.copy(pClip);
+            isClip = true;
+          }
+          targetR.copy(pCur);
+          const qClipR = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.10, -1.45, 0.0));
+          handR.targetWristQuat.copy(qClipR);
+          currentPhase = u;
+          isContactInstant = isClip;
+        } else if (lem === "money") {
+          // Authentic ASL MONEY: Non-dominant palm supine flat tray;
+          // dominant flat-O taps twice onto the palm.
+          const baseLy = 4.0;
+          targetL.set(-2.0, baseLy, 16.0);
+          const qBaseL = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.20, 0.0, 1.55));
+          handL.targetWristQuat.copy(qBaseL);
+
+          const pTap = new THREE.Vector3(0.5, 5.5, 16.0);
+          const pPre = new THREE.Vector3(1.0, 8.8, 16.0);
+          let pCur = new THREE.Vector3();
+          let isMoneyTap = false;
+          if (u < 0.35) {
+            const t = u / 0.35;
+            pCur.lerpVectors(pPre, pTap, t * t);
+          } else if (u < 0.48) {
+            pCur.copy(pTap);
+            isMoneyTap = true;
+            targetL.y = baseLy - 0.4;
+          } else if (u < 0.65) {
+            const t = (u - 0.48) / 0.17;
+            const rebound = pTap.clone().add(new THREE.Vector3(0.0, 2.2, 0.0));
+            pCur.lerpVectors(pTap, rebound, Math.sin(t * Math.PI * 0.5));
+          } else if (u < 0.82) {
+            const t = (u - 0.65) / 0.17;
+            const rebound = pTap.clone().add(new THREE.Vector3(0.0, 2.2, 0.0));
+            pCur.lerpVectors(rebound, pTap, t * t);
+          } else {
+            pCur.copy(pTap);
+            isMoneyTap = true;
+            targetL.y = baseLy - 0.4;
+          }
+          targetR.copy(pCur);
+          const qMoneyR = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.55, -0.65, 0.40));
+          handR.targetWristQuat.copy(qMoneyR);
+          currentPhase = u;
+          isContactInstant = isMoneyTap;
+        } else if (lem === "where") {
+          // Authentic ASL WHERE: Dominant 1-handshape in neutral space;
+          // Index finger extended pointing up; wrist wags side to side across 3.5 cycles
+          const pCenter = new THREE.Vector3(5.5, 9.5, 16.0);
+          const wagPhase = u * Math.PI * 2.0 * 3.5;
+          const wagEnvelope = Math.sin(u * Math.PI);
+          const deltaX = Math.sin(wagPhase) * 1.6 * wagEnvelope;
+          const deltaYaw = Math.sin(wagPhase) * 0.38 * wagEnvelope;
+
+          targetR.set(pCenter.x + deltaX, pCenter.y, pCenter.z);
+          const qWhere = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.20, -1.25 + deltaYaw, 0.10));
+          handR.targetWristQuat.copy(qWhere);
+
+          targetL.set(-8.5, -6.0, 12.0);
+          handL.targetWristQuat.setFromEuler(new THREE.Euler(0, 0, 0));
+          currentPhase = u;
+        } else if (lem === "bathroom") {
+          // Authentic ASL BATHROOM: Dominant T-handshape (thumb tucked between index & middle);
+          // rapid forearm shake / twist back and forth across 3.5 cycles
+          const pCenter = new THREE.Vector3(7.0, 10.5, 15.0);
+          const shakePhase = u * Math.PI * 2.0 * 3.5;
+          const shakeEnvelope = Math.sin(u * Math.PI);
+          const twistAngle = Math.sin(shakePhase) * 0.45 * shakeEnvelope;
+          const deltaX = Math.sin(shakePhase) * 0.8 * shakeEnvelope;
+
+          targetR.set(pCenter.x + deltaX, pCenter.y, pCenter.z);
+          const qBath = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.25, -1.20 + twistAngle, twistAngle * 0.5));
+          handR.targetWristQuat.copy(qBath);
+
+          targetL.set(-8.5, -6.0, 12.0);
+          handL.targetWristQuat.setFromEuler(new THREE.Euler(0, 0, 0));
+          currentPhase = u;
+        } else if (lem === "check") {
+          // Authentic ASL CHECK: Non-dominant flat palm vertical clipboard;
+          // dominant bent-index draws a downward verification checkmark stroke.
+          targetL.set(-3.0, 6.5, 16.0);
+          const qCheckL = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.0, 0.0, 1.57));
+          handL.targetWristQuat.copy(qCheckL);
+
+          const pCheckStart = new THREE.Vector3(-0.5, 9.2, 16.0);
+          const pCheckVortex = new THREE.Vector3(-0.8, 5.8, 16.0);
+          const pCheckFlick = new THREE.Vector3(1.2, 7.8, 16.0);
+          let pCur = new THREE.Vector3();
+          if (u < 0.45) {
+            const t = u / 0.45;
+            pCur.lerpVectors(pCheckStart, pCheckVortex, t);
+          } else if (u < 0.75) {
+            const t = (u - 0.45) / 0.30;
+            pCur.lerpVectors(pCheckVortex, pCheckFlick, t);
+          } else {
+            pCur.copy(pCheckFlick);
+          }
+          targetR.copy(pCur);
+          const qCheckR = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.15, -1.35, 0.20));
+          handR.targetWristQuat.copy(qCheckR);
+          currentPhase = u;
+          if (u >= 0.40 && u <= 0.50) isContactInstant = true;
+        } else if (lem === "stop") {
+          // Authentic ASL STOP: Non-dominant flat palm supine; dominant open-B chops down onto palm
+          targetL.set(-2.0, 4.0, 16.0);
+          const qBaseL = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.20, 0.0, 1.55));
+          handL.targetWristQuat.copy(qBaseL);
+
+          const pStopPre = new THREE.Vector3(1.5, 10.5, 15.0);
+          const pStopLand = new THREE.Vector3(0.5, 4.8, 16.0);
+          let pCur = new THREE.Vector3();
+          if (u < 0.60) {
+            const t = u / 0.60;
+            pCur.lerpVectors(pStopPre, pStopLand, t * t);
+          } else {
+            pCur.copy(pStopLand);
+            isContactInstant = true;
+          }
+          targetR.copy(pCur);
+          const qChop = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.30, -0.90, 0.35));
+          handR.targetWristQuat.copy(qChop);
           currentPhase = u;
         } else if ((lem === "hi" || mov === "WAVE_5X") && !endLoc) {
           // Authentic ASL GREETING WAVE: Hand at temple locus waves laterally 4-5 full cycles with wrist waggle
