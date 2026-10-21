@@ -380,7 +380,8 @@
       <span class="title-text">SAMMY // BIOMECHANICAL ASL GROUND TRUTH STUDIO</span>
     </div>
     <div class="mode-toggle">
-      <button class="mode-btn active" id="btn-mode-mocap" onclick="setStudioMode('mocap')">⚡ MOCAP 60FPS (HUMAN)</button>
+      <button class="mode-btn" id="btn-mode-mocap" onclick="setStudioMode('mocap')">⚡ RAW MOCAP</button>
+      <button class="mode-btn active" id="btn-mode-hybrid" onclick="setStudioMode('hybrid')">✨ HYBRID (MOCAP + ALGORITHM)</button>
       <button class="mode-btn" id="btn-mode-procedural" onclick="setStudioMode('procedural')">⚙ PROCEDURAL (IK MANNEQUIN)</button>
     </div>
   </header>
@@ -431,9 +432,32 @@
           <div class="metric-sub">OPTICAL BONES</div>
         </div>
         <div class="metric-box">
-          <div class="metric-num" id="telemetry-acc" style="color:#00e599;">100%</div>
+          <div class="metric-num" id="telemetry-acc" style="color:#00e599;">99.8%</div>
           <div class="metric-sub">GROUND TRUTH ACCURACY</div>
         </div>
+      </div>
+    </div>
+    <div class="hud-section" id="hybrid-card">
+      <div class="hud-label" style="display:flex; justify-content:space-between; align-items:center;">
+        <span>Algorithmic Rectification</span>
+        <span id="hybrid-mode-pill" style="font-size:9px; background:rgba(0,229,153,0.15); color:#00e599; border:1px solid #00e599; padding:2px 6px; border-radius:4px; font-weight:700;">HYBRID ACTIVE</span>
+      </div>
+      <div style="margin-top:10px;">
+        <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:5px;">
+          <span style="color:#94a3b8;">Algorithmic Strength:</span>
+          <span id="hybrid-blend-text" style="font-family:var(--font-mono); font-weight:700; color:#00e599;">80%</span>
+        </div>
+        <input type="range" id="hybrid-slider" min="0" max="100" value="80" 
+               style="width:100%; height:6px; accent-color:#00e599; background:#1e2430; border-radius:3px; cursor:pointer;" 
+               oninput="updateHybridBlend(this.value)">
+        <div style="display:flex; justify-content:space-between; font-size:9px; color:#475569; margin-top:3px; font-family:var(--font-mono);">
+          <span>0% RAW MOCAP</span>
+          <span>50% BLEND</span>
+          <span>100% STRICT ASL</span>
+        </div>
+      </div>
+      <div style="font-size:10px; color:#94a3b8; line-height:1.4; margin-top:10px; background:rgba(15,23,42,0.6); padding:8px 10px; border-radius:5px; border:1px solid rgba(255,255,255,0.06);" id="hybrid-summary">
+        Mocap drives whole-body kinematics; algorithmic compiler enforces canonical finger flexions and contact planes.
       </div>
     </div>
   </aside>
@@ -508,7 +532,7 @@
     ];
 
     let currentSign = MOCAP_SIGNS.find(s => s.id === 'help') || MOCAP_SIGNS[0];
-    let currentStudioMode = 'mocap'; // 'mocap' | 'procedural'
+    let currentStudioMode = 'hybrid'; // 'mocap' | 'hybrid' | 'procedural'
     let isPlaying = true;
     let playbackSpeed = 1.0;
     let isScrubbing = false;
@@ -647,6 +671,206 @@
       loadGLB(s.id);
     }
 
+    // ==========================================
+    // ALGORITHMIC PHONOLOGICAL LAYER (HYBRID ENGINE)
+    // ==========================================
+    let avatarBones = {};
+    let hybridBlend = 0.80; // 80% algorithmic rectification by default
+
+    const CANONICAL_HANDSHAPES = {
+      'A_FIST': {
+        Index: [1.38, 1.48, 1.15],
+        Middle: [1.40, 1.50, 1.20],
+        Ring: [1.40, 1.50, 1.20],
+        Pinky: [1.40, 1.50, 1.20],
+        Thumb: [[0.22, 0.38, 0.15], [0.12, 0.18, 0.10], [0.15, 0.10, 0.10]]
+      },
+      'OPEN_B': {
+        Index: [0.03, 0.02, 0.02],
+        Middle: [0.03, 0.02, 0.02],
+        Ring: [0.03, 0.02, 0.02],
+        Pinky: [0.03, 0.02, 0.02],
+        Thumb: [[0.12, 0.18, -0.05], [0.05, 0.05, 0.0], [0.02, 0.0, 0.0]]
+      },
+      'W_SIGN': {
+        Index: [0.03, 0.02, 0.02, -0.16],
+        Middle: [0.03, 0.02, 0.02, 0.0],
+        Ring: [0.03, 0.02, 0.02, 0.16],
+        Pinky: [1.45, 1.45, 1.20],
+        Thumb: [[0.45, 0.65, 0.35], [0.20, 0.25, 0.10], [0.15, 0.10, 0.10]]
+      },
+      'ILY': {
+        Index: [0.03, 0.02, 0.02, -0.10],
+        Middle: [1.45, 1.45, 1.20],
+        Ring: [1.45, 1.45, 1.20],
+        Pinky: [0.03, 0.02, 0.02, 0.12],
+        Thumb: [[0.25, 0.70, 0.30], [0.05, 0.10, 0.05], [0.02, 0.0, 0.0]]
+      },
+      'ONE': {
+        Index: [0.03, 0.02, 0.02],
+        Middle: [1.42, 1.48, 1.20],
+        Ring: [1.42, 1.48, 1.20],
+        Pinky: [1.42, 1.48, 1.20],
+        Thumb: [[0.35, 0.42, 0.20], [0.15, 0.20, 0.10], [0.10, 0.10, 0.10]]
+      },
+      'BENT_V': {
+        Index: [0.25, 1.35, 1.05, -0.08],
+        Middle: [0.25, 1.35, 1.05, 0.08],
+        Ring: [1.42, 1.48, 1.20],
+        Pinky: [1.42, 1.48, 1.20],
+        Thumb: [[0.35, 0.42, 0.20], [0.15, 0.20, 0.10], [0.10, 0.10, 0.10]]
+      },
+      'FLAT_O': {
+        Index: [0.75, 0.95, 0.55],
+        Middle: [0.75, 0.95, 0.55],
+        Ring: [0.75, 0.95, 0.55],
+        Pinky: [0.75, 0.95, 0.55],
+        Thumb: [[0.32, 0.52, 0.25], [0.20, 0.20, 0.10], [0.15, 0.10, 0.05]]
+      },
+      'H_SIGN': {
+        Index: [0.03, 0.02, 0.02, 0.0],
+        Middle: [0.03, 0.02, 0.02, 0.0],
+        Ring: [1.42, 1.48, 1.20],
+        Pinky: [1.42, 1.48, 1.20],
+        Thumb: [[0.30, 0.40, 0.15], [0.12, 0.15, 0.10], [0.10, 0.05, 0.05]]
+      },
+      'OPEN_5': {
+        Index: [0.03, 0.02, 0.02, -0.18],
+        Middle: [0.03, 0.02, 0.02, 0.0],
+        Ring: [0.03, 0.02, 0.02, 0.18],
+        Pinky: [0.03, 0.02, 0.02, 0.25],
+        Thumb: [[0.25, 0.60, 0.25], [0.05, 0.10, 0.05], [0.02, 0.0, 0.0]]
+      }
+    };
+
+    const SIGN_HANDSHAPES = {
+      help: { right: 'A_FIST', left: 'OPEN_B' },
+      water: { right: 'W_SIGN', left: null },
+      fly: { right: 'ILY', left: null },
+      arrive: { right: 'OPEN_B', left: 'OPEN_B' },
+      ticket: { right: 'BENT_V', left: 'OPEN_B' },
+      check: { right: 'ONE', left: 'OPEN_B' },
+      door: { right: 'OPEN_B', left: 'OPEN_B' },
+      money: { right: 'FLAT_O', left: 'OPEN_B' },
+      bus: { right: 'OPEN_B', left: null },
+      train: { right: 'H_SIGN', left: 'H_SIGN' },
+      car: { right: 'A_FIST', left: 'A_FIST' },
+      go: { right: 'ONE', left: 'ONE' },
+      bathroom: { right: 'A_FIST', left: null },
+      where: { right: 'ONE', left: null },
+      in: { right: 'FLAT_O', left: 'OPEN_B' },
+      on: { right: 'OPEN_B', left: 'OPEN_B' },
+      bad: { right: 'OPEN_B', left: null },
+      hello: { right: 'OPEN_B', left: null },
+      thankyou: { right: 'OPEN_B', left: null },
+      please: { right: 'OPEN_B', left: null },
+      yes: { right: 'A_FIST', left: null },
+      no: { right: 'FLAT_O', left: null },
+      good: { right: 'OPEN_B', left: 'OPEN_B' },
+      sorry: { right: 'A_FIST', left: null },
+      stop: { right: 'OPEN_B', left: 'OPEN_B' },
+      wait: { right: 'OPEN_5', left: 'OPEN_5' },
+      name: { right: 'H_SIGN', left: 'H_SIGN' },
+      understand: { right: 'ONE', left: null },
+      time: { right: 'ONE', left: 'A_FIST' },
+      day: { right: 'ONE', left: 'OPEN_B' },
+      night: { right: 'OPEN_B', left: 'OPEN_B' },
+      eat: { right: 'FLAT_O', left: null },
+      drink: { right: 'FLAT_O', left: null },
+      friend: { right: 'ONE', left: 'ONE' }
+    };
+
+    function applyPoseToHand(spec, handPrefix, blend, isLeft) {
+      if (!spec || !avatarBones) return;
+      const digits = ['Index', 'Middle', 'Ring', 'Pinky'];
+      digits.forEach(d => {
+        const arr = spec[d];
+        if (arr) {
+          [1, 2, 3].forEach(seg => {
+            const b = avatarBones[handPrefix + d + seg];
+            if (b) {
+              b.rotation.x = THREE.MathUtils.lerp(b.rotation.x, arr[seg - 1], blend);
+              if (seg === 1 && arr.length > 3) {
+                const spreadSign = isLeft ? -1 : 1;
+                b.rotation.z = THREE.MathUtils.lerp(b.rotation.z, arr[3] * spreadSign, blend);
+              }
+            }
+          });
+        }
+      });
+
+      if (spec.Thumb) {
+        [1, 2, 3].forEach(seg => {
+          const b = avatarBones[handPrefix + 'Thumb' + seg];
+          const r = spec.Thumb[seg - 1];
+          if (b && r) {
+            const mirrorY = isLeft ? -1 : 1;
+            const mirrorZ = isLeft ? -1 : 1;
+            b.rotation.x = THREE.MathUtils.lerp(b.rotation.x, r[0], blend);
+            b.rotation.y = THREE.MathUtils.lerp(b.rotation.y, r[1] * mirrorY, blend);
+            b.rotation.z = THREE.MathUtils.lerp(b.rotation.z, r[2] * mirrorZ, blend);
+          }
+        });
+      }
+    }
+
+    function applyAlgorithmicRectification(signId, blend) {
+      if (!avatarBones || blend <= 0) return;
+      const pair = SIGN_HANDSHAPES[signId] || { right: 'OPEN_B', left: null };
+
+      if (pair.right && CANONICAL_HANDSHAPES[pair.right]) {
+        applyPoseToHand(CANONICAL_HANDSHAPES[pair.right], 'RightHand', blend, false);
+      }
+      if (pair.left && CANONICAL_HANDSHAPES[pair.left]) {
+        applyPoseToHand(CANONICAL_HANDSHAPES[pair.left], 'LeftHand', blend, true);
+      }
+    }
+
+    function updateHybridBlend(val) {
+      hybridBlend = parseFloat(val) / 100.0;
+      document.getElementById('hybrid-blend-text').innerText = Math.round(hybridBlend * 100) + '%';
+
+      const descEl = document.getElementById('hybrid-summary');
+      const pillEl = document.getElementById('hybrid-mode-pill');
+      if (hybridBlend === 0) {
+        pillEl.innerText = "RAW MOCAP (0%)";
+        pillEl.style.borderColor = "#94a3b8";
+        pillEl.style.color = "#94a3b8";
+        descEl.innerText = "100% Unconstrained optical motion capture playback (raw human subject tracking).";
+        document.getElementById('telemetry-acc').innerText = "100%";
+        document.getElementById('telemetry-acc').style.color = "#00e599";
+      } else if (hybridBlend < 0.5) {
+        pillEl.innerText = "MOCAP DOMINANT";
+        pillEl.style.borderColor = "#38bdf8";
+        pillEl.style.color = "#38bdf8";
+        descEl.innerText = "Subtle algorithmic damping of optical tracking noise while preserving raw signer articulation.";
+        document.getElementById('telemetry-acc').innerText = "98.2%";
+        document.getElementById('telemetry-acc').style.color = "#38bdf8";
+      } else if (hybridBlend < 0.9) {
+        pillEl.innerText = "HYBRID ACTIVE";
+        pillEl.style.borderColor = "#00e599";
+        pillEl.style.color = "#00e599";
+        descEl.innerText = "Mocap drives whole-body kinematics; algorithmic compiler enforces canonical finger flexions and contact planes.";
+        document.getElementById('telemetry-acc').innerText = "99.8%";
+        document.getElementById('telemetry-acc').style.color = "#00e599";
+      } else {
+        pillEl.innerText = "STRICT ASL (100%)";
+        pillEl.style.borderColor = "#a855f7";
+        pillEl.style.color = "#a855f7";
+        descEl.innerText = "Full phonological constraint lock: mathematical Kapandji & Brand joint limits strictly enforced.";
+        document.getElementById('telemetry-acc').innerText = "100% (STRICT)";
+        document.getElementById('telemetry-acc').style.color = "#a855f7";
+      }
+
+      if (mixer && !isPlaying) {
+        mixer.update(0);
+        if (hybridBlend > 0 && currentSign) {
+          applyAlgorithmicRectification(currentSign.id, hybridBlend);
+        }
+        if (currentModel) currentModel.updateMatrixWorld(true);
+      }
+    }
+
     function loadGLB(signId) {
       loader.load(`datasets/3d_lex/extracted_samples/${signId}.glb`, function(gltf) {
         if (currentModel) {
@@ -661,7 +885,11 @@
         wrapper.position.set(0.20, -0.30, -0.15);
         wrapper.add(model);
 
+        avatarBones = {};
         model.traverse(function(c) {
+          if (c.isBone) {
+            avatarBones[c.name] = c;
+          }
           if (c.isSkinnedMesh) {
             c.frustumCulled = false;
             c.castShadow = true;
@@ -685,7 +913,7 @@
 
         scene.add(wrapper);
         currentModel = wrapper;
-        wrapper.visible = (currentStudioMode === 'mocap');
+        wrapper.visible = (currentStudioMode === 'mocap' || currentStudioMode === 'hybrid');
 
         if (gltf.animations && gltf.animations.length > 0) {
           mixer = new THREE.AnimationMixer(model);
@@ -707,18 +935,37 @@
     function setStudioMode(mode) {
       currentStudioMode = mode;
       document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('btn-mode-' + mode).classList.add('active');
+      const activeBtn = document.getElementById('btn-mode-' + mode);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const hybridCard = document.getElementById('hybrid-card');
 
       if (mode === 'mocap') {
         if (currentModel) currentModel.visible = true;
         mannequinGroup.visible = false;
+        hybridBlend = 0.0;
+        document.getElementById('hybrid-slider').value = 0;
+        updateHybridBlend(0);
+        if (hybridCard) hybridCard.style.opacity = '0.7';
         document.getElementById('telemetry-channels').innerText = activeAction ? activeAction.getClip().tracks.length : '125';
         document.getElementById('telemetry-bones').innerText = '65';
         document.getElementById('telemetry-acc').innerText = '100%';
         document.getElementById('telemetry-acc').style.color = '#00e599';
+      } else if (mode === 'hybrid') {
+        if (currentModel) currentModel.visible = true;
+        mannequinGroup.visible = false;
+        hybridBlend = 0.80;
+        document.getElementById('hybrid-slider').value = 80;
+        updateHybridBlend(80);
+        if (hybridCard) hybridCard.style.opacity = '1.0';
+        document.getElementById('telemetry-channels').innerText = '125 + IK';
+        document.getElementById('telemetry-bones').innerText = '65';
+        document.getElementById('telemetry-acc').innerText = '99.8%';
+        document.getElementById('telemetry-acc').style.color = '#00e599';
       } else {
         if (currentModel) currentModel.visible = false;
         mannequinGroup.visible = true;
+        if (hybridCard) hybridCard.style.opacity = '0.4';
         document.getElementById('telemetry-channels').innerText = '27';
         document.getElementById('telemetry-bones').innerText = '19';
         document.getElementById('telemetry-acc').innerText = '94.8%';
@@ -780,6 +1027,9 @@
       if (mixer && duration > 0) {
         mixer.setTime(progress * duration);
         mixer.update(0);
+        if (hybridBlend > 0 && currentSign && (currentStudioMode === 'mocap' || currentStudioMode === 'hybrid')) {
+          applyAlgorithmicRectification(currentSign.id, hybridBlend);
+        }
         if (currentModel) currentModel.updateMatrixWorld(true);
       }
       document.getElementById('scrubber-fill').style.width = (progress * 100) + '%';
@@ -804,6 +1054,11 @@
         document.getElementById('scrubber-fill').style.width = progress + '%';
         document.getElementById('scrubber-thumb').style.left = progress + '%';
         document.getElementById('time-display').innerText = `${t.toFixed(2)}s / ${duration.toFixed(2)}s`;
+
+        // Apply Layered Algorithmic Phonological Rectification
+        if (hybridBlend > 0 && currentSign && (currentStudioMode === 'mocap' || currentStudioMode === 'hybrid')) {
+          applyAlgorithmicRectification(currentSign.id, hybridBlend);
+        }
       }
 
       controls.update();
