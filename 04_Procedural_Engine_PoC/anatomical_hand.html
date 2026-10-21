@@ -141,8 +141,75 @@
       flex-direction: column;
       z-index: 40;
     }
+    .deck-category-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      background: #070a12;
+      padding: 6px;
+      border-bottom: 1px solid var(--border-subtle);
+      gap: 4px;
+    }
+    .deck-cat-btn {
+      flex: 1 1 calc(33.3% - 4px);
+      background: var(--card-inset);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      padding: 5px 4px;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      transition: all 0.15s ease;
+    }
+    .deck-cat-btn:nth-child(4),
+    .deck-cat-btn:nth-child(5) {
+      flex: 1 1 calc(50% - 4px);
+    }
+    .deck-cat-btn:hover {
+      color: #fff;
+      border-color: var(--border-tactile);
+      background: rgba(255,255,255,0.04);
+    }
+    .deck-cat-btn.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #38bdf8;
+      color: #38bdf8;
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.2);
+    }
+    .deck-cat-btn span.num {
+      font-size: 8px;
+      color: var(--text-dim);
+    }
+    .deck-cat-btn.active span.num {
+      color: #38bdf8;
+    }
+    .deck-search-box {
+      margin-top: 6px;
+      display: flex;
+      gap: 4px;
+    }
+    .deck-search-input {
+      flex: 1;
+      background: var(--card-inset);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      padding: 4px 8px;
+      outline: none;
+    }
+    .deck-search-input:focus {
+      border-color: #38bdf8;
+    }
     .sidebar-header {
-      padding: 14px 16px 10px;
+      padding: 10px 14px 10px;
       border-bottom: 1px solid var(--border-subtle);
     }
     .sidebar-title {
@@ -930,15 +997,34 @@
     </div>
   </header>
 
-  <!-- LEFT SIDEBAR: SIGNS DECK -->
+  <!-- LEFT SIDEBAR: ARTICULATOR & PHONOLOGY DECKS -->
   <aside id="sidebar">
-    <div class="sidebar-header">
-      <div class="sidebar-title">Empirical Lexicon (34 Signs)</div>
-      <div class="cat-tabs">
-        <button class="cat-btn active" onclick="filterCategory('all', this)">ALL (34)</button>
-        <button class="cat-btn" onclick="filterCategory('travel', this)">TRAVEL (10)</button>
-        <button class="cat-btn" onclick="filterCategory('needs', this)">NEEDS (7)</button>
-        <button class="cat-btn" onclick="filterCategory('common', this)">COMMON (17)</button>
+    <div class="deck-category-tabs">
+      <button class="deck-cat-btn active" data-cat="signs" onclick="LexiconWorkbench.switchCategory('signs', this)">
+        <span class="num">01</span> SIGNS (34)
+      </button>
+      <button class="deck-cat-btn" data-cat="handshapes" onclick="LexiconWorkbench.switchCategory('handshapes', this)">
+        <span class="num">02</span> HANDSHAPES (38)
+      </button>
+      <button class="deck-cat-btn" data-cat="locations" onclick="LexiconWorkbench.switchCategory('locations', this)">
+        <span class="num">03</span> LOCI (24)
+      </button>
+      <button class="deck-cat-btn" data-cat="movements" onclick="LexiconWorkbench.switchCategory('movements', this)">
+        <span class="num">04</span> MOVEMENTS (16)
+      </button>
+      <button class="deck-cat-btn" data-cat="orientations" onclick="LexiconWorkbench.switchCategory('orientations', this)">
+        <span class="num">05</span> ORIENTATIONS (14)
+      </button>
+    </div>
+    <div class="sidebar-header" id="sidebar-header-pane">
+      <div class="sidebar-title" id="sidebar-title-text">Empirical Lexicon (34 Signs)</div>
+      <div id="deck-subbar">
+        <div class="cat-tabs">
+          <button class="cat-btn active" onclick="filterCategory('all', this)">ALL (34)</button>
+          <button class="cat-btn" onclick="filterCategory('travel', this)">TRAVEL (10)</button>
+          <button class="cat-btn" onclick="filterCategory('needs', this)">NEEDS (7)</button>
+          <button class="cat-btn" onclick="filterCategory('common', this)">COMMON (17)</button>
+        </div>
       </div>
     </div>
     <div class="sign-list" id="sign-list-container"></div>
@@ -985,8 +1071,8 @@
     <!-- Rack 02: Phonological Recipe Edit -->
     <div class="rack-section">
       <div class="rack-title">
-        <span>02 // PHONOLOGICAL RECIPE EDIT</span>
-        <span style="font-size:8.5px; color:var(--text-dim);">&lang;H, L, M, O, B&rang;</span>
+        <span id="rack-02-title">02 // PHONOLOGICAL RECIPE EDIT</span>
+        <span id="rack-02-sub" style="font-size:8.5px; color:var(--text-dim);">&lang;H, L, M, O, B&rang;</span>
       </div>
       <div id="param-controls-deck" class="param-grid">
         <!-- Injected dynamically by LexiconWorkbench -->
@@ -1316,114 +1402,162 @@
     // THE 5 CANONICAL PARAMETRIC SIGN LEXICONS <H, L, M, O, B>
     // =========================================================================
     const FINGER_TOKENS = {
-      EXTENDED: { f1: 2, a1: 0, f2: 4, f3: 2 },
-      EXTENDED_SPREAD_L: { f1: 2, a1: 16, f2: 4, f3: 2 },
-      EXTENDED_SPREAD_R: { f1: 2, a1: -16, f2: 4, f3: 2 },
-      EXTENDED_FLARE_WIDE_L: { f1: 2, a1: 26, f2: 4, f3: 2 },
-      EXTENDED_FLARE_WIDE_R: { f1: 2, a1: -26, f2: 4, f3: 2 },
-      CLOSED: { f1: 95, a1: 0, f2: 100, f3: 80 },
-      CLOSED_OVER_THUMB: { f1: 88, a1: 0, f2: 95, f3: 76 },
-      CURVED: { f1: 43, a1: 0, f2: 40, f3: 36 },
-      CURVED_O: { f1: 52, a1: 0, f2: 55, f3: 49 },
-      HALF_BENT: { f1: 90, a1: 0, f2: 10, f3: 0 },
-      HOOK_BENT: { f1: 0, a1: 0, f2: 95, f3: 80 },
-      CLAW_E: { f1: 82, a1: 0, f2: 78, f3: 48 }
+      EXTENDED: { f1: 2, a1: 0, f2: 4, f3: 2, desc: "Anatomically extended straight" },
+      NATURAL_REST_IDX: { f1: 16, a1: 4, f2: 24, f3: 16, desc: "Natural relaxed cascade curl" },
+      NATURAL_REST_MID: { f1: 22, a1: 0, f2: 32, f3: 20, desc: "Natural relaxed cascade curl" },
+      NATURAL_REST_RNG: { f1: 28, a1: -6, f2: 44, f3: 28, desc: "Natural relaxed cascade curl" },
+      NATURAL_REST_PNK: { f1: 34, a1: -12, f2: 54, f3: 34, desc: "Natural relaxed cascade curl" },
+      EXTENDED_SPREAD_L: { f1: 2, a1: 16, f2: 4, f3: 2, desc: "Extended abducted medial (+16° flare)" },
+      EXTENDED_SPREAD_R: { f1: 2, a1: -16, f2: 4, f3: 2, desc: "Extended abducted lateral (-16° flare)" },
+      EXTENDED_FLARE_WIDE_L: { f1: 2, a1: 26, f2: 4, f3: 2, desc: "Extended wide flare medial (+26°)" },
+      EXTENDED_FLARE_WIDE_R: { f1: 2, a1: -26, f2: 4, f3: 2, desc: "Extended wide flare lateral (-26°)" },
+      EXTENDED_FORWARD: { f1: 45, a1: 0, f2: 8, f3: 4, desc: "Pointing forward" },
+      POINTING_DOWN: { f1: 90, a1: 0, f2: 10, f3: 0, desc: "Pointing straight down" },
+      CROSSED_IDX_UNDER: { f1: -8, a1: -16, f2: 2, f3: 2, desc: "Index passing under middle" },
+      CROSSED_MID_OVER: { f1: 8, a1: 24, f2: 4, f3: 2, desc: "Middle crossing over index" },
+      CROSSED_R: { f1: -8, a1: -16, f2: 2, f3: 2, desc: "Index under crossed middle (R)" },
+      CLOSED: { f1: 95, a1: 0, f2: 100, f3: 80, desc: "Fist closed (MCP 95°, PIP 100°, DIP 80°)" },
+      CLOSED_OVER_THUMB: { f1: 88, a1: 0, f2: 95, f3: 76, desc: "Snug fist closed over thumb" },
+      CURVED: { f1: 43, a1: 0, f2: 40, f3: 36, desc: "C-shape curved claw" },
+      CURVED_O: { f1: 52, a1: 0, f2: 55, f3: 49, desc: "O-shape circular arc" },
+      HALF_BENT: { f1: 90, a1: 0, f2: 10, f3: 0, desc: "L-bend at knuckle (MCP 90°, PIP 10°)" },
+      HOOK_BENT: { f1: 0, a1: 0, f2: 95, f3: 80, desc: "Hook bend (knuckle 0°, PIP 95°, DIP 80°)" },
+      CLAW_E: { f1: 82, a1: 0, f2: 78, f3: 48, desc: "Tight E-claw on thumb" }
     };
 
     const THUMB_TOKENS = {
-      THM_REST_SIDE: { f1: -30, a1: -65, f2: 30, f3: 15 },
-      THM_NATURAL_REST: { f1: -25, a1: -60, f2: 24, f3: 16 },
-      THM_WRAP_OVER: { f1: -25, a1: -65, f2: 30, f3: 60 },
-      THM_WRAP_FRONT: { f1: -16, a1: -60, f2: 30, f3: 65 },
-      THM_FLAT_PALM: { f1: 20, a1: -65, f2: 20, f3: 0 },
-      THM_OUT: { f1: -50, a1: -30, f2: 0, f3: 0 },
-      THM_OUT_SPREAD: { f1: -65, a1: -30, f2: 0, f3: 0 },
-      THM_PINCH_INDEX: { f1: 15, a1: -45, f2: 30, f3: 20 },
-      THM_CURVED: { f1: 20, a1: -40, f2: 13, f3: 12 },
-      THM_OPPOSE_O: { f1: 4, a1: -45, f2: 30, f3: 20 }
+      THM_REST_SIDE: { f1: -30, a1: -65, f2: 30, f3: 15, desc: "Rest on radial margin of index" },
+      THM_NATURAL_REST: { f1: -25, a1: -60, f2: 24, f3: 16, desc: "Natural relaxed opposition" },
+      THM_WRAP_OVER: { f1: -25, a1: -65, f2: 30, f3: 60, desc: "Wrapped over closed fingers" },
+      THM_WRAP_FRONT: { f1: -16, a1: -60, f2: 30, f3: 65, desc: "Fist wrap across front" },
+      THM_FLAT_PALM: { f1: 20, a1: -65, f2: 20, f3: 0, desc: "Planar flat across palm base" },
+      THM_OUT: { f1: -50, a1: -30, f2: 0, f3: 0, desc: "Extended 90° outward" },
+      THM_OUT_SPREAD: { f1: -65, a1: -30, f2: 0, f3: 0, desc: "Wide outward spread" },
+      THM_TUCK_T: { f1: -34, a1: -66, f2: 10, f3: 50, desc: "Tucked between index & middle (T)" },
+      THM_TUCK_N: { f1: 8, a1: -60, f2: 20, f3: 20, desc: "Tucked under index & middle (N)" },
+      THM_TUCK_M: { f1: 44, a1: -50, f2: 10, f3: 10, desc: "Tucked under 3 fingers (M)" },
+      THM_PINCH_INDEX: { f1: 15, a1: -45, f2: 30, f3: 20, desc: "Index pad-to-pad pinch" },
+      THM_PINCH_MID: { f1: 15, a1: -45, f2: 30, f3: 20, desc: "Middle fingertip touch" },
+      THM_CURVED: { f1: 20, a1: -40, f2: 13, f3: 12, desc: "C-shape opposing curve" },
+      THM_OPPOSE_O: { f1: 4, a1: -45, f2: 30, f3: 20, desc: "O-shape opposing circle" },
+      THM_BETWEEN_INDEX_MID: { f1: -30, a1: -45, f2: 40, f3: 70, desc: "Upward between index & mid (K/P)" },
+      THM_HOLD_PINKY: { f1: 30, a1: -55, f2: 40, f3: 40, desc: "Holding pinky down (W)" },
+      THM_POINTING_DOWN: { f1: 0, a1: 60, f2: 0, f3: 0, desc: "Pointing down (Q)" }
     };
 
     const PARAMETRIC_LEXICONS = {
+      // 1. 38 CANONICAL ASL HANDSHAPES
       handshapes: {
-        "1": { name: "1-Handshape", tokens: { idx: "EXTENDED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" } },
-        "bent_1": { name: "Bent 1 / Hook", tokens: { idx: "HOOK_BENT", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" } },
-        "v": { name: "V / 2-Handshape", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED_SPREAD_R", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" } },
-        "bent_v": { name: "Bent V / Double Hook", tokens: { idx: "HOOK_BENT", mid: "HOOK_BENT", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" } },
-        "3": { name: "3-Handshape", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED_SPREAD_R", rng: "CLOSED", pnk: "CLOSED", thm: "THM_OUT_SPREAD" } },
-        "4": { name: "4-Handshape", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "EXTENDED_FLARE_WIDE_R", thm: "THM_FLAT_PALM" } },
-        "5": { name: "5-Handshape (Open)", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "EXTENDED_FLARE_WIDE_R", thm: "THM_OUT_SPREAD" } },
-        "curved_5": { name: "Curved 5 / Claw", tokens: { idx: "CURVED", mid: "CURVED", rng: "CURVED", pnk: "CURVED", thm: "THM_CURVED" } },
-        "a": { name: "A-Handshape", tokens: { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_REST_SIDE" } },
-        "s": { name: "S-Handshape (Fist)", tokens: { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" } },
-        "t": { name: "T-Handshape", tokens: { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_PINCH_INDEX" } },
-        "open_b": { name: "Open B (Flat Palm)", tokens: { idx: "EXTENDED", mid: "EXTENDED", rng: "EXTENDED", pnk: "EXTENDED", thm: "THM_OUT" } },
-        "flat_b": { name: "Flat B (Thumb In)", tokens: { idx: "EXTENDED", mid: "EXTENDED", rng: "EXTENDED", pnk: "EXTENDED", thm: "THM_FLAT_PALM" } },
-        "bent_b": { name: "Bent B", tokens: { idx: "HALF_BENT", mid: "HALF_BENT", rng: "HALF_BENT", pnk: "HALF_BENT", thm: "THM_FLAT_PALM" } },
-        "c": { name: "C-Handshape", tokens: { idx: "CURVED", mid: "CURVED", rng: "CURVED", pnk: "CURVED", thm: "THM_CURVED" } },
-        "o": { name: "O-Handshape", tokens: { idx: "CURVED_O", mid: "CURVED_O", rng: "CURVED_O", pnk: "CURVED_O", thm: "THM_OPPOSE_O" } },
-        "flat_o": { name: "Flat O / Pinched", tokens: { idx: "HALF_BENT", mid: "HALF_BENT", rng: "HALF_BENT", pnk: "HALF_BENT", thm: "THM_PINCH_INDEX" } },
-        "f": { name: "F-Handshape", tokens: { idx: "CURVED_O", mid: "EXTENDED", rng: "EXTENDED", pnk: "EXTENDED", thm: "THM_PINCH_INDEX" } },
-        "h": { name: "H / U-Handshape", tokens: { idx: "EXTENDED", mid: "EXTENDED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" } },
-        "w": { name: "W-Handshape", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "CLOSED", thm: "THM_WRAP_FRONT" } },
-        "y": { name: "Y-Handshape", tokens: { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "EXTENDED_FLARE_WIDE_R", thm: "THM_OUT_SPREAD" } },
-        "ily": { name: "ILY (I Love You)", tokens: { idx: "EXTENDED", mid: "CLOSED", rng: "CLOSED", pnk: "EXTENDED_FLARE_WIDE_R", thm: "THM_OUT_SPREAD" } }
+        "1": { name: "1-Handshape", category: "numeral", tokens: { idx: "EXTENDED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index extended straight, other digits curled tightly, thumb wrapped across" },
+        "bent_1": { name: "Bent 1 / Hook", category: "modified", tokens: { idx: "HOOK_BENT", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index curled 90° at PIP joint, other digits closed" },
+        "flat_1": { name: "Flat 1 / MCP Bent", category: "numeral", tokens: { idx: "HALF_BENT", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index bent 90° at MCP joint, others closed" },
+        "v": { name: "V / 2-Handshape", category: "numeral", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED_SPREAD_R", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index and Middle extended in wide dynamic V (+50° total opening)" },
+        "bent_v": { name: "Bent V / Double Hook", category: "modified", tokens: { idx: "HOOK_BENT", mid: "HOOK_BENT", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index and Middle bent at PIP joints in spread hooks" },
+        "curved_v": { name: "Curved V / Claws", category: "modified", tokens: { idx: "CURVED", mid: "CURVED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index and Middle spread in V-shape and curved like dual claws" },
+        "3": { name: "3-Handshape", category: "numeral", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED_SPREAD_R", rng: "CLOSED", pnk: "CLOSED", thm: "THM_OUT_SPREAD" }, desc: "Thumb, Index, Middle extended wide spread; Ring and Pinky closed" },
+        "curved_3": { name: "Curved 3", category: "numeral", tokens: { idx: "CURVED", mid: "CURVED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_CURVED" }, desc: "Thumb, Index, Middle curved claws" },
+        "4": { name: "4-Handshape", category: "numeral", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "EXTENDED_FLARE_WIDE_R", thm: "THM_FLAT_PALM" }, desc: "Four fingers extended wide spread; thumb folded flat across palm" },
+        "5": { name: "5-Handshape (Open)", category: "numeral", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "EXTENDED_FLARE_WIDE_R", thm: "THM_OUT_SPREAD" }, desc: "All 5 digits extended in wide dynamic flare" },
+        "curved_5": { name: "Curved 5 / Claw", category: "open", tokens: { idx: "CURVED", mid: "CURVED", rng: "CURVED", pnk: "CURVED", thm: "THM_CURVED" }, desc: "All 5 digits curved claw like grasping a sphere" },
+        "stacked_5": { name: "Stacked 5", category: "open", tokens: { idx: "EXTENDED", mid: "EXTENDED", rng: "EXTENDED", pnk: "EXTENDED", thm: "THM_OPPOSE_O" }, desc: "All fingers extended together, thumb opposed" },
+        "flatspread_5": { name: "Flat Spread 5", category: "open", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "EXTENDED_FLARE_WIDE_R", thm: "THM_OUT_SPREAD" }, desc: "All 5 digits extended flat and spread wide with maximum radial flare" },
+        "a": { name: "A-Handshape", category: "alphabet", tokens: { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_REST_SIDE" }, desc: "Closed fist with thumb resting vertically against index lateral side" },
+        "s": { name: "S-Handshape (Fist)", category: "fist", tokens: { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Tight fist with thumb firmly wrapped across anterior index/middle" },
+        "t": { name: "T-Handshape", category: "alphabet", tokens: { idx: "CLOSED_OVER_THUMB", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_TUCK_T" }, desc: "Fist with thumb tucked between index and middle fingers" },
+        "m": { name: "M-Handshape", category: "alphabet", tokens: { idx: "CLOSED_OVER_THUMB", mid: "CLOSED_OVER_THUMB", rng: "CLOSED_OVER_THUMB", pnk: "CLOSED", thm: "THM_TUCK_M" }, desc: "Thumb tucked under 3 fingers (index, middle, ring)" },
+        "n": { name: "N-Handshape", category: "alphabet", tokens: { idx: "CLOSED_OVER_THUMB", mid: "CLOSED_OVER_THUMB", rng: "CLOSED", pnk: "CLOSED", thm: "THM_TUCK_N" }, desc: "Thumb tucked under 2 fingers (index and middle)" },
+        "open_b": { name: "Open B (Flat Palm)", category: "flat", tokens: { idx: "EXTENDED", mid: "EXTENDED", rng: "EXTENDED", pnk: "EXTENDED", thm: "THM_REST_SIDE" }, desc: "4 fingers extended adducted side-by-side, thumb relaxed at side" },
+        "flat_b": { name: "Flat B (Thumb In)", category: "flat", tokens: { idx: "EXTENDED", mid: "EXTENDED", rng: "EXTENDED", pnk: "EXTENDED", thm: "THM_FLAT_PALM" }, desc: "4 fingers extended flat together, thumb crossed over palm base" },
+        "bent_b": { name: "Bent B", category: "modified", tokens: { idx: "HALF_BENT", mid: "HALF_BENT", rng: "HALF_BENT", pnk: "HALF_BENT", thm: "THM_FLAT_PALM" }, desc: "4 fingers together bent 90° at MCP joint; PIP/DIP straight" },
+        "closed_b": { name: "Closed B", category: "flat", tokens: { idx: "EXTENDED", mid: "EXTENDED", rng: "EXTENDED", pnk: "EXTENDED", thm: "THM_FLAT_PALM" }, desc: "Four fingers extended flat adducted together, thumb folded flat against palm base" },
+        "c": { name: "C-Handshape", category: "curved", tokens: { idx: "CURVED", mid: "CURVED", rng: "CURVED", pnk: "CURVED", thm: "THM_CURVED" }, desc: "All fingers curved in smooth C-arc, thumb curved opposing" },
+        "d": { name: "D-Handshape", category: "alphabet", tokens: { idx: "EXTENDED", mid: "CURVED_O", rng: "CURVED_O", pnk: "CURVED_O", thm: "THM_OPPOSE_O" }, desc: "Index extended straight; thumb touches middle/ring/pinky in circle" },
+        "e": { name: "E-Handshape", category: "alphabet", tokens: { idx: "CLAW_E", mid: "CLAW_E", rng: "CLAW_E", pnk: "CLAW_E", thm: "THM_FLAT_PALM" }, desc: "4 fingertips curled down resting on top of thumb" },
+        "f": { name: "F-Handshape", category: "alphabet", tokens: { idx: "CURVED_O", mid: "EXTENDED_SPREAD_R", rng: "EXTENDED", pnk: "EXTENDED_SPREAD_R", thm: "THM_PINCH_INDEX" }, desc: "Index tip touches thumb tip in circle; Middle, Ring, Pinky extended spread" },
+        "g": { name: "G-Handshape", category: "alphabet", tokens: { idx: "EXTENDED_FORWARD", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_OUT" }, desc: "Index pointing horizontally forward; thumb parallel forward" },
+        "h": { name: "H / U-Handshape", category: "alphabet", tokens: { idx: "EXTENDED", mid: "EXTENDED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" }, desc: "Index and Middle extended together horizontally forward; others closed" },
+        "i": { name: "I-Handshape", category: "alphabet", tokens: { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "EXTENDED_SPREAD_R", thm: "THM_WRAP_FRONT" }, desc: "Pinky extended straight; Index, Middle, Ring curled; thumb across" },
+        "k": { name: "K-Handshape", category: "alphabet", tokens: { idx: "EXTENDED", mid: "EXTENDED_FORWARD", rng: "CLOSED", pnk: "CLOSED", thm: "THM_BETWEEN_INDEX_MID" }, desc: "Index up, Middle forward, thumb pad resting against index PIP" },
+        "l": { name: "L-Handshape", category: "alphabet", tokens: { idx: "EXTENDED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_OUT_SPREAD" }, desc: "Index up, thumb out 90° L-shape; other fingers curled" },
+        "o": { name: "O-Handshape", category: "alphabet", tokens: { idx: "CURVED_O", mid: "CURVED_O", rng: "CURVED_O", pnk: "CURVED_O", thm: "THM_OPPOSE_O" }, desc: "All 4 fingertips meeting thumb pad in continuous O-ring" },
+        "flat_o": { name: "Flat O / Pinched", category: "pinch", tokens: { idx: "HALF_BENT", mid: "HALF_BENT", rng: "HALF_BENT", pnk: "HALF_BENT", thm: "THM_OPPOSE_O" }, desc: "Fingers bent at MCP, flat pads touching thumb (duck bill)" },
+        "baby_o": { name: "Baby O (Small O)", category: "pinch", tokens: { idx: "CURVED_O", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_PINCH_INDEX" }, desc: "Index fingertip touches thumb tip in small circle, other fingers closed" },
+        "p": { name: "P-Handshape", category: "alphabet", tokens: { idx: "EXTENDED_FORWARD", mid: "POINTING_DOWN", rng: "CLOSED", pnk: "CLOSED", thm: "THM_BETWEEN_INDEX_MID" }, desc: "K-shape oriented downward (Index forward, Middle pointing down)" },
+        "q": { name: "Q-Handshape", category: "alphabet", tokens: { idx: "POINTING_DOWN", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_POINTING_DOWN" }, desc: "G-shape oriented downward (Index and thumb pointing down)" },
+        "r": { name: "R-Handshape", category: "alphabet", tokens: { idx: "CROSSED_IDX_UNDER", mid: "CROSSED_MID_OVER", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_OVER" }, desc: "Middle finger crossed anteriorly over index finger in authentic ASL R" },
+        "u": { name: "U-Handshape", category: "alphabet", tokens: { idx: "EXTENDED", mid: "EXTENDED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_FLAT_PALM" }, desc: "Index and Middle extended together straight side-by-side" },
+        "w": { name: "W-Handshape", category: "numeral", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED", rng: "EXTENDED_FLARE_WIDE_R", pnk: "CLOSED", thm: "THM_HOLD_PINKY" }, desc: "Index, Middle, Ring extended wide flare in trident W-shape" },
+        "x": { name: "X-Handshape", category: "modified", tokens: { idx: "HOOK_BENT", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_REST_SIDE" }, desc: "Index curled into hook/crook; others closed" },
+        "y": { name: "Y-Handshape", category: "alphabet", tokens: { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "EXTENDED_SPREAD_R", thm: "THM_OUT_SPREAD" }, desc: "Thumb and Pinky extended out wide; middle three fingers curled in fist" },
+        "ily": { name: "ILY (I Love You)", category: "combined", tokens: { idx: "EXTENDED", mid: "CLOSED", rng: "CLOSED", pnk: "EXTENDED_SPREAD_R", thm: "THM_OUT_SPREAD" }, desc: "Thumb, Index, and Pinky extended; Middle and Ring closed" },
+        "horns": { name: "Horns", category: "numeral", tokens: { idx: "EXTENDED", mid: "CLOSED", rng: "CLOSED", pnk: "EXTENDED_SPREAD_R", thm: "THM_FLAT_PALM" }, desc: "Index and Pinky extended; Middle and Ring curled" },
+        "open_8": { name: "Open 8 / Feel", category: "modified", tokens: { idx: "EXTENDED", mid: "HALF_BENT", rng: "EXTENDED", pnk: "EXTENDED", thm: "THM_OPPOSE_O" }, desc: "Middle finger bent at MCP touching thumb; other digits extended" }
       },
 
+      // 2. 24 CALIBRATED 3D ANATOMICAL BODY & SPATIAL LOCI
       locations: {
-        "neutral_mid": { name: "Neutral Space (Chest)", Arm: [1.04, 0.68, -0.14], ForeArm: [0.06, -0.38, -2.02], Hand: [0.12, -0.18, 0.40] },
-        "neutral_high": { name: "Neutral Space (High/Face)", Arm: [1.38, 0.50, 0.05], ForeArm: [0.08, -0.28, -1.55], Hand: [0.10, -0.12, 0.32] },
-        "neutral_low": { name: "Neutral Space (Abdominal)", Arm: [0.72, 0.38, 0.12], ForeArm: [0.04, -0.20, -1.45], Hand: [0.08, -0.05, 0.20] },
-        "chin": { name: "Chin / Lower Lip", Arm: [1.35, 0.85, -0.20], ForeArm: [0.10, -0.55, -2.45], Hand: [0.15, -0.25, 0.55] },
-        "mouth": { name: "Mouth / Oral Locus", Arm: [1.32, 0.82, -0.18], ForeArm: [0.09, -0.52, -2.40], Hand: [0.14, -0.22, 0.50] },
-        "forehead": { name: "Forehead / Upper Cranial", Arm: [1.52, 0.80, -0.10], ForeArm: [0.12, -0.50, -2.50], Hand: [0.16, -0.20, 0.45] },
-        "temple": { name: "Temple / Lateral Cranial", Arm: [1.45, 0.55, 0.10], ForeArm: [0.08, -0.25, -1.45], Hand: [0.08, -0.12, 0.30] },
-        "temple_right": { name: "Right Temple", Arm: [1.45, 0.55, 0.10], ForeArm: [0.08, -0.25, -1.45], Hand: [0.08, -0.12, 0.30] },
-        "chest": { name: "Chest / Sternum", Arm: [0.98, 0.62, -0.12], ForeArm: [0.06, -0.36, -1.90], Hand: [0.10, -0.15, 0.35] },
-        "sternum": { name: "Mid-Sternum Contact", Arm: [0.98, 0.62, -0.12], ForeArm: [0.06, -0.36, -1.90], Hand: [0.10, -0.15, 0.35] },
-        "shoulder_lateral": { name: "Shoulder Lateral", Arm: [1.10, 0.55, 0.25], ForeArm: [0.08, -0.25, -1.65], Hand: [0.12, -0.10, 0.30] },
-        "passive_wrist": { name: "Passive Base Wrist", Arm: [1.06, 0.74, -0.13], ForeArm: [0.05, -0.40, -2.08], Hand: [0.12, -0.18, 0.42] },
-        "eyes": { name: "Eyes / Visual Plane", Arm: [1.38, 0.78, -0.08], ForeArm: [0.10, -0.48, -2.35], Hand: [0.14, -0.18, 0.42] },
-        "clavicle": { name: "Clavicle / Collarbone", Arm: [1.02, 0.60, -0.10], ForeArm: [0.06, -0.32, -1.80], Hand: [0.10, -0.12, 0.30] }
+        "neutral_mid": { name: "Neutral Space (Mid / Chest)", category: "spatial", Arm: [1.04, 0.68, -0.14], ForeArm: [0.06, -0.38, -2.02], Hand: [0.12, -0.18, 0.40], coords: (s) => [s * 16.5, 8.0, 24.0], desc: "Wide open chest-level conversational space" },
+        "neutral_high": { name: "Neutral Space (High / Face)", category: "spatial", Arm: [1.38, 0.50, 0.05], ForeArm: [0.08, -0.28, -1.55], Hand: [0.10, -0.12, 0.32], coords: (s) => [s * 15.0, 19.5, 22.5], desc: "High open conversational space, face level" },
+        "neutral_low": { name: "Neutral Space (Low / Waist)", category: "spatial", Arm: [0.72, 0.38, 0.12], ForeArm: [0.04, -0.20, -1.45], Hand: [0.08, -0.05, 0.20], coords: (s) => [s * 15.0, -2.5, 23.0], desc: "Low open waist-level conversational space" },
+        "crown": { name: "Crown (Top of Head)", category: "cranial", Arm: [1.60, 0.72, -0.05], ForeArm: [0.14, -0.45, -2.60], Hand: [0.18, -0.18, 0.45], coords: (s) => [s * 0.0, 24.0, 3.5], desc: "Apex of the head, sagittal midline clear of cranium" },
+        "forehead": { name: "Forehead (Frontal Center)", category: "cranial", Arm: [1.52, 0.80, -0.10], ForeArm: [0.12, -0.50, -2.50], Hand: [0.16, -0.20, 0.45], coords: (s) => [s * 1.2, 19.8, 6.5], desc: "Upper cranial locus, in front of frontal bone (e.g. Father)" },
+        "forehead_right": { name: "Forehead Right", category: "cranial", Arm: [1.50, 0.75, -0.08], ForeArm: [0.12, -0.48, -2.48], Hand: [0.15, -0.20, 0.45], coords: () => [2.8, 19.8, 6.5], desc: "Right cranial locus, right frontal eminence" },
+        "temple": { name: "Temple (Lateral Cranial)", category: "cranial", Arm: [1.45, 0.55, 0.10], ForeArm: [0.08, -0.25, -1.45], Hand: [0.08, -0.12, 0.30], coords: (s) => [s * 8.5, 20.5, 9.0], desc: "Lateral cranial locus beside head (e.g. Airplane, Hello)" },
+        "temple_right": { name: "Right Temple", category: "cranial", Arm: [1.45, 0.55, 0.10], ForeArm: [0.08, -0.25, -1.45], Hand: [0.08, -0.12, 0.30], coords: () => [8.5, 20.5, 9.0], desc: "Right lateral cranial locus beside head" },
+        "eyes": { name: "Eyes / Visual Plane", category: "facial", Arm: [1.38, 0.78, -0.08], ForeArm: [0.10, -0.48, -2.35], Hand: [0.14, -0.18, 0.42], coords: (s) => [s * 1.8, 18.0, 6.8], desc: "Eye level forward signing locus (e.g. See)" },
+        "nose": { name: "Nose (Sagittal Nasion)", category: "facial", Arm: [1.36, 0.80, -0.12], ForeArm: [0.10, -0.50, -2.38], Hand: [0.14, -0.20, 0.44], coords: (s) => [s * 0.4, 16.5, 7.2], desc: "Mid-facial locus, forward of nasal bridge" },
+        "cheek": { name: "Cheek (Zygomatic)", category: "facial", Arm: [1.35, 0.65, 0.05], ForeArm: [0.08, -0.35, -1.85], Hand: [0.12, -0.14, 0.35], coords: (s) => [s * 4.2, 16.2, 6.0], desc: "Lateral cheek locus, clear of cheekbone (e.g. Deaf)" },
+        "mouth": { name: "Mouth / Oral Locus", category: "facial", Arm: [1.32, 0.82, -0.18], ForeArm: [0.09, -0.52, -2.40], Hand: [0.14, -0.22, 0.50], coords: (s) => [s * 0.4, 15.2, 6.8], desc: "Oral locus, in front of lips (e.g. Eat, Drink)" },
+        "chin": { name: "Chin / Lower Lip", category: "facial", Arm: [1.35, 0.85, -0.20], ForeArm: [0.10, -0.55, -2.45], Hand: [0.15, -0.25, 0.55], coords: (s) => [s * 0.4, 14.2, 6.2], desc: "Base of jaw / mental locus (e.g. Water, Thank You)" },
+        "jaw": { name: "Jaw (Mandibular Angle)", category: "facial", Arm: [1.28, 0.70, -0.10], ForeArm: [0.08, -0.42, -2.15], Hand: [0.12, -0.18, 0.40], coords: (s) => [s * 3.8, 13.5, 5.2], desc: "Lateral lower mandibular angle locus" },
+        "throat": { name: "Throat / Larynx", category: "torso", Arm: [1.18, 0.72, -0.14], ForeArm: [0.08, -0.40, -2.10], Hand: [0.12, -0.18, 0.40], coords: (s) => [s * 0.4, 11.5, 5.5], desc: "Anterior laryngeal locus, forward of midline neck" },
+        "clavicle": { name: "Clavicle / Collarbone", category: "torso", Arm: [1.02, 0.60, -0.10], ForeArm: [0.06, -0.32, -1.80], Hand: [0.10, -0.12, 0.30], coords: (s) => [s * 5.2, 9.8, 6.5], desc: "Subclavicular locus, forward of collarbone" },
+        "shoulder_lateral": { name: "Shoulder Lateral", category: "torso", Arm: [1.10, 0.55, 0.25], ForeArm: [0.08, -0.25, -1.65], Hand: [0.12, -0.10, 0.30], coords: (s) => [s * 7.5, 9.8, 3.5], desc: "Acromial shoulder locus, lateral to glenoid" },
+        "chest": { name: "Chest / Pectoral", category: "torso", Arm: [0.98, 0.62, -0.12], ForeArm: [0.06, -0.36, -1.90], Hand: [0.10, -0.15, 0.35], coords: (s) => [s * 3.8, 6.0, 7.6], desc: "Pectoral chest locus, in front of pectoralis" },
+        "sternum": { name: "Sternum (Chest Center)", category: "torso", Arm: [0.98, 0.62, -0.12], ForeArm: [0.06, -0.36, -1.90], Hand: [0.10, -0.15, 0.35], coords: (s) => [s * 1.2, 5.0, 7.8], desc: "Chest center locus, in front of sagittal sternum (e.g. Me)" },
+        "heart": { name: "Heart (Precordial)", category: "torso", Arm: [0.96, 0.66, -0.16], ForeArm: [0.06, -0.38, -1.95], Hand: [0.10, -0.16, 0.38], coords: () => [-3.8, 6.0, 7.6], desc: "Precordial chest locus in front of left heart" },
+        "stomach": { name: "Stomach (Abdominal)", category: "torso", Arm: [0.80, 0.45, 0.05], ForeArm: [0.05, -0.25, -1.60], Hand: [0.08, -0.10, 0.25], coords: (s) => [s * 0.4, -2.5, 7.2], desc: "Epigastric abdominal locus, in front of torso" },
+        "passive_wrist": { name: "Passive Base Wrist", category: "passive", Arm: [1.06, 0.74, -0.13], ForeArm: [0.05, -0.40, -2.08], Hand: [0.12, -0.18, 0.42], coords: () => [2.0, 8.5, 16.0], desc: "Non-dominant wrist joint shelf in conversational space (e.g. Work)" },
+        "passive_palm": { name: "Passive Palm Shelf", category: "passive", Arm: [1.06, 0.74, -0.13], ForeArm: [0.05, -0.40, -2.08], Hand: [0.12, -0.18, 0.42], coords: () => [2.0, 8.5, 16.0], desc: "Flat upward non-dominant palm shelf in conversational space" },
+        "passive_forearm": { name: "Passive Forearm Shelf", category: "passive", Arm: [1.02, 0.70, -0.10], ForeArm: [0.05, -0.38, -2.00], Hand: [0.12, -0.15, 0.40], coords: () => [2.0, 8.5, 15.5], desc: "Horizontal non-dominant forearm shelf (e.g. Night)" }
       },
 
+      // 3. 14 CANONICAL WRIST ORIENTATIONS
       orientations: {
-        "PALM_MEDIAL": { name: "Palm Inward (Medial)", euler: [0.12, -0.18, 0.40] },
-        "PALM_ANTERIOR": { name: "Palm Forward (Anterior)", euler: [0.05, 0.0, 0.10] },
-        "PALM_POSTERIOR": { name: "Palm Facing Chest (Posterior)", euler: [0.22, -0.10, 1.25] },
-        "PALM_SUPINE": { name: "Palm Upward (Supine)", euler: [0.25, 0.30, -0.55] },
-        "PALM_PRONE": { name: "Palm Downward (Prone)", euler: [-0.10, -0.25, 1.10] },
-        "PALM_CONTRALATERAL": { name: "Palm Across Body", euler: [0.18, -0.32, 0.70] }
+        "PALM_MEDIAL": { name: "Palm Inward (Medial)", category: "attitude", desc: "Palm faces inward toward body midline", euler: [0.12, -0.18, 0.40] },
+        "PALM_ANTERIOR": { name: "Palm Forward (Anterior)", category: "attitude", desc: "Palm faces straight forward at interlocutor", euler: [0.05, 0.0, 0.10] },
+        "PALM_POSTERIOR": { name: "Palm Facing Chest (Posterior)", category: "attitude", desc: "Palm faces back toward signer chest", euler: [0.22, -0.10, 1.25] },
+        "PALM_SUPINE": { name: "Palm Upward (Supine)", category: "attitude", desc: "Palm faces ceiling; wrist supinated", euler: [0.25, 0.30, -0.55] },
+        "PALM_PRONE": { name: "Palm Downward (Prone)", category: "attitude", desc: "Palm faces ground; wrist pronated", euler: [-0.10, -0.25, 1.10] },
+        "PALM_CONTRALATERAL": { name: "Palm Across Body", category: "attitude", desc: "Palm faces across contralateral body plane", euler: [0.18, -0.32, 0.70] },
+        "PALM_IPSILATERAL": { name: "Palm Ipsilateral (Outward)", category: "attitude", desc: "Palm faces laterally away from midline", euler: [0.20, 1.25, -0.20] },
+        "FINGERS_ANTERIOR": { name: "Fingers Forward (Deictic)", category: "attitude", desc: "Index/fingers aim directly forward (e.g. You)", euler: [1.45, -0.20, 0.0] },
+        "FINGERS_POSTERIOR": { name: "Fingers Inward (Me)", category: "attitude", desc: "Index/fingers aim inward into chest (e.g. Me)", euler: [-0.70, -0.50, 0.60] },
+        "FINGERS_CRANIAL": { name: "Fingers Upward (Cranial)", category: "attitude", desc: "Fingers vertical toward ceiling", euler: [0.0, 0.0, 0.0] },
+        "FINGERS_CAUDAL": { name: "Fingers Downward (Caudal)", category: "attitude", desc: "Fingers pointing straight down toward floor (e.g. P, Q)", euler: [2.80, 0.0, 0.0] },
+        "BLADE_FORWARD": { name: "Ulnar Blade Forward", category: "attitude", desc: "Blade of hand faces forward; thumb cranial", euler: [0.40, -0.60, 0.85] },
+        "BLADE_DOWN": { name: "Radial Blade Down", category: "attitude", desc: "Thumb side facing downward in chop attitude", euler: [1.10, -0.15, 0.30] },
+        "WRIST_HYPEREXTENDED": { name: "Wrist Hyperextended", category: "attitude", desc: "Wrist dorsiflexed 45° with palm prominent", euler: [-0.45, -0.10, 0.20] }
       },
 
+      // 4. 16 KINEMATIC MOVEMENT PRIMITIVES
       movements: {
-        "TAP_2X": { name: "Double Contact Tap", dyn: (tau) => ({ dyR: -0.10 * Math.abs(Math.sin(4 * Math.PI * tau)) }) },
-        "VERTICAL_RISE": { name: "Vertical Rise (+8cm)", dyn: (tau) => ({ dyR: 0.16 * Math.sin(Math.PI * tau), dyL: 0.16 * Math.sin(Math.PI * tau) }) },
-        "HORIZONTAL_SWEEP": { name: "Horizontal Sweep", dyn: (tau) => ({ dzR: 0.28 * Math.sin(2 * Math.PI * tau) }) },
-        "CIRCULAR_ROLL": { name: "Circular Roll (Steering)", dyn: (tau) => ({ dyR: 0.10 * Math.sin(2 * Math.PI * tau), dzR: 0.12 * Math.cos(2 * Math.PI * tau), dyL: -0.10 * Math.sin(2 * Math.PI * tau), dzL: -0.12 * Math.cos(2 * Math.PI * tau) }) },
-        "ARC_CORONAL": { name: "Coronal Arc Downward", dyn: (tau) => ({ dyR: -0.15 * Math.sin(Math.PI * tau) }) },
-        "LINEAR_FORWARD": { name: "Forward Thrust", dyn: (tau) => ({ dyR: 0.20 * tau }) },
-        "WRIST_TWIST": { name: "Wrist Alternating Twist", dyn: (tau) => ({ dzR: 0.30 * Math.sin(6 * Math.PI * tau) }) },
-        "WRIST_NOD": { name: "Wrist Nodding", dyn: (tau) => ({ dyR: -0.12 * Math.abs(Math.sin(4 * Math.PI * tau)) }) },
-        "STATIC_HOLD": { name: "Static Canonical Hold", dyn: () => ({}) },
-        "APERTURE_CLOSE": { name: "Aperture Snap Close", dyn: () => ({}) },
-        "DOWNWARD_CHECK": { name: "Downward Checkmark", dyn: (tau) => ({ dyR: -0.14 * Math.sin(2 * Math.PI * tau) }) },
-        "HINGE_PIVOT": { name: "Hinge Door Pivot", dyn: (tau) => ({ dzR: 0.25 * Math.sin(Math.PI * tau) }) },
-        "RUB_RECIPROCAL": { name: "Reciprocal Rub", dyn: (tau) => ({ dyR: 0.10 * Math.sin(4 * Math.PI * tau) }) },
-        "SAGITTAL_ARC": { name: "Sagittal Arc", dyn: (tau) => ({ dyR: 0.18 * Math.sin(Math.PI * tau) }) },
-        "VERTICAL_INSERTION": { name: "Vertical Insertion", dyn: (tau) => ({ dyR: -0.12 * tau }) },
-        "DOWN_CONTACT": { name: "Downward Contact", dyn: (tau) => ({ dyR: -0.12 * tau }) },
-        "PRONATION_DROP": { name: "Pronation Drop", dyn: (tau) => ({ dyR: -0.16 * tau, dzR: 0.20 * tau }) },
-        "TRANSVERSE_CIRCLE": { name: "Transverse Circle", dyn: (tau) => ({ dyR: 0.08 * Math.sin(2 * Math.PI * tau), dzR: 0.08 * Math.cos(2 * Math.PI * tau) }) },
-        "PALM_CHOP": { name: "Decisive Palm Chop", dyn: (tau) => ({ dyR: -0.18 * Math.sin(Math.PI * tau) }) },
-        "CIRCUMFERENTIAL_SWEEP": { name: "Circumferential Sweep", dyn: (tau) => ({ dzR: 0.30 * Math.sin(Math.PI * tau) }) },
-        "VERTICAL_DROP": { name: "Vertical Drop", dyn: (tau) => ({ dyR: -0.14 * Math.sin(Math.PI * tau), dyL: -0.14 * Math.sin(Math.PI * tau) }) },
-        "CORONAL_RELEASE": { name: "Coronal Release", dyn: (tau) => ({ dzR: 0.25 * Math.sin(Math.PI * tau), dzL: -0.25 * Math.sin(Math.PI * tau) }) },
-        "FOREARM_TWIST": { name: "Forearm Dual Twist", dyn: (tau) => ({ dzR: 0.22 * Math.sin(4 * Math.PI * tau), dzL: -0.22 * Math.sin(4 * Math.PI * tau) }) },
-        "ANGULAR_PIVOT": { name: "Angular Pivot", dyn: (tau) => ({ dzR: 0.20 * Math.sin(2 * Math.PI * tau) }) },
-        "FORWARD_RELEASE": { name: "Forward Release", dyn: (tau) => ({ dyR: 0.16 * tau }) },
-        "FORWARD_PROJECTION": { name: "Forward Deictic", dyn: (tau) => ({ dyR: 0.18 * tau }) },
-        "INWARD_RETRACTION": { name: "Inward Retraction", dyn: (tau) => ({ dyR: -0.14 * tau, dyL: -0.14 * tau }) },
-        "MEDIAL_CONVERGENCE": { name: "Medial Convergence", dyn: (tau) => ({ dzR: -0.15 * Math.sin(Math.PI * tau), dzL: 0.15 * Math.sin(Math.PI * tau) }) }
+        "TAP_2X": { name: "Double Contact Tap (2.8 Hz)", category: "oscillatory", class: "Periodic Double-Tap", ribbon: "Vertical Oscillation", desc: "Rhythmic double contact against body or passive base", dyn: (tau) => ({ dyR: -0.12 * Math.abs(Math.sin(4 * Math.PI * tau)) }) },
+        "TAP_1X": { name: "Single Discrete Tap", category: "oscillatory", class: "Terminal Impact", ribbon: "Sagittal Pulse", desc: "Single deliberate contact against locus with rebound", dyn: (tau) => ({ dyR: tau < 0.5 ? -0.14 * Math.sin(2 * Math.PI * tau) : 0 }) },
+        "VERTICAL_RISE": { name: "Vertical Rise (+8cm)", category: "linear", class: "Antigravity Rise", ribbon: "Ascending Column", desc: "Upward vertical ascent stroke in signing space", dyn: (tau) => ({ dyR: 0.16 * Math.sin(Math.PI * tau), dyL: 0.16 * Math.sin(Math.PI * tau) }) },
+        "VERTICAL_DROP": { name: "Vertical Drop (-8cm)", category: "linear", class: "Gravitational Drop", ribbon: "Vertical Column", desc: "Downward vertical descent stroke", dyn: (tau) => ({ dyR: -0.14 * Math.sin(Math.PI * tau), dyL: -0.14 * Math.sin(Math.PI * tau) }) },
+        "HORIZONTAL_SWEEP": { name: "Horizontal Sweep", category: "linear", class: "Coronal Sweep", ribbon: "Lateral Stroke", desc: "Translational stroke across coronal plane (10cm)", dyn: (tau) => ({ dzR: 0.28 * Math.sin(2 * Math.PI * tau) }) },
+        "LINEAR_FORWARD": { name: "Linear Forward (+12cm)", category: "linear", class: "Direct Linear Thrust", ribbon: "Linear Vector", desc: "Straight outward stroke toward interlocutor", dyn: (tau) => ({ dyR: 0.20 * tau }) },
+        "LINEAR_BACKWARD": { name: "Linear Inward (-8cm)", category: "linear", class: "Deictic Retraction", ribbon: "Inward Vector", desc: "Straight inward stroke toward chest", dyn: (tau) => ({ dyR: -0.14 * tau }) },
+        "CIRCULAR_ROLL": { name: "Circular Roll (Steering)", category: "curvilinear", class: "Planar Curvilinear Orbit", ribbon: "Coronal Orbit", desc: "Dual hands trace continuous circular steering orbit", dyn: (tau) => ({ dyR: 0.10 * Math.sin(2 * Math.PI * tau), dzR: 0.12 * Math.cos(2 * Math.PI * tau), dyL: -0.10 * Math.sin(2 * Math.PI * tau), dzL: -0.12 * Math.cos(2 * Math.PI * tau) }) },
+        "ARC_CORONAL": { name: "Coronal Arc Downward", category: "curvilinear", class: "Frontal Planar Arc", ribbon: "Frontal Arc", desc: "Arced trajectory in coronal plane downward and out", dyn: (tau) => ({ dyR: -0.15 * Math.sin(Math.PI * tau) }) },
+        "ARC_SAGITTAL": { name: "Sagittal Arc (Book/Night)", category: "curvilinear", class: "Planar Parabolic Arc", ribbon: "Sagittal Arc", desc: "Curved arc in sagittal plane forward and down", dyn: (tau) => ({ dyR: 0.18 * Math.sin(Math.PI * tau) }) },
+        "WRIST_TWIST": { name: "Wrist Alternating Twist", category: "attitude", class: "Radio-Ulnar Oscillation", ribbon: "Axial Vortex", desc: "Rapid axial pronation-supination alternating twist", dyn: (tau) => ({ dzR: 0.30 * Math.sin(6 * Math.PI * tau) }) },
+        "WRIST_NOD": { name: "Wrist Nod (Pitch Yes)", category: "attitude", class: "Axial Joint Oscillation", ribbon: "Pitch Rocker", desc: "Repeated flexion-extension nodding of wrist (e.g. Yes)", dyn: (tau) => ({ dyR: -0.12 * Math.abs(Math.sin(4 * Math.PI * tau)) }) },
+        "PALM_CHOP": { name: "Decisive Palm Chop", category: "oscillatory", class: "Terminal Impact", ribbon: "Rapid Blade Strike", desc: "Decisive downward palm blade strike (e.g. Stop)", dyn: (tau) => ({ dyR: -0.18 * Math.sin(Math.PI * tau) }) },
+        "ZIGZAG": { name: "Zigzag Undulation", category: "curvilinear", class: "Harmonic Undulation", ribbon: "Undulating Serpent", desc: "Alternating multi-inflection path in space", dyn: (tau) => ({ dzR: 0.22 * Math.sin(4 * Math.PI * tau), dyR: -0.10 * (tau % 0.5) }) },
+        "STATIC_HOLD": { name: "Static Canonical Hold", category: "oscillatory", class: "Stationary Isometry", ribbon: "None", desc: "Stationary hold with zero displacement (isometry)", dyn: () => ({}) },
+        "WAVE_5X": { name: "Multi-Cycle Lateral Wave", category: "oscillatory", class: "Periodic Lateral Oscillation", ribbon: "Multi-Cycle Wave", desc: "Multi-cycle lateral wave (4-5 oscillations) at temple", dyn: (tau) => ({ dzR: 0.30 * Math.sin(8 * Math.PI * tau) }) }
       }
     };
 
@@ -1490,7 +1624,19 @@
     // =========================================================================
     // PRO CURATOR WORKBENCH CONTROLLER & LEXICON AUDITOR
     // =========================================================================
+    let currentCategory = 'signs';
+    let activeHandshapeKey = '1';
+    let activeLocationKey = 'chin';
+    let activeMovementKey = 'TAP_2X';
+    let activeOrientationKey = 'PALM_MEDIAL';
+    let locNudges = { x: 0, y: 0, z: 0 };
+    let movementTime = 0.0;
+    const movementDuration = 2.0;
+    let deckSearchQuery = '';
+    let deckSubFilter = 'all';
+
     var LexiconWorkbench = window.LexiconWorkbench = {
+      currentCategory: 'signs',
       activeHandTab: 'dominant',
       activeWorkingRecipe: null,
       overrides: {},
@@ -1499,6 +1645,613 @@
       init() {
         this.loadRecipe(currentSign.id);
         this.bindShortcuts();
+      },
+
+      switchCategory(cat, btn) {
+        this.currentCategory = cat;
+        currentCategory = cat;
+
+        // 1. Update Category Switch Buttons
+        document.querySelectorAll('.deck-cat-btn').forEach(b => {
+          b.classList.toggle('active', b.dataset.cat === cat);
+        });
+
+        // 2. Clear Active Kinematic Queues & Mixers
+        if (cat !== 'signs') {
+          if (activeAction) activeAction.paused = true;
+        } else {
+          if (activeAction && currentStudioMode === 'hybrid') activeAction.paused = false;
+        }
+
+        // 3. Render Header, Subbar & List based on Category
+        const titleEl = document.getElementById('sidebar-title-text');
+        const subbar = document.getElementById('deck-subbar');
+        const badge = document.getElementById('spec-category-badge');
+
+        const rackFinetune = document.getElementById('rack-finetune');
+        const hybridCard = document.getElementById('hybrid-card');
+
+        deckSearchQuery = '';
+        deckSubFilter = 'all';
+
+        if (cat === 'signs') {
+          if (titleEl) titleEl.innerText = "Empirical Lexicon (34 Signs)";
+          if (badge) badge.innerText = (currentSign && currentSign.cat) ? currentSign.cat.toUpperCase() : "SIGN";
+          if (rackFinetune) rackFinetune.style.display = 'block';
+          if (hybridCard) hybridCard.style.display = (currentStudioMode === 'hybrid') ? 'block' : 'none';
+
+          if (subbar) {
+            subbar.innerHTML = `
+              <div class="cat-tabs">
+                <button class="cat-btn active" onclick="filterCategory('all', this)">ALL (34)</button>
+                <button class="cat-btn" onclick="filterCategory('travel', this)">TRAVEL (10)</button>
+                <button class="cat-btn" onclick="filterCategory('needs', this)">NEEDS (7)</button>
+                <button class="cat-btn" onclick="filterCategory('common', this)">COMMON (17)</button>
+              </div>
+            `;
+          }
+          populateSignList(MOCAP_SIGNS);
+          this.loadRecipe(currentSign.id);
+          selectSign(currentSign);
+        } else if (cat === 'handshapes') {
+          if (titleEl) titleEl.innerText = "Parametric Handshapes (38)";
+          if (badge) badge.innerText = "HANDSHAPE";
+          if (rackFinetune) rackFinetune.style.display = 'none';
+          if (hybridCard) hybridCard.style.display = 'none';
+
+          if (subbar) {
+            subbar.innerHTML = `
+              <div class="cat-tabs">
+                <button class="cat-btn active" onclick="LexiconWorkbench.filterDeckSub('all', this)">ALL (38)</button>
+                <button class="cat-btn" onclick="LexiconWorkbench.filterDeckSub('numeral', this)">NUMERAL (9)</button>
+                <button class="cat-btn" onclick="LexiconWorkbench.filterDeckSub('alphabet', this)">ALPHA (15)</button>
+                <button class="cat-btn" onclick="LexiconWorkbench.filterDeckSub('modified', this)">MODIFIED (14)</button>
+              </div>
+              <div class="deck-search-box">
+                <input type="text" class="deck-search-input" placeholder="🔍 Search 38 handshapes..." oninput="LexiconWorkbench.onDeckSearch(this.value)" />
+              </div>
+            `;
+          }
+          this.renderDeckList();
+          this.selectHandshapeItem(activeHandshapeKey || '1');
+        } else if (cat === 'locations') {
+          if (titleEl) titleEl.innerText = "3D Anatomical Loci (24)";
+          if (badge) badge.innerText = "LOCUS";
+          if (rackFinetune) rackFinetune.style.display = 'none';
+          if (hybridCard) hybridCard.style.display = 'none';
+
+          if (subbar) {
+            subbar.innerHTML = `
+              <div class="cat-tabs">
+                <button class="cat-btn active" onclick="LexiconWorkbench.filterDeckSub('all', this)">ALL (24)</button>
+                <button class="cat-btn" onclick="LexiconWorkbench.filterDeckSub('cranial', this)">HEAD (5)</button>
+                <button class="cat-btn" onclick="LexiconWorkbench.filterDeckSub('facial', this)">FACE (6)</button>
+                <button class="cat-btn" onclick="LexiconWorkbench.filterDeckSub('torso', this)">TORSO (7)</button>
+                <button class="cat-btn" onclick="LexiconWorkbench.filterDeckSub('spatial', this)">SPATIAL (6)</button>
+              </div>
+              <div class="deck-search-box">
+                <input type="text" class="deck-search-input" placeholder="🔍 Search 24 loci..." oninput="LexiconWorkbench.onDeckSearch(this.value)" />
+              </div>
+            `;
+          }
+          this.renderDeckList();
+          this.selectLocationItem(activeLocationKey || 'chin');
+        } else if (cat === 'movements') {
+          if (titleEl) titleEl.innerText = "Kinematic Movements (16)";
+          if (badge) badge.innerText = "MOVEMENT";
+          if (rackFinetune) rackFinetune.style.display = 'none';
+          if (hybridCard) hybridCard.style.display = 'none';
+
+          if (subbar) {
+            subbar.innerHTML = `
+              <div class="cat-tabs">
+                <button class="cat-btn active" onclick="LexiconWorkbench.filterDeckSub('all', this)">ALL (16)</button>
+                <button class="cat-btn" onclick="LexiconWorkbench.filterDeckSub('oscillatory', this)">OSCILLATE (5)</button>
+                <button class="cat-btn" onclick="LexiconWorkbench.filterDeckSub('linear', this)">LINEAR (4)</button>
+                <button class="cat-btn" onclick="LexiconWorkbench.filterDeckSub('curvilinear', this)">ARC/CURVE (4)</button>
+                <button class="cat-btn" onclick="LexiconWorkbench.filterDeckSub('attitude', this)">ATTITUDE (3)</button>
+              </div>
+              <div class="deck-search-box">
+                <input type="text" class="deck-search-input" placeholder="🔍 Search 16 movements..." oninput="LexiconWorkbench.onDeckSearch(this.value)" />
+              </div>
+            `;
+          }
+          this.renderDeckList();
+          this.selectMovementItem(activeMovementKey || 'TAP_2X');
+        } else if (cat === 'orientations') {
+          if (titleEl) titleEl.innerText = "Wrist Orientations (14)";
+          if (badge) badge.innerText = "ORIENTATION";
+          if (rackFinetune) rackFinetune.style.display = 'none';
+          if (hybridCard) hybridCard.style.display = 'none';
+
+          if (subbar) {
+            subbar.innerHTML = `
+              <div class="deck-search-box" style="margin-top:0;">
+                <input type="text" class="deck-search-input" placeholder="🔍 Search 14 orientations..." oninput="LexiconWorkbench.onDeckSearch(this.value)" />
+              </div>
+            `;
+          }
+          this.renderDeckList();
+          this.selectOrientationItem(activeOrientationKey || 'PALM_MEDIAL');
+        }
+      },
+
+      onDeckSearch(val) {
+        deckSearchQuery = val;
+        this.renderDeckList();
+      },
+
+      filterDeckSub(sub, btn) {
+        deckSubFilter = sub;
+        if (btn) {
+          const p = btn.closest('.cat-tabs');
+          if (p) p.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        }
+        this.renderDeckList();
+      },
+
+      renderDeckList() {
+        const list = document.getElementById('sign-list-container');
+        if (!list) return;
+        list.innerHTML = '';
+        const cat = this.currentCategory;
+        const q = (deckSearchQuery || '').toLowerCase().trim();
+        const sub = deckSubFilter;
+
+        let entries = [];
+        if (cat === 'handshapes') {
+          entries = Object.keys(PARAMETRIC_LEXICONS.handshapes).map(k => ({
+            id: k,
+            ...PARAMETRIC_LEXICONS.handshapes[k]
+          }));
+        } else if (cat === 'locations') {
+          entries = Object.keys(PARAMETRIC_LEXICONS.locations).map(k => ({
+            id: k,
+            ...PARAMETRIC_LEXICONS.locations[k]
+          }));
+        } else if (cat === 'movements') {
+          entries = Object.keys(PARAMETRIC_LEXICONS.movements).map(k => ({
+            id: k,
+            ...PARAMETRIC_LEXICONS.movements[k]
+          }));
+        } else if (cat === 'orientations') {
+          entries = Object.keys(PARAMETRIC_LEXICONS.orientations).map(k => ({
+            id: k,
+            ...PARAMETRIC_LEXICONS.orientations[k]
+          }));
+        }
+
+        entries = entries.filter(e => {
+          const matchQ = !q || e.id.toLowerCase().includes(q) || (e.name && e.name.toLowerCase().includes(q)) || (e.desc && e.desc.toLowerCase().includes(q));
+          const matchSub = (sub === 'all') || (e.category && e.category.toLowerCase() === sub.toLowerCase());
+          return matchQ && matchSub;
+        });
+
+        const activeId = (cat === 'handshapes') ? activeHandshapeKey :
+                         (cat === 'locations') ? activeLocationKey :
+                         (cat === 'movements') ? activeMovementKey : activeOrientationKey;
+
+        entries.forEach(e => {
+          const div = document.createElement('div');
+          div.className = 'sign-item' + (e.id === activeId ? ' active' : '');
+          div.id = 'deck-item-' + e.id;
+          div.onclick = () => {
+            if (cat === 'handshapes') LexiconWorkbench.selectHandshapeItem(e.id);
+            else if (cat === 'locations') LexiconWorkbench.selectLocationItem(e.id);
+            else if (cat === 'movements') LexiconWorkbench.selectMovementItem(e.id);
+            else if (cat === 'orientations') LexiconWorkbench.selectOrientationItem(e.id);
+          };
+
+          let subText = e.desc || '';
+          if (cat === 'handshapes' && e.tokens) {
+            subText = `idx:${e.tokens.idx} | mid:${e.tokens.mid} | thm:${e.tokens.thm}`;
+          } else if (cat === 'locations' && e.Arm) {
+            subText = `Arm:[${e.Arm.join(',')}] ForeArm:[${e.ForeArm.join(',')}]`;
+          } else if (cat === 'movements' && e.class) {
+            subText = `${e.class} // ${e.ribbon || 'Dynamic Stroke'}`;
+          } else if (cat === 'orientations' && e.euler) {
+            subText = `Euler: [${e.euler.join(', ')}] rad`;
+          }
+
+          div.innerHTML = `
+            <div>
+              <div class="sign-name">${e.name || e.id}</div>
+              <div class="sign-sub" title="${subText}">${subText.substring(0, 36)}...</div>
+            </div>
+            <div class="sign-meta" style="text-transform:uppercase;">
+              ${e.category || cat.substring(0, 4)}
+            </div>
+          `;
+          list.appendChild(div);
+        });
+      },
+
+      selectHandshapeItem(hsKey) {
+        activeHandshapeKey = hsKey;
+        const hsDef = PARAMETRIC_LEXICONS.handshapes[hsKey];
+        if (!hsDef) return;
+
+        document.querySelectorAll('.sign-item').forEach(el => el.classList.remove('active'));
+        const el = document.getElementById('deck-item-' + hsKey);
+        if (el) el.classList.add('active');
+
+        // Automatically ensure console sidebox is visible
+        const pane = document.getElementById('curation-console-pane');
+        if (pane && !pane.classList.contains('expanded')) {
+          toggleCurationConsole();
+        }
+
+        if (avatarBones) {
+          if (avatarBones['RightArm']) avatarBones['RightArm'].rotation.set(1.15, -0.65, 0.35);
+          if (avatarBones['RightForeArm']) avatarBones['RightForeArm'].rotation.set(0.30, 0.45, 1.85);
+          if (avatarBones['RightHand']) avatarBones['RightHand'].rotation.set(0.15, 0.20, -0.40);
+          
+          if (avatarBones['LeftArm']) avatarBones['LeftArm'].rotation.set(REST_ARM.LeftArm[0], REST_ARM.LeftArm[1], REST_ARM.LeftArm[2]);
+          if (avatarBones['LeftForeArm']) avatarBones['LeftForeArm'].rotation.set(REST_ARM.LeftForeArm[0], REST_ARM.LeftForeArm[1], REST_ARM.LeftForeArm[2]);
+          if (avatarBones['LeftHand']) avatarBones['LeftHand'].rotation.set(REST_ARM.LeftHand[0], REST_ARM.LeftHand[1], REST_ARM.LeftHand[2]);
+
+          const fAngles = getFingerAngles(hsKey);
+          applyProceduralDigits(fAngles, 'RightHand', 1.0, false);
+          applyProceduralDigits(null, 'LeftHand', 0.0, true);
+          if (currentModel) currentModel.updateMatrixWorld(true);
+        }
+
+        const setElText = (id, txt) => {
+          const el = document.getElementById(id);
+          if (el) el.innerText = txt;
+        };
+
+        setElText('rack-02-title', '02 // 5-DIGIT ARTICULATOR TOKENS');
+        setElText('rack-02-sub', 'TEST & ADJUST');
+        setElText('spec-name', hsDef.name);
+        setElText('spec-lemma', "HANDSHAPE // ID: " + hsKey);
+        setElText('spec-desc', hsDef.desc || "Canonical ASL handshape articulation with 15 joint bounds.");
+        setElText('spec-channels', "15 JOINTS");
+        setElText('spec-acc', "100% PHON");
+        setElText('spec-category-badge', (hsDef.category || "Handshape").toUpperCase());
+
+        const deck = document.getElementById('param-controls-deck');
+        if (deck) {
+          const allTokens = Object.keys(FINGER_TOKENS);
+          const thmTokens = Object.keys(THUMB_TOKENS);
+          deck.innerHTML = `
+            <div style="font-family:var(--font-mono); font-size:10px; color:#38bdf8; font-weight:700; margin-bottom:8px; border-bottom:1px solid rgba(56,189,248,0.2); padding-bottom:4px;">
+              ✋ 5-DIGIT ARTICULATOR TOKENS (TEST & ADJUST)
+            </div>
+            <div class="param-field">
+              <span class="param-field-label">Index Digit:</span>
+              <div class="param-field-control">
+                <select class="param-select" onchange="LexiconWorkbench.onHandshapeTokenChange('idx', this.value)">
+                  ${allTokens.map(t => `<option value="${t}" ${t === hsDef.tokens.idx ? 'selected' : ''}>${t}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+            <div class="param-field">
+              <span class="param-field-label">Middle Digit:</span>
+              <div class="param-field-control">
+                <select class="param-select" onchange="LexiconWorkbench.onHandshapeTokenChange('mid', this.value)">
+                  ${allTokens.map(t => `<option value="${t}" ${t === hsDef.tokens.mid ? 'selected' : ''}>${t}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+            <div class="param-field">
+              <span class="param-field-label">Ring Digit:</span>
+              <div class="param-field-control">
+                <select class="param-select" onchange="LexiconWorkbench.onHandshapeTokenChange('rng', this.value)">
+                  ${allTokens.map(t => `<option value="${t}" ${t === hsDef.tokens.rng ? 'selected' : ''}>${t}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+            <div class="param-field">
+              <span class="param-field-label">Pinky Digit:</span>
+              <div class="param-field-control">
+                <select class="param-select" onchange="LexiconWorkbench.onHandshapeTokenChange('pnk', this.value)">
+                  ${allTokens.map(t => `<option value="${t}" ${t === hsDef.tokens.pnk ? 'selected' : ''}>${t}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+            <div class="param-field">
+              <span class="param-field-label">Thumb Digit:</span>
+              <div class="param-field-control">
+                <select class="param-select" onchange="LexiconWorkbench.onHandshapeTokenChange('thm', this.value)">
+                  ${thmTokens.map(t => `<option value="${t}" ${t === hsDef.tokens.thm ? 'selected' : ''}>${t}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+          `;
+        }
+
+        const codeBlock = document.getElementById('recipe-code-block');
+        if (codeBlock) {
+          codeBlock.innerText = `"${hsKey}": {\n  name: "${hsDef.name}",\n  category: "${hsDef.category || 'general'}",\n  tokens: ${JSON.stringify(hsDef.tokens, null, 2)}\n}`;
+        }
+      },
+
+      onHandshapeTokenChange(digit, token) {
+        const hsDef = PARAMETRIC_LEXICONS.handshapes[activeHandshapeKey];
+        if (!hsDef) return;
+        hsDef.tokens[digit] = token;
+        if (avatarBones) {
+          const fAngles = getFingerAngles(activeHandshapeKey);
+          applyProceduralDigits(fAngles, 'RightHand', 1.0, false);
+          if (currentModel) currentModel.updateMatrixWorld(true);
+        }
+        const codeBlock = document.getElementById('recipe-code-block');
+        if (codeBlock) {
+          codeBlock.innerText = `"${activeHandshapeKey}": {\n  name: "${hsDef.name}",\n  category: "${hsDef.category || 'general'}",\n  tokens: ${JSON.stringify(hsDef.tokens, null, 2)}\n}`;
+        }
+        showToast(`Posed ${digit.toUpperCase()} to ${token}`);
+      },
+
+      selectLocationItem(locKey) {
+        activeLocationKey = locKey;
+        const locDef = PARAMETRIC_LEXICONS.locations[locKey];
+        if (!locDef) return;
+
+        document.querySelectorAll('.sign-item').forEach(el => el.classList.remove('active'));
+        const el = document.getElementById('deck-item-' + locKey);
+        if (el) el.classList.add('active');
+
+        // Automatically ensure console sidebox is visible
+        const pane = document.getElementById('curation-console-pane');
+        if (pane && !pane.classList.contains('expanded')) {
+          toggleCurationConsole();
+        }
+
+        this.applyLocationPose();
+
+        const setElText = (id, txt) => {
+          const el = document.getElementById(id);
+          if (el) el.innerText = txt;
+        };
+
+        setElText('rack-02-title', '02 // 3D SPATIAL COORDINATES');
+        setElText('rack-02-sub', 'ARM & FOREARM ROOTS');
+        setElText('spec-name', locDef.name);
+        setElText('spec-lemma', "LOCUS // ID: " + locKey);
+        setElText('spec-desc', locDef.desc || "3D Anatomical signing locus anchor point.");
+        setElText('spec-channels', "3D ANCHOR");
+        setElText('spec-acc', "100% LOCUS");
+        setElText('spec-category-badge', (locDef.category || "Locus").toUpperCase());
+
+        const deck = document.getElementById('param-controls-deck');
+        if (deck) {
+          deck.innerHTML = `
+            <div style="font-family:var(--font-mono); font-size:10px; color:#38bdf8; font-weight:700; margin-bottom:8px; border-bottom:1px solid rgba(56,189,248,0.2); padding-bottom:4px;">
+              📍 3D SPATIAL COORDINATE NUDGES & JOINT ROOTS
+            </div>
+            <div style="background:rgba(15,23,42,0.6); padding:8px; border-radius:5px; margin-bottom:10px; border:1px solid rgba(255,255,255,0.06); font-family:var(--font-mono); font-size:9.5px; color:#94a3b8;">
+              <div>Arm Root: <span style="color:#fff;">[${locDef.Arm.join(', ')}] rad</span></div>
+              <div style="margin-top:3px;">ForeArm: <span style="color:#fff;">[${locDef.ForeArm.join(', ')}] rad</span></div>
+              <div style="margin-top:3px;">Hand Wrist: <span style="color:#fff;">[${locDef.Hand.join(', ')}] rad</span></div>
+            </div>
+            <div class="param-field">
+              <span class="param-field-label">Lateral X Offset (cm):</span>
+              <div class="slider-nudge-group">
+                <button class="nudge-btn" onclick="LexiconWorkbench.nudgeLocation('x', -0.5)">-0.5</button>
+                <input type="range" class="nudge-slider" id="loc-nudge-x" min="-15" max="15" step="0.2" value="${locNudges.x}" oninput="LexiconWorkbench.onLocationNudge('x', parseFloat(this.value))" />
+                <button class="nudge-btn" onclick="LexiconWorkbench.nudgeLocation('x', 0.5)">+0.5</button>
+                <span class="nudge-val-badge" id="lbl-loc-x">${locNudges.x.toFixed(1)} cm</span>
+              </div>
+            </div>
+            <div class="param-field">
+              <span class="param-field-label">Height Y Offset (cm):</span>
+              <div class="slider-nudge-group">
+                <button class="nudge-btn" onclick="LexiconWorkbench.nudgeLocation('y', -0.5)">-0.5</button>
+                <input type="range" class="nudge-slider" id="loc-nudge-y" min="-15" max="15" step="0.2" value="${locNudges.y}" oninput="LexiconWorkbench.onLocationNudge('y', parseFloat(this.value))" />
+                <button class="nudge-btn" onclick="LexiconWorkbench.nudgeLocation('y', 0.5)">+0.5</button>
+                <span class="nudge-val-badge" id="lbl-loc-y">${locNudges.y.toFixed(1)} cm</span>
+              </div>
+            </div>
+            <div class="param-field">
+              <span class="param-field-label">Depth Z Offset (cm):</span>
+              <div class="slider-nudge-group">
+                <button class="nudge-btn" onclick="LexiconWorkbench.nudgeLocation('z', -0.5)">-0.5</button>
+                <input type="range" class="nudge-slider" id="loc-nudge-z" min="-15" max="15" step="0.2" value="${locNudges.z}" oninput="LexiconWorkbench.onLocationNudge('z', parseFloat(this.value))" />
+                <button class="nudge-btn" onclick="LexiconWorkbench.nudgeLocation('z', 0.5)">+0.5</button>
+                <span class="nudge-val-badge" id="lbl-loc-z">${locNudges.z.toFixed(1)} cm</span>
+              </div>
+            </div>
+            <div style="margin-top:6px;">
+              <button class="te-btn-tiny" onclick="LexiconWorkbench.resetLocationNudges()">↺ RESET NUDGES TO ZERO</button>
+            </div>
+          `;
+        }
+
+        const codeBlock = document.getElementById('recipe-code-block');
+        if (codeBlock) {
+          codeBlock.innerText = `"${locKey}": {\n  name: "${locDef.name}",\n  category: "${locDef.category}",\n  Arm: [${locDef.Arm.join(', ')}],\n  ForeArm: [${locDef.ForeArm.join(', ')}],\n  Hand: [${locDef.Hand.join(', ')}]\n}`;
+        }
+      },
+
+      applyLocationPose() {
+        const locDef = PARAMETRIC_LEXICONS.locations[activeLocationKey];
+        if (!locDef || !avatarBones) return;
+        const nX = locNudges.x * 0.035;
+        const nY = locNudges.y * 0.035;
+        const nZ = locNudges.z * 0.040;
+
+        if (avatarBones['RightArm']) avatarBones['RightArm'].rotation.set(locDef.Arm[0] + nY, locDef.Arm[1] + nX, locDef.Arm[2]);
+        if (avatarBones['RightForeArm']) avatarBones['RightForeArm'].rotation.set(locDef.ForeArm[0], locDef.ForeArm[1], locDef.ForeArm[2] + nZ);
+        if (avatarBones['RightHand']) avatarBones['RightHand'].rotation.set(locDef.Hand[0], locDef.Hand[1], locDef.Hand[2]);
+
+        if (avatarBones['LeftArm']) avatarBones['LeftArm'].rotation.set(REST_ARM.LeftArm[0], REST_ARM.LeftArm[1], REST_ARM.LeftArm[2]);
+        if (avatarBones['LeftForeArm']) avatarBones['LeftForeArm'].rotation.set(REST_ARM.LeftForeArm[0], REST_ARM.LeftForeArm[1], REST_ARM.LeftForeArm[2]);
+        if (avatarBones['LeftHand']) avatarBones['LeftHand'].rotation.set(REST_ARM.LeftHand[0], REST_ARM.LeftHand[1], REST_ARM.LeftHand[2]);
+
+        const fAngles = getFingerAngles('1');
+        applyProceduralDigits(fAngles, 'RightHand', 1.0, false);
+        applyProceduralDigits(null, 'LeftHand', 0.0, true);
+        if (currentModel) currentModel.updateMatrixWorld(true);
+      },
+
+      onLocationNudge(axis, val) {
+        locNudges[axis] = val;
+        const lbl = document.getElementById('lbl-loc-' + axis);
+        if (lbl) lbl.innerText = val.toFixed(1) + " cm";
+        this.applyLocationPose();
+      },
+
+      nudgeLocation(axis, delta) {
+        const val = Math.max(-15, Math.min(15, +(locNudges[axis] + delta).toFixed(1)));
+        const inp = document.getElementById('loc-nudge-' + axis);
+        if (inp) inp.value = val;
+        this.onLocationNudge(axis, val);
+      },
+
+      resetLocationNudges() {
+        locNudges = { x: 0, y: 0, z: 0 };
+        ['x', 'y', 'z'].forEach(a => {
+          const inp = document.getElementById('loc-nudge-' + a);
+          if (inp) inp.value = 0;
+          const lbl = document.getElementById('lbl-loc-' + a);
+          if (lbl) lbl.innerText = "0.0 cm";
+        });
+        this.applyLocationPose();
+        showToast("Locus nudges reset to 0");
+      },
+
+      selectMovementItem(movKey) {
+        activeMovementKey = movKey;
+        const movDef = PARAMETRIC_LEXICONS.movements[movKey];
+        if (!movDef) return;
+
+        document.querySelectorAll('.sign-item').forEach(el => el.classList.remove('active'));
+        const el = document.getElementById('deck-item-' + movKey);
+        if (el) el.classList.add('active');
+
+        // Automatically ensure console sidebox is visible
+        const pane = document.getElementById('curation-console-pane');
+        if (pane && !pane.classList.contains('expanded')) {
+          toggleCurationConsole();
+        }
+
+        movementTime = 0.0;
+        isPlaying = true;
+        document.getElementById('btn-play-pause').innerText = '⏸';
+
+        const setElText = (id, txt) => {
+          const el = document.getElementById(id);
+          if (el) el.innerText = txt;
+        };
+
+        setElText('rack-02-title', '02 // KINEMATIC MOVEMENT DYNAMICS');
+        setElText('rack-02-sub', 'STROKE GEOMETRY');
+        setElText('spec-name', movDef.name);
+        setElText('spec-lemma', "MOVEMENT // ID: " + movKey);
+        setElText('spec-desc', movDef.desc || "Dynamic kinematic movement stroke trajectory.");
+        setElText('spec-channels', "KINEMATIC");
+        setElText('spec-acc', "DYNAMIC");
+        setElText('spec-category-badge', (movDef.category || "Movement").toUpperCase());
+
+        const deck = document.getElementById('param-controls-deck');
+        if (deck) {
+          deck.innerHTML = `
+            <div style="font-family:var(--font-mono); font-size:10px; color:#38bdf8; font-weight:700; margin-bottom:8px; border-bottom:1px solid rgba(56,189,248,0.2); padding-bottom:4px;">
+              ⚡ KINEMATIC MOVEMENT DYNAMICS & GEOMETRY
+            </div>
+            <div class="param-field">
+              <span class="param-field-label">Kinematic Class:</span>
+              <span style="font-family:var(--font-mono); font-size:11px; color:#fff; font-weight:700;">${movDef.class}</span>
+            </div>
+            <div class="param-field">
+              <span class="param-field-label">Trajectory Geometry:</span>
+              <span style="font-family:var(--font-mono); font-size:11px; color:#00e599; font-weight:700;">${movDef.ribbon || "Spatial Trajectory"}</span>
+            </div>
+            <div class="param-field">
+              <span class="param-field-label">Cycle Frequency:</span>
+              <span style="font-family:var(--font-mono); font-size:11px; color:#38bdf8; font-weight:700;">2.0 Hz (Continuous Loop)</span>
+            </div>
+            <div style="font-size:10px; color:#94a3b8; line-height:1.4; margin-top:8px; background:rgba(15,23,42,0.6); padding:8px 10px; border-radius:5px; border:1px solid rgba(255,255,255,0.06);">
+              ${movDef.desc}
+            </div>
+          `;
+        }
+
+        const codeBlock = document.getElementById('recipe-code-block');
+        if (codeBlock) {
+          codeBlock.innerText = `"${movKey}": {\n  name: "${movDef.name}",\n  class: "${movDef.class}",\n  ribbon: "${movDef.ribbon}"\n}`;
+        }
+      },
+
+      selectOrientationItem(oriKey) {
+        activeOrientationKey = oriKey;
+        const oriDef = PARAMETRIC_LEXICONS.orientations[oriKey];
+        if (!oriDef) return;
+
+        document.querySelectorAll('.sign-item').forEach(el => el.classList.remove('active'));
+        const el = document.getElementById('deck-item-' + oriKey);
+        if (el) el.classList.add('active');
+
+        // Automatically ensure console sidebox is visible
+        const pane = document.getElementById('curation-console-pane');
+        if (pane && !pane.classList.contains('expanded')) {
+          toggleCurationConsole();
+        }
+
+        this.applyOrientationPose();
+
+        const setElText = (id, txt) => {
+          const el = document.getElementById(id);
+          if (el) el.innerText = txt;
+        };
+
+        setElText('rack-02-title', '02 // WRIST ATTITUDE CONFIGURATION');
+        setElText('rack-02-sub', 'PITCH, YAW, ROLL');
+        setElText('spec-name', oriDef.name);
+        setElText('spec-lemma', "ORIENTATION // ID: " + oriKey);
+        setElText('spec-desc', oriDef.desc || "Canonical wrist attitude Euler configuration.");
+        setElText('spec-channels', "3-AXIS EULER");
+        setElText('spec-acc', "ATTITUDE");
+        setElText('spec-category-badge', "ORIENTATION");
+
+        const deck = document.getElementById('param-controls-deck');
+        if (deck) {
+          const e = oriDef.euler;
+          const degX = Math.round(e[0] * 180 / Math.PI);
+          const degY = Math.round(e[1] * 180 / Math.PI);
+          const degZ = Math.round(e[2] * 180 / Math.PI);
+
+          deck.innerHTML = `
+            <div style="font-family:var(--font-mono); font-size:10px; color:#38bdf8; font-weight:700; margin-bottom:8px; border-bottom:1px solid rgba(56,189,248,0.2); padding-bottom:4px;">
+              🔄 CANONICAL WRIST ATTITUDE EULER ANGLES
+            </div>
+            <div class="param-field">
+              <span class="param-field-label">Pitch X:</span>
+              <span class="nudge-val-badge">${degX}° (${e[0].toFixed(2)} rad)</span>
+            </div>
+            <div class="param-field">
+              <span class="param-field-label">Yaw Y:</span>
+              <span class="nudge-val-badge">${degY}° (${e[1].toFixed(2)} rad)</span>
+            </div>
+            <div class="param-field">
+              <span class="param-field-label">Roll Z:</span>
+              <span class="nudge-val-badge">${degZ}° (${e[2].toFixed(2)} rad)</span>
+            </div>
+            <div style="font-size:10px; color:#94a3b8; line-height:1.4; margin-top:8px; background:rgba(15,23,42,0.6); padding:8px 10px; border-radius:5px; border:1px solid rgba(255,255,255,0.06);">
+              ${oriDef.desc}
+            </div>
+          `;
+        }
+
+        const codeBlock = document.getElementById('recipe-code-block');
+        if (codeBlock) {
+          codeBlock.innerText = `"${oriKey}": {\n  name: "${oriDef.name}",\n  euler: [${oriDef.euler.join(', ')}]\n}`;
+        }
+      },
+
+      applyOrientationPose() {
+        const oriDef = PARAMETRIC_LEXICONS.orientations[activeOrientationKey];
+        if (!oriDef || !avatarBones) return;
+
+        if (avatarBones['RightArm']) avatarBones['RightArm'].rotation.set(1.04, 0.68, -0.14);
+        if (avatarBones['RightForeArm']) avatarBones['RightForeArm'].rotation.set(0.06, -0.38, -2.02);
+        if (avatarBones['RightHand']) avatarBones['RightHand'].rotation.set(oriDef.euler[0], oriDef.euler[1], oriDef.euler[2]);
+
+        const fAngles = getFingerAngles('open_b');
+        applyProceduralDigits(fAngles, 'RightHand', 1.0, false);
+        if (currentModel) currentModel.updateMatrixWorld(true);
       },
 
       bindShortcuts() {
@@ -1562,6 +2315,10 @@
         if (!this.activeWorkingRecipe.fineTune) {
           this.activeWorkingRecipe.fineTune = { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 };
         }
+        const t2 = document.getElementById('rack-02-title');
+        if (t2) t2.innerText = "02 // PHONOLOGICAL RECIPE EDIT";
+        const s2 = document.getElementById('rack-02-sub');
+        if (s2) s2.innerHTML = "&lang;H, L, M, O, B&rang;";
         this.renderSignControls();
         this.updateFineTuneInputs();
         this.updateRecipeCode();
@@ -2066,7 +2823,15 @@
           activeAction = mixer.clipAction(clip);
           activeAction.play();
 
-          if (currentStudioMode === 'algorithm') {
+          if (LexiconWorkbench.currentCategory && LexiconWorkbench.currentCategory !== 'signs') {
+            activeAction.paused = true;
+            mixer.setTime(0.01);
+            mixer.update(0);
+            if (LexiconWorkbench.currentCategory === 'handshapes') LexiconWorkbench.selectHandshapeItem(activeHandshapeKey);
+            else if (LexiconWorkbench.currentCategory === 'locations') LexiconWorkbench.selectLocationItem(activeLocationKey);
+            else if (LexiconWorkbench.currentCategory === 'movements') LexiconWorkbench.selectMovementItem(activeMovementKey);
+            else if (LexiconWorkbench.currentCategory === 'orientations') LexiconWorkbench.selectOrientationItem(activeOrientationKey);
+          } else if (currentStudioMode === 'algorithm') {
             activeAction.paused = true;
             mixer.setTime(0.01);
             mixer.update(0);
@@ -2084,6 +2849,9 @@
     LexiconWorkbench.init();
 
     const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('cat')) {
+      LexiconWorkbench.switchCategory(urlParams.get('cat'));
+    }
     if (urlParams.get('mode') === 'algorithm') {
       setStudioMode('algorithm');
     }
@@ -2393,7 +3161,9 @@
     }
 
     function restartSign() {
-      if (currentStudioMode === 'algorithm') {
+      if (LexiconWorkbench.currentCategory === 'movements') {
+        movementTime = 0.0;
+      } else if (currentStudioMode === 'algorithm') {
         proceduralTime = 0.0;
         updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', 0);
       } else {
@@ -2422,7 +3192,9 @@
       const rect = scrubberTrack.getBoundingClientRect();
       const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
       updateScrubberUI(pos);
-      if (currentStudioMode === 'algorithm') {
+      if (LexiconWorkbench.currentCategory === 'movements') {
+        movementTime = pos * movementDuration;
+      } else if (currentStudioMode === 'algorithm') {
         proceduralTime = pos * proceduralDuration;
         if (mixer) {
           mixer.setTime(0.01);
@@ -2443,8 +3215,10 @@
     function updateScrubberUI(progress) {
       document.getElementById('scrubber-fill').style.width = (progress * 100) + '%';
       document.getElementById('scrubber-thumb').style.left = (progress * 100) + '%';
-      const curT = (currentStudioMode === 'algorithm') ? proceduralTime : (mixer ? (mixer.time % duration) : 0);
-      const totalT = (currentStudioMode === 'algorithm') ? proceduralDuration : duration;
+      const curT = (LexiconWorkbench.currentCategory === 'movements') ? movementTime :
+                   (currentStudioMode === 'algorithm') ? proceduralTime : (mixer ? (mixer.time % duration) : 0);
+      const totalT = (LexiconWorkbench.currentCategory === 'movements') ? movementDuration :
+                     (currentStudioMode === 'algorithm') ? proceduralDuration : duration;
       document.getElementById('time-display').innerText = `${curT.toFixed(2)}s / ${totalT.toFixed(2)}s`;
     }
     function endScrub() {
@@ -2461,7 +3235,62 @@
       requestAnimationFrame(animate);
       const delta = clock.getDelta();
 
-      if (currentStudioMode === 'algorithm') {
+      if (LexiconWorkbench.currentCategory === 'movements') {
+        if (isPlaying && !isScrubbing) {
+          movementTime = (movementTime + delta * playbackSpeed) % movementDuration;
+        }
+        const tau = movementTime / movementDuration;
+        const movDef = PARAMETRIC_LEXICONS.movements[activeMovementKey];
+        const dyn = (movDef && movDef.dyn) ? movDef.dyn(tau) : {};
+
+        if (avatarBones) {
+          const locDef = PARAMETRIC_LEXICONS.locations.neutral_mid;
+          if (avatarBones['RightArm']) avatarBones['RightArm'].rotation.set(locDef.Arm[0] + (dyn.dyR || 0), locDef.Arm[1], locDef.Arm[2]);
+          if (avatarBones['RightForeArm']) avatarBones['RightForeArm'].rotation.set(locDef.ForeArm[0], locDef.ForeArm[1], locDef.ForeArm[2] + (dyn.dzR || 0));
+          if (avatarBones['RightHand']) avatarBones['RightHand'].rotation.set(locDef.Hand[0], locDef.Hand[1], locDef.Hand[2]);
+
+          if (avatarBones['LeftArm']) avatarBones['LeftArm'].rotation.set(REST_ARM.LeftArm[0] + (dyn.dyL || 0), REST_ARM.LeftArm[1], REST_ARM.LeftArm[2]);
+          if (avatarBones['LeftForeArm']) avatarBones['LeftForeArm'].rotation.set(REST_ARM.LeftForeArm[0], REST_ARM.LeftForeArm[1], REST_ARM.LeftForeArm[2] + (dyn.dzL || 0));
+          if (avatarBones['LeftHand']) avatarBones['LeftHand'].rotation.set(REST_ARM.LeftHand[0], REST_ARM.LeftHand[1], REST_ARM.LeftHand[2]);
+
+          const fAngles = getFingerAngles('1');
+          applyProceduralDigits(fAngles, 'RightHand', 1.0, false);
+          applyProceduralDigits(null, 'LeftHand', 0.0, true);
+        }
+        if (mixer) {
+          mixer.setTime(0.01);
+          mixer.update(0);
+        }
+        if (currentModel) currentModel.updateMatrixWorld(true);
+        updateScrubberUI(tau);
+      } else if (LexiconWorkbench.currentCategory === 'handshapes') {
+        if (avatarBones) {
+          if (avatarBones['RightArm']) avatarBones['RightArm'].rotation.set(1.15, -0.65, 0.35);
+          if (avatarBones['RightForeArm']) avatarBones['RightForeArm'].rotation.set(0.30, 0.45, 1.85);
+          if (avatarBones['RightHand']) avatarBones['RightHand'].rotation.set(0.15, 0.20, -0.40);
+          const fAngles = getFingerAngles(activeHandshapeKey);
+          applyProceduralDigits(fAngles, 'RightHand', 1.0, false);
+        }
+        if (mixer) {
+          mixer.setTime(0.01);
+          mixer.update(0);
+        }
+        if (currentModel) currentModel.updateMatrixWorld(true);
+      } else if (LexiconWorkbench.currentCategory === 'locations') {
+        LexiconWorkbench.applyLocationPose();
+        if (mixer) {
+          mixer.setTime(0.01);
+          mixer.update(0);
+        }
+        if (currentModel) currentModel.updateMatrixWorld(true);
+      } else if (LexiconWorkbench.currentCategory === 'orientations') {
+        LexiconWorkbench.applyOrientationPose();
+        if (mixer) {
+          mixer.setTime(0.01);
+          mixer.update(0);
+        }
+        if (currentModel) currentModel.updateMatrixWorld(true);
+      } else if (currentStudioMode === 'algorithm') {
         if (isPlaying && !isScrubbing) {
           proceduralTime = (proceduralTime + delta * playbackSpeed) % proceduralDuration;
         }
