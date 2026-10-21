@@ -24,6 +24,13 @@
 /04_Procedural_Engine_PoC/sources/*
 !/04_Procedural_Engine_PoC/sources/*.*
 
+# Whitelist Kinematic Lexicon Samples for WebGL Prototype
+!/04_Procedural_Engine_PoC/datasets/
+/04_Procedural_Engine_PoC/datasets/*
+!/04_Procedural_Engine_PoC/datasets/asl_signs/
+/04_Procedural_Engine_PoC/datasets/asl_signs/*
+!/04_Procedural_Engine_PoC/datasets/asl_signs/*.glb
+
 # Whitelist publication PDFs
 !/Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf
 !/Motivation_Letter.pdf

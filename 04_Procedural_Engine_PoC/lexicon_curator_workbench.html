@@ -2409,7 +2409,7 @@
     let initialHipsPos = null;
 
     function loadGLB(signId) {
-      loader.load(`datasets/3d_lex/extracted_samples/${signId}.glb`, function(gltf) {
+      loader.load(`datasets/asl_signs/${signId}.glb`, function(gltf) {
         if (currentModel) {
           scene.remove(currentModel);
           if (mixer) mixer.stopAllAction();
@@ -2487,9 +2487,18 @@
           }
 
           isPlaying = true;
-          document.getElementById('btn-play-pause').innerText = '⏸';
-          document.getElementById('spec-channels').innerText = '125 (60 FPS)';
-          document.getElementById('spec-acc').innerText = '99.9%';
+          const btnPlay = document.getElementById('btn-play-pause');
+          if (btnPlay) btnPlay.innerText = '⏸';
+          const specChannels = document.getElementById('spec-channels');
+          if (specChannels) specChannels.innerText = '125 (60 FPS)';
+          const specAcc = document.getElementById('spec-acc');
+          if (specAcc) specAcc.innerText = '99.9%';
+        }
+      }, undefined, function(err) {
+        console.warn("Could not load sign asset:", signId, err);
+        // Resilient fallback: articulate procedurally if asset fetch encounters network block
+        if (!isFingerspelling) {
+          startFingerspelling(signId);
         }
       });
     }
