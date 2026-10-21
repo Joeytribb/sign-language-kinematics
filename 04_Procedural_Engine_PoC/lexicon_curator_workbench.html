@@ -1642,6 +1642,13 @@
       overrides: {},
       verifiedMap: window.verifiedSignsMap,
 
+      ensureConsoleOpen() {
+        const pane = document.getElementById('curation-console-pane');
+        if (pane && pane.classList.contains('collapsed')) {
+          toggleCurationConsole();
+        }
+      },
+
       init() {
         this.loadRecipe(currentSign.id);
         this.bindShortcuts();
@@ -1877,15 +1884,13 @@
         if (el) el.classList.add('active');
 
         // Automatically ensure console sidebox is visible
-        const pane = document.getElementById('curation-console-pane');
-        if (pane && !pane.classList.contains('expanded')) {
-          toggleCurationConsole();
-        }
+        this.ensureConsoleOpen();
 
         if (avatarBones) {
-          if (avatarBones['RightArm']) avatarBones['RightArm'].rotation.set(1.15, -0.65, 0.35);
-          if (avatarBones['RightForeArm']) avatarBones['RightForeArm'].rotation.set(0.30, 0.45, 1.85);
-          if (avatarBones['RightHand']) avatarBones['RightHand'].rotation.set(0.15, 0.20, -0.40);
+          const loc = PARAMETRIC_LEXICONS.locations.neutral_mid;
+          if (avatarBones['RightArm']) avatarBones['RightArm'].rotation.set(loc.Arm[0], loc.Arm[1], loc.Arm[2]);
+          if (avatarBones['RightForeArm']) avatarBones['RightForeArm'].rotation.set(loc.ForeArm[0], loc.ForeArm[1], loc.ForeArm[2]);
+          if (avatarBones['RightHand']) avatarBones['RightHand'].rotation.set(0.12, -0.15, 0.38);
           
           if (avatarBones['LeftArm']) avatarBones['LeftArm'].rotation.set(REST_ARM.LeftArm[0], REST_ARM.LeftArm[1], REST_ARM.LeftArm[2]);
           if (avatarBones['LeftForeArm']) avatarBones['LeftForeArm'].rotation.set(REST_ARM.LeftForeArm[0], REST_ARM.LeftForeArm[1], REST_ARM.LeftForeArm[2]);
@@ -1994,10 +1999,7 @@
         if (el) el.classList.add('active');
 
         // Automatically ensure console sidebox is visible
-        const pane = document.getElementById('curation-console-pane');
-        if (pane && !pane.classList.contains('expanded')) {
-          toggleCurationConsole();
-        }
+        this.ensureConsoleOpen();
 
         this.applyLocationPose();
 
@@ -2122,10 +2124,7 @@
         if (el) el.classList.add('active');
 
         // Automatically ensure console sidebox is visible
-        const pane = document.getElementById('curation-console-pane');
-        if (pane && !pane.classList.contains('expanded')) {
-          toggleCurationConsole();
-        }
+        this.ensureConsoleOpen();
 
         movementTime = 0.0;
         isPlaying = true;
@@ -2185,10 +2184,7 @@
         if (el) el.classList.add('active');
 
         // Automatically ensure console sidebox is visible
-        const pane = document.getElementById('curation-console-pane');
-        if (pane && !pane.classList.contains('expanded')) {
-          toggleCurationConsole();
-        }
+        this.ensureConsoleOpen();
 
         this.applyOrientationPose();
 
@@ -2755,8 +2751,8 @@
       RightArm: [0.60, 0.10, 0.20],
       RightForeArm: [-0.10, 0.05, -0.40],
       RightHand: [0.05, -0.05, 0.10],
-      LeftArm: [0.60, -0.10, -0.20],
-      LeftForeArm: [-0.10, -0.05, 0.40],
+      LeftArm: [0.55, -0.05, -0.90],
+      LeftForeArm: [0.05, 0.05, 0.15],
       LeftHand: [0.05, 0.05, -0.10]
     };
 
@@ -3265,11 +3261,16 @@
         updateScrubberUI(tau);
       } else if (LexiconWorkbench.currentCategory === 'handshapes') {
         if (avatarBones) {
-          if (avatarBones['RightArm']) avatarBones['RightArm'].rotation.set(1.15, -0.65, 0.35);
-          if (avatarBones['RightForeArm']) avatarBones['RightForeArm'].rotation.set(0.30, 0.45, 1.85);
-          if (avatarBones['RightHand']) avatarBones['RightHand'].rotation.set(0.15, 0.20, -0.40);
+          const loc = PARAMETRIC_LEXICONS.locations.neutral_mid;
+          if (avatarBones['RightArm']) avatarBones['RightArm'].rotation.set(loc.Arm[0], loc.Arm[1], loc.Arm[2]);
+          if (avatarBones['RightForeArm']) avatarBones['RightForeArm'].rotation.set(loc.ForeArm[0], loc.ForeArm[1], loc.ForeArm[2]);
+          if (avatarBones['RightHand']) avatarBones['RightHand'].rotation.set(0.12, -0.15, 0.38);
+          if (avatarBones['LeftArm']) avatarBones['LeftArm'].rotation.set(REST_ARM.LeftArm[0], REST_ARM.LeftArm[1], REST_ARM.LeftArm[2]);
+          if (avatarBones['LeftForeArm']) avatarBones['LeftForeArm'].rotation.set(REST_ARM.LeftForeArm[0], REST_ARM.LeftForeArm[1], REST_ARM.LeftForeArm[2]);
+          if (avatarBones['LeftHand']) avatarBones['LeftHand'].rotation.set(REST_ARM.LeftHand[0], REST_ARM.LeftHand[1], REST_ARM.LeftHand[2]);
           const fAngles = getFingerAngles(activeHandshapeKey);
           applyProceduralDigits(fAngles, 'RightHand', 1.0, false);
+          applyProceduralDigits(null, 'LeftHand', 0.0, true);
         }
         if (mixer) {
           mixer.setTime(0.01);
