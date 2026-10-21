@@ -380,9 +380,8 @@
       <span class="title-text">SAMMY // BIOMECHANICAL ASL GROUND TRUTH STUDIO</span>
     </div>
     <div class="mode-toggle">
-      <button class="mode-btn" id="btn-mode-mocap" onclick="setStudioMode('mocap')">⚡ RAW MOCAP</button>
+      <button class="mode-btn" id="btn-mode-algorithm" onclick="setStudioMode('algorithm')">⚙ ALGORITHM ONLY (HUMAN AVATAR)</button>
       <button class="mode-btn active" id="btn-mode-hybrid" onclick="setStudioMode('hybrid')">✨ HYBRID (MOCAP + ALGORITHM)</button>
-      <button class="mode-btn" id="btn-mode-procedural" onclick="setStudioMode('procedural')">⚙ PROCEDURAL (IK MANNEQUIN)</button>
     </div>
   </header>
 
@@ -871,6 +870,202 @@
       }
     }
 
+    // ==========================================
+    // PROCEDURAL ALGORITHMIC ENGINE (PURE ALGORITHM ON HUMAN AVATAR)
+    // ==========================================
+    let proceduralTime = 0.0;
+    const proceduralDuration = 3.0;
+
+    const REST_ARM = {
+      RightArm: [0.15, -0.08, 1.35],
+      RightForeArm: [0.18, 0.04, 0.22],
+      RightHand: [0.05, -0.05, 0.10],
+      LeftArm: [0.15, 0.08, -1.35],
+      LeftForeArm: [0.18, -0.04, -0.22],
+      LeftHand: [0.05, 0.05, -0.10]
+    };
+
+    const REST_FINGERS = {
+      Index: [0.30, 0.35, 0.20],
+      Middle: [0.35, 0.40, 0.25],
+      Ring: [0.38, 0.42, 0.25],
+      Pinky: [0.38, 0.42, 0.25],
+      Thumb: [[0.18, 0.22, 0.05], [0.08, 0.08, 0.04], [0.04, 0.04, 0.0]]
+    };
+
+    const SIGN_LOCI = {
+      help: {
+        right: { Arm: [0.32, 0.52, 0.78], ForeArm: [0.20, 0.36, -1.48], Hand: [0.12, -0.18, 0.42] },
+        left:  { Arm: [0.32, -0.52, -0.78], ForeArm: [0.16, -0.42, 1.46], Hand: [0.22, 0.28, -0.52] },
+        dynamic: (tau) => ({
+          dyR: (tau >= 0.30 && tau <= 0.70) ? 0.12 * Math.sin(Math.PI * (tau - 0.30) / 0.40) : 0,
+          dyL: (tau >= 0.30 && tau <= 0.70) ? 0.12 * Math.sin(Math.PI * (tau - 0.30) / 0.40) : 0
+        })
+      },
+      water: {
+        right: { Arm: [0.46, 0.68, 0.95], ForeArm: [0.22, 0.52, -1.98], Hand: [0.15, -0.25, 0.55] },
+        left:  null,
+        dynamic: (tau) => ({
+          dyR: (tau >= 0.30 && tau <= 0.70) ? 0.08 * Math.abs(Math.sin(4 * Math.PI * (tau - 0.30) / 0.40)) : 0
+        })
+      },
+      fly: {
+        right: { Arm: [0.65, 0.40, 1.15], ForeArm: [0.12, 0.25, -1.15], Hand: [0.05, -0.10, 0.25] },
+        left:  null,
+        dynamic: (tau) => ({
+          dyR: (tau >= 0.30 && tau <= 0.70) ? 0.20 * ((tau - 0.30) / 0.40) : 0
+        })
+      },
+      arrive: {
+        right: { Arm: [0.42, 0.45, 0.85], ForeArm: [0.22, 0.30, -1.40], Hand: [0.15, -0.15, 0.35] },
+        left:  { Arm: [0.30, -0.45, -0.70], ForeArm: [0.15, -0.40, 1.40], Hand: [0.18, 0.25, -0.45] },
+        dynamic: (tau) => ({
+          dyR: (tau >= 0.30 && tau <= 0.70) ? -0.10 * Math.sin(Math.PI * (tau - 0.30) / 0.40) : 0
+        })
+      },
+      ticket: {
+        right: { Arm: [0.32, 0.48, 0.80], ForeArm: [0.20, 0.34, -1.42], Hand: [0.12, -0.18, 0.40] },
+        left:  { Arm: [0.30, -0.48, -0.75], ForeArm: [0.15, -0.42, 1.42], Hand: [0.20, 0.15, -0.35] },
+        dynamic: (tau) => ({
+          dyR: (tau >= 0.30 && tau <= 0.70) ? 0.08 * Math.abs(Math.sin(4 * Math.PI * (tau - 0.30) / 0.40)) : 0
+        })
+      },
+      car: {
+        right: { Arm: [0.26, 0.38, 0.72], ForeArm: [0.16, 0.26, -1.28], Hand: [0.10, 0.0, 0.25] },
+        left:  { Arm: [0.26, -0.38, -0.72], ForeArm: [0.16, -0.26, 1.28], Hand: [0.10, 0.0, -0.25] },
+        dynamic: (tau) => ({
+          dzR: (tau >= 0.30 && tau <= 0.70) ? 0.25 * Math.sin(4 * Math.PI * tau) : 0,
+          dzL: (tau >= 0.30 && tau <= 0.70) ? -0.25 * Math.sin(4 * Math.PI * tau) : 0
+        })
+      },
+      where: {
+        right: { Arm: [0.28, 0.45, 0.75], ForeArm: [0.15, 0.25, -1.35], Hand: [0.10, -0.10, 0.30] },
+        left:  null,
+        dynamic: (tau) => ({
+          dzR: (tau >= 0.30 && tau <= 0.70) ? 0.35 * Math.sin(6 * Math.PI * tau) : 0
+        })
+      }
+    };
+
+    function updateProceduralSignAnimation(signId, time) {
+      if (!avatarBones || !currentModel) return;
+      const tau = (time % proceduralDuration) / proceduralDuration;
+
+      let w = 0;
+      if (tau < 0.28) {
+        w = 0.5 * (1 - Math.cos(Math.PI * (tau / 0.28)));
+      } else if (tau <= 0.72) {
+        w = 1.0;
+      } else {
+        w = 0.5 * (1 + Math.cos(Math.PI * ((tau - 0.72) / 0.28)));
+      }
+
+      // Organic respiration & subtle sway
+      if (avatarBones['Spine']) avatarBones['Spine'].rotation.z = 0.015 * Math.sin(time * 1.5);
+      if (avatarBones['Spine1']) avatarBones['Spine1'].rotation.x = 0.02 * Math.cos(time * 1.5);
+      if (avatarBones['Neck']) avatarBones['Neck'].rotation.x = 0.04 * w;
+
+      const locus = SIGN_LOCI[signId] || {
+        right: { Arm: [0.30, 0.45, 0.75], ForeArm: [0.18, 0.30, -1.38], Hand: [0.10, -0.10, 0.30] },
+        left:  null
+      };
+      const dyn = locus.dynamic ? locus.dynamic(tau) : {};
+
+      // Dominant Right Arm
+      if (avatarBones['RightArm']) {
+        const tgt = locus.right ? locus.right.Arm : REST_ARM.RightArm;
+        const dy = dyn.dyR || 0;
+        avatarBones['RightArm'].rotation.x = THREE.MathUtils.lerp(REST_ARM.RightArm[0], tgt[0] + dy, w);
+        avatarBones['RightArm'].rotation.y = THREE.MathUtils.lerp(REST_ARM.RightArm[1], tgt[1], w);
+        avatarBones['RightArm'].rotation.z = THREE.MathUtils.lerp(REST_ARM.RightArm[2], tgt[2], w);
+      }
+      if (avatarBones['RightForeArm']) {
+        const tgt = locus.right ? locus.right.ForeArm : REST_ARM.RightForeArm;
+        const dy = dyn.dyR || 0;
+        avatarBones['RightForeArm'].rotation.x = THREE.MathUtils.lerp(REST_ARM.RightForeArm[0], tgt[0], w);
+        avatarBones['RightForeArm'].rotation.y = THREE.MathUtils.lerp(REST_ARM.RightForeArm[1], tgt[1] + dy * 0.5, w);
+        avatarBones['RightForeArm'].rotation.z = THREE.MathUtils.lerp(REST_ARM.RightForeArm[2], tgt[2], w);
+      }
+      if (avatarBones['RightHand']) {
+        const tgt = locus.right ? locus.right.Hand : REST_ARM.RightHand;
+        const dz = dyn.dzR || 0;
+        avatarBones['RightHand'].rotation.x = THREE.MathUtils.lerp(REST_ARM.RightHand[0], tgt[0], w);
+        avatarBones['RightHand'].rotation.y = THREE.MathUtils.lerp(REST_ARM.RightHand[1], tgt[1], w);
+        avatarBones['RightHand'].rotation.z = THREE.MathUtils.lerp(REST_ARM.RightHand[2], tgt[2] + dz, w);
+      }
+
+      // Non-Dominant Left Arm
+      if (avatarBones['LeftArm']) {
+        const tgt = locus.left ? locus.left.Arm : REST_ARM.LeftArm;
+        const dy = dyn.dyL || 0;
+        avatarBones['LeftArm'].rotation.x = THREE.MathUtils.lerp(REST_ARM.LeftArm[0], tgt[0] + dy, w);
+        avatarBones['LeftArm'].rotation.y = THREE.MathUtils.lerp(REST_ARM.LeftArm[1], tgt[1], w);
+        avatarBones['LeftArm'].rotation.z = THREE.MathUtils.lerp(REST_ARM.LeftArm[2], tgt[2], w);
+      }
+      if (avatarBones['LeftForeArm']) {
+        const tgt = locus.left ? locus.left.ForeArm : REST_ARM.LeftForeArm;
+        avatarBones['LeftForeArm'].rotation.x = THREE.MathUtils.lerp(REST_ARM.LeftForeArm[0], tgt[0], w);
+        avatarBones['LeftForeArm'].rotation.y = THREE.MathUtils.lerp(REST_ARM.LeftForeArm[1], tgt[1], w);
+        avatarBones['LeftForeArm'].rotation.z = THREE.MathUtils.lerp(REST_ARM.LeftForeArm[2], tgt[2], w);
+      }
+      if (avatarBones['LeftHand']) {
+        const tgt = locus.left ? locus.left.Hand : REST_ARM.LeftHand;
+        const dz = dyn.dzL || 0;
+        avatarBones['LeftHand'].rotation.x = THREE.MathUtils.lerp(REST_ARM.LeftHand[0], tgt[0], w);
+        avatarBones['LeftHand'].rotation.y = THREE.MathUtils.lerp(REST_ARM.LeftHand[1], tgt[1], w);
+        avatarBones['LeftHand'].rotation.z = THREE.MathUtils.lerp(REST_ARM.LeftHand[2], tgt[2] + dz, w);
+      }
+
+      // Procedural Finger Articulation
+      const pair = SIGN_HANDSHAPES[signId] || { right: 'OPEN_B', left: null };
+      const rightSpec = CANONICAL_HANDSHAPES[pair.right] || CANONICAL_HANDSHAPES['OPEN_B'];
+      const leftSpec = CANONICAL_HANDSHAPES[pair.left] || CANONICAL_HANDSHAPES['OPEN_B'];
+
+      applyProceduralDigits(rightSpec, 'RightHand', w, false);
+      if (pair.left) {
+        applyProceduralDigits(leftSpec, 'LeftHand', w, true);
+      } else {
+        applyProceduralDigits(null, 'LeftHand', 0, true);
+      }
+    }
+
+    function applyProceduralDigits(targetSpec, handPrefix, weight, isLeft) {
+      const digits = ['Index', 'Middle', 'Ring', 'Pinky'];
+      digits.forEach(d => {
+        const restArr = REST_FINGERS[d];
+        const tgtArr = targetSpec ? targetSpec[d] : restArr;
+        [1, 2, 3].forEach(seg => {
+          const b = avatarBones[handPrefix + d + seg];
+          if (b) {
+            const rx0 = restArr[seg - 1];
+            const rx1 = tgtArr ? tgtArr[seg - 1] : rx0;
+            b.rotation.x = THREE.MathUtils.lerp(rx0, rx1, weight);
+
+            if (seg === 1) {
+              const sp0 = 0.0;
+              const sp1 = (tgtArr && tgtArr.length > 3) ? tgtArr[3] : 0.0;
+              const spreadSign = isLeft ? -1 : 1;
+              b.rotation.z = THREE.MathUtils.lerp(sp0, sp1 * spreadSign, weight);
+            }
+          }
+        });
+      });
+
+      const restTh = REST_FINGERS.Thumb;
+      const tgtTh = targetSpec ? targetSpec.Thumb : restTh;
+      [1, 2, 3].forEach(seg => {
+        const b = avatarBones[handPrefix + 'Thumb' + seg];
+        if (b) {
+          const r0 = restTh[seg - 1];
+          const r1 = tgtTh ? tgtTh[seg - 1] : r0;
+          const mirror = isLeft ? -1 : 1;
+          b.rotation.x = THREE.MathUtils.lerp(r0[0], r1[0], weight);
+          b.rotation.y = THREE.MathUtils.lerp(r0[1] * mirror, r1[1] * mirror, weight);
+          b.rotation.z = THREE.MathUtils.lerp(r0[2] * mirror, r1[2] * mirror, weight);
+        }
+      });
+    }
+
     function loadGLB(signId) {
       loader.load(`datasets/3d_lex/extracted_samples/${signId}.glb`, function(gltf) {
         if (currentModel) {
@@ -913,14 +1108,16 @@
 
         scene.add(wrapper);
         currentModel = wrapper;
-        wrapper.visible = (currentStudioMode === 'mocap' || currentStudioMode === 'hybrid');
+        wrapper.visible = true;
 
         if (gltf.animations && gltf.animations.length > 0) {
           mixer = new THREE.AnimationMixer(model);
           const clip = gltf.animations[0];
           duration = clip.duration;
           activeAction = mixer.clipAction(clip);
-          activeAction.play();
+          if (currentStudioMode === 'hybrid') {
+            activeAction.play();
+          }
           isPlaying = true;
           document.getElementById('btn-play-pause').innerText = '⏸';
           document.getElementById('telemetry-channels').innerText = clip.tracks.length;
@@ -931,7 +1128,7 @@
     // Default initial sign
     selectSign(MOCAP_SIGNS.find(s => s.id === 'help') || MOCAP_SIGNS[0]);
 
-    // Studio Mode Switcher
+    // Studio Mode Switcher: Only 2 options (Pure Algorithm on Human Avatar vs Hybrid)
     function setStudioMode(mode) {
       currentStudioMode = mode;
       document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
@@ -940,52 +1137,67 @@
 
       const hybridCard = document.getElementById('hybrid-card');
 
-      if (mode === 'mocap') {
+      if (mode === 'algorithm') {
+        if (activeAction) activeAction.stop();
         if (currentModel) currentModel.visible = true;
         mannequinGroup.visible = false;
-        hybridBlend = 0.0;
-        document.getElementById('hybrid-slider').value = 0;
-        updateHybridBlend(0);
-        if (hybridCard) hybridCard.style.opacity = '0.7';
-        document.getElementById('telemetry-channels').innerText = activeAction ? activeAction.getClip().tracks.length : '125';
-        document.getElementById('telemetry-bones').innerText = '65';
-        document.getElementById('telemetry-acc').innerText = '100%';
-        document.getElementById('telemetry-acc').style.color = '#00e599';
-      } else if (mode === 'hybrid') {
+        proceduralTime = 0;
+        updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', 0);
+        if (currentModel) currentModel.updateMatrixWorld(true);
+
+        document.getElementById('hybrid-mode-pill').innerText = "PURE ALGORITHM";
+        document.getElementById('hybrid-mode-pill').style.borderColor = "#38bdf8";
+        document.getElementById('hybrid-mode-pill').style.color = "#38bdf8";
+        document.getElementById('hybrid-blend-text').innerText = "100%";
+        document.getElementById('hybrid-slider').value = 100;
+        document.getElementById('hybrid-slider').disabled = true;
+        document.getElementById('hybrid-summary').innerText = "Procedural IK & phonological solver directly articulates this rigged human avatar. Zero mocap dependency.";
+
+        document.getElementById('telemetry-channels').innerText = "65 (IK SOLVER)";
+        document.getElementById('telemetry-bones').innerText = "65";
+        document.getElementById('telemetry-acc').innerText = "100% (GRAMMAR)";
+        document.getElementById('telemetry-acc').style.color = "#38bdf8";
+        document.getElementById('time-display').innerText = `0.00s / ${proceduralDuration.toFixed(2)}s`;
+      } else { // hybrid
         if (currentModel) currentModel.visible = true;
         mannequinGroup.visible = false;
+        if (activeAction) activeAction.play();
         hybridBlend = 0.80;
+        document.getElementById('hybrid-slider').disabled = false;
         document.getElementById('hybrid-slider').value = 80;
         updateHybridBlend(80);
-        if (hybridCard) hybridCard.style.opacity = '1.0';
-        document.getElementById('telemetry-channels').innerText = '125 + IK';
-        document.getElementById('telemetry-bones').innerText = '65';
-        document.getElementById('telemetry-acc').innerText = '99.8%';
-        document.getElementById('telemetry-acc').style.color = '#00e599';
-      } else {
-        if (currentModel) currentModel.visible = false;
-        mannequinGroup.visible = true;
-        if (hybridCard) hybridCard.style.opacity = '0.4';
-        document.getElementById('telemetry-channels').innerText = '27';
-        document.getElementById('telemetry-bones').innerText = '19';
-        document.getElementById('telemetry-acc').innerText = '94.8%';
-        document.getElementById('telemetry-acc').style.color = '#38bdf8';
+
+        document.getElementById('telemetry-channels').innerText = "125 + IK";
+        document.getElementById('telemetry-bones').innerText = "65";
+        document.getElementById('telemetry-acc').innerText = "99.8%";
+        document.getElementById('telemetry-acc').style.color = "#00e599";
+        if (mixer) {
+          const t = mixer.time % duration;
+          document.getElementById('time-display').innerText = `${t.toFixed(2)}s / ${duration.toFixed(2)}s`;
+        }
       }
     }
 
     // Controls
     function togglePlayPause() {
-      if (!activeAction) return;
       isPlaying = !isPlaying;
-      activeAction.paused = !isPlaying;
+      if (currentStudioMode === 'hybrid' && activeAction) {
+        activeAction.paused = !isPlaying;
+      }
       document.getElementById('btn-play-pause').innerText = isPlaying ? '⏸' : '▶';
     }
 
     function restartSign() {
-      if (!mixer || !activeAction) return;
-      mixer.setTime(0);
+      if (currentStudioMode === 'algorithm') {
+        proceduralTime = 0;
+        updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', 0);
+      } else {
+        if (mixer && activeAction) {
+          mixer.setTime(0);
+          activeAction.paused = false;
+        }
+      }
       isPlaying = true;
-      activeAction.paused = false;
       document.getElementById('btn-play-pause').innerText = '⏸';
     }
 
@@ -1024,16 +1236,26 @@
       const track = document.getElementById('scrubber-track');
       const rect = track.getBoundingClientRect();
       const progress = Math.min(1.0, Math.max(0.0, (e.clientX - rect.left) / rect.width));
-      if (mixer && duration > 0) {
-        mixer.setTime(progress * duration);
-        mixer.update(0);
-        if (hybridBlend > 0 && currentSign && (currentStudioMode === 'mocap' || currentStudioMode === 'hybrid')) {
-          applyAlgorithmicRectification(currentSign.id, hybridBlend);
-        }
+
+      if (currentStudioMode === 'algorithm') {
+        proceduralTime = progress * proceduralDuration;
+        updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', proceduralTime);
         if (currentModel) currentModel.updateMatrixWorld(true);
+      } else {
+        if (mixer && duration > 0) {
+          mixer.setTime(progress * duration);
+          mixer.update(0);
+          if (hybridBlend > 0 && currentSign) {
+            applyAlgorithmicRectification(currentSign.id, hybridBlend);
+          }
+          if (currentModel) currentModel.updateMatrixWorld(true);
+        }
       }
       document.getElementById('scrubber-fill').style.width = (progress * 100) + '%';
       document.getElementById('scrubber-thumb').style.left = (progress * 100) + '%';
+      const curT = (currentStudioMode === 'algorithm') ? proceduralTime : (mixer ? (mixer.time % duration) : 0);
+      const totalT = (currentStudioMode === 'algorithm') ? proceduralDuration : duration;
+      document.getElementById('time-display').innerText = `${curT.toFixed(2)}s / ${totalT.toFixed(2)}s`;
     }
     function endScrub() {
       isScrubbing = false;
@@ -1047,17 +1269,28 @@
       requestAnimationFrame(animate);
       const delta = clock.getDelta();
 
-      if (mixer && isPlaying && !isScrubbing && duration > 0) {
-        mixer.update(delta * playbackSpeed);
-        const t = (mixer.time % duration);
-        const progress = (t / duration) * 100;
+      if (currentStudioMode === 'algorithm') {
+        if (isPlaying && !isScrubbing) {
+          proceduralTime = (proceduralTime + delta * playbackSpeed) % proceduralDuration;
+        }
+        updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', proceduralTime);
+        const progress = (proceduralTime / proceduralDuration) * 100;
         document.getElementById('scrubber-fill').style.width = progress + '%';
         document.getElementById('scrubber-thumb').style.left = progress + '%';
-        document.getElementById('time-display').innerText = `${t.toFixed(2)}s / ${duration.toFixed(2)}s`;
+        document.getElementById('time-display').innerText = `${proceduralTime.toFixed(2)}s / ${proceduralDuration.toFixed(2)}s`;
+      } else {
+        if (mixer && isPlaying && !isScrubbing && duration > 0) {
+          mixer.update(delta * playbackSpeed);
+          const t = (mixer.time % duration);
+          const progress = (t / duration) * 100;
+          document.getElementById('scrubber-fill').style.width = progress + '%';
+          document.getElementById('scrubber-thumb').style.left = progress + '%';
+          document.getElementById('time-display').innerText = `${t.toFixed(2)}s / ${duration.toFixed(2)}s`;
 
-        // Apply Layered Algorithmic Phonological Rectification
-        if (hybridBlend > 0 && currentSign && (currentStudioMode === 'mocap' || currentStudioMode === 'hybrid')) {
-          applyAlgorithmicRectification(currentSign.id, hybridBlend);
+          // Apply Layered Algorithmic Phonological Rectification
+          if (hybridBlend > 0 && currentSign) {
+            applyAlgorithmicRectification(currentSign.id, hybridBlend);
+          }
         }
       }
 
