@@ -1,7 +1,7 @@
 # SAMMY: Universal 3D Sign Language & Accessibility Infrastructure
 
 > **Deterministic 27-DOF Kinematic Engine • 60 FPS Edge WebGL • Universal Design for Transit & Healthcare Compliance (14 CFR § 382.57 & ADA Title III)**  
-> Sub-millimeter anatomical precision, zero-cloud edge rendering, and direct Sorenson Video Relay Service (VRS) live escalation.
+> Sub-millimeter anatomical precision, zero-cloud edge rendering, and enterprise ADA/EAA compliance.
 
 [![Website](https://img.shields.io/badge/Project%20Website-Live%20Portal-10B981.svg)](https://joeytribb.github.io/sign-language-kinematics/)
 [![3D Story Cinema](https://img.shields.io/badge/3D%20Cinema-Airport%20Story%20%26%20Dyslexia-8B5CF6.svg)](https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/airport_story_scene.html)
@@ -18,7 +18,7 @@
 | Experience | Focus & Technical Scope | Live Interactive Demo |
 | :--- | :--- | :--- |
 | **🎬 Grand 3D Airport Narrative Cinema & Dyslexia Simulator** | Full 5-act animated concourse narrative: bustling passenger crowds, Gate B12 boarding queue, audio PA "silent gate change" crisis, authentic FIDS dyslexia letter scrambling (`b↔d`, `p↔q`), and seamless camera push-in to the live Sammy kiosk. | [**Launch 3D Story Cinema ↗**](https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/airport_story_scene.html) |
-| **✈️ Airport Kiosk Mode (14 CFR § 382.57)** | Real-world passenger terminal simulation grounded in Washington Dulles International Airport (IAD) Concourse C/D operations, flight broadcasts, and Sorenson VRS bridge. | [**Launch Airport Kiosk ↗**](https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/anatomical_hand.html?kiosk) |
+| **✈️ Airport Kiosk Mode (14 CFR § 382.57)** | Real-world passenger terminal simulation grounded in Washington Dulles International Airport (IAD) Concourse C/D operations, flight broadcasts, and 14 CFR § 382.57 accessibility compliance. | [**Launch Airport Kiosk ↗**](https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/anatomical_hand.html?kiosk) |
 | **👋 Sammy 3D Biomechanical Studio** | 30 articulated joints, 24 DOF skeletal hand rig, 66 spatial loci, 38 ASL-LEX phonemes, and 360° interactive orbit. | [**Launch 3D Studio ↗**](https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/anatomical_hand.html) |
 | **🌐 Full Technology Portal** | Technical whitepapers, ablation benchmarks, and architecture roadmap. | [**View Project Portal ↗**](https://joeytribb.github.io/sign-language-kinematics/) |
 
@@ -50,10 +50,11 @@ SAMMY does not use ungrounded AI to replace humans. Our platform creates a high-
 - Certified Deaf native linguists, 3D animators, and ASL educators serve as **paid phonetic curators and quality-assurance engineers** who audit, validate, and govern the lexicon database.
 - Eliminates cultural backlash, guarantees grammatical authenticity, and directly closes the disability wealth gap.
 
-### 3. Strategic Synergy with Sorenson Communications (VRS)
-SAMMY is architected to **protect and expand Sorenson's core Video Relay Service (VRS)** ecosystem:
-- **Automates the Unstaffed 95%:** Handles routine gate reassignments, directional wayfinding, and boarding group calls where certified human interpreters are not physically stationed.
-- **Instant Escalation to Sorenson VRS:** Features a one-touch emergency bridge connecting passengers directly to RID-certified Sorenson VRS human interpreters for complex exceptions (lost baggage, missed flights, medical distress), funneling high-margin relay minutes directly into Sorenson's network.
+### 3. Strategic Commercial Synergy with Enable Ventures' LP Network
+SAMMY provides built-in enterprise distribution across **Enable Ventures' strategic institutional Limited Partner (LP) network**:
+- **Healthcare Systems (UnitedHealth Group, Ascension):** Accessible emergency intake, bedside triage, and patient communication portals under ACA Section 1557 and ADA Title III.
+- **Financial Services & Retail Banking (Ally Bank):** ADA-compliant smart ATM terminals, branch video teller assistance, and accessible mobile banking digital avatars.
+- **Employer Workplaces & Insurance (Liberty Mutual Investments):** Enterprise workplace accessibility, employee onboarding, claims filing, and worker accommodation compliance.
 
 ---
 
