@@ -192,22 +192,7 @@
       box-shadow: 0 0 12px rgba(0, 242, 254, 0.5);
     }
 
-    /* AUTOCOMPLETE DROPDOWN */
-    .search-dropdown-menu {
-      position: absolute;
-      top: 42px;
-      left: 0;
-      right: 0;
-      background: rgba(15, 23, 42, 0.96);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(0, 242, 254, 0.25);
-      border-radius: 10px;
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7);
-      padding: 6px;
-      z-index: 100;
-      max-height: 280px;
-      overflow-y: auto;
-    }
+    /* DROPDOWN ITEM STYLES */
     .dropdown-item {
       display: flex;
       align-items: center;
@@ -1110,126 +1095,824 @@
       background: #38bdf8;
       color: #000;
     }
+
+    /* APPLE LIQUID GLASS MINIMAL STUDIO STYLES */
+    #canvas-container {
+      position: absolute;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 38%, #0f172a 0%, #070b14 65%, #020408 100%);
+    }
+
+    /* TOP FLOATING GLASS NAV */
+    .top-glass-nav {
+      position: fixed;
+      top: 18px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 40;
+      pointer-events: none;
+    }
+    .brand-glass-pill {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 9999px;
+      padding: 6px 16px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+    .brand-pulse-dot {
+      width: 7px;
+      height: 7px;
+      background: #00e599;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #00e599;
+      animation: pulse 1.8s infinite;
+    }
+    .brand-glass-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 11.5px;
+      letter-spacing: 0.08em;
+      color: #fff;
+    }
+    .brand-glass-badge {
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      font-weight: 800;
+      color: #00f2fe;
+      background: rgba(0, 242, 254, 0.12);
+      border: 1px solid rgba(0, 242, 254, 0.35);
+      padding: 2px 7px;
+      border-radius: 10px;
+      letter-spacing: 0.04em;
+    }
+
+    /* LIVE AIRPORT TELEMETRY TICKER PILL */
+    .airport-ticker-glass {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(28px) saturate(190%);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      border-radius: 9999px;
+      padding: 6px 16px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.18);
+      transition: all 0.25s ease;
+    }
+    .ticker-dot {
+      width: 7px;
+      height: 7px;
+      background: #38bdf8;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #38bdf8;
+      animation: pulse 1.2s infinite;
+    }
+    .ticker-code {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 11px;
+      color: #38bdf8;
+      letter-spacing: 0.04em;
+    }
+    .ticker-arrow {
+      color: #64748b;
+      font-size: 10px;
+    }
+    .ticker-text {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+    .ticker-status-badge {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 800;
+      color: #00e599;
+      background: rgba(0, 229, 153, 0.15);
+      border: 1px solid rgba(0, 229, 153, 0.35);
+      padding: 2px 7px;
+      border-radius: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    /* CAMERA PRESET PILLS */
+    .cam-glass-group {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 9999px;
+      padding: 3px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+    }
+    .cam-glass-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .cam-glass-btn.active, .cam-glass-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+    }
+    .cam-glass-btn.active {
+      color: #00f2fe;
+      box-shadow: 0 0 12px rgba(0, 242, 254, 0.25);
+    }
+
+    /* THE APPLE LIQUID GLASS BOTTOM ISLAND */
+    .apple-bottom-island {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 16px;
+      background: rgba(15, 23, 42, 0.68);
+      backdrop-filter: blur(32px) saturate(210%);
+      -webkit-backdrop-filter: blur(32px) saturate(210%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 9999px;
+      box-shadow: 
+        0 24px 60px rgba(0, 0, 0, 0.65),
+        0 4px 20px rgba(0, 0, 0, 0.4),
+        inset 0 1px 1.5px rgba(255, 255, 255, 0.3),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.35);
+      max-width: 95vw;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .apple-bottom-island:hover {
+      border-color: rgba(0, 242, 254, 0.35);
+      box-shadow: 
+        0 28px 70px rgba(0, 0, 0, 0.75),
+        0 0 24px rgba(0, 242, 254, 0.15),
+        inset 0 1px 1.5px rgba(255, 255, 255, 0.35);
+    }
+
+    /* TRANSPORT BUTTONS */
+    .island-transport {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .island-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      font-size: 11px;
+    }
+    .island-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(1.05);
+    }
+    .island-btn:active {
+      transform: scale(0.96);
+    }
+    .round-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+    .play-hero-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.25), rgba(0, 229, 153, 0.25));
+      border: 1px solid rgba(0, 242, 254, 0.5);
+      color: #00f2fe;
+      font-size: 13px;
+      box-shadow: 0 0 12px rgba(0, 242, 254, 0.2);
+    }
+    .play-hero-btn:hover {
+      background: linear-gradient(135deg, #00f2fe, #00e599);
+      color: #060913;
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.5);
+    }
+
+    .island-divider {
+      width: 1px;
+      height: 24px;
+      background: rgba(255, 255, 255, 0.12);
+      flex-shrink: 0;
+    }
+
+    /* SIGN IDENTITY & MICRO SCRUBBER */
+    .island-sign-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 180px;
+      max-width: 280px;
+    }
+    .island-sign-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    #hud-sign-name {
+      font-family: var(--font-display);
+      font-size: 12.5px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex-shrink: 0;
+      max-width: 85px;
+    }
+    #hud-sign-cat {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      color: #00e599;
+      background: rgba(0, 229, 153, 0.12);
+      border: 1px solid rgba(0, 229, 153, 0.25);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    #time-display {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: #64748b;
+      margin-left: auto;
+      white-space: nowrap;
+    }
+    .island-scrubber {
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    #scrubber-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00f2fe, #00e599);
+      border-radius: 2px;
+      transition: width 0.05s linear;
+    }
+    #scrubber-thumb { display: none; }
+
+    /* FEATURE CAPSULE CHIPS */
+    .island-chip {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 9999px;
+      padding: 6px 12px;
+      color: #cbd5e1;
+      font-family: var(--font-sans);
+      font-size: 10.5px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .island-chip:hover, .island-chip.active {
+      background: rgba(0, 242, 254, 0.16);
+      border-color: rgba(0, 242, 254, 0.4);
+      color: #00f2fe;
+    }
+
+    /* SEARCH INPUT IN ISLAND */
+    .island-search {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 9999px;
+      padding: 3px 5px 3px 11px;
+      transition: all 0.2s ease;
+      width: 220px;
+    }
+    .island-search:focus-within {
+      width: 280px;
+      border-color: #00f2fe;
+      background: rgba(10, 16, 28, 0.95);
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.25);
+    }
+    .island-search-icon {
+      font-size: 11px;
+      margin-right: 6px;
+      color: #64748b;
+    }
+    #asl-search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-size: 11px;
+      font-family: var(--font-sans);
+    }
+    #asl-search-input::placeholder {
+      color: #64748b;
+      font-size: 10px;
+    }
+    .island-search-go {
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(0, 229, 153, 0.2));
+      border: 1px solid rgba(0, 242, 254, 0.4);
+      color: #00f2fe;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .island-search-go:hover {
+      background: linear-gradient(135deg, #00f2fe, #00e599);
+      color: #040711;
+    }
+
+    /* SEARCH DROPDOWN MENU ABOVE ISLAND */
+    .search-dropdown-menu {
+      position: absolute;
+      bottom: 46px !important;
+      top: auto !important;
+      left: 0;
+      right: 0;
+      background: rgba(15, 23, 42, 0.96);
+      backdrop-filter: blur(28px);
+      border: 1px solid rgba(0, 242, 254, 0.25);
+      border-radius: 14px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
+      padding: 6px;
+      z-index: 120;
+      max-height: 260px;
+      overflow-y: auto;
+    }
+
+    /* FLOATING GLASS POPOVERS (BLOOMING ABOVE ISLAND) */
+    .glass-popover {
+      position: fixed;
+      bottom: 82px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 95;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(36px) saturate(210%);
+      -webkit-backdrop-filter: blur(36px) saturate(210%);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 20px;
+      padding: 20px 24px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+      animation: popoverBloom 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      color: #fff;
+      max-width: 560px;
+      width: 90vw;
+    }
+    @keyframes popoverBloom {
+      from { opacity: 0; transform: translate(-50%, 15px) scale(0.96); }
+      to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+    }
+    .popover-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .popover-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .popover-tag {
+      background: rgba(0, 242, 254, 0.15);
+      border: 1px solid rgba(0, 242, 254, 0.35);
+      color: #00f2fe;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+    .popover-title {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.04em;
+    }
+    .popover-close {
+      background: transparent;
+      border: none;
+      color: #64748b;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 2px 6px;
+      transition: color 0.15s;
+    }
+    .popover-close:hover { color: #fff; }
+
+    /* RECIPE GRID */
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .recipe-cell {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+    .recipe-label {
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .recipe-val {
+      font-size: 11px;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+    .recipe-accent-val {
+      color: #00f2fe;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+    }
+    .recipe-math-box {
+      background: rgba(0, 229, 153, 0.06);
+      border: 1px solid rgba(0, 229, 153, 0.2);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 11px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    /* SITUATIONS LIST */
+    .situation-presets-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .situation-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .situation-card:hover {
+      background: rgba(0, 242, 254, 0.12);
+      border-color: rgba(0, 242, 254, 0.35);
+      transform: translateX(3px);
+    }
+    .situation-card-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .situation-icon { font-size: 14px; }
+    .situation-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .situation-phrase {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #94a3b8;
+    }
+    .situation-badge {
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      font-weight: 700;
+      color: #00e599;
+      background: rgba(0, 229, 153, 0.12);
+      border: 1px solid rgba(0, 229, 153, 0.25);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .radar-toggle-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 242, 254, 0.06);
+      border: 1px solid rgba(0, 242, 254, 0.22);
+      border-radius: 12px;
+      padding: 10px 14px;
+    }
+    .radar-toggle-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .radar-toggle-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .radar-toggle-desc {
+      font-size: 9.5px;
+      color: #94a3b8;
+    }
+    .radar-switch-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .radar-switch-btn.active {
+      background: linear-gradient(135deg, #00f2fe, #00e599);
+      color: #030712;
+      border-color: #00f2fe;
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.5);
+    }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header id="header">
-    <div class="brand-left">
-      <span class="badge-gt"><span class="pulse-dot"></span> ⚡ 60 FPS GROUND TRUTH</span>
-      <span class="title-text">SAMMY // ASL STUDIO</span>
+  <!-- TOP FLOATING GLASS NAV & TELEMETRY -->
+  <nav class="top-glass-nav">
+    <div class="brand-glass-pill">
+      <span class="brand-pulse-dot"></span>
+      <span class="brand-glass-title">SAMMY // ASL STUDIO</span>
+      <span class="brand-glass-badge">60 FPS REAL-TIME</span>
     </div>
 
-    <!-- CENTER UNIVERSAL SIGN SEARCH BAR -->
-    <div class="header-search-container">
-      <div class="search-input-wrap">
-        <span class="search-pulse-dot"></span>
-        <input type="text" id="asl-search-input" 
-               placeholder="Sign any word, sentence, or proper noun (e.g. 'help', 'where is bathroom', 'sammy')..." 
-               autocomplete="off"
-               onkeydown="if(event.key === 'Enter') executeAslSearch()"
-               oninput="onSearchInputChange(this.value)" />
-        <button id="btn-search-go" class="search-submit-btn" onclick="executeAslSearch()">SIGN ↵</button>
+    <!-- AUTONOMOUS AIRPORT LIVE STREAM TICKER -->
+    <div id="live-airport-ticker" class="airport-ticker-glass" style="display:none;">
+      <span class="ticker-dot"></span>
+      <span class="ticker-code" id="ticker-flight-code">JFK // AY1331</span>
+      <span class="ticker-arrow">➔</span>
+      <span class="ticker-text" id="ticker-flight-msg">Flight Arrived Gate B22</span>
+      <span class="ticker-status-badge">AUTO TRANSLATING</span>
+    </div>
+
+    <!-- FLOATING CAMERA PRESETS -->
+    <div class="cam-glass-group">
+      <button class="cam-glass-btn active" id="cam-front" onclick="setCameraPreset('front')">FRONT</button>
+      <button class="cam-glass-btn" id="cam-hands" onclick="setCameraPreset('hands')">HANDS</button>
+      <button class="cam-glass-btn" id="cam-side" onclick="setCameraPreset('side')">HERO 45°</button>
+    </div>
+  </nav>
+
+  <!-- 3D FULL VIEWPORT STAGE -->
+  <main id="canvas-container"></main>
+
+  <!-- HIDDEN COMPATIBILITY CONTAINERS -->
+  <div id="sign-list-container" style="display:none;"></div>
+  <div id="hud-sign-desc" style="display:none;"></div>
+
+  <!-- FLOATING ALGORITHMIC RECIPE INSPECTOR (BLOOMS ABOVE ISLAND) -->
+  <div id="recipe-popover" class="glass-popover" style="display:none;">
+    <div class="popover-header">
+      <div class="popover-title-row">
+        <span class="popover-tag">PHONOLOGY &amp; IK</span>
+        <span class="popover-title">ALGORITHMIC RECIPE FORMULATION</span>
       </div>
+      <button class="popover-close" onclick="toggleRecipePopover()">✕</button>
+    </div>
+
+    <div class="recipe-grid">
+      <div class="recipe-cell">
+        <div class="recipe-label">Target Handshape</div>
+        <div class="recipe-val" id="pop-recipe-hs">ILY (Index-Thumb-Pinky)</div>
+      </div>
+      <div class="recipe-cell">
+        <div class="recipe-label">Spatial Locus Vector</div>
+        <div class="recipe-accent-val" id="pop-recipe-loc">Sub-Clavicle [0.18, 1.22, -0.15]</div>
+      </div>
+      <div class="recipe-cell">
+        <div class="recipe-label">Wrist Orientation</div>
+        <div class="recipe-val" id="pop-recipe-ori">PALM_PRONE / MEDIAL</div>
+      </div>
+      <div class="recipe-cell">
+        <div class="recipe-label">Bilateral Topology</div>
+        <div class="recipe-accent-val" id="pop-recipe-bil">ASYMMETRIC_BASE</div>
+      </div>
+      <div class="recipe-cell">
+        <div class="recipe-label">Motion Primitive</div>
+        <div class="recipe-val" id="pop-recipe-mov">Linear Gliding Arc</div>
+      </div>
+      <div class="recipe-cell">
+        <div class="recipe-label">Kinematic Precision</div>
+        <div class="recipe-accent-val">125 DOF @ 60 FPS (0.0mm Drift)</div>
+      </div>
+    </div>
+
+    <div class="recipe-math-box">
+      <div style="font-family:var(--font-mono); font-size:9.5px; font-weight:800; color:#00e599; margin-bottom:4px;">
+        QUARTIC JOINT STRAIN OBJECTIVE:
+      </div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:#38bdf8; margin-bottom:5px; letter-spacing:0.02em;">
+        <i>P</i><sub>strain</sub>(<b>θ</b>) = ∑ <i>k</i><sub><i>i</i></sub>(θ<sub><i>i</i></sub> − θ<sub>0,<i>i</i></sub>)<sup>4</sup> + λ ‖<b>x</b><sub>palm</sub> − <b>x</b><sub>locus</sub>‖<sup>2</sup>
+      </div>
+      <div style="font-size:10px; color:#94a3b8; line-height:1.4;">
+        Kinematic posture is synthesized with anatomical boundary checks preventing joint hyperextension and maintaining strict physical validity.
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING AIRPORT SITUATIONS & LIVE RADAR POPOVER -->
+  <div id="situations-popover" class="glass-popover" style="display:none;">
+    <div class="popover-header">
+      <div class="popover-title-row">
+        <span class="popover-tag">TELEMETRY</span>
+        <span class="popover-title">AIRPORT SITUATIONAL DISPATCH</span>
+      </div>
+      <button class="popover-close" onclick="toggleSituationsPopover()">✕</button>
+    </div>
+
+    <!-- PRESET PHRASES -->
+    <div class="situation-presets-list">
+      <div class="situation-card" onclick="executeAslSearch('flight arrive now'); toggleSituationsPopover();">
+        <div class="situation-card-left">
+          <span class="situation-icon">🛫</span>
+          <div>
+            <div class="situation-title">Flight Arrival &amp; Gate</div>
+            <div class="situation-phrase">"Flight arrive now"</div>
+          </div>
+        </div>
+        <span class="situation-badge">3 SIGNS</span>
+      </div>
+
+      <div class="situation-card" onclick="executeAslSearch('please check ticket'); toggleSituationsPopover();">
+        <div class="situation-card-left">
+          <span class="situation-icon">🛂</span>
+          <div>
+            <div class="situation-title">Security &amp; Boarding Verification</div>
+            <div class="situation-phrase">"Please check ticket"</div>
+          </div>
+        </div>
+        <span class="situation-badge">3 SIGNS</span>
+      </div>
+
+      <div class="situation-card" onclick="executeAslSearch('where is bathroom please'); toggleSituationsPopover();">
+        <div class="situation-card-left">
+          <span class="situation-icon">🚻</span>
+          <div>
+            <div class="situation-title">Passenger Wayfinding</div>
+            <div class="situation-phrase">"Where is bathroom please"</div>
+          </div>
+        </div>
+        <span class="situation-badge">3 SIGNS</span>
+      </div>
+
+      <div class="situation-card" onclick="executeAslSearch('train and bus go now'); toggleSituationsPopover();">
+        <div class="situation-card-left">
+          <span class="situation-icon">🧳</span>
+          <div>
+            <div class="situation-title">Inter-Terminal Transit</div>
+            <div class="situation-phrase">"Train and bus go now"</div>
+          </div>
+        </div>
+        <span class="situation-badge">3 SIGNS</span>
+      </div>
+
+      <div class="situation-card" onclick="executeAslSearch('can you help me'); toggleSituationsPopover();">
+        <div class="situation-card-left">
+          <span class="situation-icon">🆘</span>
+          <div>
+            <div class="situation-title">Staff Assistance Request</div>
+            <div class="situation-phrase">"Can you help me"</div>
+          </div>
+        </div>
+        <span class="situation-badge">3 SIGNS</span>
+      </div>
+
+      <div class="situation-card" onclick="executeAslSearch('sammy'); toggleSituationsPopover();">
+        <div class="situation-card-left">
+          <span class="situation-icon">🔤</span>
+          <div>
+            <div class="situation-title">Proper Noun Fingerspelling</div>
+            <div class="situation-phrase">Fingerspelling: "SAMMY"</div>
+          </div>
+        </div>
+        <span class="situation-badge">5 LETTERS</span>
+      </div>
+    </div>
+
+    <!-- AUTONOMOUS STREAM TOGGLE -->
+    <div class="radar-toggle-box">
+      <div class="radar-toggle-left">
+        <div class="radar-toggle-title">Autonomous Live Telemetry Stream</div>
+        <div class="radar-toggle-desc">Pulls real-time flight dispatch events &amp; signs them automatically</div>
+      </div>
+      <button id="btn-live-radar-toggle" class="radar-switch-btn" onclick="toggleAirportLiveFeed()">
+        <span class="chip-icon">⚪</span>
+        <span>RADAR: OFF</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- BOTTOM APPLE LIQUID GLASS DYNAMIC ISLAND / PILL -->
+  <div id="bottom-island" class="apple-bottom-island">
+    <!-- Playback Controls -->
+    <div class="island-transport">
+      <button class="island-btn round-btn" onclick="prevSign()" title="Previous Sign (⏮)">⏮</button>
+      <button class="island-btn play-hero-btn" id="btn-play-pause" onclick="togglePlayPause()" title="Play / Pause">⏸</button>
+      <button class="island-btn round-btn" onclick="nextSign()" title="Next Sign (⏭)">⏭</button>
+    </div>
+
+    <div class="island-divider"></div>
+
+    <!-- Active Sign Identity & Micro Scrubber -->
+    <div class="island-sign-info">
+      <div class="island-sign-meta">
+        <span id="hud-sign-name">HELP</span>
+        <span id="hud-sign-cat">NEEDS</span>
+        <span id="time-display">0.00s / 0.00s</span>
+      </div>
+      <div class="island-scrubber" id="scrubber-track" onmousedown="startScrub(event)">
+        <div id="scrubber-fill"></div>
+        <div id="scrubber-thumb"></div>
+      </div>
+    </div>
+
+    <div class="island-divider"></div>
+
+    <!-- Algorithmic Recipe Inspector Button -->
+    <button class="island-chip" id="btn-recipe-chip" onclick="toggleRecipePopover()" title="Inspect Algorithmic Kinematic Formulation">
+      <span>ⓘ</span>
+      <span>RECIPE</span>
+    </button>
+
+    <!-- Situations & Live Radar Feed Button -->
+    <button class="island-chip" id="btn-situations-chip" onclick="toggleSituationsPopover()" title="Airport Situations & Live Telemetry Stream">
+      <span>✈</span>
+      <span>AIRPORT LIVE</span>
+    </button>
+
+    <div class="island-divider"></div>
+
+    <!-- Integrated Search Bar -->
+    <div class="island-search">
+      <span class="island-search-icon">🔍</span>
+      <input type="text" id="asl-search-input" 
+             placeholder="Sign any word or sentence..." 
+             autocomplete="off"
+             oninput="onSearchInputChange(this.value)"
+             onkeydown="if(event.key === 'Enter') executeAslSearch()" />
+      <button class="island-search-go" onclick="executeAslSearch()">SIGN</button>
       <!-- Autocomplete Dropdown -->
       <div id="search-dropdown" class="search-dropdown-menu" style="display:none;"></div>
     </div>
-
-    <div style="display:flex; align-items:center; gap:10px;">
-      <button class="audit-header-btn" onclick="LexiconWorkbench.runAutoAudit()" title="Run Fast Automated Kinematic Clearance & Phonology Audit">
-        ⚡ AUDIT LEXICON (34)
-      </button>
-      <div class="engine-badge-container">
-        <span class="preview-badge"><span class="pulse-dot"></span> PREVIEW ENGINE</span>
-        <span class="preview-label">60 FPS GROUND TRUTH KINEMATICS</span>
-      </div>
-    </div>
-  </header>
-
-  <!-- QUICK PROMPTS CHIP BAR -->
-  <div class="quick-prompts-bar">
-    <span class="prompt-hint">⚡ TRY:</span>
-    <button class="prompt-chip" onclick="executeAslSearch('help')">Help</button>
-    <button class="prompt-chip" onclick="executeAslSearch('where is bathroom')">Where is bathroom</button>
-    <button class="prompt-chip" onclick="executeAslSearch('can you help me')">Can you help me</button>
-    <button class="prompt-chip" onclick="executeAslSearch('ticket and money')">Ticket &amp; Money</button>
-    <button class="prompt-chip" onclick="executeAslSearch('flight arrive now')">Flight arrive now</button>
-    <button class="prompt-chip special" onclick="executeAslSearch('sammy')">🔤 Spelled: Sammy</button>
-    <button class="prompt-chip special" onclick="executeAslSearch('paris')">🔤 Spelled: Paris</button>
   </div>
-
-  <!-- LEFT SIDEBAR: SIGNS DECK -->
-  <aside id="sidebar">
-    <div class="sidebar-header">
-      <div class="sidebar-title">Empirical Lexicon (34 Signs)</div>
-      <div class="cat-tabs">
-        <button class="cat-btn active" onclick="filterCategory('all', this)">ALL (34)</button>
-        <button class="cat-btn" onclick="filterCategory('travel', this)">TRAVEL (10)</button>
-        <button class="cat-btn" onclick="filterCategory('needs', this)">NEEDS (7)</button>
-        <button class="cat-btn" onclick="filterCategory('common', this)">COMMON (17)</button>
-      </div>
-    </div>
-    <div class="sign-list" id="sign-list-container"></div>
-  </aside>
-
-  <!-- CENTER VIEWPORT -->
-  <main id="canvas-container"></main>
-
-  <!-- FLOATING SIGN HUD OVERLAY -->
-  <div id="sign-hud-card" class="sign-hud-card">
-    <div class="hud-header">
-      <div class="hud-title-col">
-        <span id="hud-sign-name" class="hud-sign-name">HELP</span>
-        <span id="hud-sign-cat" class="hud-category-pill">NEEDS</span>
-      </div>
-      <div class="hud-badge-gt">
-        <span class="pulse-dot"></span> 60 FPS
-      </div>
-    </div>
-    <div id="hud-sign-desc" class="hud-desc-text">
-      Assistance request. Left flat base palm lifts right A-fist vertically in synchronized motion.
-    </div>
-    <div class="hud-telemetry-row">
-      <div class="hud-metric">
-        <span class="hud-metric-label">CHANNELS</span>
-        <span class="hud-metric-val">125 DOF</span>
-      </div>
-      <div class="hud-metric">
-        <span class="hud-metric-label">PRECISION</span>
-        <span class="hud-metric-val" style="color:#00e599;">99.9%</span>
-      </div>
-      <div class="hud-metric">
-        <span class="hud-metric-label">ANCHOR</span>
-        <span class="hud-metric-val" style="color:#00f2fe;">0.0 mm</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- CAMERA PRESET PILLS -->
-  <div class="cam-pills">
-    <button class="cam-btn active" id="cam-front" onclick="setCameraPreset('front')">1. FRONT VIEW</button>
-    <button class="cam-btn" id="cam-hands" onclick="setCameraPreset('hands')">2. HANDS CLOSE-UP</button>
-    <button class="cam-btn" id="cam-side" onclick="setCameraPreset('side')">3. 45° HERO ANGLE</button>
-  </div>
-
-  <!-- BOTTOM TIMELINE SCRUBBER -->
-  <footer id="timeline-bar">
-    <button class="ctrl-btn" id="btn-play-pause" onclick="togglePlayPause()">⏸</button>
-    <button class="ctrl-btn" onclick="restartSign()">⏮</button>
-    <div class="time-readout" id="time-display">0.00s / 0.00s</div>
-    
-    <div class="scrubber-track" id="scrubber-track" onmousedown="startScrub(event)">
-      <div class="scrubber-fill" id="scrubber-fill"></div>
-      <div class="scrubber-thumb" id="scrubber-thumb"></div>
-    </div>
-
-    <div class="speed-group">
-      <button class="speed-btn" onclick="setSpeed(0.25, this)">0.25x</button>
-      <button class="speed-btn" onclick="setSpeed(0.5, this)">0.5x</button>
-      <button class="speed-btn active" onclick="setSpeed(1.0, this)">1.0x</button>
-    </div>
-  </footer>
 
   <!-- BATCH AUDITOR MODAL OVERLAY (LEXICON CHECKER) -->
   <div id="audit-modal" onclick="if(event.target===this) LexiconWorkbench.closeAuditModal()">
@@ -2261,7 +2944,7 @@
       const nameEl = document.getElementById('hud-sign-name');
       if (nameEl) nameEl.innerText = queue[index].toUpperCase();
       const catEl = document.getElementById('hud-sign-cat');
-      if (catEl) catEl.innerText = `SEQUENCE (${index + 1}/${queue.length})`;
+      if (catEl) catEl.innerText = `SEQ ${index + 1}/${queue.length}`;
       const descEl = document.getElementById('hud-sign-desc');
       if (descEl) {
         const pillsHtml = queue.map((sId, i) => {
@@ -2907,6 +3590,157 @@
       renderer.setSize(container.clientWidth, container.clientHeight);
     }
     window.addEventListener('resize', onWindowResize);
-  </script>
+  
+    // =========================================================================
+    // APPLE LIQUID GLASS UI CONTROLLERS & AUTONOMOUS TELEMETRY ENGINE
+    // =========================================================================
+    var isAirportLiveFeedActive = false;
+    var airportDispatchTimer = null;
+    var currentDispatchIndex = 0;
+
+    function prevSign() {
+      if (signQueue.length > 1) {
+        signQueueIndex = (signQueueIndex - 1 + signQueue.length) % signQueue.length;
+        playQueueStep();
+        return;
+      }
+      const curId = currentSign ? currentSign.id : 'help';
+      const idx = GROUND_TRUTH_SIGNS.findIndex(s => s.id === curId);
+      const prevIdx = (idx - 1 + GROUND_TRUTH_SIGNS.length) % GROUND_TRUTH_SIGNS.length;
+      selectSign(GROUND_TRUTH_SIGNS[prevIdx]);
+    }
+
+    function nextSign() {
+      if (signQueue.length > 1) {
+        signQueueIndex = (signQueueIndex + 1) % signQueue.length;
+        playQueueStep();
+        return;
+      }
+      const curId = currentSign ? currentSign.id : 'help';
+      const idx = GROUND_TRUTH_SIGNS.findIndex(s => s.id === curId);
+      const nextIdx = (idx + 1) % GROUND_TRUTH_SIGNS.length;
+      selectSign(GROUND_TRUTH_SIGNS[nextIdx]);
+    }
+
+    function toggleRecipePopover() {
+      const pop = document.getElementById('recipe-popover');
+      const chip = document.getElementById('btn-recipe-chip');
+      const sitPop = document.getElementById('situations-popover');
+      if (sitPop) sitPop.style.display = 'none';
+
+      if (pop.style.display === 'none' || !pop.style.display) {
+        updateRecipePopoverContent();
+        pop.style.display = 'block';
+        if (chip) chip.classList.add('active');
+        if (window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise();
+      } else {
+        pop.style.display = 'none';
+        if (chip) chip.classList.remove('active');
+      }
+    }
+
+    function updateRecipePopoverContent() {
+      if (!currentSign) return;
+      const r = (window.LexiconWorkbench && LexiconWorkbench.activeWorkingRecipe) ? LexiconWorkbench.activeWorkingRecipe : ((typeof SIGN_RECIPES !== 'undefined' && SIGN_RECIPES[currentSign.id]) ? SIGN_RECIPES[currentSign.id] : {});
+      const hsEl = document.getElementById('pop-recipe-hs');
+      if (hsEl) hsEl.innerText = (currentSign.hs || r.handshape || 'Open-B').toUpperCase();
+
+      const locEl = document.getElementById('pop-recipe-loc');
+      if (locEl) locEl.innerText = (r.location || currentSign.loc || 'Neutral Mid').toUpperCase();
+
+      const oriEl = document.getElementById('pop-recipe-ori');
+      if (oriEl) oriEl.innerText = (r.orientation || 'PALM_MEDIAL').toUpperCase();
+
+      const bilEl = document.getElementById('pop-recipe-bil');
+      if (bilEl) bilEl.innerText = (r.bilateral || currentSign.bil || 'ASYMMETRIC_BASE').toUpperCase();
+
+      const movEl = document.getElementById('pop-recipe-mov');
+      if (movEl) movEl.innerText = (currentSign.mov || r.movement || 'Linear Glide');
+    }
+
+    function toggleSituationsPopover() {
+      const pop = document.getElementById('situations-popover');
+      const chip = document.getElementById('btn-situations-chip');
+      const recPop = document.getElementById('recipe-popover');
+      if (recPop) recPop.style.display = 'none';
+
+      if (pop.style.display === 'none' || !pop.style.display) {
+        pop.style.display = 'block';
+        if (chip) chip.classList.add('active');
+      } else {
+        pop.style.display = 'none';
+        if (chip) chip.classList.remove('active');
+      }
+    }
+
+    // AUTONOMOUS AIRPORT LIVE DISPATCH FEED
+    const AIRPORT_LIVE_DISPATCH_QUEUE = [
+      { flight: 'JFK // AY1331', msg: 'Flight Arrived Gate B22', query: 'flight arrive now' },
+      { flight: 'LHR // BA0178', msg: 'Security Checkpoint Call', query: 'please check ticket' },
+      { flight: 'SFO // UA0852', msg: 'Passenger Wayfinding Desk', query: 'where is bathroom please' },
+      { flight: 'CDG // AF0012', msg: 'Inter-Terminal Shuttle Transfer', query: 'train and bus go now' },
+      { flight: 'DXB // EK0201', msg: 'Mobility & Boarding Assistance', query: 'can you help me' },
+      { flight: 'HND // JL0004', msg: 'Baggage & Payment Service', query: 'ticket and money please' },
+      { flight: 'HEL // AY0001', msg: 'Gate Exit Clearance', query: 'door arrive now' }
+    ];
+
+    function toggleAirportLiveFeed() {
+      isAirportLiveFeedActive = !isAirportLiveFeedActive;
+      const tickerEl = document.getElementById('live-airport-ticker');
+      const feedBtn = document.getElementById('btn-live-radar-toggle');
+
+      if (isAirportLiveFeedActive) {
+        if (tickerEl) tickerEl.style.display = 'flex';
+        if (feedBtn) {
+          feedBtn.classList.add('active');
+          feedBtn.innerHTML = '<span class="chip-icon">🟢</span><span>RADAR: ACTIVE</span>';
+        }
+        showToast('📡 Autonomous Airport Radar Activated');
+        triggerNextAirportDispatch();
+        airportDispatchTimer = setInterval(triggerNextAirportDispatch, 14000);
+      } else {
+        if (tickerEl) tickerEl.style.display = 'none';
+        if (feedBtn) {
+          feedBtn.classList.remove('active');
+          feedBtn.innerHTML = '<span class="chip-icon">⚪</span><span>RADAR: OFF</span>';
+        }
+        if (airportDispatchTimer) clearInterval(airportDispatchTimer);
+        showToast('Airport Radar Feed Paused');
+      }
+    }
+
+    function triggerNextAirportDispatch() {
+      if (!isAirportLiveFeedActive) return;
+      const item = AIRPORT_LIVE_DISPATCH_QUEUE[currentDispatchIndex];
+      currentDispatchIndex = (currentDispatchIndex + 1) % AIRPORT_LIVE_DISPATCH_QUEUE.length;
+
+      const flightEl = document.getElementById('ticker-flight-code');
+      const msgEl = document.getElementById('ticker-flight-msg');
+      if (flightEl) flightEl.innerText = item.flight;
+      if (msgEl) msgEl.innerText = item.msg;
+
+      executeAslSearch(item.query);
+    }
+
+    // Close popovers when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#recipe-popover') && !e.target.closest('#btn-recipe-chip')) {
+        const pop = document.getElementById('recipe-popover');
+        const chip = document.getElementById('btn-recipe-chip');
+        if (pop && pop.style.display === 'block') {
+          pop.style.display = 'none';
+          if (chip) chip.classList.remove('active');
+        }
+      }
+      if (!e.target.closest('#situations-popover') && !e.target.closest('#btn-situations-chip')) {
+        const pop = document.getElementById('situations-popover');
+        const chip = document.getElementById('btn-situations-chip');
+        if (pop && pop.style.display === 'block') {
+          pop.style.display = 'none';
+          if (chip) chip.classList.remove('active');
+        }
+      }
+    });
+</script>
 </body>
 </html>
