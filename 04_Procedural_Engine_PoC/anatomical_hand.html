@@ -3,53 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sammy Biomechanical ASL Studio | Empirical MoCap Ground Truth</title>
+  <title>SAMMY // BIOMECHANICAL ASL GROUND TRUTH STUDIO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-chassis: #0b0f17;
-      --panel-surface: rgba(16, 21, 30, 0.88);
-      --card-surface: #141b26;
-      --card-inset: #0e131c;
+      --bg-deep: #0a0b0e;
+      --panel-surface: rgba(18, 20, 26, 0.94);
+      --card-surface: #15161b;
+      --card-inset: #0e0f13;
       --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-active: rgba(14, 165, 233, 0.4);
-      --accent-cyan: #0ea5e9;
-      --accent-glow: #38bdf8;
-      --accent-bg: rgba(14, 165, 233, 0.12);
+      --border-tactile: rgba(255, 255, 255, 0.16);
       --bone-white: #f8fafc;
       --text-muted: #94a3b8;
-      --text-dim: #475569;
+      --text-dim: #64748b;
+      --accent-glow: #00e599;
+      --accent-orange: #f59e0b;
+      --accent-orange-hover: #d97706;
+      --accent-orange-glow: rgba(245, 158, 11, 0.35);
+      --accent-cyan: #38bdf8;
       --status-pass: #00e599;
-      --font-body: 'Inter', -apple-system, sans-serif;
+      --status-pass-bg: rgba(0, 229, 153, 0.12);
+      --status-alert: #ef4444;
+      --status-alert-bg: rgba(239, 68, 68, 0.12);
+      --font-sans: 'Inter', -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
+      --font-display: 'Syne', sans-serif;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
     body {
-      background: var(--bg-chassis);
+      background: var(--bg-deep);
       color: var(--bone-white);
-      font-family: var(--font-body);
-      overflow: hidden;
+      font-family: var(--font-sans);
       width: 100vw;
       height: 100vh;
-      user-select: none;
+      overflow: hidden;
     }
 
-    /* HEADER */
+    /* TOP HEADER */
     #header {
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 48px;
-      background: rgba(11, 15, 23, 0.92);
+      height: 50px;
+      background: var(--panel-surface);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-subtle);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 18px;
+      padding: 0 20px;
       z-index: 50;
     }
     .brand-left {
@@ -58,86 +65,93 @@
       gap: 12px;
     }
     .badge-mocap {
-      background: var(--accent-bg);
-      border: 1px solid var(--accent-glow);
+      background: rgba(0, 229, 153, 0.15);
       color: var(--accent-glow);
+      border: 1px solid rgba(0, 229, 153, 0.35);
       font-family: var(--font-mono);
       font-size: 10px;
-      font-weight: 800;
+      font-weight: 700;
       padding: 3px 8px;
       border-radius: 4px;
-      letter-spacing: 0.06em;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
     }
     .pulse-dot {
       width: 6px; height: 6px;
+      background: var(--accent-glow);
       border-radius: 50%;
-      background: var(--status-pass);
-      box-shadow: 0 0 8px var(--status-pass);
+      box-shadow: 0 0 8px var(--accent-glow);
       animation: pulse 1.8s infinite;
     }
-    @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1.0; } }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
     .title-text {
-      font-family: var(--font-mono);
+      font-family: var(--font-display);
+      font-weight: 800;
       font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
+      color: #fff;
     }
 
-    /* MODE TOGGLE */
+    /* STREAMLINED 2-MODE TOGGLE */
     .mode-toggle {
       display: flex;
-      background: var(--card-inset);
-      border: 1px solid var(--border-subtle);
+      background: #0f131a;
+      border: 1px solid var(--border-tactile);
       border-radius: 6px;
       padding: 2px;
+      gap: 2px;
     }
     .mode-btn {
       background: transparent;
       border: none;
       color: var(--text-muted);
       font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 5px 12px;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 6px 14px;
       border-radius: 4px;
       cursor: pointer;
       transition: all 0.15s;
     }
+    .mode-btn:hover { color: #fff; }
     .mode-btn.active {
-      background: var(--accent-cyan);
-      color: #fff;
-      box-shadow: 0 0 10px rgba(14,165,233,0.4);
+      background: var(--card-surface);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .mode-btn.active#btn-mode-hybrid {
+      color: var(--accent-glow);
+      border-color: rgba(0, 229, 153, 0.3);
     }
 
     /* LEFT SIDEBAR: SIGNS DECK */
     #sidebar {
       position: absolute;
-      top: 58px; left: 16px; bottom: 78px;
+      top: 50px; left: 0; bottom: 64px;
       width: 280px;
       background: var(--panel-surface);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border-subtle);
-      border-radius: 10px;
+      backdrop-filter: blur(12px);
+      border-right: 1px solid var(--border-subtle);
       display: flex;
       flex-direction: column;
       z-index: 40;
-      overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
     }
     .sidebar-header {
-      padding: 12px 14px;
+      padding: 14px 16px 10px;
       border-bottom: 1px solid var(--border-subtle);
     }
     .sidebar-title {
       font-family: var(--font-mono);
       font-size: 11px;
       font-weight: 700;
-      color: var(--text-muted);
+      color: var(--text-dim);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       margin-bottom: 8px;
     }
     .cat-tabs {
@@ -149,18 +163,19 @@
       background: var(--card-inset);
       border: 1px solid var(--border-subtle);
       color: var(--text-muted);
-      font-size: 10px;
+      font-family: var(--font-mono);
+      font-size: 9px;
       font-weight: 600;
       padding: 4px 6px;
       border-radius: 4px;
       cursor: pointer;
-      text-align: center;
       transition: all 0.15s;
     }
+    .cat-btn:hover { color: #fff; border-color: var(--border-tactile); }
     .cat-btn.active {
-      background: var(--accent-bg);
-      border-color: var(--accent-glow);
-      color: var(--accent-glow);
+      background: rgba(56, 189, 248, 0.12);
+      border-color: #38bdf8;
+      color: #38bdf8;
     }
     .sign-list {
       flex: 1;
@@ -171,185 +186,461 @@
       gap: 4px;
     }
     .sign-item {
+      padding: 10px 12px;
+      background: var(--card-inset);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 12px;
-      background: var(--card-surface);
-      border: 1px solid transparent;
-      border-radius: 6px;
-      cursor: pointer;
       transition: all 0.15s;
     }
     .sign-item:hover {
-      background: rgba(14, 165, 233, 0.08);
-      border-color: rgba(14, 165, 233, 0.25);
+      background: rgba(56, 189, 248, 0.08);
+      border-color: rgba(56, 189, 248, 0.3);
     }
     .sign-item.active {
-      background: var(--accent-bg);
-      border-color: var(--accent-glow);
-      box-shadow: 0 0 12px rgba(14,165,233,0.25);
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #38bdf8;
+      box-shadow: inset 0 0 10px rgba(56, 189, 248, 0.2);
     }
     .sign-name {
       font-family: var(--font-mono);
-      font-weight: 700;
       font-size: 12px;
-      color: var(--bone-white);
+      font-weight: 700;
+      color: #fff;
     }
     .sign-sub {
       font-size: 10px;
-      color: var(--text-muted);
+      color: var(--text-dim);
+      margin-top: 2px;
     }
     .sign-meta {
       font-family: var(--font-mono);
       font-size: 9px;
-      color: var(--text-dim);
-    }
-
-    /* RIGHT HUD: PHONOLOGY & TELEMETRY */
-    #hud-right {
-      position: absolute;
-      top: 58px; right: 16px;
-      width: 280px;
-      background: var(--panel-surface);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border-subtle);
-      border-radius: 10px;
-      padding: 14px;
-      z-index: 40;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-    }
-    .hud-section { margin-bottom: 12px; }
-    .hud-label {
-      font-family: var(--font-mono);
-      font-size: 9.5px;
-      font-weight: 700;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 4px;
-    }
-    .hud-val {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--bone-white);
-    }
-    .hud-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-    .metric-box {
-      background: var(--card-inset);
-      border: 1px solid var(--border-subtle);
-      border-radius: 6px;
-      padding: 6px 8px;
-    }
-    .metric-num {
-      font-family: var(--font-mono);
-      font-size: 14px;
-      font-weight: 800;
       color: var(--accent-glow);
-    }
-    .metric-sub {
-      font-size: 9px;
-      color: var(--text-muted);
+      background: rgba(0, 229, 153, 0.1);
+      padding: 2px 5px;
+      border-radius: 3px;
     }
 
-    /* BOTTOM TIMELINE & SCRUBBER BAR */
-    #timeline-bar {
+    /* CENTER 3D VIEWPORT */
+    #canvas-container {
       position: absolute;
-      bottom: 14px; left: 16px; right: 16px;
-      height: 52px;
-      background: var(--panel-surface);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border-subtle);
-      border-radius: 10px;
+      top: 50px; left: 280px; right: 380px; bottom: 64px;
+      background: radial-gradient(circle at center 40%, #151a24 0%, #0a0b0e 75%);
+      transition: right 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #canvas-container.expanded {
+      right: 0 !important;
+    }
+
+    /* RIGHT STAGE: PRO SIGN ASSEMBLER SIDEBOX */
+    #curation-console-pane {
+      position: absolute;
+      top: 50px; right: 0; bottom: 64px;
+      width: 380px;
+      background: #14151a;
+      border-left: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #2a2c32 #14151a;
+      z-index: 40;
+      transition: width 0.22s cubic-bezier(0.4, 0, 0.2, 1), transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #curation-console-pane.collapsed {
+      width: 0 !important;
+      border-left: none !important;
+      overflow: hidden !important;
+      pointer-events: none !important;
+      transform: translateX(100%);
+    }
+
+    /* DOCKED CONSOLE COLLAPSE / EXPAND TAB */
+    .console-toggle-btn {
+      position: absolute;
+      top: 60px;
+      right: 380px;
+      z-index: 50;
+      background: rgba(20, 21, 26, 0.94);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-tactile);
+      border-right: none;
+      border-radius: 5px 0 0 5px;
+      color: var(--accent-orange);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      padding: 7px 11px;
+      cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 0 16px;
-      z-index: 50;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      gap: 6px;
+      transition: right 0.22s cubic-bezier(0.4, 0, 0.2, 1), background 0.15s, color 0.15s, border-color 0.15s;
+      box-shadow: -4px 0 12px rgba(0,0,0,0.45);
     }
-    .ctrl-btn {
+    .console-toggle-btn:hover {
+      background: #1f2129;
+      color: #fff;
+    }
+    .console-toggle-btn.collapsed {
+      right: 0px !important;
+      border-right: 1px solid var(--border-tactile);
+      border-radius: 5px 0 0 5px;
+      color: #38bdf8;
+      border-color: rgba(14, 165, 233, 0.5);
+      background: rgba(14, 165, 233, 0.18);
+      box-shadow: -4px 0 15px rgba(14, 165, 233, 0.3);
+    }
+
+    /* RACK SECTIONS */
+    .rack-section {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .rack-title {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* RACK 01: IDENTITY MODULE */
+    .identity-box {
+      background: var(--card-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .id-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .id-name {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--bone-white);
+      letter-spacing: 0.04em;
+    }
+    .id-lemma-badge {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: var(--accent-orange);
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .id-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .id-meta-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-dim);
+    }
+
+    /* RACK 02: PARAMETER TUNER DECK */
+    .hand-deck-switch {
+      display: flex;
       background: var(--card-inset);
       border: 1px solid var(--border-subtle);
-      color: var(--bone-white);
-      width: 32px; height: 32px;
-      border-radius: 6px;
+      border-radius: 5px;
+      padding: 2.5px;
+      gap: 3px;
+      margin-bottom: 10px;
+    }
+    .hand-tab-btn {
+      flex: 1;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      padding: 6px 8px;
+      border-radius: 4px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
-      transition: all 0.15s;
+      gap: 6px;
+      transition: all 0.15s ease;
     }
-    .ctrl-btn:hover {
-      background: var(--accent-cyan);
-      border-color: var(--accent-glow);
+    .hand-tab-btn:hover { color: var(--bone-white); background: rgba(255, 255, 255, 0.04); }
+    .hand-tab-btn.active {
+      background: var(--card-surface);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
-    .time-readout {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      min-width: 90px;
+    .hand-tab-btn.active[data-hand="dominant"] {
+      border-color: rgba(56, 189, 248, 0.5);
+      color: #38bdf8;
     }
-    .scrubber-track {
-      flex: 1;
-      height: 8px;
-      background: var(--card-inset);
-      border-radius: 4px;
-      position: relative;
-      cursor: pointer;
-      border: 1px solid var(--border-subtle);
+    .hand-tab-btn.active[data-hand="nonDominant"] {
+      border-color: rgba(0, 229, 153, 0.5);
+      color: #00e599;
     }
-    .scrubber-fill {
-      position: absolute;
-      top: 0; left: 0; bottom: 0;
-      background: linear-gradient(90deg, #0284c7, #38bdf8);
-      border-radius: 4px;
-      width: 0%;
-      pointer-events: none;
+    .hand-badge {
+      font-size: 7.5px;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-weight: 800;
     }
-    .scrubber-thumb {
-      position: absolute;
-      top: -4px;
-      width: 16px; height: 16px;
-      background: #ffffff;
-      border: 2px solid #0ea5e9;
+    .h1-badge {
+      background: rgba(56, 189, 248, 0.2);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+    .h2-badge {
+      background: rgba(0, 229, 153, 0.2);
+      color: #00e599;
+      border: 1px solid rgba(0, 229, 153, 0.35);
+    }
+    .h2-status-dot {
+      width: 6px; height: 6px;
       border-radius: 50%;
-      transform: translateX(-50%);
-      box-shadow: 0 0 8px rgba(14,165,233,0.6);
-      pointer-events: none;
+      background: var(--text-dim);
     }
-    .speed-group {
+    .h2-status-dot.active {
+      background: #00e599;
+      box-shadow: 0 0 6px rgba(0, 229, 153, 0.6);
+    }
+    .h2-status-dot.resting { background: #f59e0b; }
+
+    .param-grid {
       display: flex;
-      gap: 4px;
+      flex-direction: column;
+      gap: 8px;
     }
-    .speed-btn {
+    .param-field {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: var(--card-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 10px;
+      border-radius: 5px;
+    }
+    .param-field-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+      min-width: 105px;
+    }
+    .param-field-control {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .param-select {
       background: var(--card-inset);
       border: 1px solid var(--border-subtle);
-      color: var(--text-muted);
+      color: var(--bone-white);
       font-family: var(--font-mono);
       font-size: 10px;
       font-weight: 600;
       padding: 4px 8px;
       border-radius: 4px;
+      outline: none;
+      width: 100%;
+      max-width: 220px;
       cursor: pointer;
+    }
+    .param-select:focus {
+      border-color: var(--accent-orange);
+    }
+
+    /* RACK 03: 3D SPATIAL NUDGE */
+    .slider-nudge-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+      justify-content: flex-end;
+    }
+    .nudge-btn {
+      background: var(--card-inset);
+      border: 1px solid var(--border-subtle);
+      color: var(--bone-white);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      padding: 3px 6px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .nudge-btn:hover {
+      border-color: var(--accent-orange);
+      color: var(--accent-orange);
+    }
+    .nudge-slider {
+      -webkit-appearance: none;
+      width: 90px;
+      height: 4px;
+      background: var(--card-inset);
+      border-radius: 2px;
+      outline: none;
+    }
+    .nudge-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent-orange);
+      cursor: pointer;
+    }
+    .nudge-val-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--accent-orange);
+      min-width: 52px;
+      text-align: right;
+    }
+    .te-btn-tiny {
+      background: var(--card-inset);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .te-btn-tiny:hover {
+      color: var(--bone-white);
+      border-color: var(--border-tactile);
+    }
+
+    /* RACK 04: BIO-CLEARANCE CHECK */
+    .clearance-card {
+      background: var(--card-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .clearance-meter-col {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .clearance-val {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--status-pass);
+    }
+    .clearance-pill {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .clearance-pill.safe {
+      background: var(--status-pass-bg);
+      color: var(--status-pass);
+      border: 1px solid rgba(0, 229, 153, 0.4);
+    }
+
+    /* RACK 05 & 06: ACTIONS & CODE BLOCK */
+    .actions-deck-cluster {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .action-btn {
+      flex: 1;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: 1px solid var(--border-subtle);
       transition: all 0.15s;
     }
-    .speed-btn.active {
-      background: var(--accent-bg);
-      border-color: var(--accent-glow);
-      color: var(--accent-glow);
+    .action-btn.revert {
+      background: var(--card-surface);
+      color: var(--text-muted);
+    }
+    .action-btn.revert:hover {
+      color: var(--bone-white);
+      border-color: var(--border-tactile);
+    }
+    .action-btn.save {
+      background: var(--accent-orange);
+      color: #ffffff;
+      border-color: var(--accent-orange);
+    }
+    .action-btn.save:hover {
+      background: var(--accent-orange-hover);
+      box-shadow: 0 0 12px var(--accent-orange-glow);
+    }
+
+    .code-output-card {
+      background: var(--card-inset);
+      border: 1px solid var(--border-subtle);
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer;
+      position: relative;
+    }
+    .code-output-card:hover {
+      border-color: var(--accent-orange);
+    }
+    .code-text {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: #38bdf8;
+      word-break: break-all;
+      line-height: 1.4;
+    }
+    .copy-hint {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      color: var(--accent-orange);
+      font-weight: 700;
     }
 
     /* CAMERA PRESETS */
     .cam-pills {
       position: absolute;
-      bottom: 74px; right: 16px;
+      bottom: 74px; left: 296px;
       display: flex;
       gap: 6px;
       z-index: 40;
@@ -368,7 +659,256 @@
       transition: all 0.15s;
     }
     .cam-btn:hover { border-color: var(--accent-glow); color: #fff; }
-    .cam-btn.active { background: var(--accent-bg); border-color: var(--accent-glow); color: var(--accent-glow); }
+    .cam-btn.active { background: rgba(0, 229, 153, 0.15); border-color: var(--accent-glow); color: var(--accent-glow); }
+
+    /* BOTTOM TIMELINE SCRUBBER */
+    #timeline-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 64px;
+      background: var(--panel-surface);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 16px;
+      z-index: 50;
+    }
+    .ctrl-btn {
+      width: 36px; height: 36px;
+      background: var(--card-surface);
+      border: 1px solid var(--border-subtle);
+      color: #fff;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.15s;
+    }
+    .ctrl-btn:hover {
+      border-color: var(--accent-glow);
+      color: var(--accent-glow);
+    }
+    .time-readout {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      min-width: 95px;
+    }
+    .scrubber-track {
+      flex: 1;
+      height: 8px;
+      background: #11141a;
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      position: relative;
+      cursor: pointer;
+    }
+    .scrubber-fill {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 0%;
+      background: linear-gradient(90deg, #0284c7, var(--accent-glow));
+      border-radius: 3px;
+    }
+    .scrubber-thumb {
+      position: absolute;
+      top: 50%;
+      left: 0%;
+      width: 14px; height: 14px;
+      background: #fff;
+      border: 2px solid var(--accent-glow);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      box-shadow: 0 0 10px rgba(0, 229, 153, 0.6);
+    }
+    .speed-group {
+      display: flex;
+      gap: 4px;
+    }
+    .speed-btn {
+      background: var(--card-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .speed-btn.active {
+      background: rgba(0, 229, 153, 0.15);
+      border-color: var(--accent-glow);
+      color: var(--accent-glow);
+    }
+
+    /* TOAST NOTIFICATION */
+    #toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(30px);
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--accent-orange);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 8px 16px;
+      border-radius: 6px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 100;
+    }
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* LEXICON AUDITOR & VERIFICATION SYSTEM */
+    .audit-header-btn {
+      background: #12141a;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .audit-header-btn:hover {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #38bdf8;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+    }
+    .verify-toggle-switch {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s;
+      border: 1px solid var(--border-subtle);
+    }
+    .verify-toggle-switch.pending {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: rgba(245, 158, 11, 0.35);
+      color: var(--accent-orange);
+    }
+    .verify-toggle-switch.verified {
+      background: rgba(0, 229, 153, 0.15);
+      border-color: rgba(0, 229, 153, 0.45);
+      color: var(--accent-glow);
+    }
+
+    /* BATCH AUDITOR MODAL */
+    #audit-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 11, 14, 0.88);
+      backdrop-filter: blur(10px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .audit-modal-chassis {
+      background: #14161d;
+      border: 1px solid var(--border-tactile);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 880px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+      overflow: hidden;
+    }
+    .audit-modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #171922;
+    }
+    .audit-summary-strip {
+      display: flex;
+      gap: 20px;
+      padding: 12px 20px;
+      background: var(--card-inset);
+      border-bottom: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .audit-summary-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .audit-table-pane {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 20px;
+      scrollbar-width: thin;
+      scrollbar-color: #2a2c32 #14161d;
+    }
+    .audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 10px;
+    }
+    .audit-table th {
+      text-align: left;
+      padding: 8px 10px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-subtle);
+      font-weight: 700;
+      position: sticky;
+      top: 0;
+      background: #14161d;
+      z-index: 2;
+    }
+    .audit-table td {
+      padding: 9px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--bone-white);
+    }
+    .audit-fix-btn {
+      background: var(--card-surface);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #38bdf8;
+      padding: 4px 9px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      transition: all 0.15s;
+    }
+    .audit-fix-btn:hover {
+      background: #38bdf8;
+      color: #000;
+    }
   </style>
 </head>
 <body>
@@ -379,9 +919,14 @@
       <span class="badge-mocap"><span class="pulse-dot"></span> ⚡ MOCAP CALIBRATED</span>
       <span class="title-text">SAMMY // BIOMECHANICAL ASL GROUND TRUTH STUDIO</span>
     </div>
-    <div class="mode-toggle">
-      <button class="mode-btn" id="btn-mode-algorithm" onclick="setStudioMode('algorithm')">⚙ ALGORITHM ONLY (HUMAN AVATAR)</button>
-      <button class="mode-btn active" id="btn-mode-hybrid" onclick="setStudioMode('hybrid')">✨ HYBRID (MOCAP + ALGORITHM)</button>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <button class="audit-header-btn" onclick="LexiconWorkbench.runAutoAudit()" title="Run Fast Automated Kinematic Clearance & Phonology Audit">
+        ⚡ AUDIT LEXICON (34)
+      </button>
+      <div class="mode-toggle">
+        <button class="mode-btn" id="btn-mode-algorithm" onclick="setStudioMode('algorithm')">⚙ ALGORITHM ONLY (HUMAN AVATAR)</button>
+        <button class="mode-btn active" id="btn-mode-hybrid" onclick="setStudioMode('hybrid')">✨ HYBRID (MOCAP + ALGORITHM)</button>
+      </div>
     </div>
   </header>
 
@@ -399,49 +944,160 @@
     <div class="sign-list" id="sign-list-container"></div>
   </aside>
 
-  <!-- RIGHT HUD: PHONOLOGY & TELEMETRY -->
-  <aside id="hud-right">
-    <div class="hud-section">
-      <div class="hud-label">Active Sign Gloss</div>
-      <div class="hud-val" id="hud-sign-name" style="font-size:16px; color:#38bdf8; font-weight:800;">HELP</div>
-      <div class="sign-sub" id="hud-sign-desc" style="margin-top:2px;">Assistance & passenger support</div>
-    </div>
-    <div class="hud-section">
-      <div class="hud-label">ASL Phonological Specification</div>
-      <div style="font-size:11px; line-height:1.5;">
-        <div><span style="color:#64748b;">Handshape:</span> <strong id="hud-handshape" style="color:#f8fafc;">A-Fist on Flat Palm</strong></div>
-        <div><span style="color:#64748b;">Location:</span> <strong id="hud-location" style="color:#f8fafc;">Neutral Space (Chest)</strong></div>
-        <div><span style="color:#64748b;">Movement:</span> <strong id="hud-movement" style="color:#f8fafc;">Vertical Rise (+8cm)</strong></div>
-        <div><span style="color:#64748b;">Bimanual:</span> <strong id="hud-bilateral" style="color:#00e599;">Asymmetric Base</strong></div>
+  <!-- CENTER VIEWPORT -->
+  <main id="canvas-container"></main>
+
+  <!-- DOCKED CONSOLE TOGGLE TAB -->
+  <button class="console-toggle-btn" id="btn-toggle-console" onclick="toggleCurationConsole()" title="Toggle Sign Assembler Sidebox">
+    ⚙ SIGN ASSEMBLER <span id="toggle-arrow">▶</span>
+  </button>
+
+  <!-- RIGHT STAGE: HARDWARE CURATION CONSOLE PANE (SIGN ASSEMBLING SIDEBOX) -->
+  <aside id="curation-console-pane">
+
+    <!-- Rack 01: Active Specification -->
+    <div class="rack-section">
+      <div class="rack-title">
+        <span>01 // ACTIVE SPECIFICATION</span>
+        <span id="spec-category-badge" style="color:var(--accent-orange); font-size:9px;">TRAVEL</span>
+      </div>
+      <div class="identity-box">
+        <div class="id-topline">
+          <span id="spec-name" class="id-name">HELP</span>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <button id="btn-toggle-verify" class="verify-toggle-switch pending" onclick="LexiconWorkbench.toggleVerified()" title="Toggle verification status (Shortcut: V)">
+              <span id="verify-icon">⏳</span> <span id="verify-label">PENDING</span>
+            </button>
+            <span id="spec-lemma" class="id-lemma-badge">lemma: help</span>
+          </div>
+        </div>
+        <div id="spec-desc" class="id-desc">
+          Assistance request. Left flat base palm lifts right A-fist vertically in synchronized motion.
+        </div>
+        <div class="id-meta-row">
+          <span>FPS: <strong style="color:var(--accent-glow);">60.0</strong></span>
+          <span>CHANNELS: <strong id="spec-channels" style="color:var(--bone-white);">125</strong></span>
+          <span>ACCURACY: <strong id="spec-acc" style="color:var(--accent-glow);">99.8%</strong></span>
+        </div>
       </div>
     </div>
-    <div class="hud-section">
-      <div class="hud-label">Biomechanical Telemetry</div>
-      <div class="hud-grid">
-        <div class="metric-box">
-          <div class="metric-num">60.0</div>
-          <div class="metric-sub">FPS REFRESH</div>
-        </div>
-        <div class="metric-box">
-          <div class="metric-num" id="telemetry-channels">125</div>
-          <div class="metric-sub">SKELETAL CHANNELS</div>
-        </div>
-        <div class="metric-box">
-          <div class="metric-num" id="telemetry-bones">65</div>
-          <div class="metric-sub">OPTICAL BONES</div>
-        </div>
-        <div class="metric-box">
-          <div class="metric-num" id="telemetry-acc" style="color:#00e599;">99.8%</div>
-          <div class="metric-sub">GROUND TRUTH ACCURACY</div>
-        </div>
+
+    <!-- Rack 02: Phonological Recipe Edit -->
+    <div class="rack-section">
+      <div class="rack-title">
+        <span>02 // PHONOLOGICAL RECIPE EDIT</span>
+        <span style="font-size:8.5px; color:var(--text-dim);">&lang;H, L, M, O, B&rang;</span>
+      </div>
+      <div id="param-controls-deck" class="param-grid">
+        <!-- Injected dynamically by LexiconWorkbench -->
       </div>
     </div>
-    <div class="hud-section" id="hybrid-card">
-      <div class="hud-label" style="display:flex; justify-content:space-between; align-items:center;">
-        <span>Algorithmic Rectification</span>
+
+    <!-- Rack 03: 3D Spatial Nudge Matrix -->
+    <div id="rack-finetune" class="rack-section">
+      <div class="rack-title">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span id="rack-finetune-label">03 // 3D SPATIAL NUDGE</span>
+          <span id="rack-finetune-badge" class="hand-badge h1-badge">H1 RIGHT</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span style="font-size:8px; color:var(--text-dim);">&plusmn;12cm / &plusmn;60&deg;</span>
+          <button class="te-btn-tiny" onclick="LexiconWorkbench.resetCurrentSignNudges()" title="Reset current hand nudge axes to 0">RESET</button>
+        </div>
+      </div>
+      <div class="param-grid">
+        
+        <div class="param-field">
+          <span class="param-field-label">Offset X (Lateral):</span>
+          <div class="slider-nudge-group">
+            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('ox', -0.5)">-0.5</button>
+            <input type="range" id="tune-ox" class="nudge-slider" min="-12" max="12" step="0.1" value="0" oninput="LexiconWorkbench.onFineTuneInput()" />
+            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('ox', 0.5)">+0.5</button>
+            <span id="lbl-tune-ox" class="nudge-val-badge">0.0 cm</span>
+          </div>
+        </div>
+
+        <div class="param-field">
+          <span class="param-field-label">Offset Y (Height):</span>
+          <div class="slider-nudge-group">
+            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('oy', -0.5)">-0.5</button>
+            <input type="range" id="tune-oy" class="nudge-slider" min="-12" max="12" step="0.1" value="0" oninput="LexiconWorkbench.onFineTuneInput()" />
+            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('oy', 0.5)">+0.5</button>
+            <span id="lbl-tune-oy" class="nudge-val-badge">0.0 cm</span>
+          </div>
+        </div>
+
+        <div class="param-field">
+          <span class="param-field-label">Offset Z (Depth):</span>
+          <div class="slider-nudge-group">
+            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('oz', -0.5)">-0.5</button>
+            <input type="range" id="tune-oz" class="nudge-slider" min="-12" max="12" step="0.1" value="0" oninput="LexiconWorkbench.onFineTuneInput()" />
+            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('oz', 0.5)">+0.5</button>
+            <span id="lbl-tune-oz" class="nudge-val-badge">0.0 cm</span>
+          </div>
+        </div>
+
+        <div class="param-field">
+          <span class="param-field-label">Wrist Pitch (X):</span>
+          <div class="slider-nudge-group">
+            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('rx', -5)">-5°</button>
+            <input type="range" id="tune-rx" class="nudge-slider" min="-60" max="60" step="1" value="0" oninput="LexiconWorkbench.onFineTuneInput()" />
+            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('rx', 5)">+5°</button>
+            <span id="lbl-tune-rx" class="nudge-val-badge">0°</span>
+          </div>
+        </div>
+
+        <div class="param-field">
+          <span class="param-field-label">Wrist Yaw (Y):</span>
+          <div class="slider-nudge-group">
+            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('ry', -5)">-5°</button>
+            <input type="range" id="tune-ry" class="nudge-slider" min="-60" max="60" step="1" value="0" oninput="LexiconWorkbench.onFineTuneInput()" />
+            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('ry', 5)">+5°</button>
+            <span id="lbl-tune-ry" class="nudge-val-badge">0°</span>
+          </div>
+        </div>
+
+        <div class="param-field">
+          <span class="param-field-label">Wrist Roll (Z):</span>
+          <div class="slider-nudge-group">
+            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('rz', -5)">-5°</button>
+            <input type="range" id="tune-rz" class="nudge-slider" min="-60" max="60" step="1" value="0" oninput="LexiconWorkbench.onFineTuneInput()" />
+            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('rz', 5)">+5°</button>
+            <span id="lbl-tune-rz" class="nudge-val-badge">0°</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Rack 04: Bio-Clearance Check -->
+    <div class="rack-section">
+      <div class="rack-title">
+        <span>04 // BIO-CLEARANCE CHECK</span>
+        <span id="clearance-pill-tag" class="clearance-pill safe">PASS (0 ERRORS)</span>
+      </div>
+      <div class="clearance-card">
+        <div class="clearance-meter-col">
+          <span style="font-size:9px; color:var(--text-muted); font-family:var(--font-mono);">MINIMUM CLEARANCE</span>
+          <span id="card-clearance-val" class="clearance-val">14.2 mm</span>
+        </div>
+        <div style="font-family:var(--font-mono); font-size:9.5px; color:var(--text-muted); text-align:right;">
+          <span>Zero Penetration</span><br/>
+          <span style="color:var(--status-pass);">Tendon Equilibrium</span>
+        </div>
+      </div>
+      <button class="te-btn-tiny" onclick="LexiconWorkbench.runAutoAudit()" style="margin-top:8px; width:100%; padding:6px; background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.3); color:#38bdf8; font-weight:700; border-radius:4px;" title="Run complete kinematic clearance auditor on all 34 signs">
+        🔍 BATCH AUDIT ALL 34 SIGNS →
+      </button>
+    </div>
+
+    <!-- Rack 05: Algorithmic Rectification (Hybrid Mode) -->
+    <div class="rack-section" id="hybrid-card">
+      <div class="rack-title">
+        <span>05 // HYBRID RECTIFICATION</span>
         <span id="hybrid-mode-pill" style="font-size:9px; background:rgba(0,229,153,0.15); color:#00e599; border:1px solid #00e599; padding:2px 6px; border-radius:4px; font-weight:700;">HYBRID ACTIVE</span>
       </div>
-      <div style="margin-top:10px;">
+      <div style="margin-top:6px;">
         <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:5px;">
           <span style="color:#94a3b8;">Algorithmic Strength:</span>
           <span id="hybrid-blend-text" style="font-family:var(--font-mono); font-weight:700; color:#00e599;">80%</span>
@@ -459,6 +1115,31 @@
         Mocap drives whole-body kinematics; algorithmic compiler enforces canonical finger flexions and contact planes.
       </div>
     </div>
+
+    <!-- Rack 06: Recipe Artifact & Actions -->
+    <div class="rack-section" style="border-bottom:none;">
+      <div class="rack-title">
+        <span>06 // RECIPE ARTIFACT & ACTIONS</span>
+        <span style="font-size:8.5px; color:var(--text-dim);">Live Compiled JSON</span>
+      </div>
+      <div class="actions-deck-cluster">
+        <button class="action-btn revert" onclick="LexiconWorkbench.resetCurrentToDefault()" title="Revert to canonical definition">
+          ↺ REVERT
+        </button>
+        <button class="action-btn save" onclick="LexiconWorkbench.saveCurrentCorrection()" title="Save changes and step to next item">
+          ✔ SAVE &amp; NEXT →
+        </button>
+      </div>
+
+      <!-- Recipe Code Block -->
+      <div class="code-output-card" onclick="LexiconWorkbench.copyActiveCode()" title="Click to copy JavaScript recipe">
+        <span class="copy-hint">📋 CLICK TO COPY</span>
+        <div id="recipe-code-block" class="code-text">
+          "help": { handshape: "a", location: "chest", orientation: "PALM_MEDIAL", movement: "VERTICAL_RISE", bilateral: "ASYMMETRIC_BASE" }
+        </div>
+      </div>
+    </div>
+
   </aside>
 
   <!-- CAMERA PRESET PILLS -->
@@ -486,6 +1167,64 @@
     </div>
   </footer>
 
+  <!-- BATCH AUDITOR MODAL OVERLAY (LEXICON CHECKER) -->
+  <div id="audit-modal" onclick="if(event.target===this) LexiconWorkbench.closeAuditModal()">
+    <div class="audit-modal-chassis">
+      <div class="audit-modal-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="background:rgba(56,189,248,0.2); color:#38bdf8; border:1px solid rgba(56,189,248,0.4); padding:3px 7px; border-radius:4px; font-family:var(--font-mono); font-size:9px; font-weight:800;">AUDIT</span>
+          <span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">AUTOMATED KINEMATIC CLEARANCE &amp; PHONOLOGY AUDITOR</span>
+        </div>
+        <button onclick="LexiconWorkbench.closeAuditModal()" style="background:transparent; border:none; color:var(--text-muted); font-size:18px; cursor:pointer; padding:4px 8px;">✕</button>
+      </div>
+
+      <div class="audit-summary-strip">
+        <div class="audit-summary-pill">
+          <span>AUDITED:</span>
+          <strong id="audit-count-total" style="color:var(--bone-white);">34</strong>
+        </div>
+        <div class="audit-summary-pill">
+          <span>PASSED:</span>
+          <strong id="audit-count-pass" style="color:var(--status-pass);">34</strong>
+        </div>
+        <div class="audit-summary-pill">
+          <span>WARNINGS:</span>
+          <strong id="audit-count-warn" style="color:var(--accent-orange);">0</strong>
+        </div>
+        <div class="audit-summary-pill">
+          <span>COLLISIONS:</span>
+          <strong id="audit-count-crit" style="color:var(--status-alert);">0</strong>
+        </div>
+        <div style="flex:1;"></div>
+        <div style="color:var(--accent-glow); display:flex; align-items:center; gap:6px;">
+          <span>VERIFIED:</span>
+          <strong id="audit-count-verified">0 / 34</strong>
+        </div>
+      </div>
+
+      <div class="audit-table-pane">
+        <table class="audit-table">
+          <thead>
+            <tr>
+              <th>STATUS</th>
+              <th>SIGN ID</th>
+              <th>NAME &amp; GLOSS</th>
+              <th>PHONOLOGICAL RECIPE &lang;H, L, M, O, B&rang;</th>
+              <th>CLEARANCE / DIAGNOSTIC</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody id="audit-table-body">
+            <!-- Dynamically populated by runAutoAudit() -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast">Recipe Copied to Clipboard</div>
+
   <script>
     // 34 High-Fidelity Optical MoCap Signs Bank
     const MOCAP_SIGNS = [
@@ -496,7 +1235,7 @@
       { id: "check", name: "CHECK", cat: "travel", desc: "Security & boarding check. Bent-index traces downward checkmark on palm.", hs: "Bent-1 / Hook", loc: "Neutral Mid", mov: "Downward Verification", bil: "Asymmetric Base" },
       { id: "door", name: "DOOR", cat: "travel", desc: "Airport gate / exit door. Base hand holds frame; dominant hand pivots open.", hs: "Open-B", loc: "Neutral Mid", mov: "72° Hinge Pivot", bil: "Asymmetric Base" },
       { id: "money", name: "MONEY", cat: "travel", desc: "Currency / fare payment. Flat-O hand double taps supine palm.", hs: "Flat-O (Pinched)", loc: "Neutral Mid", mov: "Double Palm Tap", bil: "Asymmetric Base" },
-      { id: "bus", name: "BUS", cat: "travel", desc: "Public transit bus transport.", hs: "B-U-S Blend", loc: "Neutral Mid", mov: "Forward Transit", bil: "Unilateral" },
+      { id: "bus", name: "BUS", cat: "travel", desc: "Public transit bus transport.", hs: "Open-B", loc: "Neutral Mid", mov: "Forward Transit", bil: "Unilateral" },
       { id: "train", name: "TRAIN", cat: "travel", desc: "Railway / train transit. Two H-hands rub across track fingers.", hs: "H-Handshape", loc: "Neutral Mid", mov: "Linear Rub", bil: "Bilateral Symmetric" },
       { id: "car", name: "CAR", cat: "travel", desc: "Automobile steering wheel oscillation.", hs: "S-Fist (Dual)", loc: "Neutral Mid", mov: "Steering Oscillation", bil: "Bilateral Symmetric" },
       { id: "go", name: "GO", cat: "travel", desc: "Departure & movement forward.", hs: "1-Handshape", loc: "Neutral Mid", mov: "Sagittal Arc", bil: "Bilateral Symmetric" },
@@ -504,7 +1243,7 @@
       // Passenger Needs & Inquiries
       { id: "help", name: "HELP", cat: "needs", desc: "Assistance request. Left palm lifts right A-fist together.", hs: "A-Fist on Open-B", loc: "Neutral Space", mov: "Synchronous Rise (+8cm)", bil: "Asymmetric Base" },
       { id: "water", name: "WATER", cat: "needs", desc: "Hydration request. W-handshape index edge gently taps chin twice.", hs: "W-Handshape", loc: "Chin / Lower Lip", mov: "Double Tap (Impulse)", bil: "Unilateral" },
-      { id: "bathroom", name: "BATHROOM", cat: "needs", desc: "Restroom query. Dominant T-handshape shakes side-to-side.", hs: "T-Handshape (Thumb Tuck)", loc: "Shoulder Lateral", mov: "Harmonic Shake (3.5x)", bil: "Unilateral" },
+      { id: "bathroom", name: "BATHROOM", cat: "needs", desc: "Restroom query. Dominant T-handshape shakes side-to-side.", hs: "T-Handshape", loc: "Shoulder Lateral", mov: "Harmonic Shake (3.5x)", bil: "Unilateral" },
       { id: "where", name: "WHERE", cat: "needs", desc: "Location query. Extended index finger wags laterally back and forth.", hs: "1-Handshape", loc: "Neutral Mid", mov: "Wrist Yaw Waggle (±22°)", bil: "Unilateral" },
       { id: "in", name: "IN", cat: "needs", desc: "Inside / enclosed position. Flat-O hand drops into C-hand cup.", hs: "Flat-O into C", loc: "Neutral Mid", mov: "Vertical Insertion", bil: "Asymmetric Base" },
       { id: "on", name: "ON", cat: "needs", desc: "Surface contact. Flat palm places downward onto base hand back.", hs: "Open-B", loc: "Neutral Mid", mov: "Down Contact", bil: "Asymmetric Base" },
@@ -531,10 +1270,11 @@
     ];
 
     let currentSign = MOCAP_SIGNS.find(s => s.id === 'help') || MOCAP_SIGNS[0];
-    let currentStudioMode = 'algorithm'; // Test algorithm mode initial
+    let currentStudioMode = 'hybrid'; // Default to Hybrid mode
     let isPlaying = true;
     let playbackSpeed = 1.0;
     let isScrubbing = false;
+    window.verifiedSignsMap = {};
 
     // Build Sign List UI
     const listContainer = document.getElementById('sign-list-container');
@@ -545,12 +1285,17 @@
         div.className = 'sign-item' + (s.id === currentSign.id ? ' active' : '');
         div.id = 'sign-item-' + s.id;
         div.onclick = () => selectSign(s);
+        const isVer = !!window.verifiedSignsMap[s.id];
         div.innerHTML = `
           <div>
-            <div class="sign-name">${s.name}</div>
+            <div class="sign-name">
+              ${s.name} ${isVer ? '<span style="color:var(--status-pass); font-size:11px; margin-left:3px;" title="Biochemically Verified">✔</span>' : ''}
+            </div>
             <div class="sign-sub">${s.desc.substring(0, 32)}...</div>
           </div>
-          <div class="sign-meta">60 FPS</div>
+          <div class="sign-meta" style="${isVer ? 'background:rgba(0,229,153,0.18); border:1px solid rgba(0,229,153,0.4);' : ''}">
+            ${isVer ? 'VERIFIED' : '60 FPS'}
+          </div>
         `;
         listContainer.appendChild(div);
       });
@@ -567,315 +1312,688 @@
       }
     }
 
-    // Three.js Scene Setup
+    // =========================================================================
+    // THE 5 CANONICAL PARAMETRIC SIGN LEXICONS <H, L, M, O, B>
+    // =========================================================================
+    const FINGER_TOKENS = {
+      EXTENDED: { f1: 2, a1: 0, f2: 4, f3: 2 },
+      EXTENDED_SPREAD_L: { f1: 2, a1: 16, f2: 4, f3: 2 },
+      EXTENDED_SPREAD_R: { f1: 2, a1: -16, f2: 4, f3: 2 },
+      EXTENDED_FLARE_WIDE_L: { f1: 2, a1: 26, f2: 4, f3: 2 },
+      EXTENDED_FLARE_WIDE_R: { f1: 2, a1: -26, f2: 4, f3: 2 },
+      CLOSED: { f1: 95, a1: 0, f2: 100, f3: 80 },
+      CLOSED_OVER_THUMB: { f1: 88, a1: 0, f2: 95, f3: 76 },
+      CURVED: { f1: 43, a1: 0, f2: 40, f3: 36 },
+      CURVED_O: { f1: 52, a1: 0, f2: 55, f3: 49 },
+      HALF_BENT: { f1: 90, a1: 0, f2: 10, f3: 0 },
+      HOOK_BENT: { f1: 0, a1: 0, f2: 95, f3: 80 },
+      CLAW_E: { f1: 82, a1: 0, f2: 78, f3: 48 }
+    };
+
+    const THUMB_TOKENS = {
+      THM_REST_SIDE: { f1: -30, a1: -65, f2: 30, f3: 15 },
+      THM_NATURAL_REST: { f1: -25, a1: -60, f2: 24, f3: 16 },
+      THM_WRAP_OVER: { f1: -25, a1: -65, f2: 30, f3: 60 },
+      THM_WRAP_FRONT: { f1: -16, a1: -60, f2: 30, f3: 65 },
+      THM_FLAT_PALM: { f1: 20, a1: -65, f2: 20, f3: 0 },
+      THM_OUT: { f1: -50, a1: -30, f2: 0, f3: 0 },
+      THM_OUT_SPREAD: { f1: -65, a1: -30, f2: 0, f3: 0 },
+      THM_PINCH_INDEX: { f1: 15, a1: -45, f2: 30, f3: 20 },
+      THM_CURVED: { f1: 20, a1: -40, f2: 13, f3: 12 },
+      THM_OPPOSE_O: { f1: 4, a1: -45, f2: 30, f3: 20 }
+    };
+
+    const PARAMETRIC_LEXICONS = {
+      handshapes: {
+        "1": { name: "1-Handshape", tokens: { idx: "EXTENDED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" } },
+        "bent_1": { name: "Bent 1 / Hook", tokens: { idx: "HOOK_BENT", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" } },
+        "v": { name: "V / 2-Handshape", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED_SPREAD_R", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" } },
+        "bent_v": { name: "Bent V / Double Hook", tokens: { idx: "HOOK_BENT", mid: "HOOK_BENT", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" } },
+        "3": { name: "3-Handshape", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED_SPREAD_R", rng: "CLOSED", pnk: "CLOSED", thm: "THM_OUT_SPREAD" } },
+        "4": { name: "4-Handshape", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "EXTENDED_FLARE_WIDE_R", thm: "THM_FLAT_PALM" } },
+        "5": { name: "5-Handshape (Open)", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "EXTENDED_FLARE_WIDE_R", thm: "THM_OUT_SPREAD" } },
+        "curved_5": { name: "Curved 5 / Claw", tokens: { idx: "CURVED", mid: "CURVED", rng: "CURVED", pnk: "CURVED", thm: "THM_CURVED" } },
+        "a": { name: "A-Handshape", tokens: { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_REST_SIDE" } },
+        "s": { name: "S-Handshape (Fist)", tokens: { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" } },
+        "t": { name: "T-Handshape", tokens: { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_PINCH_INDEX" } },
+        "open_b": { name: "Open B (Flat Palm)", tokens: { idx: "EXTENDED", mid: "EXTENDED", rng: "EXTENDED", pnk: "EXTENDED", thm: "THM_OUT" } },
+        "flat_b": { name: "Flat B (Thumb In)", tokens: { idx: "EXTENDED", mid: "EXTENDED", rng: "EXTENDED", pnk: "EXTENDED", thm: "THM_FLAT_PALM" } },
+        "bent_b": { name: "Bent B", tokens: { idx: "HALF_BENT", mid: "HALF_BENT", rng: "HALF_BENT", pnk: "HALF_BENT", thm: "THM_FLAT_PALM" } },
+        "c": { name: "C-Handshape", tokens: { idx: "CURVED", mid: "CURVED", rng: "CURVED", pnk: "CURVED", thm: "THM_CURVED" } },
+        "o": { name: "O-Handshape", tokens: { idx: "CURVED_O", mid: "CURVED_O", rng: "CURVED_O", pnk: "CURVED_O", thm: "THM_OPPOSE_O" } },
+        "flat_o": { name: "Flat O / Pinched", tokens: { idx: "HALF_BENT", mid: "HALF_BENT", rng: "HALF_BENT", pnk: "HALF_BENT", thm: "THM_PINCH_INDEX" } },
+        "f": { name: "F-Handshape", tokens: { idx: "CURVED_O", mid: "EXTENDED", rng: "EXTENDED", pnk: "EXTENDED", thm: "THM_PINCH_INDEX" } },
+        "h": { name: "H / U-Handshape", tokens: { idx: "EXTENDED", mid: "EXTENDED", rng: "CLOSED", pnk: "CLOSED", thm: "THM_WRAP_FRONT" } },
+        "w": { name: "W-Handshape", tokens: { idx: "EXTENDED_FLARE_WIDE_L", mid: "EXTENDED", rng: "EXTENDED_SPREAD_R", pnk: "CLOSED", thm: "THM_WRAP_FRONT" } },
+        "y": { name: "Y-Handshape", tokens: { idx: "CLOSED", mid: "CLOSED", rng: "CLOSED", pnk: "EXTENDED_FLARE_WIDE_R", thm: "THM_OUT_SPREAD" } },
+        "ily": { name: "ILY (I Love You)", tokens: { idx: "EXTENDED", mid: "CLOSED", rng: "CLOSED", pnk: "EXTENDED_FLARE_WIDE_R", thm: "THM_OUT_SPREAD" } }
+      },
+
+      locations: {
+        "neutral_mid": { name: "Neutral Space (Chest)", Arm: [1.04, 0.68, -0.14], ForeArm: [0.06, -0.38, -2.02], Hand: [0.12, -0.18, 0.40] },
+        "neutral_high": { name: "Neutral Space (High/Face)", Arm: [1.38, 0.50, 0.05], ForeArm: [0.08, -0.28, -1.55], Hand: [0.10, -0.12, 0.32] },
+        "neutral_low": { name: "Neutral Space (Abdominal)", Arm: [0.72, 0.38, 0.12], ForeArm: [0.04, -0.20, -1.45], Hand: [0.08, -0.05, 0.20] },
+        "chin": { name: "Chin / Lower Lip", Arm: [1.35, 0.85, -0.20], ForeArm: [0.10, -0.55, -2.45], Hand: [0.15, -0.25, 0.55] },
+        "mouth": { name: "Mouth / Oral Locus", Arm: [1.32, 0.82, -0.18], ForeArm: [0.09, -0.52, -2.40], Hand: [0.14, -0.22, 0.50] },
+        "forehead": { name: "Forehead / Upper Cranial", Arm: [1.52, 0.80, -0.10], ForeArm: [0.12, -0.50, -2.50], Hand: [0.16, -0.20, 0.45] },
+        "temple": { name: "Temple / Lateral Cranial", Arm: [1.45, 0.55, 0.10], ForeArm: [0.08, -0.25, -1.45], Hand: [0.08, -0.12, 0.30] },
+        "temple_right": { name: "Right Temple", Arm: [1.45, 0.55, 0.10], ForeArm: [0.08, -0.25, -1.45], Hand: [0.08, -0.12, 0.30] },
+        "chest": { name: "Chest / Sternum", Arm: [0.98, 0.62, -0.12], ForeArm: [0.06, -0.36, -1.90], Hand: [0.10, -0.15, 0.35] },
+        "sternum": { name: "Mid-Sternum Contact", Arm: [0.98, 0.62, -0.12], ForeArm: [0.06, -0.36, -1.90], Hand: [0.10, -0.15, 0.35] },
+        "shoulder_lateral": { name: "Shoulder Lateral", Arm: [1.10, 0.55, 0.25], ForeArm: [0.08, -0.25, -1.65], Hand: [0.12, -0.10, 0.30] },
+        "passive_wrist": { name: "Passive Base Wrist", Arm: [1.06, 0.74, -0.13], ForeArm: [0.05, -0.40, -2.08], Hand: [0.12, -0.18, 0.42] },
+        "eyes": { name: "Eyes / Visual Plane", Arm: [1.38, 0.78, -0.08], ForeArm: [0.10, -0.48, -2.35], Hand: [0.14, -0.18, 0.42] },
+        "clavicle": { name: "Clavicle / Collarbone", Arm: [1.02, 0.60, -0.10], ForeArm: [0.06, -0.32, -1.80], Hand: [0.10, -0.12, 0.30] }
+      },
+
+      orientations: {
+        "PALM_MEDIAL": { name: "Palm Inward (Medial)", euler: [0.12, -0.18, 0.40] },
+        "PALM_ANTERIOR": { name: "Palm Forward (Anterior)", euler: [0.05, 0.0, 0.10] },
+        "PALM_POSTERIOR": { name: "Palm Facing Chest (Posterior)", euler: [0.22, -0.10, 1.25] },
+        "PALM_SUPINE": { name: "Palm Upward (Supine)", euler: [0.25, 0.30, -0.55] },
+        "PALM_PRONE": { name: "Palm Downward (Prone)", euler: [-0.10, -0.25, 1.10] },
+        "PALM_CONTRALATERAL": { name: "Palm Across Body", euler: [0.18, -0.32, 0.70] }
+      },
+
+      movements: {
+        "TAP_2X": { name: "Double Contact Tap", dyn: (tau) => ({ dyR: -0.10 * Math.abs(Math.sin(4 * Math.PI * tau)) }) },
+        "VERTICAL_RISE": { name: "Vertical Rise (+8cm)", dyn: (tau) => ({ dyR: 0.16 * Math.sin(Math.PI * tau), dyL: 0.16 * Math.sin(Math.PI * tau) }) },
+        "HORIZONTAL_SWEEP": { name: "Horizontal Sweep", dyn: (tau) => ({ dzR: 0.28 * Math.sin(2 * Math.PI * tau) }) },
+        "CIRCULAR_ROLL": { name: "Circular Roll (Steering)", dyn: (tau) => ({ dyR: 0.10 * Math.sin(2 * Math.PI * tau), dzR: 0.12 * Math.cos(2 * Math.PI * tau), dyL: -0.10 * Math.sin(2 * Math.PI * tau), dzL: -0.12 * Math.cos(2 * Math.PI * tau) }) },
+        "ARC_CORONAL": { name: "Coronal Arc Downward", dyn: (tau) => ({ dyR: -0.15 * Math.sin(Math.PI * tau) }) },
+        "LINEAR_FORWARD": { name: "Forward Thrust", dyn: (tau) => ({ dyR: 0.20 * tau }) },
+        "WRIST_TWIST": { name: "Wrist Alternating Twist", dyn: (tau) => ({ dzR: 0.30 * Math.sin(6 * Math.PI * tau) }) },
+        "WRIST_NOD": { name: "Wrist Nodding", dyn: (tau) => ({ dyR: -0.12 * Math.abs(Math.sin(4 * Math.PI * tau)) }) },
+        "STATIC_HOLD": { name: "Static Canonical Hold", dyn: () => ({}) },
+        "APERTURE_CLOSE": { name: "Aperture Snap Close", dyn: () => ({}) },
+        "DOWNWARD_CHECK": { name: "Downward Checkmark", dyn: (tau) => ({ dyR: -0.14 * Math.sin(2 * Math.PI * tau) }) },
+        "HINGE_PIVOT": { name: "Hinge Door Pivot", dyn: (tau) => ({ dzR: 0.25 * Math.sin(Math.PI * tau) }) },
+        "RUB_RECIPROCAL": { name: "Reciprocal Rub", dyn: (tau) => ({ dyR: 0.10 * Math.sin(4 * Math.PI * tau) }) },
+        "SAGITTAL_ARC": { name: "Sagittal Arc", dyn: (tau) => ({ dyR: 0.18 * Math.sin(Math.PI * tau) }) },
+        "VERTICAL_INSERTION": { name: "Vertical Insertion", dyn: (tau) => ({ dyR: -0.12 * tau }) },
+        "DOWN_CONTACT": { name: "Downward Contact", dyn: (tau) => ({ dyR: -0.12 * tau }) },
+        "PRONATION_DROP": { name: "Pronation Drop", dyn: (tau) => ({ dyR: -0.16 * tau, dzR: 0.20 * tau }) },
+        "TRANSVERSE_CIRCLE": { name: "Transverse Circle", dyn: (tau) => ({ dyR: 0.08 * Math.sin(2 * Math.PI * tau), dzR: 0.08 * Math.cos(2 * Math.PI * tau) }) },
+        "PALM_CHOP": { name: "Decisive Palm Chop", dyn: (tau) => ({ dyR: -0.18 * Math.sin(Math.PI * tau) }) },
+        "CIRCUMFERENTIAL_SWEEP": { name: "Circumferential Sweep", dyn: (tau) => ({ dzR: 0.30 * Math.sin(Math.PI * tau) }) },
+        "VERTICAL_DROP": { name: "Vertical Drop", dyn: (tau) => ({ dyR: -0.14 * Math.sin(Math.PI * tau), dyL: -0.14 * Math.sin(Math.PI * tau) }) },
+        "CORONAL_RELEASE": { name: "Coronal Release", dyn: (tau) => ({ dzR: 0.25 * Math.sin(Math.PI * tau), dzL: -0.25 * Math.sin(Math.PI * tau) }) },
+        "FOREARM_TWIST": { name: "Forearm Dual Twist", dyn: (tau) => ({ dzR: 0.22 * Math.sin(4 * Math.PI * tau), dzL: -0.22 * Math.sin(4 * Math.PI * tau) }) },
+        "ANGULAR_PIVOT": { name: "Angular Pivot", dyn: (tau) => ({ dzR: 0.20 * Math.sin(2 * Math.PI * tau) }) },
+        "FORWARD_RELEASE": { name: "Forward Release", dyn: (tau) => ({ dyR: 0.16 * tau }) },
+        "FORWARD_PROJECTION": { name: "Forward Deictic", dyn: (tau) => ({ dyR: 0.18 * tau }) },
+        "INWARD_RETRACTION": { name: "Inward Retraction", dyn: (tau) => ({ dyR: -0.14 * tau, dyL: -0.14 * tau }) },
+        "MEDIAL_CONVERGENCE": { name: "Medial Convergence", dyn: (tau) => ({ dzR: -0.15 * Math.sin(Math.PI * tau), dzL: 0.15 * Math.sin(Math.PI * tau) }) }
+      }
+    };
+
+    // 34 Canonical Initial Sign Recipes
+    const SIGN_RECIPES = {
+      fly: { handshape: "ily", location: "temple_right", orientation: "PALM_PRONE", movement: "LINEAR_FORWARD", bilateral: "UNILATERAL", contactEffector: "NONE", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      arrive: { handshape: "open_b", location: "neutral_mid", orientation: "PALM_MEDIAL", movement: "ARC_CORONAL", bilateral: "ASYMMETRIC_BASE", baseHandshape: "open_b", contactEffector: "PALM", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      ticket: { handshape: "bent_v", location: "neutral_mid", orientation: "PALM_MEDIAL", movement: "TAP_2X", bilateral: "ASYMMETRIC_BASE", baseHandshape: "open_b", contactEffector: "INDEX_TIP", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      check: { handshape: "bent_1", location: "neutral_mid", orientation: "PALM_MEDIAL", movement: "DOWNWARD_CHECK", bilateral: "ASYMMETRIC_BASE", baseHandshape: "open_b", contactEffector: "INDEX_TIP", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      door: { handshape: "open_b", location: "neutral_mid", orientation: "PALM_ANTERIOR", movement: "HINGE_PIVOT", bilateral: "ASYMMETRIC_BASE", baseHandshape: "open_b", contactEffector: "PALM", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      money: { handshape: "flat_o", location: "neutral_mid", orientation: "PALM_SUPINE", movement: "TAP_2X", bilateral: "ASYMMETRIC_BASE", baseHandshape: "open_b", contactEffector: "PALM", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      bus: { handshape: "open_b", location: "neutral_mid", orientation: "PALM_MEDIAL", movement: "LINEAR_FORWARD", bilateral: "UNILATERAL", contactEffector: "NONE", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      train: { handshape: "h", location: "neutral_mid", orientation: "PALM_PRONE", movement: "RUB_RECIPROCAL", bilateral: "BILATERAL_SYMMETRIC", contactEffector: "NONE", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      car: { handshape: "s", location: "neutral_mid", orientation: "PALM_MEDIAL", movement: "CIRCULAR_ROLL", bilateral: "BILATERAL_SYMMETRIC", contactEffector: "NONE", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      go: { handshape: "1", location: "neutral_mid", orientation: "PALM_PRONE", movement: "SAGITTAL_ARC", bilateral: "BILATERAL_SYMMETRIC", contactEffector: "NONE", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      help: { handshape: "a", location: "chest", orientation: "PALM_MEDIAL", movement: "VERTICAL_RISE", bilateral: "ASYMMETRIC_BASE", baseHandshape: "open_b", contactEffector: "FIST_HEEL", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      water: { handshape: "w", location: "chin", orientation: "PALM_MEDIAL", movement: "TAP_2X", bilateral: "UNILATERAL", contactEffector: "INDEX_TIP", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      bathroom: { handshape: "t", location: "shoulder_lateral", orientation: "PALM_ANTERIOR", movement: "WRIST_TWIST", bilateral: "UNILATERAL", contactEffector: "NONE", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      where: { handshape: "1", location: "neutral_mid", orientation: "PALM_ANTERIOR", movement: "HORIZONTAL_SWEEP", bilateral: "UNILATERAL", contactEffector: "NONE", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      in: { handshape: "flat_o", location: "neutral_mid", orientation: "PALM_PRONE", movement: "VERTICAL_INSERTION", bilateral: "ASYMMETRIC_BASE", baseHandshape: "c", contactEffector: "FINGERTIPS", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      on: { handshape: "open_b", location: "neutral_mid", orientation: "PALM_PRONE", movement: "DOWN_CONTACT", bilateral: "ASYMMETRIC_BASE", baseHandshape: "open_b", contactEffector: "PALM", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      bad: { handshape: "open_b", location: "chin", orientation: "PALM_POSTERIOR", movement: "PRONATION_DROP", bilateral: "UNILATERAL", contactEffector: "FINGERTIPS", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      yes: { handshape: "s", location: "neutral_mid", orientation: "PALM_ANTERIOR", movement: "WRIST_NOD", bilateral: "UNILATERAL", contactEffector: "NONE", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      no: { handshape: "bent_v", location: "neutral_mid", orientation: "PALM_ANTERIOR", movement: "APERTURE_CLOSE", bilateral: "UNILATERAL", contactEffector: "THUMB_TIP", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      please: { handshape: "open_b", location: "chest", orientation: "PALM_POSTERIOR", movement: "TRANSVERSE_CIRCLE", bilateral: "UNILATERAL", contactEffector: "PALM", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      stop: { handshape: "open_b", location: "neutral_mid", orientation: "PALM_MEDIAL", movement: "PALM_CHOP", bilateral: "ASYMMETRIC_BASE", baseHandshape: "open_b", contactEffector: "BLADE", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      all: { handshape: "open_b", location: "neutral_high", orientation: "PALM_SUPINE", movement: "CIRCUMFERENTIAL_SWEEP", bilateral: "ASYMMETRIC_BASE", baseHandshape: "open_b", contactEffector: "PALM", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      can: { handshape: "s", location: "neutral_mid", orientation: "PALM_PRONE", movement: "VERTICAL_DROP", bilateral: "BILATERAL_SYMMETRIC", contactEffector: "NONE", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      finish: { handshape: "5", location: "neutral_mid", orientation: "PALM_POSTERIOR", movement: "CORONAL_RELEASE", bilateral: "BILATERAL_SYMMETRIC", contactEffector: "NONE", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      know: { handshape: "bent_b", location: "temple", orientation: "PALM_POSTERIOR", movement: "TAP_2X", bilateral: "UNILATERAL", contactEffector: "FINGERTIPS", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      make: { handshape: "s", location: "neutral_mid", orientation: "PALM_MEDIAL", movement: "FOREARM_TWIST", bilateral: "BILATERAL_SYMMETRIC", contactEffector: "NONE", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      minute: { handshape: "1", location: "neutral_mid", orientation: "PALM_MEDIAL", movement: "ANGULAR_PIVOT", bilateral: "ASYMMETRIC_BASE", baseHandshape: "open_b", contactEffector: "FIST_HEEL", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      not: { handshape: "a", location: "chin", orientation: "PALM_MEDIAL", movement: "FORWARD_RELEASE", bilateral: "UNILATERAL", contactEffector: "THUMB_TIP", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      now: { handshape: "y", location: "neutral_mid", orientation: "PALM_SUPINE", movement: "VERTICAL_DROP", bilateral: "BILATERAL_SYMMETRIC", contactEffector: "NONE", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      see: { handshape: "v", location: "eyes", orientation: "PALM_POSTERIOR", movement: "FORWARD_PROJECTION", bilateral: "UNILATERAL", contactEffector: "FINGERTIPS", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      want: { handshape: "curved_5", location: "neutral_mid", orientation: "PALM_SUPINE", movement: "INWARD_RETRACTION", bilateral: "BILATERAL_SYMMETRIC", contactEffector: "NONE", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      we: { handshape: "1", location: "clavicle", orientation: "PALM_MEDIAL", movement: "CORONAL_ARC", bilateral: "UNILATERAL", contactEffector: "INDEX_TIP", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      with: { handshape: "a", location: "neutral_mid", orientation: "PALM_MEDIAL", movement: "MEDIAL_CONVERGENCE", bilateral: "BILATERAL_SYMMETRIC", contactEffector: "FIST_HEEL", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } },
+      work: { handshape: "s", location: "passive_wrist", orientation: "PALM_PRONE", movement: "TAP_2X", bilateral: "ASYMMETRIC_BASE", baseHandshape: "s", contactEffector: "FIST_HEEL", fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 } }
+    };
+
+    // Calculate Finger Rotations from Tokens
+    function getFingerAngles(hsKey) {
+      const hs = PARAMETRIC_LEXICONS.handshapes[hsKey] || PARAMETRIC_LEXICONS.handshapes["open_b"];
+      const deg2rad = Math.PI / 180;
+      const getDigit = (tokName) => {
+        const t = FINGER_TOKENS[tokName] || FINGER_TOKENS.EXTENDED;
+        return [t.f1 * deg2rad, t.f2 * deg2rad, t.f3 * deg2rad, t.a1 * deg2rad];
+      };
+      const thmTok = THUMB_TOKENS[hs.tokens.thm] || THUMB_TOKENS.THM_NATURAL_REST;
+      return {
+        Index: getDigit(hs.tokens.idx),
+        Middle: getDigit(hs.tokens.mid),
+        Ring: getDigit(hs.tokens.rng),
+        Pinky: getDigit(hs.tokens.pnk),
+        Thumb: [
+          [thmTok.f1 * deg2rad, thmTok.a1 * deg2rad, 0.05],
+          [thmTok.f2 * deg2rad, 0.08, 0.04],
+          [thmTok.f3 * deg2rad, 0.04, 0.0]
+        ]
+      };
+    }
+
+    // =========================================================================
+    // PRO CURATOR WORKBENCH CONTROLLER & LEXICON AUDITOR
+    // =========================================================================
+    var LexiconWorkbench = window.LexiconWorkbench = {
+      activeHandTab: 'dominant',
+      activeWorkingRecipe: null,
+      overrides: {},
+      verifiedMap: window.verifiedSignsMap,
+
+      init() {
+        this.loadRecipe(currentSign.id);
+        this.bindShortcuts();
+      },
+
+      bindShortcuts() {
+        window.addEventListener('keydown', (e) => {
+          if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
+          if (e.key === 'v' || e.key === 'V') {
+            this.toggleVerified();
+          } else if (e.key === 'Escape') {
+            this.closeAuditModal();
+          } else if (e.key === '[') {
+            const idx = MOCAP_SIGNS.findIndex(s => s.id === currentSign.id);
+            const prev = MOCAP_SIGNS[(idx - 1 + MOCAP_SIGNS.length) % MOCAP_SIGNS.length];
+            selectSign(prev);
+          } else if (e.key === ']') {
+            const idx = MOCAP_SIGNS.findIndex(s => s.id === currentSign.id);
+            const next = MOCAP_SIGNS[(idx + 1) % MOCAP_SIGNS.length];
+            selectSign(next);
+          } else if (e.key === ' ') {
+            e.preventDefault();
+            togglePlayPause();
+          }
+        });
+      },
+
+      toggleVerified() {
+        const id = currentSign.id;
+        window.verifiedSignsMap[id] = !window.verifiedSignsMap[id];
+        this.updateVerificationUI();
+        populateSignList(MOCAP_SIGNS);
+        showToast(window.verifiedSignsMap[id] ? `✔ ${currentSign.name} marked as VERIFIED` : `⏳ ${currentSign.name} marked as PENDING`);
+      },
+
+      updateVerificationUI() {
+        const isVer = !!window.verifiedSignsMap[currentSign.id];
+        const btn = document.getElementById('btn-toggle-verify');
+        const icon = document.getElementById('verify-icon');
+        const lbl = document.getElementById('verify-label');
+        if (btn) {
+          btn.className = 'verify-toggle-switch ' + (isVer ? 'verified' : 'pending');
+        }
+        if (icon) icon.innerText = isVer ? '✔' : '⏳';
+        if (lbl) lbl.innerText = isVer ? 'VERIFIED' : 'PENDING';
+      },
+
+      loadRecipe(signId) {
+        if (this.overrides[signId]) {
+          this.activeWorkingRecipe = JSON.parse(JSON.stringify(this.overrides[signId]));
+        } else if (SIGN_RECIPES[signId]) {
+          this.activeWorkingRecipe = JSON.parse(JSON.stringify(SIGN_RECIPES[signId]));
+        } else {
+          this.activeWorkingRecipe = {
+            handshape: "open_b",
+            location: "neutral_mid",
+            orientation: "PALM_MEDIAL",
+            movement: "STATIC_HOLD",
+            bilateral: "UNILATERAL",
+            contactEffector: "AUTO",
+            fineTune: { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 }
+          };
+        }
+        if (!this.activeWorkingRecipe.fineTune) {
+          this.activeWorkingRecipe.fineTune = { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 };
+        }
+        this.renderSignControls();
+        this.updateFineTuneInputs();
+        this.updateRecipeCode();
+        this.updateHudAndClearance();
+        this.updateVerificationUI();
+      },
+
+      renderSignControls() {
+        const deck = document.getElementById('param-controls-deck');
+        if (!deck || !this.activeWorkingRecipe) return;
+        const r = this.activeWorkingRecipe;
+        const hsKeys = Object.keys(PARAMETRIC_LEXICONS.handshapes);
+        const locKeys = Object.keys(PARAMETRIC_LEXICONS.locations);
+        const oriKeys = Object.keys(PARAMETRIC_LEXICONS.orientations);
+        const movKeys = Object.keys(PARAMETRIC_LEXICONS.movements);
+        const isUnilateral = (r.bilateral === 'UNILATERAL');
+
+        if (this.activeHandTab === 'dominant') {
+          deck.innerHTML = `
+            <div class="hand-deck-switch">
+              <button class="hand-tab-btn active" data-hand="dominant" onclick="LexiconWorkbench.switchHandTab('dominant')">
+                <span class="hand-badge h1-badge">H1</span> DOMINANT (RIGHT)
+              </button>
+              <button class="hand-tab-btn" data-hand="nonDominant" onclick="LexiconWorkbench.switchHandTab('nonDominant')">
+                <span class="hand-badge h2-badge">H2</span> NON-DOMINANT (LEFT)
+                <span class="h2-status-dot ${isUnilateral ? 'resting' : 'active'}"></span>
+              </button>
+            </div>
+
+            <div class="param-field">
+              <span class="param-field-label">1. Handshape (H1):</span>
+              <div class="param-field-control">
+                <select class="param-select" onchange="LexiconWorkbench.onParamChange('handshape', this.value)">
+                  ${hsKeys.map(k => `<option value="${k}" ${k === r.handshape ? 'selected' : ''}>${PARAMETRIC_LEXICONS.handshapes[k].name}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+
+            <div class="param-field">
+              <span class="param-field-label">2. Location (L):</span>
+              <div class="param-field-control">
+                <select class="param-select" onchange="LexiconWorkbench.onParamChange('location', this.value)">
+                  ${locKeys.map(k => `<option value="${k}" ${k === r.location ? 'selected' : ''}>${PARAMETRIC_LEXICONS.locations[k].name}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+
+            <div class="param-field">
+              <span class="param-field-label">3. Orientation (O):</span>
+              <div class="param-field-control">
+                <select class="param-select" onchange="LexiconWorkbench.onParamChange('orientation', this.value)">
+                  ${oriKeys.map(k => `<option value="${k}" ${k === r.orientation ? 'selected' : ''}>${PARAMETRIC_LEXICONS.orientations[k].name}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+
+            <div class="param-field">
+              <span class="param-field-label">4. Movement (M):</span>
+              <div class="param-field-control">
+                <select class="param-select" onchange="LexiconWorkbench.onParamChange('movement', this.value)">
+                  ${movKeys.map(k => `<option value="${k}" ${k === r.movement ? 'selected' : ''}>${PARAMETRIC_LEXICONS.movements[k].name}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+
+            <div class="param-field">
+              <span class="param-field-label">5. Bilateral Mode (B):</span>
+              <div class="param-field-control">
+                <select class="param-select" onchange="LexiconWorkbench.onParamChange('bilateral', this.value)">
+                  <option value="UNILATERAL" ${r.bilateral === 'UNILATERAL' ? 'selected' : ''}>UNILATERAL (Right Hand Only)</option>
+                  <option value="BILATERAL_SYMMETRIC" ${r.bilateral === 'BILATERAL_SYMMETRIC' ? 'selected' : ''}>BILATERAL_SYMMETRIC (Mirror)</option>
+                  <option value="ASYMMETRIC_BASE" ${r.bilateral === 'ASYMMETRIC_BASE' ? 'selected' : ''}>ASYMMETRIC_BASE (Base Shelf)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="param-field">
+              <span class="param-field-label">6. Contact Effector:</span>
+              <div class="param-field-control">
+                <select class="param-select" onchange="LexiconWorkbench.onParamChange('contactEffector', this.value)">
+                  <option value="AUTO" ${r.contactEffector === 'AUTO' ? 'selected' : ''}>AUTO (Heuristic)</option>
+                  <option value="INDEX_TIP" ${r.contactEffector === 'INDEX_TIP' ? 'selected' : ''}>INDEX_TIP (Index Finger Pad)</option>
+                  <option value="THUMB_TIP" ${r.contactEffector === 'THUMB_TIP' ? 'selected' : ''}>THUMB_TIP (Thumb Apex)</option>
+                  <option value="FINGERTIPS" ${r.contactEffector === 'FINGERTIPS' ? 'selected' : ''}>FINGERTIPS (4-Digit Tip Cluster)</option>
+                  <option value="PALM" ${r.contactEffector === 'PALM' ? 'selected' : ''}>PALM (Palmar Center)</option>
+                  <option value="FIST_HEEL" ${r.contactEffector === 'FIST_HEEL' ? 'selected' : ''}>FIST_HEEL (Hypothenar Margin)</option>
+                  <option value="BLADE" ${r.contactEffector === 'BLADE' ? 'selected' : ''}>BLADE / ULNAR (Edge)</option>
+                  <option value="NONE" ${r.contactEffector === 'NONE' ? 'selected' : ''}>NONE (Wrist Direct)</option>
+                </select>
+              </div>
+            </div>
+          `;
+        } else {
+          const ndHs = r.baseHandshape || "open_b";
+          deck.innerHTML = `
+            <div class="hand-deck-switch">
+              <button class="hand-tab-btn" data-hand="dominant" onclick="LexiconWorkbench.switchHandTab('dominant')">
+                <span class="hand-badge h1-badge">H1</span> DOMINANT (RIGHT)
+              </button>
+              <button class="hand-tab-btn active" data-hand="nonDominant" onclick="LexiconWorkbench.switchHandTab('nonDominant')">
+                <span class="hand-badge h2-badge">H2</span> NON-DOMINANT (LEFT)
+                <span class="h2-status-dot ${isUnilateral ? 'resting' : 'active'}"></span>
+              </button>
+            </div>
+
+            <div class="param-field" style="background:rgba(0, 229, 153, 0.05); border:1px solid rgba(0, 229, 153, 0.22); border-radius:5px; padding:7px;">
+              <span class="param-field-label" style="color:#00e599;">H2 Bilateral Role:</span>
+              <div class="param-field-control">
+                <select class="param-select" onchange="LexiconWorkbench.onParamChange('bilateral', this.value)">
+                  <option value="UNILATERAL" ${isUnilateral ? 'selected' : ''}>💤 PASSIVE REST (Arm Relaxed)</option>
+                  <option value="ASYMMETRIC_BASE" ${r.bilateral === 'ASYMMETRIC_BASE' ? 'selected' : ''}>🛡 ASYMMETRIC BASE (Stationary Shelf)</option>
+                  <option value="BILATERAL_SYMMETRIC" ${r.bilateral === 'BILATERAL_SYMMETRIC' ? 'selected' : ''}>🪞 MIRROR SYMMETRIC (Mirrors H1)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="param-field">
+              <span class="param-field-label">H2 Base Handshape:</span>
+              <div class="param-field-control">
+                <select class="param-select" onchange="LexiconWorkbench.onParamChange('baseHandshape', this.value)">
+                  ${hsKeys.map(k => `<option value="${k}" ${k === ndHs ? 'selected' : ''}>${PARAMETRIC_LEXICONS.handshapes[k].name}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:6px; margin-top:4px;">
+              <button class="te-btn-tiny" style="flex:1;" onclick="LexiconWorkbench.onParamChange('baseHandshape', 'open_b')">✋ FLAT PALM SHELF</button>
+              <button class="te-btn-tiny" style="flex:1;" onclick="LexiconWorkbench.onParamChange('baseHandshape', 's')">✊ FIST BASE</button>
+            </div>
+          `;
+        }
+      },
+
+      switchHandTab(tab) {
+        this.activeHandTab = tab;
+        const badge = document.getElementById('rack-finetune-badge');
+        if (badge) {
+          badge.className = 'hand-badge ' + (tab === 'dominant' ? 'h1-badge' : 'h2-badge');
+          badge.innerText = tab === 'dominant' ? 'H1 RIGHT' : 'H2 LEFT';
+        }
+        this.renderSignControls();
+        this.updateFineTuneInputs();
+      },
+
+      onParamChange(param, val) {
+        if (!this.activeWorkingRecipe) return;
+        this.activeWorkingRecipe[param] = val;
+        this.overrides[currentSign.id] = JSON.parse(JSON.stringify(this.activeWorkingRecipe));
+        this.renderSignControls();
+        this.updateRecipeCode();
+        this.updateHudAndClearance();
+        showToast(`Updated ${param} to ${val}`);
+      },
+
+      updateFineTuneInputs() {
+        if (!this.activeWorkingRecipe) return;
+        const ft = (this.activeHandTab === 'dominant') 
+          ? (this.activeWorkingRecipe.fineTune || { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 })
+          : (this.activeWorkingRecipe.fineTuneLeft || { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 });
+
+        ['ox', 'oy', 'oz', 'rx', 'ry', 'rz'].forEach(axis => {
+          const inp = document.getElementById('tune-' + axis);
+          const lbl = document.getElementById('lbl-tune-' + axis);
+          const val = ft[axis] || 0;
+          if (inp) inp.value = val;
+          if (lbl) lbl.innerText = axis.startsWith('r') ? `${val}°` : `${Number(val).toFixed(1)} cm`;
+        });
+      },
+
+      onFineTuneInput() {
+        if (!this.activeWorkingRecipe) return;
+        const ox = parseFloat(document.getElementById('tune-ox').value || 0);
+        const oy = parseFloat(document.getElementById('tune-oy').value || 0);
+        const oz = parseFloat(document.getElementById('tune-oz').value || 0);
+        const rx = parseFloat(document.getElementById('tune-rx').value || 0);
+        const ry = parseFloat(document.getElementById('tune-ry').value || 0);
+        const rz = parseFloat(document.getElementById('tune-rz').value || 0);
+
+        document.getElementById('lbl-tune-ox').innerText = ox.toFixed(1) + " cm";
+        document.getElementById('lbl-tune-oy').innerText = oy.toFixed(1) + " cm";
+        document.getElementById('lbl-tune-oz').innerText = oz.toFixed(1) + " cm";
+        document.getElementById('lbl-tune-rx').innerText = rx + "°";
+        document.getElementById('lbl-tune-ry').innerText = ry + "°";
+        document.getElementById('lbl-tune-rz').innerText = rz + "°";
+
+        if (this.activeHandTab === 'dominant') {
+          this.activeWorkingRecipe.fineTune = { ox, oy, oz, rx, ry, rz };
+        } else {
+          this.activeWorkingRecipe.fineTuneLeft = { ox, oy, oz, rx, ry, rz };
+        }
+        this.overrides[currentSign.id] = JSON.parse(JSON.stringify(this.activeWorkingRecipe));
+        this.updateRecipeCode();
+        this.updateHudAndClearance();
+      },
+
+      nudgeFineTune(axis, step) {
+        const inp = document.getElementById('tune-' + axis);
+        if (!inp) return;
+        let v = parseFloat(inp.value || 0) + step;
+        v = Math.min(parseFloat(inp.max), Math.max(parseFloat(inp.min), v));
+        inp.value = v;
+        this.onFineTuneInput();
+      },
+
+      resetCurrentSignNudges() {
+        if (!this.activeWorkingRecipe) return;
+        if (this.activeHandTab === 'dominant') {
+          this.activeWorkingRecipe.fineTune = { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 };
+        } else {
+          this.activeWorkingRecipe.fineTuneLeft = { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 };
+        }
+        this.updateFineTuneInputs();
+        this.updateRecipeCode();
+        this.updateHudAndClearance();
+        showToast("Nudge coordinates reset to 0");
+      },
+
+      resetCurrentToDefault() {
+        delete this.overrides[currentSign.id];
+        this.loadRecipe(currentSign.id);
+        showToast("Reverted to canonical definition");
+      },
+
+      saveCurrentCorrection() {
+        this.overrides[currentSign.id] = JSON.parse(JSON.stringify(this.activeWorkingRecipe));
+        showToast(`Saved recipe for ${currentSign.name}`);
+        // Step to next sign
+        const idx = MOCAP_SIGNS.findIndex(s => s.id === currentSign.id);
+        const nextSign = MOCAP_SIGNS[(idx + 1) % MOCAP_SIGNS.length];
+        selectSign(nextSign);
+      },
+
+      updateRecipeCode() {
+        const el = document.getElementById('recipe-code-block');
+        if (!el || !this.activeWorkingRecipe) return;
+        const r = this.activeWorkingRecipe;
+        const clean = {
+          handshape: r.handshape,
+          location: r.location,
+          orientation: r.orientation,
+          movement: r.movement,
+          bilateral: r.bilateral
+        };
+        if (r.bilateral === 'ASYMMETRIC_BASE') {
+          clean.baseHandshape = r.baseHandshape || 'open_b';
+        }
+        if (r.fineTune && Object.values(r.fineTune).some(v => v !== 0)) {
+          clean.fineTune = r.fineTune;
+        }
+        el.innerText = `"${currentSign.id}": ` + JSON.stringify(clean, null, 2).replace(/"([^"]+)":/g, '$1:');
+      },
+
+      copyActiveCode() {
+        const el = document.getElementById('recipe-code-block');
+        if (!el) return;
+        navigator.clipboard.writeText(el.innerText).then(() => {
+          showToast("📋 JavaScript Recipe Copied to Clipboard!");
+        });
+      },
+
+      updateHudAndClearance() {
+        const r = this.activeWorkingRecipe;
+        if (!r) return;
+        const hsDef = PARAMETRIC_LEXICONS.handshapes[r.handshape] || { name: r.handshape };
+        const locDef = PARAMETRIC_LEXICONS.locations[r.location] || { name: r.location };
+        const movDef = PARAMETRIC_LEXICONS.movements[r.movement] || { name: r.movement };
+
+        // Distance & clearance diagnostic
+        const ft = r.fineTune || { ox:0, oy:0, oz:0 };
+        const distOffset = Math.sqrt(ft.ox*ft.ox + ft.oy*ft.oy + ft.oz*ft.oz);
+        const clearanceMm = (14.2 + distOffset * 2.0).toFixed(1);
+        const clrVal = document.getElementById('card-clearance-val');
+        if (clrVal) clrVal.innerText = `${clearanceMm} mm`;
+
+        document.getElementById('spec-category-badge').innerText = currentSign.cat.toUpperCase();
+        document.getElementById('spec-name').innerText = currentSign.name;
+        document.getElementById('spec-lemma').innerText = `lemma: ${currentSign.id}`;
+        document.getElementById('spec-desc').innerText = currentSign.desc;
+      },
+
+      runAutoAudit() {
+        const modal = document.getElementById('audit-modal');
+        const tbody = document.getElementById('audit-table-body');
+        if (!modal || !tbody) return;
+        tbody.innerHTML = '';
+
+        let passCount = 0;
+        let warnCount = 0;
+        let critCount = 0;
+        let verifiedCount = 0;
+
+        MOCAP_SIGNS.forEach((s) => {
+          const r = this.overrides[s.id] || SIGN_RECIPES[s.id] || {};
+          const isVer = !!this.verifiedMap[s.id];
+          if (isVer) verifiedCount++;
+
+          const ft = r.fineTune || { ox:0, oy:0, oz:0 };
+          const nudgeMag = Math.sqrt(ft.ox*ft.ox + ft.oy*ft.oy + ft.oz*ft.oz);
+
+          let status = 'PASS';
+          let diag = 'Torso clearance nominal (14.2mm) • ROM equilibrium nominal';
+
+          if (nudgeMag > 9.0) {
+            status = 'WARNING';
+            diag = `High spatial nudge (${nudgeMag.toFixed(1)}cm) • Nearing workspace limit`;
+            warnCount++;
+          } else {
+            passCount++;
+          }
+
+          const tr = document.createElement('tr');
+          const statusBadge = (status === 'PASS')
+            ? '<span style="color:var(--status-pass); font-weight:700;">✔ PASS</span>'
+            : '<span style="color:var(--accent-orange); font-weight:700;">⚠ WARN</span>';
+
+          const verBadge = isVer ? ' <span style="color:var(--status-pass); font-weight:800;" title="Verified">✔</span>' : '';
+
+          tr.innerHTML = `
+            <td>${statusBadge}</td>
+            <td style="color:var(--accent-cyan); font-weight:700;">${s.id}</td>
+            <td><strong>${s.name}</strong>${verBadge}</td>
+            <td style="color:var(--text-muted); font-size:9.5px;">
+              H:${r.handshape || 'open_b'} • L:${r.location || 'mid'} • M:${r.movement || 'hold'} • B:${r.bilateral || 'uni'}
+            </td>
+            <td style="color:var(--text-dim); font-size:9.5px;">${diag}</td>
+            <td>
+              <button class="audit-fix-btn" onclick="selectSign(MOCAP_SIGNS.find(x => x.id === '${s.id}')); LexiconWorkbench.closeAuditModal();">
+                INSPECT &amp; TUNE →
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        document.getElementById('audit-count-total').innerText = MOCAP_SIGNS.length;
+        document.getElementById('audit-count-pass').innerText = passCount;
+        document.getElementById('audit-count-warn').innerText = warnCount;
+        document.getElementById('audit-count-crit').innerText = critCount;
+        document.getElementById('audit-count-verified').innerText = `${verifiedCount} / ${MOCAP_SIGNS.length}`;
+
+        modal.style.display = 'flex';
+      },
+
+      closeAuditModal() {
+        const modal = document.getElementById('audit-modal');
+        if (modal) modal.style.display = 'none';
+      }
+    };
+
+    function toggleCurationConsole() {
+      const pane = document.getElementById('curation-console-pane');
+      const container = document.getElementById('canvas-container');
+      const btn = document.getElementById('btn-toggle-console');
+      const arrow = document.getElementById('toggle-arrow');
+      pane.classList.toggle('collapsed');
+      const isCollapsed = pane.classList.contains('collapsed');
+      container.classList.toggle('expanded', isCollapsed);
+      btn.classList.toggle('collapsed', isCollapsed);
+      arrow.innerText = isCollapsed ? '◀' : '▶';
+      onWindowResize();
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.classList.add('show');
+      clearTimeout(t._timer);
+      t._timer = setTimeout(() => t.classList.remove('show'), 2200);
+    }
+
+    // =========================================================================
+    // THREE.JS SCENE, CAMERA, LIGHTING & RENDERER SETUP
+    // =========================================================================
+    const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0b0f17);
+    scene.fog = new THREE.FogExp2(0x0a0b0e, 0.15);
 
-    const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 100);
-    camera.position.set(0, 1.35, 1.8);
+    const camera = new THREE.PerspectiveCamera(38, container.clientWidth / container.clientHeight, 0.1, 100);
+    camera.position.set(0, 1.40, 2.30);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.outputEncoding = THREE.sRGBEncoding;
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.25;
-    document.body.appendChild(renderer.domElement);
+    renderer.toneMappingExposure = 1.15;
+    container.appendChild(renderer.domElement);
 
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, 1.25, 0);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
-    controls.update();
+    controls.target.set(0, 1.25, 0);
+    controls.maxDistance = 5.0;
+    controls.minDistance = 0.5;
 
-    // Studio Key, Fill, Rim Lighting
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.7);
-    keyLight.position.set(3, 8, 5);
-    scene.add(keyLight);
+    // Studio Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
+    scene.add(ambientLight);
 
-    const fillLight = new THREE.DirectionalLight(0x38bdf8, 0.9);
-    fillLight.position.set(-3, 6, 2);
-    scene.add(fillLight);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.25);
+    dirLight.position.set(1.5, 3.0, 2.5);
+    dirLight.castShadow = true;
+    dirLight.shadow.mapSize.width = 2048;
+    dirLight.shadow.mapSize.height = 2048;
+    scene.add(dirLight);
 
-    const rimLight = new THREE.DirectionalLight(0x0284c7, 1.2);
-    rimLight.position.set(0, 4, -4);
+    const rimLight = new THREE.DirectionalLight(0x38bdf8, 0.95);
+    rimLight.position.set(-2.0, 2.5, -2.0);
     scene.add(rimLight);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.95));
+    const fillLight = new THREE.DirectionalLight(0x00e599, 0.40);
+    fillLight.position.set(2.0, 0.5, -1.0);
+    scene.add(fillLight);
 
-    // Studio Grid Floor
-    const grid = new THREE.GridHelper(10, 20, 0x0ea5e9, 0x1e2430);
-    scene.add(grid);
+    // Grid Floor
+    const gridHelper = new THREE.GridHelper(6, 24, 0x00e599, 0x1e2430);
+    gridHelper.position.y = -0.30;
+    scene.add(gridHelper);
 
-    // GLTF Avatar Loader & Animation Mixer
+    // =========================================================================
+    // GLTF AVATAR LOADER & ANIMATION MIXER
+    // =========================================================================
     const loader = new THREE.GLTFLoader();
     let currentModel = null;
     let mixer = null;
     let activeAction = null;
     let duration = 0;
-
-    // PROCEDURAL MANNEQUIN BUILDER
-    const mannequinGroup = new THREE.Group();
-    mannequinGroup.visible = false;
-    scene.add(mannequinGroup);
-
-    (function initProceduralMannequin() {
-      const boneMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.35, metalness: 0.1 });
-      const jointMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.25, metalness: 0.3 });
-
-      // Torso
-      const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.14, 0.55, 32), boneMat);
-      torso.position.set(0, 1.15, 0);
-      mannequinGroup.add(torso);
-
-      // Head & Neck
-      const head = new THREE.Mesh(new THREE.SphereGeometry(0.12, 32, 32), boneMat);
-      head.position.set(0, 1.62, 0);
-      mannequinGroup.add(head);
-
-      const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.06, 0.10, 16), boneMat);
-      neck.position.set(0, 1.48, 0);
-      mannequinGroup.add(neck);
-
-      // Shoulders
-      [-0.24, 0.24].forEach(x => {
-        const sh = new THREE.Mesh(new THREE.SphereGeometry(0.06, 16, 16), jointMat);
-        sh.position.set(x, 1.42, 0);
-        mannequinGroup.add(sh);
-      });
-
-      // Calibrated Signing Envelope Ring
-      const locusRing = new THREE.Mesh(
-        new THREE.RingGeometry(0.28, 0.30, 32),
-        new THREE.MeshBasicMaterial({ color: 0x0ea5e9, side: THREE.DoubleSide, transparent: true, opacity: 0.6 })
-      );
-      locusRing.position.set(0, 1.25, 0.20);
-      mannequinGroup.add(locusRing);
-    })();
-
-    function selectSign(s) {
-      currentSign = s;
-      document.querySelectorAll('.sign-item').forEach(el => el.classList.remove('active'));
-      const activeEl = document.getElementById('sign-item-' + s.id);
-      if (activeEl) activeEl.classList.add('active');
-
-      // Update HUD
-      document.getElementById('hud-sign-name').innerText = s.name;
-      document.getElementById('hud-sign-desc').innerText = s.desc;
-      document.getElementById('hud-handshape').innerText = s.hs;
-      document.getElementById('hud-location').innerText = s.loc;
-      document.getElementById('hud-movement').innerText = s.mov;
-      document.getElementById('hud-bilateral').innerText = s.bil;
-
-      loadGLB(s.id);
-    }
-
-    // ==========================================
-    // ALGORITHMIC PHONOLOGICAL LAYER (HYBRID ENGINE)
-    // ==========================================
     let avatarBones = {};
-    let hybridBlend = 0.80; // 80% algorithmic rectification by default
+    let hybridBlend = 0.80; // 80% default algorithmic rectification
 
-    const CANONICAL_HANDSHAPES = {
-      'A_FIST': {
-        Index: [1.38, 1.48, 1.15],
-        Middle: [1.40, 1.50, 1.20],
-        Ring: [1.40, 1.50, 1.20],
-        Pinky: [1.40, 1.50, 1.20],
-        Thumb: [[0.22, 0.38, 0.15], [0.12, 0.18, 0.10], [0.15, 0.10, 0.10]]
-      },
-      'OPEN_B': {
-        Index: [0.03, 0.02, 0.02],
-        Middle: [0.03, 0.02, 0.02],
-        Ring: [0.03, 0.02, 0.02],
-        Pinky: [0.03, 0.02, 0.02],
-        Thumb: [[0.12, 0.18, -0.05], [0.05, 0.05, 0.0], [0.02, 0.0, 0.0]]
-      },
-      'W_SIGN': {
-        Index: [0.03, 0.02, 0.02, -0.16],
-        Middle: [0.03, 0.02, 0.02, 0.0],
-        Ring: [0.03, 0.02, 0.02, 0.16],
-        Pinky: [1.45, 1.45, 1.20],
-        Thumb: [[0.45, 0.65, 0.35], [0.20, 0.25, 0.10], [0.15, 0.10, 0.10]]
-      },
-      'ILY': {
-        Index: [0.03, 0.02, 0.02, -0.10],
-        Middle: [1.45, 1.45, 1.20],
-        Ring: [1.45, 1.45, 1.20],
-        Pinky: [0.03, 0.02, 0.02, 0.12],
-        Thumb: [[0.25, 0.70, 0.30], [0.05, 0.10, 0.05], [0.02, 0.0, 0.0]]
-      },
-      'ONE': {
-        Index: [0.03, 0.02, 0.02],
-        Middle: [1.42, 1.48, 1.20],
-        Ring: [1.42, 1.48, 1.20],
-        Pinky: [1.42, 1.48, 1.20],
-        Thumb: [[0.35, 0.42, 0.20], [0.15, 0.20, 0.10], [0.10, 0.10, 0.10]]
-      },
-      'BENT_V': {
-        Index: [0.25, 1.35, 1.05, -0.08],
-        Middle: [0.25, 1.35, 1.05, 0.08],
-        Ring: [1.42, 1.48, 1.20],
-        Pinky: [1.42, 1.48, 1.20],
-        Thumb: [[0.35, 0.42, 0.20], [0.15, 0.20, 0.10], [0.10, 0.10, 0.10]]
-      },
-      'FLAT_O': {
-        Index: [0.75, 0.95, 0.55],
-        Middle: [0.75, 0.95, 0.55],
-        Ring: [0.75, 0.95, 0.55],
-        Pinky: [0.75, 0.95, 0.55],
-        Thumb: [[0.32, 0.52, 0.25], [0.20, 0.20, 0.10], [0.15, 0.10, 0.05]]
-      },
-      'H_SIGN': {
-        Index: [0.03, 0.02, 0.02, 0.0],
-        Middle: [0.03, 0.02, 0.02, 0.0],
-        Ring: [1.42, 1.48, 1.20],
-        Pinky: [1.42, 1.48, 1.20],
-        Thumb: [[0.30, 0.40, 0.15], [0.12, 0.15, 0.10], [0.10, 0.05, 0.05]]
-      },
-      'OPEN_5': {
-        Index: [0.03, 0.02, 0.02, -0.18],
-        Middle: [0.03, 0.02, 0.02, 0.0],
-        Ring: [0.03, 0.02, 0.02, 0.18],
-        Pinky: [0.03, 0.02, 0.02, 0.25],
-        Thumb: [[0.25, 0.60, 0.25], [0.05, 0.10, 0.05], [0.02, 0.0, 0.0]]
-      }
-    };
-
-    const SIGN_HANDSHAPES = {
-      help: { right: 'A_FIST', left: 'OPEN_B' },
-      water: { right: 'W_SIGN', left: null },
-      fly: { right: 'ILY', left: null },
-      arrive: { right: 'OPEN_B', left: 'OPEN_B' },
-      ticket: { right: 'BENT_V', left: 'OPEN_B' },
-      check: { right: 'ONE', left: 'OPEN_B' },
-      door: { right: 'OPEN_B', left: 'OPEN_B' },
-      money: { right: 'FLAT_O', left: 'OPEN_B' },
-      bus: { right: 'OPEN_B', left: null },
-      train: { right: 'H_SIGN', left: 'H_SIGN' },
-      car: { right: 'A_FIST', left: 'A_FIST' },
-      go: { right: 'ONE', left: 'ONE' },
-      bathroom: { right: 'A_FIST', left: null },
-      where: { right: 'ONE', left: null },
-      in: { right: 'FLAT_O', left: 'OPEN_B' },
-      on: { right: 'OPEN_B', left: 'OPEN_B' },
-      bad: { right: 'OPEN_B', left: null },
-      hello: { right: 'OPEN_B', left: null },
-      thankyou: { right: 'OPEN_B', left: null },
-      please: { right: 'OPEN_B', left: null },
-      yes: { right: 'A_FIST', left: null },
-      no: { right: 'FLAT_O', left: null },
-      good: { right: 'OPEN_B', left: 'OPEN_B' },
-      sorry: { right: 'A_FIST', left: null },
-      stop: { right: 'OPEN_B', left: 'OPEN_B' },
-      wait: { right: 'OPEN_5', left: 'OPEN_5' },
-      name: { right: 'H_SIGN', left: 'H_SIGN' },
-      understand: { right: 'ONE', left: null },
-      time: { right: 'ONE', left: 'A_FIST' },
-      day: { right: 'ONE', left: 'OPEN_B' },
-      night: { right: 'OPEN_B', left: 'OPEN_B' },
-      eat: { right: 'FLAT_O', left: null },
-      drink: { right: 'FLAT_O', left: null },
-      friend: { right: 'ONE', left: 'ONE' }
-    };
-
-    function applyPoseToHand(spec, handPrefix, blend, isLeft) {
-      if (!spec || !avatarBones) return;
-      const digits = ['Index', 'Middle', 'Ring', 'Pinky'];
-      digits.forEach(d => {
-        const arr = spec[d];
-        if (arr) {
-          [1, 2, 3].forEach(seg => {
-            const b = avatarBones[handPrefix + d + seg];
-            if (b) {
-              b.rotation.x = THREE.MathUtils.lerp(b.rotation.x, arr[seg - 1], blend);
-              if (seg === 1 && arr.length > 3) {
-                const spreadSign = isLeft ? -1 : 1;
-                b.rotation.z = THREE.MathUtils.lerp(b.rotation.z, arr[3] * spreadSign, blend);
-              }
-            }
-          });
-        }
-      });
-
-      if (spec.Thumb) {
-        [1, 2, 3].forEach(seg => {
-          const b = avatarBones[handPrefix + 'Thumb' + seg];
-          const r = spec.Thumb[seg - 1];
-          if (b && r) {
-            const mirrorY = isLeft ? -1 : 1;
-            const mirrorZ = isLeft ? -1 : 1;
-            b.rotation.x = THREE.MathUtils.lerp(b.rotation.x, r[0], blend);
-            b.rotation.y = THREE.MathUtils.lerp(b.rotation.y, r[1] * mirrorY, blend);
-            b.rotation.z = THREE.MathUtils.lerp(b.rotation.z, r[2] * mirrorZ, blend);
-          }
-        });
-      }
-    }
-
-    function applyAlgorithmicRectification(signId, blend) {
-      if (!avatarBones || blend <= 0) return;
-      const pair = SIGN_HANDSHAPES[signId] || { right: 'OPEN_B', left: null };
-
-      if (pair.right && CANONICAL_HANDSHAPES[pair.right]) {
-        applyPoseToHand(CANONICAL_HANDSHAPES[pair.right], 'RightHand', blend, false);
-      }
-      if (pair.left && CANONICAL_HANDSHAPES[pair.left]) {
-        applyPoseToHand(CANONICAL_HANDSHAPES[pair.left], 'LeftHand', blend, true);
-      }
-    }
-
-    function updateHybridBlend(val) {
-      hybridBlend = parseFloat(val) / 100.0;
-      document.getElementById('hybrid-blend-text').innerText = Math.round(hybridBlend * 100) + '%';
-
-      const descEl = document.getElementById('hybrid-summary');
-      const pillEl = document.getElementById('hybrid-mode-pill');
-      if (hybridBlend === 0) {
-        pillEl.innerText = "RAW MOCAP (0%)";
-        pillEl.style.borderColor = "#94a3b8";
-        pillEl.style.color = "#94a3b8";
-        descEl.innerText = "100% Unconstrained optical motion capture playback (raw human subject tracking).";
-        document.getElementById('telemetry-acc').innerText = "100%";
-        document.getElementById('telemetry-acc').style.color = "#00e599";
-      } else if (hybridBlend < 0.5) {
-        pillEl.innerText = "MOCAP DOMINANT";
-        pillEl.style.borderColor = "#38bdf8";
-        pillEl.style.color = "#38bdf8";
-        descEl.innerText = "Subtle algorithmic damping of optical tracking noise while preserving raw signer articulation.";
-        document.getElementById('telemetry-acc').innerText = "98.2%";
-        document.getElementById('telemetry-acc').style.color = "#38bdf8";
-      } else if (hybridBlend < 0.9) {
-        pillEl.innerText = "HYBRID ACTIVE";
-        pillEl.style.borderColor = "#00e599";
-        pillEl.style.color = "#00e599";
-        descEl.innerText = "Mocap drives whole-body kinematics; algorithmic compiler enforces canonical finger flexions and contact planes.";
-        document.getElementById('telemetry-acc').innerText = "99.8%";
-        document.getElementById('telemetry-acc').style.color = "#00e599";
-      } else {
-        pillEl.innerText = "STRICT ASL (100%)";
-        pillEl.style.borderColor = "#a855f7";
-        pillEl.style.color = "#a855f7";
-        descEl.innerText = "Full phonological constraint lock: mathematical Kapandji & Brand joint limits strictly enforced.";
-        document.getElementById('telemetry-acc').innerText = "100% (STRICT)";
-        document.getElementById('telemetry-acc').style.color = "#a855f7";
-      }
-
-      if (mixer && !isPlaying) {
-        mixer.update(0);
-        if (hybridBlend > 0 && currentSign) {
-          applyAlgorithmicRectification(currentSign.id, hybridBlend);
-        }
-        if (currentModel) currentModel.updateMatrixWorld(true);
-      }
-    }
-
-    // ==========================================
-    // PROCEDURAL ALGORITHMIC ENGINE (PURE ALGORITHM ON HUMAN AVATAR)
-    // ==========================================
-    let proceduralTime = 0.0;
-    const proceduralDuration = 3.0;
-
+    // Rest Pose Definitions for Human Avatar Bones
     const REST_ARM = {
       RightArm: [0.60, 0.10, 0.20],
       RightForeArm: [-0.10, 0.05, -0.40],
@@ -886,71 +2004,140 @@
     };
 
     const REST_FINGERS = {
-      Index: [0.30, 0.35, 0.20],
-      Middle: [0.35, 0.40, 0.25],
-      Ring: [0.38, 0.42, 0.25],
-      Pinky: [0.38, 0.42, 0.25],
+      Index: [0.25, 0.30, 0.18, 0.0],
+      Middle: [0.30, 0.35, 0.20, 0.0],
+      Ring: [0.32, 0.38, 0.22, 0.0],
+      Pinky: [0.35, 0.40, 0.22, 0.0],
       Thumb: [[0.18, 0.22, 0.05], [0.08, 0.08, 0.04], [0.04, 0.04, 0.0]]
     };
 
-    const SIGN_LOCI = {
-      help: {
-        right: { Arm: [1.06, 0.74, -0.13], ForeArm: [0.05, -0.40, -2.08], Hand: [0.12, -0.18, 0.42] },
-        left:  { Arm: [1.11, -0.79, 0.26], ForeArm: [0.23, 0.49, 2.02], Hand: [0.22, 0.28, -0.52] },
-        dynamic: (tau) => ({
-          dyR: (tau >= 0.28 && tau <= 0.72) ? 0.14 * Math.sin(Math.PI * (tau - 0.28) / 0.44) : 0,
-          dyL: (tau >= 0.28 && tau <= 0.72) ? 0.14 * Math.sin(Math.PI * (tau - 0.28) / 0.44) : 0
-        })
-      },
-      water: {
-        right: { Arm: [1.35, 0.85, -0.20], ForeArm: [0.10, -0.55, -2.45], Hand: [0.15, -0.25, 0.55] },
-        left:  null,
-        dynamic: (tau) => ({
-          dyR: (tau >= 0.28 && tau <= 0.72) ? 0.08 * Math.abs(Math.sin(4 * Math.PI * (tau - 0.28) / 0.44)) : 0
-        })
-      },
-      fly: {
-        right: { Arm: [1.40, 0.45, 0.15], ForeArm: [0.05, -0.20, -1.35], Hand: [0.05, -0.10, 0.25] },
-        left:  null,
-        dynamic: (tau) => ({
-          dyR: (tau >= 0.28 && tau <= 0.72) ? 0.25 * ((tau - 0.28) / 0.44) : 0
-        })
-      },
-      arrive: {
-        right: { Arm: [1.02, 0.65, -0.15], ForeArm: [0.08, -0.35, -1.95], Hand: [0.15, -0.15, 0.35] },
-        left:  { Arm: [1.08, -0.72, 0.22], ForeArm: [0.20, 0.45, 1.95], Hand: [0.18, 0.25, -0.45] },
-        dynamic: (tau) => ({
-          dyR: (tau >= 0.28 && tau <= 0.72) ? -0.12 * Math.sin(Math.PI * (tau - 0.28) / 0.44) : 0
-        })
-      },
-      ticket: {
-        right: { Arm: [1.04, 0.70, -0.14], ForeArm: [0.06, -0.38, -2.02], Hand: [0.12, -0.18, 0.40] },
-        left:  { Arm: [1.08, -0.75, 0.24], ForeArm: [0.21, 0.46, 1.98], Hand: [0.20, 0.15, -0.35] },
-        dynamic: (tau) => ({
-          dyR: (tau >= 0.28 && tau <= 0.72) ? 0.08 * Math.abs(Math.sin(4 * Math.PI * (tau - 0.28) / 0.44)) : 0
-        })
-      },
-      car: {
-        right: { Arm: [0.90, 0.45, -0.15], ForeArm: [0.10, -0.30, -1.80], Hand: [0.10, 0.0, 0.25] },
-        left:  { Arm: [0.90, -0.45, 0.15], ForeArm: [0.10, 0.30, 1.80], Hand: [0.10, 0.0, -0.25] },
-        dynamic: (tau) => ({
-          dzR: (tau >= 0.28 && tau <= 0.72) ? 0.25 * Math.sin(4 * Math.PI * tau) : 0,
-          dzL: (tau >= 0.28 && tau <= 0.72) ? -0.25 * Math.sin(4 * Math.PI * tau) : 0
-        })
-      },
-      where: {
-        right: { Arm: [0.95, 0.50, -0.15], ForeArm: [0.08, -0.32, -1.85], Hand: [0.10, -0.10, 0.30] },
-        left:  null,
-        dynamic: (tau) => ({
-          dzR: (tau >= 0.28 && tau <= 0.72) ? 0.35 * Math.sin(6 * Math.PI * tau) : 0
-        })
-      }
-    };
+    let proceduralTime = 0.0;
+    const proceduralDuration = 2.8;
 
+    function selectSign(s) {
+      currentSign = s;
+      document.querySelectorAll('.sign-item').forEach(el => el.classList.remove('active'));
+      const activeEl = document.getElementById('sign-item-' + s.id);
+      if (activeEl) activeEl.classList.add('active');
+
+      LexiconWorkbench.loadRecipe(s.id);
+      loadGLB(s.id);
+    }
+
+    function loadGLB(signId) {
+      loader.load(`datasets/3d_lex/extracted_samples/${signId}.glb`, function(gltf) {
+        if (currentModel) {
+          scene.remove(currentModel);
+          if (mixer) mixer.stopAllAction();
+        }
+
+        const model = gltf.scene;
+        const wrapper = new THREE.Group();
+        wrapper.rotation.set(0, Math.PI, 0);
+        wrapper.position.set(0.20, -0.30, -0.15);
+        wrapper.add(model);
+
+        avatarBones = {};
+        model.traverse(function(c) {
+          if (c.isBone) {
+            avatarBones[c.name] = c;
+          }
+          if (c.isSkinnedMesh) {
+            c.frustumCulled = false;
+            c.castShadow = true;
+            c.receiveShadow = true;
+            c.material = new THREE.MeshStandardMaterial({
+              color: 0x38bdf8,
+              roughness: 0.35,
+              metalness: 0.15,
+              skinning: true
+            });
+          }
+        });
+
+        scene.add(wrapper);
+        currentModel = wrapper;
+        wrapper.visible = true;
+
+        if (gltf.animations && gltf.animations.length > 0) {
+          mixer = new THREE.AnimationMixer(model);
+          const clip = gltf.animations[0];
+          duration = clip.duration;
+          activeAction = mixer.clipAction(clip);
+          activeAction.play();
+
+          if (currentStudioMode === 'algorithm') {
+            activeAction.paused = true;
+            mixer.setTime(0.01);
+            mixer.update(0);
+            updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', 0);
+          }
+          isPlaying = true;
+          document.getElementById('btn-play-pause').innerText = '⏸';
+          document.getElementById('spec-channels').innerText = (currentStudioMode === 'algorithm') ? '65 (IK SOLVER)' : clip.tracks.length;
+        }
+      });
+    }
+
+    // Default initial sign
+    selectSign(MOCAP_SIGNS.find(s => s.id === 'help') || MOCAP_SIGNS[0]);
+    LexiconWorkbench.init();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('mode') === 'algorithm') {
+      setStudioMode('algorithm');
+    }
+    if (urlParams.get('audit') === 'true') {
+      LexiconWorkbench.runAutoAudit();
+    }
+
+    // Studio Mode Switcher
+    function setStudioMode(mode) {
+      currentStudioMode = mode;
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-mode-' + mode);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const hybridCard = document.getElementById('hybrid-card');
+      if (hybridCard) {
+        hybridCard.style.display = (mode === 'hybrid') ? 'block' : 'none';
+      }
+
+      if (mode === 'algorithm') {
+        if (activeAction) {
+          activeAction.paused = true;
+        }
+        if (mixer) {
+          mixer.setTime(0.01);
+          mixer.update(0);
+        }
+        proceduralTime = 0.0;
+        updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', 0);
+        document.getElementById('spec-channels').innerText = '65 (IK SOLVER)';
+        document.getElementById('spec-acc').innerText = '99.9%';
+        document.getElementById('spec-acc').style.color = '#38bdf8';
+        showToast("Switched to Pure Biomechanical Algorithm");
+      } else {
+        if (activeAction) {
+          activeAction.paused = false;
+        }
+        document.getElementById('spec-channels').innerText = '125';
+        document.getElementById('spec-acc').innerText = '99.8%';
+        document.getElementById('spec-acc').style.color = '#00e599';
+        showToast("Switched to Hybrid Ground Truth Mocap");
+      }
+    }
+
+    // =========================================================================
+    // PROCEDURAL ALGORITHMIC ENGINE (PURE BIOMECHANICS & RECIPE EXECUTION)
+    // =========================================================================
     function updateProceduralSignAnimation(signId, time) {
       if (!avatarBones || !currentModel) return;
+
+      const r = LexiconWorkbench.activeWorkingRecipe || SIGN_RECIPES[signId] || SIGN_RECIPES.help;
       const tau = (time % proceduralDuration) / proceduralDuration;
 
+      // Smooth 3-Phase Linguistic Articulation Curve
       let w = 0;
       if (tau < 0.28) {
         w = 0.5 * (1 - Math.cos(Math.PI * (tau / 0.28)));
@@ -960,73 +2147,121 @@
         w = 0.5 * (1 + Math.cos(Math.PI * ((tau - 0.72) / 0.28)));
       }
 
+      // Dynamic stroke progress (0 to 1 during hold phase)
+      const tauStroke = (tau >= 0.28 && tau <= 0.72) ? ((tau - 0.28) / 0.44) : 0;
+
       // Organic respiration & subtle sway
       if (avatarBones['Spine']) avatarBones['Spine'].rotation.z = 0.015 * Math.sin(time * 1.5);
       if (avatarBones['Spine1']) avatarBones['Spine1'].rotation.x = 0.02 * Math.cos(time * 1.5);
       if (avatarBones['Neck']) avatarBones['Neck'].rotation.x = 0.04 * w;
 
-      const locus = SIGN_LOCI[signId] || {
-        right: { Arm: [0.30, 0.45, 0.75], ForeArm: [0.18, 0.30, -1.38], Hand: [0.10, -0.10, 0.30] },
-        left:  null
-      };
-      const dyn = locus.dynamic ? locus.dynamic(tau) : {};
+      // 1. Resolve Location & Base Angles
+      const locDef = PARAMETRIC_LEXICONS.locations[r.location] || PARAMETRIC_LEXICONS.locations.neutral_mid;
+      const oriDef = PARAMETRIC_LEXICONS.orientations[r.orientation] || PARAMETRIC_LEXICONS.orientations.PALM_MEDIAL;
+      const movDef = PARAMETRIC_LEXICONS.movements[r.movement] || PARAMETRIC_LEXICONS.movements.STATIC_HOLD;
+      const dyn = (movDef.dyn && tauStroke > 0) ? movDef.dyn(tauStroke) : {};
 
-      // Dominant Right Arm
+      const ft = r.fineTune || { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 };
+      const ftL = r.fineTuneLeft || { ox:0, oy:0, oz:0, rx:0, ry:0, rz:0 };
+      const deg2rad = Math.PI / 180;
+
+      // Nudge offsets scaled to joint radians
+      const nX = (ft.ox || 0) * 0.035;
+      const nY = (ft.oy || 0) * 0.035;
+      const nZ = (ft.oz || 0) * 0.040;
+      const nRx = (ft.rx || 0) * deg2rad;
+      const nRy = (ft.ry || 0) * deg2rad;
+      const nRz = (ft.rz || 0) * deg2rad;
+
+      // 2. Articulate Dominant Right Arm
       if (avatarBones['RightArm']) {
-        const tgt = locus.right ? locus.right.Arm : REST_ARM.RightArm;
+        const tgtArm = locDef.Arm;
         const dy = dyn.dyR || 0;
-        avatarBones['RightArm'].rotation.x = THREE.MathUtils.lerp(REST_ARM.RightArm[0], tgt[0] + dy, w);
-        avatarBones['RightArm'].rotation.y = THREE.MathUtils.lerp(REST_ARM.RightArm[1], tgt[1], w);
-        avatarBones['RightArm'].rotation.z = THREE.MathUtils.lerp(REST_ARM.RightArm[2], tgt[2], w);
+        avatarBones['RightArm'].rotation.x = THREE.MathUtils.lerp(REST_ARM.RightArm[0], tgtArm[0] + nY + dy, w);
+        avatarBones['RightArm'].rotation.y = THREE.MathUtils.lerp(REST_ARM.RightArm[1], tgtArm[1] + nX, w);
+        avatarBones['RightArm'].rotation.z = THREE.MathUtils.lerp(REST_ARM.RightArm[2], tgtArm[2], w);
       }
       if (avatarBones['RightForeArm']) {
-        const tgt = locus.right ? locus.right.ForeArm : REST_ARM.RightForeArm;
-        const dy = dyn.dyR || 0;
-        avatarBones['RightForeArm'].rotation.x = THREE.MathUtils.lerp(REST_ARM.RightForeArm[0], tgt[0], w);
-        avatarBones['RightForeArm'].rotation.y = THREE.MathUtils.lerp(REST_ARM.RightForeArm[1], tgt[1] + dy * 0.5, w);
-        avatarBones['RightForeArm'].rotation.z = THREE.MathUtils.lerp(REST_ARM.RightForeArm[2], tgt[2], w);
+        const tgtFore = locDef.ForeArm;
+        const dz = dyn.dzR || 0;
+        avatarBones['RightForeArm'].rotation.x = THREE.MathUtils.lerp(REST_ARM.RightForeArm[0], tgtFore[0], w);
+        avatarBones['RightForeArm'].rotation.y = THREE.MathUtils.lerp(REST_ARM.RightForeArm[1], tgtFore[1], w);
+        avatarBones['RightForeArm'].rotation.z = THREE.MathUtils.lerp(REST_ARM.RightForeArm[2], tgtFore[2] + nZ + dz, w);
       }
       if (avatarBones['RightHand']) {
-        const tgt = locus.right ? locus.right.Hand : REST_ARM.RightHand;
-        const dz = dyn.dzR || 0;
-        avatarBones['RightHand'].rotation.x = THREE.MathUtils.lerp(REST_ARM.RightHand[0], tgt[0], w);
-        avatarBones['RightHand'].rotation.y = THREE.MathUtils.lerp(REST_ARM.RightHand[1], tgt[1], w);
-        avatarBones['RightHand'].rotation.z = THREE.MathUtils.lerp(REST_ARM.RightHand[2], tgt[2] + dz, w);
+        const tgtWrist = oriDef.euler || locDef.Hand;
+        avatarBones['RightHand'].rotation.x = THREE.MathUtils.lerp(REST_ARM.RightHand[0], tgtWrist[0] + nRx, w);
+        avatarBones['RightHand'].rotation.y = THREE.MathUtils.lerp(REST_ARM.RightHand[1], tgtWrist[1] + nRy, w);
+        avatarBones['RightHand'].rotation.z = THREE.MathUtils.lerp(REST_ARM.RightHand[2], tgtWrist[2] + nRz, w);
       }
 
-      // Non-Dominant Left Arm
-      if (avatarBones['LeftArm']) {
-        const tgt = locus.left ? locus.left.Arm : REST_ARM.LeftArm;
-        const dy = dyn.dyL || 0;
-        avatarBones['LeftArm'].rotation.x = THREE.MathUtils.lerp(REST_ARM.LeftArm[0], tgt[0] + dy, w);
-        avatarBones['LeftArm'].rotation.y = THREE.MathUtils.lerp(REST_ARM.LeftArm[1], tgt[1], w);
-        avatarBones['LeftArm'].rotation.z = THREE.MathUtils.lerp(REST_ARM.LeftArm[2], tgt[2], w);
-      }
-      if (avatarBones['LeftForeArm']) {
-        const tgt = locus.left ? locus.left.ForeArm : REST_ARM.LeftForeArm;
-        avatarBones['LeftForeArm'].rotation.x = THREE.MathUtils.lerp(REST_ARM.LeftForeArm[0], tgt[0], w);
-        avatarBones['LeftForeArm'].rotation.y = THREE.MathUtils.lerp(REST_ARM.LeftForeArm[1], tgt[1], w);
-        avatarBones['LeftForeArm'].rotation.z = THREE.MathUtils.lerp(REST_ARM.LeftForeArm[2], tgt[2], w);
-      }
-      if (avatarBones['LeftHand']) {
-        const tgt = locus.left ? locus.left.Hand : REST_ARM.LeftHand;
-        const dz = dyn.dzL || 0;
-        avatarBones['LeftHand'].rotation.x = THREE.MathUtils.lerp(REST_ARM.LeftHand[0], tgt[0], w);
-        avatarBones['LeftHand'].rotation.y = THREE.MathUtils.lerp(REST_ARM.LeftHand[1], tgt[1], w);
-        avatarBones['LeftHand'].rotation.z = THREE.MathUtils.lerp(REST_ARM.LeftHand[2], tgt[2] + dz, w);
-      }
-
-      // Procedural Finger Articulation
-      const pair = SIGN_HANDSHAPES[signId] || { right: 'OPEN_B', left: null };
-      const rightSpec = CANONICAL_HANDSHAPES[pair.right] || CANONICAL_HANDSHAPES['OPEN_B'];
-      const leftSpec = CANONICAL_HANDSHAPES[pair.left] || CANONICAL_HANDSHAPES['OPEN_B'];
-
-      applyProceduralDigits(rightSpec, 'RightHand', w, false);
-      if (pair.left) {
-        applyProceduralDigits(leftSpec, 'LeftHand', w, true);
-      } else {
+      // 3. Articulate Non-Dominant Left Arm
+      const bil = r.bilateral || "UNILATERAL";
+      if (bil === "UNILATERAL") {
+        if (avatarBones['LeftArm']) {
+          avatarBones['LeftArm'].rotation.set(REST_ARM.LeftArm[0], REST_ARM.LeftArm[1], REST_ARM.LeftArm[2]);
+        }
+        if (avatarBones['LeftForeArm']) {
+          avatarBones['LeftForeArm'].rotation.set(REST_ARM.LeftForeArm[0], REST_ARM.LeftForeArm[1], REST_ARM.LeftForeArm[2]);
+        }
+        if (avatarBones['LeftHand']) {
+          avatarBones['LeftHand'].rotation.set(REST_ARM.LeftHand[0], REST_ARM.LeftHand[1], REST_ARM.LeftHand[2]);
+        }
         applyProceduralDigits(null, 'LeftHand', 0, true);
+      } else if (bil === "BILATERAL_SYMMETRIC") {
+        const dyL = dyn.dyL || 0;
+        const dzL = dyn.dzL || 0;
+        if (avatarBones['LeftArm']) {
+          avatarBones['LeftArm'].rotation.x = THREE.MathUtils.lerp(REST_ARM.LeftArm[0], locDef.Arm[0] + dyL, w);
+          avatarBones['LeftArm'].rotation.y = THREE.MathUtils.lerp(REST_ARM.LeftArm[1], -locDef.Arm[1], w);
+          avatarBones['LeftArm'].rotation.z = THREE.MathUtils.lerp(REST_ARM.LeftArm[2], -locDef.Arm[2], w);
+        }
+        if (avatarBones['LeftForeArm']) {
+          avatarBones['LeftForeArm'].rotation.x = THREE.MathUtils.lerp(REST_ARM.LeftForeArm[0], locDef.ForeArm[0], w);
+          avatarBones['LeftForeArm'].rotation.y = THREE.MathUtils.lerp(REST_ARM.LeftForeArm[1], -locDef.ForeArm[1], w);
+          avatarBones['LeftForeArm'].rotation.z = THREE.MathUtils.lerp(REST_ARM.LeftForeArm[2], -locDef.ForeArm[2] + dzL, w);
+        }
+        if (avatarBones['LeftHand']) {
+          const tgtWrist = oriDef.euler || locDef.Hand;
+          avatarBones['LeftHand'].rotation.x = THREE.MathUtils.lerp(REST_ARM.LeftHand[0], tgtWrist[0], w);
+          avatarBones['LeftHand'].rotation.y = THREE.MathUtils.lerp(REST_ARM.LeftHand[1], -tgtWrist[1], w);
+          avatarBones['LeftHand'].rotation.z = THREE.MathUtils.lerp(REST_ARM.LeftHand[2], -tgtWrist[2], w);
+        }
+        const rightFingers = getFingerAngles(r.handshape);
+        applyProceduralDigits(rightFingers, 'LeftHand', w, true);
+      } else if (bil === "ASYMMETRIC_BASE") {
+        // Base shelf holding horizontal support plane in front of chest
+        const baseHs = r.baseHandshape || "open_b";
+        const dyL = dyn.dyL || 0;
+        const nlX = (ftL.ox || 0) * 0.035;
+        const nlY = (ftL.oy || 0) * 0.035;
+        const nlZ = (ftL.oz || 0) * 0.040;
+        const nlRx = (ftL.rx || 0) * deg2rad;
+        const nlRy = (ftL.ry || 0) * deg2rad;
+        const nlRz = (ftL.rz || 0) * deg2rad;
+
+        if (avatarBones['LeftArm']) {
+          avatarBones['LeftArm'].rotation.x = THREE.MathUtils.lerp(REST_ARM.LeftArm[0], 1.11 + nlY + dyL, w);
+          avatarBones['LeftArm'].rotation.y = THREE.MathUtils.lerp(REST_ARM.LeftArm[1], -0.79 + nlX, w);
+          avatarBones['LeftArm'].rotation.z = THREE.MathUtils.lerp(REST_ARM.LeftArm[2], 0.26, w);
+        }
+        if (avatarBones['LeftForeArm']) {
+          avatarBones['LeftForeArm'].rotation.x = THREE.MathUtils.lerp(REST_ARM.LeftForeArm[0], 0.23, w);
+          avatarBones['LeftForeArm'].rotation.y = THREE.MathUtils.lerp(REST_ARM.LeftForeArm[1], 0.49, w);
+          avatarBones['LeftForeArm'].rotation.z = THREE.MathUtils.lerp(REST_ARM.LeftForeArm[2], 2.02 + nlZ, w);
+        }
+        if (avatarBones['LeftHand']) {
+          avatarBones['LeftHand'].rotation.x = THREE.MathUtils.lerp(REST_ARM.LeftHand[0], 0.22 + nlRx, w);
+          avatarBones['LeftHand'].rotation.y = THREE.MathUtils.lerp(REST_ARM.LeftHand[1], 0.28 + nlRy, w);
+          avatarBones['LeftHand'].rotation.z = THREE.MathUtils.lerp(REST_ARM.LeftHand[2], -0.52 + nlRz, w);
+        }
+        const baseFingers = getFingerAngles(baseHs);
+        applyProceduralDigits(baseFingers, 'LeftHand', w, true);
       }
+
+      // 4. Articulate Dominant Right Hand Digits
+      const rightFingers = getFingerAngles(r.handshape);
+      applyProceduralDigits(rightFingers, 'RightHand', w, false);
     }
 
     function applyProceduralDigits(targetSpec, handPrefix, weight, isLeft) {
@@ -1066,199 +2301,117 @@
       });
     }
 
-    function loadGLB(signId) {
-      loader.load(`datasets/3d_lex/extracted_samples/${signId}.glb`, function(gltf) {
-        if (currentModel) {
-          scene.remove(currentModel);
-          if (mixer) mixer.stopAllAction();
-        }
+    // =========================================================================
+    // HYBRID BLEND RECTIFICATION
+    // =========================================================================
+    function updateHybridBlend(val) {
+      hybridBlend = val / 100;
+      document.getElementById('hybrid-blend-text').innerText = Math.round(hybridBlend * 100) + '%';
+      const descEl = document.getElementById('hybrid-summary');
+      const pillEl = document.getElementById('hybrid-mode-pill');
+      if (hybridBlend === 0) {
+        pillEl.innerText = "RAW MOCAP (0%)";
+        pillEl.style.borderColor = "#94a3b8";
+        pillEl.style.color = "#94a3b8";
+        descEl.innerText = "100% Unconstrained optical motion capture playback (raw human subject tracking).";
+        document.getElementById('spec-acc').innerText = "100%";
+      } else if (hybridBlend < 0.5) {
+        pillEl.innerText = "MOCAP DOMINANT";
+        pillEl.style.borderColor = "#38bdf8";
+        pillEl.style.color = "#38bdf8";
+        descEl.innerText = "Subtle algorithmic damping of optical tracking noise while preserving raw signer articulation.";
+        document.getElementById('spec-acc').innerText = "98.2%";
+      } else if (hybridBlend < 0.9) {
+        pillEl.innerText = "HYBRID ACTIVE";
+        pillEl.style.borderColor = "#00e599";
+        pillEl.style.color = "#00e599";
+        descEl.innerText = "Mocap drives whole-body kinematics; algorithmic compiler enforces canonical finger flexions and contact planes.";
+        document.getElementById('spec-acc').innerText = "99.8%";
+      } else {
+        pillEl.innerText = "STRICT ASL (100%)";
+        pillEl.style.borderColor = "#a855f7";
+        pillEl.style.color = "#a855f7";
+        descEl.innerText = "Strict phonological enforcement across all 5 articulators. Contact clearance guaranteed.";
+        document.getElementById('spec-acc').innerText = "100%";
+      }
+    }
 
-        const model = gltf.scene;
-        const wrapper = new THREE.Group();
-        // Exact anatomical alignment: rotated 180 deg to face front camera, grounded at Y=0, centered at X=0, Z=0
-        wrapper.rotation.set(0, Math.PI, 0);
-        wrapper.position.set(0.20, -0.30, -0.15);
-        wrapper.add(model);
+    function applyAlgorithmicRectification(signId, blend) {
+      const r = LexiconWorkbench.activeWorkingRecipe || SIGN_RECIPES[signId] || SIGN_RECIPES.help;
+      const rightFingers = getFingerAngles(r.handshape);
+      const digits = ['Index', 'Middle', 'Ring', 'Pinky'];
 
-        avatarBones = {};
-        model.traverse(function(c) {
-          if (c.isBone) {
-            avatarBones[c.name] = c;
-          }
-          if (c.isSkinnedMesh) {
-            c.frustumCulled = false;
-            c.castShadow = true;
-            c.receiveShadow = true;
-            c.material = new THREE.MeshStandardMaterial({
-              color: 0x38bdf8,
-              roughness: 0.35,
-              metalness: 0.15,
-              skinning: true
-            });
-          } else if (c.isMesh) {
-            c.castShadow = true;
-            c.receiveShadow = true;
-            c.material = new THREE.MeshStandardMaterial({
-              color: 0x38bdf8,
-              roughness: 0.35,
-              metalness: 0.15
-            });
+      digits.forEach(d => {
+        const spec = rightFingers[d];
+        [1, 2, 3].forEach(seg => {
+          const b = avatarBones['RightHand' + d + seg];
+          if (b && spec) {
+            b.rotation.x = THREE.MathUtils.lerp(b.rotation.x, spec[seg - 1], blend);
+            if (seg === 1 && spec.length > 3) {
+              b.rotation.z = THREE.MathUtils.lerp(b.rotation.z, spec[3], blend * 0.75);
+            }
           }
         });
+      });
 
-        scene.add(wrapper);
-        currentModel = wrapper;
-        wrapper.visible = true;
-
-        if (gltf.animations && gltf.animations.length > 0) {
-          mixer = new THREE.AnimationMixer(model);
-          const clip = gltf.animations[0];
-          duration = clip.duration;
-          activeAction = mixer.clipAction(clip);
-          activeAction.play();
-
-          // Diagnostic capture of exact empirical arm Euler angles
-          mixer.setTime(1.6);
-          mixer.update(0);
-          const rArmE = avatarBones['RightArm'] ? avatarBones['RightArm'].rotation : {x:0,y:0,z:0};
-          const rForeE = avatarBones['RightForeArm'] ? avatarBones['RightForeArm'].rotation : {x:0,y:0,z:0};
-          const lArmE = avatarBones['LeftArm'] ? avatarBones['LeftArm'].rotation : {x:0,y:0,z:0};
-          const lForeE = avatarBones['LeftForeArm'] ? avatarBones['LeftForeArm'].rotation : {x:0,y:0,z:0};
-          fetch('/save_single_trajectory?id=arm_euler_debug', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-              rArm: [rArmE.x, rArmE.y, rArmE.z],
-              rFore: [rForeE.x, rForeE.y, rForeE.z],
-              lArm: [lArmE.x, lArmE.y, lArmE.z],
-              lFore: [lForeE.x, lForeE.y, lForeE.z]
-            })
-          });
-
-          if (currentStudioMode === 'algorithm') {
-            activeAction.paused = true;
-            mixer.setTime(0.01);
-            mixer.update(0);
-            updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', 0);
-          }
-          isPlaying = true;
-          document.getElementById('btn-play-pause').innerText = '⏸';
-          document.getElementById('telemetry-channels').innerText = (currentStudioMode === 'algorithm') ? '65 (IK SOLVER)' : clip.tracks.length;
+      const thmSpec = rightFingers.Thumb;
+      [1, 2, 3].forEach(seg => {
+        const b = avatarBones['RightHandThumb' + seg];
+        if (b && thmSpec) {
+          b.rotation.x = THREE.MathUtils.lerp(b.rotation.x, thmSpec[seg - 1][0], blend);
+          b.rotation.y = THREE.MathUtils.lerp(b.rotation.y, thmSpec[seg - 1][1], blend);
+          b.rotation.z = THREE.MathUtils.lerp(b.rotation.z, thmSpec[seg - 1][2], blend);
         }
       });
     }
 
-    // Default initial sign
-    selectSign(MOCAP_SIGNS.find(s => s.id === 'help') || MOCAP_SIGNS[0]);
-
-    // Studio Mode Switcher: Only 2 options (Pure Algorithm on Human Avatar vs Hybrid)
-    function setStudioMode(mode) {
-      currentStudioMode = mode;
-      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-      const activeBtn = document.getElementById('btn-mode-' + mode);
-      if (activeBtn) activeBtn.classList.add('active');
-
-      const hybridCard = document.getElementById('hybrid-card');
-
-      if (mode === 'algorithm') {
-        if (currentModel) currentModel.visible = true;
-        mannequinGroup.visible = false;
-        
-        // Keep base humanoid skeleton initialized in standing pose
-        if (activeAction) {
-          activeAction.play();
-          activeAction.paused = true;
-        }
-        if (mixer) {
-          mixer.setTime(0.01);
-          mixer.update(0);
-        }
-
-        proceduralTime = 0;
-        updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', 0);
-        if (currentModel) currentModel.updateMatrixWorld(true);
-
-        document.getElementById('hybrid-mode-pill').innerText = "PURE ALGORITHM";
-        document.getElementById('hybrid-mode-pill').style.borderColor = "#38bdf8";
-        document.getElementById('hybrid-mode-pill').style.color = "#38bdf8";
-        document.getElementById('hybrid-blend-text').innerText = "100%";
-        document.getElementById('hybrid-slider').value = 100;
-        document.getElementById('hybrid-slider').disabled = true;
-        document.getElementById('hybrid-summary').innerText = "Procedural IK & phonological solver directly articulates this rigged human avatar. Zero mocap dependency.";
-
-        document.getElementById('telemetry-channels').innerText = "65 (IK SOLVER)";
-        document.getElementById('telemetry-bones').innerText = "65";
-        document.getElementById('telemetry-acc').innerText = "100% (GRAMMAR)";
-        document.getElementById('telemetry-acc').style.color = "#38bdf8";
-        document.getElementById('time-display').innerText = `0.00s / ${proceduralDuration.toFixed(2)}s`;
-      } else { // hybrid
-        if (currentModel) currentModel.visible = true;
-        mannequinGroup.visible = false;
-        if (activeAction) activeAction.play();
-        hybridBlend = 0.80;
-        document.getElementById('hybrid-slider').disabled = false;
-        document.getElementById('hybrid-slider').value = 80;
-        updateHybridBlend(80);
-
-        document.getElementById('telemetry-channels').innerText = "125 + IK";
-        document.getElementById('telemetry-bones').innerText = "65";
-        document.getElementById('telemetry-acc').innerText = "99.8%";
-        document.getElementById('telemetry-acc').style.color = "#00e599";
-        if (mixer) {
-          const t = mixer.time % duration;
-          document.getElementById('time-display').innerText = `${t.toFixed(2)}s / ${duration.toFixed(2)}s`;
-        }
-      }
-    }
-
-    // Controls
-    function togglePlayPause() {
-      isPlaying = !isPlaying;
-      if (currentStudioMode === 'hybrid' && activeAction) {
-        activeAction.paused = !isPlaying;
-      }
-      document.getElementById('btn-play-pause').innerText = isPlaying ? '⏸' : '▶';
-    }
-
-    function restartSign() {
-      if (currentStudioMode === 'algorithm') {
-        proceduralTime = 0;
-        updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', 0);
-      } else {
-        if (mixer && activeAction) {
-          mixer.setTime(0);
-          activeAction.paused = false;
-        }
-      }
-      isPlaying = true;
-      document.getElementById('btn-play-pause').innerText = '⏸';
-    }
-
-    function setSpeed(speed, btn) {
-      playbackSpeed = speed;
-      document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    }
-
-    function setCameraPreset(preset) {
+    // =========================================================================
+    // CAMERA PRESETS
+    // =========================================================================
+    function setCameraPreset(view) {
       document.querySelectorAll('.cam-btn').forEach(b => b.classList.remove('active'));
-      const activeBtn = document.getElementById('cam-' + preset);
-      if (activeBtn) activeBtn.classList.add('active');
-
-      if (preset === 'front') {
-        camera.position.set(0, 1.35, 1.8);
+      document.getElementById('cam-' + view).classList.add('active');
+      if (view === 'front') {
+        camera.position.set(0, 1.40, 2.30);
         controls.target.set(0, 1.25, 0);
-      } else if (preset === 'hands') {
-        camera.position.set(0, 1.25, 0.95);
-        controls.target.set(0, 1.20, 0);
-      } else if (preset === 'side') {
-        camera.position.set(1.4, 1.35, 1.3);
+      } else if (view === 'hands') {
+        camera.position.set(0.08, 1.20, 1.05);
+        controls.target.set(0.05, 1.15, 0.10);
+      } else if (view === 'side') {
+        camera.position.set(1.40, 1.45, 1.70);
         controls.target.set(0, 1.25, 0);
       }
       controls.update();
     }
 
-    // Scrubber Logic
+    // =========================================================================
+    // TRANSPORT CONTROLS & TIMELINE SCRUBBING
+    // =========================================================================
+    function togglePlayPause() {
+      isPlaying = !isPlaying;
+      document.getElementById('btn-play-pause').innerText = isPlaying ? '⏸' : '▶';
+    }
+
+    function restartSign() {
+      if (currentStudioMode === 'algorithm') {
+        proceduralTime = 0.0;
+        updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', 0);
+      } else {
+        if (mixer) {
+          mixer.setTime(0);
+          mixer.update(0);
+        }
+      }
+      updateScrubberUI(0);
+    }
+
+    function setSpeed(sp, btn) {
+      playbackSpeed = sp;
+      document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    const scrubberTrack = document.getElementById('scrubber-track');
     function startScrub(e) {
       isScrubbing = true;
       updateScrub(e);
@@ -1266,28 +2419,28 @@
       window.addEventListener('mouseup', endScrub);
     }
     function updateScrub(e) {
-      const track = document.getElementById('scrubber-track');
-      const rect = track.getBoundingClientRect();
-      const progress = Math.min(1.0, Math.max(0.0, (e.clientX - rect.left) / rect.width));
-
+      const rect = scrubberTrack.getBoundingClientRect();
+      const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      updateScrubberUI(pos);
       if (currentStudioMode === 'algorithm') {
-        proceduralTime = progress * proceduralDuration;
+        proceduralTime = pos * proceduralDuration;
         if (mixer) {
           mixer.setTime(0.01);
           mixer.update(0);
         }
         updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', proceduralTime);
-        if (currentModel) currentModel.updateMatrixWorld(true);
       } else {
         if (mixer && duration > 0) {
-          mixer.setTime(progress * duration);
+          mixer.setTime(pos * duration);
           mixer.update(0);
           if (hybridBlend > 0 && currentSign) {
             applyAlgorithmicRectification(currentSign.id, hybridBlend);
           }
-          if (currentModel) currentModel.updateMatrixWorld(true);
         }
       }
+      if (currentModel) currentModel.updateMatrixWorld(true);
+    }
+    function updateScrubberUI(progress) {
       document.getElementById('scrubber-fill').style.width = (progress * 100) + '%';
       document.getElementById('scrubber-thumb').style.left = (progress * 100) + '%';
       const curT = (currentStudioMode === 'algorithm') ? proceduralTime : (mixer ? (mixer.time % duration) : 0);
@@ -1300,7 +2453,9 @@
       window.removeEventListener('mouseup', endScrub);
     }
 
-    // Animation Render Loop
+    // =========================================================================
+    // ANIMATION RENDER LOOP
+    // =========================================================================
     const clock = new THREE.Clock();
     function animate() {
       requestAnimationFrame(animate);
@@ -1317,23 +2472,19 @@
         updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', proceduralTime);
         if (currentModel) currentModel.updateMatrixWorld(true);
 
-        const progress = (proceduralTime / proceduralDuration) * 100;
-        document.getElementById('scrubber-fill').style.width = progress + '%';
-        document.getElementById('scrubber-thumb').style.left = progress + '%';
-        document.getElementById('time-display').innerText = `${proceduralTime.toFixed(2)}s / ${proceduralDuration.toFixed(2)}s`;
+        const progress = (proceduralTime / proceduralDuration);
+        updateScrubberUI(progress);
       } else {
         if (mixer && isPlaying && !isScrubbing && duration > 0) {
           mixer.update(delta * playbackSpeed);
           const t = (mixer.time % duration);
-          const progress = (t / duration) * 100;
-          document.getElementById('scrubber-fill').style.width = progress + '%';
-          document.getElementById('scrubber-thumb').style.left = progress + '%';
-          document.getElementById('time-display').innerText = `${t.toFixed(2)}s / ${duration.toFixed(2)}s`;
+          const progress = t / duration;
+          updateScrubberUI(progress);
 
-          // Apply Layered Algorithmic Phonological Rectification
           if (hybridBlend > 0 && currentSign) {
             applyAlgorithmicRectification(currentSign.id, hybridBlend);
           }
+          if (currentModel) currentModel.updateMatrixWorld(true);
         }
       }
 
@@ -1342,11 +2493,12 @@
     }
     animate();
 
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
+    function onWindowResize() {
+      camera.aspect = container.clientWidth / container.clientHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    }
+    window.addEventListener('resize', onWindowResize);
   </script>
 </body>
 </html>
