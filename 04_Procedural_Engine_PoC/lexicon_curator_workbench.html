@@ -127,6 +127,177 @@
       padding-left: 10px;
     }
 
+    /* UNIVERSAL HEADER SEARCH BAR */
+    .header-search-container {
+      position: relative;
+      flex: 1;
+      max-width: 580px;
+      margin: 0 16px;
+    }
+    .search-input-wrap {
+      display: flex;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 242, 254, 0.35);
+      border-radius: 24px;
+      padding: 3px 5px 3px 13px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+    .search-input-wrap:focus-within {
+      border-color: #00f2fe;
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.35), 0 4px 20px rgba(0, 0, 0, 0.6);
+      background: rgba(15, 23, 42, 0.98);
+    }
+    .search-pulse-dot {
+      width: 7px; height: 7px;
+      background: #00f2fe;
+      border-radius: 50%;
+      margin-right: 10px;
+      box-shadow: 0 0 8px #00f2fe;
+      animation: pulse 1.8s infinite;
+      flex-shrink: 0;
+    }
+    #asl-search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-family: var(--font-sans);
+      font-size: 11.5px;
+      letter-spacing: 0.02em;
+    }
+    #asl-search-input::placeholder {
+      color: #64748b;
+      font-size: 11px;
+    }
+    .search-submit-btn {
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.25), rgba(0, 229, 153, 0.25));
+      border: 1px solid rgba(0, 242, 254, 0.5);
+      color: #00f2fe;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      padding: 5px 13px;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .search-submit-btn:hover {
+      background: linear-gradient(135deg, #00f2fe, #00e599);
+      color: #050811;
+      box-shadow: 0 0 12px rgba(0, 242, 254, 0.5);
+    }
+
+    /* AUTOCOMPLETE DROPDOWN */
+    .search-dropdown-menu {
+      position: absolute;
+      top: 42px;
+      left: 0;
+      right: 0;
+      background: rgba(15, 23, 42, 0.96);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 242, 254, 0.25);
+      border-radius: 10px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7);
+      padding: 6px;
+      z-index: 100;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.12s;
+    }
+    .dropdown-item:hover, .dropdown-item.active {
+      background: rgba(0, 242, 254, 0.15);
+    }
+    .dropdown-item-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .dropdown-item-name {
+      font-weight: 700;
+      font-size: 12px;
+      color: #fff;
+    }
+    .dropdown-item-sub {
+      font-size: 10px;
+      color: #64748b;
+    }
+    .dropdown-item-badge {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      color: #00e599;
+      background: rgba(0, 229, 153, 0.12);
+      border: 1px solid rgba(0, 229, 153, 0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* QUICK PROMPTS CHIP BAR */
+    .quick-prompts-bar {
+      position: absolute;
+      top: 58px;
+      left: 296px;
+      right: 360px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 35;
+      overflow-x: auto;
+      padding: 4px 0;
+      scrollbar-width: none;
+    }
+    .quick-prompts-bar::-webkit-scrollbar { display: none; }
+    .prompt-hint {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 800;
+      color: #64748b;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+    .prompt-chip {
+      background: rgba(15, 23, 42, 0.70);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #94a3b8;
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .prompt-chip:hover {
+      background: rgba(0, 242, 254, 0.15);
+      border-color: rgba(0, 242, 254, 0.4);
+      color: #00f2fe;
+    }
+    .prompt-chip.special {
+      border-color: rgba(168, 85, 247, 0.35);
+      color: #c084fc;
+      background: rgba(168, 85, 247, 0.1);
+    }
+    .prompt-chip.special:hover {
+      background: rgba(168, 85, 247, 0.25);
+      border-color: #a855f7;
+      color: #fff;
+    }
+
     /* LEFT SIDEBAR: SIGNS DECK */
     #sidebar {
       position: absolute;
@@ -947,8 +1118,24 @@
   <header id="header">
     <div class="brand-left">
       <span class="badge-gt"><span class="pulse-dot"></span> ⚡ 60 FPS GROUND TRUTH</span>
-      <span class="title-text">SAMMY // BIOMECHANICAL ASL GROUND TRUTH STUDIO</span>
+      <span class="title-text">SAMMY // ASL STUDIO</span>
     </div>
+
+    <!-- CENTER UNIVERSAL SIGN SEARCH BAR -->
+    <div class="header-search-container">
+      <div class="search-input-wrap">
+        <span class="search-pulse-dot"></span>
+        <input type="text" id="asl-search-input" 
+               placeholder="Sign any word, sentence, or proper noun (e.g. 'help', 'where is bathroom', 'sammy')..." 
+               autocomplete="off"
+               onkeydown="if(event.key === 'Enter') executeAslSearch()"
+               oninput="onSearchInputChange(this.value)" />
+        <button id="btn-search-go" class="search-submit-btn" onclick="executeAslSearch()">SIGN ↵</button>
+      </div>
+      <!-- Autocomplete Dropdown -->
+      <div id="search-dropdown" class="search-dropdown-menu" style="display:none;"></div>
+    </div>
+
     <div style="display:flex; align-items:center; gap:10px;">
       <button class="audit-header-btn" onclick="LexiconWorkbench.runAutoAudit()" title="Run Fast Automated Kinematic Clearance & Phonology Audit">
         ⚡ AUDIT LEXICON (34)
@@ -959,6 +1146,18 @@
       </div>
     </div>
   </header>
+
+  <!-- QUICK PROMPTS CHIP BAR -->
+  <div class="quick-prompts-bar">
+    <span class="prompt-hint">⚡ TRY:</span>
+    <button class="prompt-chip" onclick="executeAslSearch('help')">Help</button>
+    <button class="prompt-chip" onclick="executeAslSearch('where is bathroom')">Where is bathroom</button>
+    <button class="prompt-chip" onclick="executeAslSearch('can you help me')">Can you help me</button>
+    <button class="prompt-chip" onclick="executeAslSearch('ticket and money')">Ticket &amp; Money</button>
+    <button class="prompt-chip" onclick="executeAslSearch('flight arrive now')">Flight arrive now</button>
+    <button class="prompt-chip special" onclick="executeAslSearch('sammy')">🔤 Spelled: Sammy</button>
+    <button class="prompt-chip special" onclick="executeAslSearch('paris')">🔤 Spelled: Paris</button>
+  </div>
 
   <!-- LEFT SIDEBAR: SIGNS DECK -->
   <aside id="sidebar">
@@ -1913,15 +2112,299 @@
     let proceduralTime = 0.0;
     const proceduralDuration = 2.8;
 
-    function selectSign(s) {
+    // =========================================================================
+    // UNIVERSAL ASL SEARCH, SEMANTIC SYNONYM MATCHING & SEQUENCING ENGINE
+    // =========================================================================
+    const ASL_SYNONYM_MAP = {
+      'help': 'help', 'assist': 'help', 'assistance': 'help', 'support': 'help', 'aid': 'help', 'rescue': 'help',
+      'fly': 'fly', 'airplane': 'fly', 'plane': 'fly', 'flight': 'fly', 'jet': 'fly', 'airport': 'fly', 'aviation': 'fly', 'takeoff': 'fly',
+      'bathroom': 'bathroom', 'restroom': 'bathroom', 'toilet': 'bathroom', 'washroom': 'bathroom', 'lavatory': 'bathroom', 'wc': 'bathroom',
+      'water': 'water', 'drink': 'water', 'beverage': 'water', 'hydrate': 'water', 'thirsty': 'water', 'aqua': 'water',
+      'car': 'car', 'automobile': 'car', 'drive': 'car', 'driving': 'car', 'vehicle': 'car', 'auto': 'car',
+      'ticket': 'ticket', 'boarding': 'ticket', 'pass': 'ticket', 'card': 'ticket', 'admission': 'ticket',
+      'door': 'door', 'gate': 'door', 'exit': 'door', 'entrance': 'door', 'entry': 'door', 'portal': 'door',
+      'money': 'money', 'cash': 'money', 'pay': 'money', 'dollar': 'money', 'currency': 'money', 'cost': 'money', 'price': 'money', 'fare': 'money',
+      'bus': 'bus', 'shuttle': 'bus', 'coach': 'bus', 'transit': 'bus',
+      'train': 'train', 'railway': 'train', 'subway': 'train', 'metro': 'train', 'rail': 'train',
+      'arrive': 'arrive', 'arrival': 'arrive', 'land': 'arrive', 'landing': 'arrive', 'destination': 'arrive', 'here': 'arrive', 'reach': 'arrive',
+      'go': 'go', 'depart': 'go', 'leave': 'go', 'move': 'go', 'walk': 'go', 'traveling': 'go', 'heading': 'go',
+      'check': 'check', 'verify': 'check', 'inspect': 'check', 'inspection': 'check', 'security': 'check', 'scan': 'check', 'confirm': 'check',
+      'please': 'please', 'kindly': 'please', 'polite': 'please', 'request': 'please',
+      'yes': 'yes', 'sure': 'yes', 'ok': 'yes', 'okay': 'yes', 'correct': 'yes', 'agree': 'yes', 'yep': 'yes', 'true': 'yes', 'fine': 'yes',
+      'no': 'no', 'nope': 'no', 'negative': 'no', 'deny': 'no', 'refuse': 'no',
+      'not': 'not', 'dont': 'not', 'never': 'not', 'cannot': 'not', "can't": 'not', 'wont': 'not',
+      'now': 'now', 'today': 'now', 'current': 'now', 'present': 'now', 'immediately': 'now', 'soon': 'now',
+      'minute': 'minute', 'time': 'minute', 'clock': 'minute', 'hour': 'minute', 'wait': 'minute', 'moment': 'minute', 'second': 'minute',
+      'want': 'want', 'need': 'want', 'desire': 'want', 'require': 'want', 'wish': 'want',
+      'know': 'know', 'understand': 'know', 'comprehend': 'know', 'familiar': 'know', 'remember': 'know', 'learn': 'know',
+      'see': 'see', 'look': 'see', 'watch': 'see', 'view': 'see', 'observe': 'see', 'sight': 'see', 'visual': 'see',
+      'work': 'work', 'job': 'work', 'labor': 'work', 'duty': 'work', 'task': 'work', 'busy': 'work',
+      'make': 'make', 'create': 'make', 'build': 'make', 'produce': 'make', 'construct': 'make', 'fix': 'make',
+      'finish': 'finish', 'done': 'finish', 'complete': 'finish', 'completed': 'finish', 'ended': 'finish', 'stop': 'finish', 'halt': 'finish',
+      'can': 'can', 'able': 'can', 'capable': 'can', 'could': 'can', 'may': 'can', 'possible': 'can',
+      'bad': 'bad', 'terrible': 'bad', 'awful': 'bad', 'poor': 'bad', 'sick': 'bad', 'ill': 'bad', 'pain': 'bad', 'hurt': 'bad',
+      'you': 'you', 'your': 'you', 'yourself': 'you',
+      'we': 'we', 'us': 'we', 'our': 'we', 'ourselves': 'we',
+      'in': 'in', 'inside': 'in', 'within': 'in', 'into': 'in',
+      'on': 'on', 'upon': 'on', 'above': 'on', 'surface': 'on',
+      'with': 'with', 'together': 'with', 'along': 'with',
+      'all': 'all', 'everyone': 'all', 'everybody': 'all', 'everything': 'all', 'entire': 'all', 'whole': 'all',
+      'where': 'where', 'location': 'where', 'place': 'where', 'which': 'where'
+    };
+
+    const FINGERSPELL_MAP = {
+      a: 'a', b: 'open_b', c: 'c', d: '1', e: 'flat_o', f: 'f', g: '1', h: 'h',
+      i: 'ily', j: 'ily', k: 'v', l: 'ily', m: 's', n: 't', o: 'o', p: 'v',
+      q: '1', r: 'v', s: 's', t: 't', u: 'h', v: 'v', w: 'w', x: 'bent_1', y: 'y', z: '1'
+    };
+
+    let signQueue = [];
+    let signQueueIndex = 0;
+    let isFingerspelling = false;
+    let fingerspellQueue = [];
+    let fingerspellIndex = 0;
+    let fingerspellTimer = 0;
+    let currentSpelledWord = '';
+    const LETTER_DURATION = 0.70;
+
+    function selectSign(s, keepQueue) {
+      if (!keepQueue) {
+        signQueue = [];
+        isFingerspelling = false;
+      }
       currentSign = s;
       document.querySelectorAll('.sign-item').forEach(el => el.classList.remove('active'));
       const activeEl = document.getElementById('sign-item-' + s.id);
       if (activeEl) activeEl.classList.add('active');
 
+      if (!keepQueue) {
+        const nameEl = document.getElementById('hud-sign-name');
+        if (nameEl) nameEl.innerText = s.name;
+        const catEl = document.getElementById('hud-sign-cat');
+        if (catEl) catEl.innerText = (s.cat || 'COMMON').toUpperCase();
+        const descEl = document.getElementById('hud-sign-desc');
+        if (descEl) descEl.innerText = s.desc;
+      }
+
       LexiconWorkbench.loadRecipe(s.id);
       loadGLB(s.id);
     }
+
+    function executeAslSearch(text) {
+      const inputEl = document.getElementById('asl-search-input');
+      const raw = (text !== undefined ? text : (inputEl ? inputEl.value : '')).trim();
+      if (!raw) return;
+      if (inputEl) inputEl.value = raw;
+      closeSearchDropdown();
+
+      isFingerspelling = false;
+      fingerspellQueue = [];
+
+      const cleanStr = raw.toLowerCase().replace(/[^a-z0-9\s]/g, '');
+      const tokens = cleanStr.split(/\s+/).filter(Boolean);
+      if (tokens.length === 0) return;
+
+      // 1. Single word query
+      if (tokens.length === 1) {
+        const word = tokens[0];
+        const mappedId = ASL_SYNONYM_MAP[word];
+        if (mappedId) {
+          const signObj = GROUND_TRUTH_SIGNS.find(s => s.id === mappedId);
+          if (signObj) {
+            signQueue = [];
+            selectSign(signObj);
+            showToast(`⚡ Signing "${signObj.name}"`);
+            return;
+          }
+        }
+        // Fallback: Fingerspell any unmapped word!
+        startFingerspelling(word);
+        return;
+      }
+
+      // 2. Multi-word phrase or sentence
+      const fillerWords = new Set(['is', 'the', 'a', 'an', 'to', 'of', 'and', 'my', 'your', 'for']);
+      const sequence = [];
+      tokens.forEach(tok => {
+        if (fillerWords.has(tok)) return;
+        const mapped = ASL_SYNONYM_MAP[tok];
+        if (mapped && !sequence.includes(mapped)) {
+          sequence.push(mapped);
+        }
+      });
+
+      if (sequence.length > 0) {
+        signQueue = sequence;
+        signQueueIndex = 0;
+        playQueueStep();
+        showToast(`⚡ Multi-Sign Sequence: ${sequence.map(s => s.toUpperCase()).join(' ➔ ')}`);
+      } else {
+        // Unknown multi-word phrase: spell first key token
+        startFingerspelling(tokens[0]);
+      }
+    }
+
+    function playQueueStep() {
+      if (signQueueIndex >= signQueue.length) {
+        signQueue = [];
+        return;
+      }
+      const signId = signQueue[signQueueIndex];
+      const signObj = GROUND_TRUTH_SIGNS.find(s => s.id === signId);
+      if (signObj) {
+        selectSign(signObj, true);
+        updateQueueHud(signQueue, signQueueIndex);
+      }
+    }
+
+    function updateQueueHud(queue, index) {
+      const nameEl = document.getElementById('hud-sign-name');
+      if (nameEl) nameEl.innerText = queue[index].toUpperCase();
+      const catEl = document.getElementById('hud-sign-cat');
+      if (catEl) catEl.innerText = `SEQUENCE (${index + 1}/${queue.length})`;
+      const descEl = document.getElementById('hud-sign-desc');
+      if (descEl) {
+        const pillsHtml = queue.map((sId, i) => {
+          const isActive = (i === index);
+          return `<span style="display:inline-block; font-family:var(--font-mono); font-size:10px; font-weight:800; padding:2px 7px; margin:2px; border-radius:4px; ${isActive ? 'background:#00e599; color:#000; box-shadow:0 0 10px #00e599;' : 'background:rgba(255,255,255,0.08); color:#94a3b8;'}">${sId.toUpperCase()}</span>`;
+        }).join(' ➔ ');
+        descEl.innerHTML = `<div style="margin-bottom:4px; color:#00e599; font-weight:700;">Multi-Sign Sequence Queue:</div><div>${pillsHtml}</div>`;
+      }
+    }
+
+    function startFingerspelling(word) {
+      isFingerspelling = true;
+      signQueue = [];
+      currentSpelledWord = word;
+      if (mixer) mixer.stopAllAction();
+      isPlaying = true;
+      fingerspellQueue = word.toLowerCase().replace(/[^a-z]/g, '').split('');
+      if (fingerspellQueue.length === 0) fingerspellQueue = ['a'];
+      fingerspellIndex = 0;
+      fingerspellTimer = 0;
+
+      showToast(`🔤 Fingerspelling "${word.toUpperCase()}" (${fingerspellQueue.length} letters)`);
+      updateFingerspellHud(word);
+    }
+
+    function updateFingerspellHud(word) {
+      const nameEl = document.getElementById('hud-sign-name');
+      if (nameEl) nameEl.innerText = word.toUpperCase();
+      const catEl = document.getElementById('hud-sign-cat');
+      if (catEl) catEl.innerText = 'FINGERSPELLING';
+      const descEl = document.getElementById('hud-sign-desc');
+      if (descEl) {
+        const lettersHtml = fingerspellQueue.map((ltr, idx) => {
+          const isActive = (idx === fingerspellIndex);
+          return `<span style="display:inline-block; font-family:var(--font-mono); font-size:12px; font-weight:800; padding:2px 7px; margin:2px; border-radius:4px; ${isActive ? 'background:#00f2fe; color:#000; box-shadow:0 0 10px #00f2fe;' : 'background:rgba(255,255,255,0.08); color:#94a3b8;'}">${ltr.toUpperCase()}</span>`;
+        }).join('');
+        descEl.innerHTML = `<div style="margin-bottom:4px; color:#38bdf8; font-weight:700;">Manual Alphabet Articulation:</div><div>${lettersHtml}</div>`;
+      }
+    }
+
+    function animateFingerspelling(delta) {
+      if (!isFingerspelling || fingerspellQueue.length === 0) return;
+      fingerspellTimer += delta * playbackSpeed;
+      if (fingerspellTimer >= LETTER_DURATION) {
+        fingerspellTimer = 0;
+        fingerspellIndex++;
+        if (fingerspellIndex >= fingerspellQueue.length) {
+          fingerspellIndex = 0;
+        }
+        updateFingerspellHud(currentSpelledWord);
+      }
+
+      // Maintain upright standing posture for torso, spine, and lower body
+      if (window.neutralStandingPose) {
+        for (const b in window.neutralStandingPose) {
+          if (avatarBones[b]) {
+            avatarBones[b].position.copy(window.neutralStandingPose[b].pos);
+            avatarBones[b].quaternion.copy(window.neutralStandingPose[b].quat);
+          }
+        }
+      } else {
+        if (avatarBones['Hips']) avatarBones['Hips'].quaternion.set(0.050, 0.719, 0.692, 0.033);
+      }
+
+      // Pose Right Arm in the standard ASL fingerspelling box (in front of right shoulder/chest)
+      const nod = 0.04 * Math.sin(fingerspellTimer * 12);
+      if (avatarBones['RightArm']) avatarBones['RightArm'].rotation.set(1.22, 0.12, -0.15);
+      if (avatarBones['RightForeArm']) avatarBones['RightForeArm'].rotation.set(0.45, 0.35, -2.05);
+      if (avatarBones['RightHand']) avatarBones['RightHand'].rotation.set(0.18 + nod, -0.85, 0.25);
+
+      // Left Arm relaxed naturally at side
+      if (avatarBones['LeftArm']) avatarBones['LeftArm'].rotation.set(1.35, 0.10, -0.05);
+      if (avatarBones['LeftForeArm']) avatarBones['LeftForeArm'].rotation.set(0.15, 0.05, 0.20);
+      if (avatarBones['LeftHand']) avatarBones['LeftHand'].rotation.set(0.05, 0, 0);
+      applyProceduralDigits(null, 'LeftHand', 0, true);
+
+      // Articulate active letter
+      const ltr = fingerspellQueue[fingerspellIndex] || 'a';
+      const hsKey = FINGERSPELL_MAP[ltr] || 'a';
+      const rightFingers = getFingerAngles(hsKey);
+      applyProceduralDigits(rightFingers, 'RightHand', 1.0, false);
+
+      stabilizeHipsAtOrigin();
+      if (currentModel) currentModel.updateMatrixWorld(true);
+
+      const progress = (fingerspellIndex + (fingerspellTimer / LETTER_DURATION)) / fingerspellQueue.length;
+      document.getElementById('scrubber-fill').style.width = (progress * 100) + '%';
+      document.getElementById('scrubber-thumb').style.left = (progress * 100) + '%';
+      const totalSpelledTime = fingerspellQueue.length * LETTER_DURATION;
+      const curSpelledTime = fingerspellIndex * LETTER_DURATION + fingerspellTimer;
+      document.getElementById('time-display').innerText = `${curSpelledTime.toFixed(2)}s / ${totalSpelledTime.toFixed(2)}s`;
+    }
+
+    function onSearchInputChange(val) {
+      const q = val.trim().toLowerCase();
+      const dd = document.getElementById('search-dropdown');
+      if (!dd) return;
+      if (!q) { dd.style.display = 'none'; return; }
+
+      const matches = [];
+      const seenIds = new Set();
+
+      GROUND_TRUTH_SIGNS.forEach(s => {
+        if (s.name.toLowerCase().includes(q) || s.id.includes(q)) {
+          matches.push({ title: s.name, type: 'SIGN', signId: s.id, desc: s.desc });
+          seenIds.add(s.id);
+        }
+      });
+
+      Object.entries(ASL_SYNONYM_MAP).forEach(([word, signId]) => {
+        if (word.startsWith(q) && !seenIds.has(signId) && matches.length < 5) {
+          const s = GROUND_TRUTH_SIGNS.find(x => x.id === signId);
+          if (s) {
+            matches.push({ title: word.toUpperCase() + ` (${s.name})`, type: 'SYNONYM', signId: s.id, desc: s.desc });
+            seenIds.add(signId);
+          }
+        }
+      });
+
+      matches.push({ title: `"${q.toUpperCase()}"`, type: 'SPELL', word: q, desc: 'Fingerspell letter-by-letter' });
+
+      dd.innerHTML = matches.map(m => `
+        <div class="dropdown-item" onclick="executeAslSearch('${m.signId || m.word}')">
+          <div class="dropdown-item-left">
+            <span style="font-size:12px;">${m.type === 'SPELL' ? '🔤' : '⚡'}</span>
+            <div>
+              <div class="dropdown-item-name">${m.title}</div>
+              <div class="dropdown-item-sub">${m.desc ? m.desc.substring(0, 36) + '...' : ''}</div>
+            </div>
+          </div>
+          <span class="dropdown-item-badge">${m.type}</span>
+        </div>
+      `).join('');
+      dd.style.display = 'block';
+    }
+
+    function closeSearchDropdown() {
+      const dd = document.getElementById('search-dropdown');
+      if (dd) dd.style.display = 'none';
+    }
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.header-search-container')) closeSearchDropdown();
+    });
 
     let initialHipsPos = null;
 
@@ -1989,6 +2472,18 @@
 
           if (avatarBones['Hips']) {
             initialHipsPos = avatarBones['Hips'].position.clone();
+            if (!window.neutralStandingPose) {
+              window.neutralStandingPose = {};
+              const bonesToSave = ['Hips', 'Spine', 'Spine1', 'Spine2', 'Neck', 'Head', 'LeftShoulder', 'RightShoulder', 'LeftUpLeg', 'RightUpLeg', 'LeftLeg', 'RightLeg', 'LeftFoot', 'RightFoot'];
+              bonesToSave.forEach(b => {
+                if (avatarBones[b]) {
+                  window.neutralStandingPose[b] = {
+                    pos: avatarBones[b].position.clone(),
+                    quat: avatarBones[b].quaternion.clone()
+                  };
+                }
+              });
+            }
           }
 
           isPlaying = true;
@@ -2364,7 +2859,9 @@
       requestAnimationFrame(animate);
       const delta = clock.getDelta();
 
-      if (mixer && isPlaying && !isScrubbing && duration > 0) {
+      if (isFingerspelling) {
+        animateFingerspelling(delta);
+      } else if (mixer && isPlaying && !isScrubbing && duration > 0) {
         mixer.update(delta * playbackSpeed);
         const t = (mixer.time % duration);
         const progress = t / duration;
@@ -2372,6 +2869,20 @@
 
         stabilizeHipsAtOrigin();
         applySpatialNudges();
+
+        // Check if sentence sequence queue has next sign
+        if (signQueue.length > 0 && !isScrubbing) {
+          if (t >= duration - 0.16 && !window._queueTrigger) {
+            window._queueTrigger = true;
+            signQueueIndex++;
+            if (signQueueIndex < signQueue.length) {
+              playQueueStep();
+            } else {
+              signQueue = [];
+            }
+            setTimeout(() => { window._queueTrigger = false; }, 400);
+          }
+        }
 
         if (currentModel) currentModel.updateMatrixWorld(true);
       }
