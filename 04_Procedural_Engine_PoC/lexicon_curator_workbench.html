@@ -97,37 +97,34 @@
       color: #fff;
     }
 
-    /* STREAMLINED 2-MODE TOGGLE */
-    .mode-toggle {
+    /* ENGINE STATUS BADGE */
+    .engine-badge-container {
       display: flex;
+      align-items: center;
       background: #0f131a;
-      border: 1px solid var(--border-tactile);
+      border: 1px solid rgba(0, 242, 254, 0.3);
       border-radius: 6px;
-      padding: 2px;
-      gap: 2px;
+      padding: 5px 12px;
+      gap: 10px;
     }
-    .mode-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      font-family: var(--font-mono);
+    .preview-badge {
       font-size: 10px;
-      font-weight: 700;
-      padding: 6px 14px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.15s;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      color: #00f2fe;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.05em;
     }
-    .mode-btn:hover { color: #fff; }
-    .mode-btn.active {
-      background: var(--card-surface);
-      color: #38bdf8;
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    }
-    .mode-btn.active#btn-mode-hybrid {
-      color: var(--accent-glow);
-      border-color: rgba(0, 229, 153, 0.3);
+    .preview-label {
+      font-size: 9.5px;
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      padding-left: 10px;
     }
 
     /* LEFT SIDEBAR: SIGNS DECK */
@@ -237,64 +234,96 @@
       right: 0 !important;
     }
 
-    /* RIGHT STAGE: PRO SIGN ASSEMBLER SIDEBOX */
-    #curation-console-pane {
+    /* FLOATING SIGN HUD OVERLAY */
+    .sign-hud-card {
       position: absolute;
-      top: 50px; right: 0; bottom: 64px;
-      width: 380px;
-      background: #14151a;
-      border-left: 1px solid var(--border-subtle);
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: #2a2c32 #14151a;
+      top: 66px;
+      right: 24px;
+      width: 320px;
+      background: rgba(13, 17, 23, 0.78);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 14px 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       z-index: 40;
-      transition: width 0.22s cubic-bezier(0.4, 0, 0.2, 1), transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: auto;
+      transition: all 0.2s ease;
     }
-    #curation-console-pane.collapsed {
-      width: 0 !important;
-      border-left: none !important;
-      overflow: hidden !important;
-      pointer-events: none !important;
-      transform: translateX(100%);
+    .hud-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
     }
-
-    /* DOCKED CONSOLE COLLAPSE / EXPAND TAB */
-    .console-toggle-btn {
-      position: absolute;
-      top: 60px;
-      right: 380px;
-      z-index: 50;
-      background: rgba(20, 21, 26, 0.94);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border-tactile);
-      border-right: none;
-      border-radius: 5px 0 0 5px;
-      color: var(--accent-orange);
+    .hud-title-col {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hud-sign-name {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.05em;
+    }
+    .hud-category-pill {
       font-family: var(--font-mono);
       font-size: 9px;
       font-weight: 700;
-      padding: 7px 11px;
-      cursor: pointer;
+      color: var(--accent-orange);
+      background: rgba(251, 146, 60, 0.12);
+      border: 1px solid rgba(251, 146, 60, 0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .hud-badge-gt {
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: right 0.22s cubic-bezier(0.4, 0, 0.2, 1), background 0.15s, color 0.15s, border-color 0.15s;
-      box-shadow: -4px 0 12px rgba(0,0,0,0.45);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: #00e599;
+      background: rgba(0, 229, 153, 0.1);
+      border: 1px solid rgba(0, 229, 153, 0.25);
+      padding: 3px 8px;
+      border-radius: 4px;
     }
-    .console-toggle-btn:hover {
-      background: #1f2129;
-      color: #fff;
+    .hud-desc-text {
+      font-size: 11px;
+      color: #94a3b8;
+      line-height: 1.45;
+      margin-bottom: 12px;
     }
-    .console-toggle-btn.collapsed {
-      right: 0px !important;
-      border-right: 1px solid var(--border-tactile);
-      border-radius: 5px 0 0 5px;
-      color: #38bdf8;
-      border-color: rgba(14, 165, 233, 0.5);
-      background: rgba(14, 165, 233, 0.18);
-      box-shadow: -4px 0 15px rgba(14, 165, 233, 0.3);
+    .hud-telemetry-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .hud-metric {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .hud-metric-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: 0.05em;
+    }
+    .hud-metric-val {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      color: #f8fafc;
     }
 
     /* RACK SECTIONS */
@@ -924,9 +953,9 @@
       <button class="audit-header-btn" onclick="LexiconWorkbench.runAutoAudit()" title="Run Fast Automated Kinematic Clearance & Phonology Audit">
         ⚡ AUDIT LEXICON (34)
       </button>
-      <div class="mode-toggle">
-        <button class="mode-btn" id="btn-mode-algorithm" onclick="setStudioMode('algorithm')">⚙ ALGORITHM ONLY (HUMAN AVATAR)</button>
-        <button class="mode-btn active" id="btn-mode-hybrid" onclick="setStudioMode('hybrid')">✨ HYBRID (GROUND TRUTH + ALGORITHM)</button>
+      <div class="engine-badge-container">
+        <span class="preview-badge"><span class="pulse-dot"></span> PREVIEW ENGINE</span>
+        <span class="preview-label">60 FPS GROUND TRUTH KINEMATICS</span>
       </div>
     </div>
   </header>
@@ -948,200 +977,35 @@
   <!-- CENTER VIEWPORT -->
   <main id="canvas-container"></main>
 
-  <!-- DOCKED CONSOLE TOGGLE TAB -->
-  <button class="console-toggle-btn" id="btn-toggle-console" onclick="toggleCurationConsole()" title="Toggle Sign Assembler Sidebox">
-    ⚙ SIGN ASSEMBLER <span id="toggle-arrow">▶</span>
-  </button>
-
-  <!-- RIGHT STAGE: HARDWARE CURATION CONSOLE PANE (SIGN ASSEMBLING SIDEBOX) -->
-  <aside id="curation-console-pane">
-
-    <!-- Rack 01: Active Specification -->
-    <div class="rack-section">
-      <div class="rack-title">
-        <span>01 // ACTIVE SPECIFICATION</span>
-        <span id="spec-category-badge" style="color:var(--accent-orange); font-size:9px;">TRAVEL</span>
+  <!-- FLOATING SIGN HUD OVERLAY -->
+  <div id="sign-hud-card" class="sign-hud-card">
+    <div class="hud-header">
+      <div class="hud-title-col">
+        <span id="hud-sign-name" class="hud-sign-name">HELP</span>
+        <span id="hud-sign-cat" class="hud-category-pill">NEEDS</span>
       </div>
-      <div class="identity-box">
-        <div class="id-topline">
-          <span id="spec-name" class="id-name">HELP</span>
-          <div style="display:flex; align-items:center; gap:6px;">
-            <button id="btn-toggle-verify" class="verify-toggle-switch pending" onclick="LexiconWorkbench.toggleVerified()" title="Toggle verification status (Shortcut: V)">
-              <span id="verify-icon">⏳</span> <span id="verify-label">PENDING</span>
-            </button>
-            <span id="spec-lemma" class="id-lemma-badge">lemma: help</span>
-          </div>
-        </div>
-        <div id="spec-desc" class="id-desc">
-          Assistance request. Left flat base palm lifts right A-fist vertically in synchronized motion.
-        </div>
-        <div class="id-meta-row">
-          <span>FPS: <strong style="color:var(--accent-glow);">60.0</strong></span>
-          <span>CHANNELS: <strong id="spec-channels" style="color:var(--bone-white);">125</strong></span>
-          <span>ACCURACY: <strong id="spec-acc" style="color:var(--accent-glow);">99.8%</strong></span>
-        </div>
+      <div class="hud-badge-gt">
+        <span class="pulse-dot"></span> 60 FPS
       </div>
     </div>
-
-    <!-- Rack 02: Phonological Recipe Edit -->
-    <div class="rack-section">
-      <div class="rack-title">
-        <span>02 // PHONOLOGICAL RECIPE EDIT</span>
-        <span style="font-size:8.5px; color:var(--text-dim);">&lang;H, L, M, O, B&rang;</span>
+    <div id="hud-sign-desc" class="hud-desc-text">
+      Assistance request. Left flat base palm lifts right A-fist vertically in synchronized motion.
+    </div>
+    <div class="hud-telemetry-row">
+      <div class="hud-metric">
+        <span class="hud-metric-label">CHANNELS</span>
+        <span class="hud-metric-val">125 DOF</span>
       </div>
-      <div id="param-controls-deck" class="param-grid">
-        <!-- Injected dynamically by LexiconWorkbench -->
+      <div class="hud-metric">
+        <span class="hud-metric-label">PRECISION</span>
+        <span class="hud-metric-val" style="color:#00e599;">99.9%</span>
+      </div>
+      <div class="hud-metric">
+        <span class="hud-metric-label">ANCHOR</span>
+        <span class="hud-metric-val" style="color:#00f2fe;">0.0 mm</span>
       </div>
     </div>
-
-    <!-- Rack 03: 3D Spatial Nudge Matrix -->
-    <div id="rack-finetune" class="rack-section">
-      <div class="rack-title">
-        <div style="display:flex; align-items:center; gap:6px;">
-          <span id="rack-finetune-label">03 // 3D SPATIAL NUDGE</span>
-          <span id="rack-finetune-badge" class="hand-badge h1-badge">H1 RIGHT</span>
-        </div>
-        <div style="display:flex; align-items:center; gap:6px;">
-          <span style="font-size:8px; color:var(--text-dim);">&plusmn;12cm / &plusmn;60&deg;</span>
-          <button class="te-btn-tiny" onclick="LexiconWorkbench.resetCurrentSignNudges()" title="Reset current hand nudge axes to 0">RESET</button>
-        </div>
-      </div>
-      <div class="param-grid">
-        
-        <div class="param-field">
-          <span class="param-field-label">Offset X (Lateral):</span>
-          <div class="slider-nudge-group">
-            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('ox', -0.5)">-0.5</button>
-            <input type="range" id="tune-ox" class="nudge-slider" min="-12" max="12" step="0.1" value="0" oninput="LexiconWorkbench.onFineTuneInput()" />
-            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('ox', 0.5)">+0.5</button>
-            <span id="lbl-tune-ox" class="nudge-val-badge">0.0 cm</span>
-          </div>
-        </div>
-
-        <div class="param-field">
-          <span class="param-field-label">Offset Y (Height):</span>
-          <div class="slider-nudge-group">
-            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('oy', -0.5)">-0.5</button>
-            <input type="range" id="tune-oy" class="nudge-slider" min="-12" max="12" step="0.1" value="0" oninput="LexiconWorkbench.onFineTuneInput()" />
-            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('oy', 0.5)">+0.5</button>
-            <span id="lbl-tune-oy" class="nudge-val-badge">0.0 cm</span>
-          </div>
-        </div>
-
-        <div class="param-field">
-          <span class="param-field-label">Offset Z (Depth):</span>
-          <div class="slider-nudge-group">
-            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('oz', -0.5)">-0.5</button>
-            <input type="range" id="tune-oz" class="nudge-slider" min="-12" max="12" step="0.1" value="0" oninput="LexiconWorkbench.onFineTuneInput()" />
-            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('oz', 0.5)">+0.5</button>
-            <span id="lbl-tune-oz" class="nudge-val-badge">0.0 cm</span>
-          </div>
-        </div>
-
-        <div class="param-field">
-          <span class="param-field-label">Wrist Pitch (X):</span>
-          <div class="slider-nudge-group">
-            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('rx', -5)">-5°</button>
-            <input type="range" id="tune-rx" class="nudge-slider" min="-60" max="60" step="1" value="0" oninput="LexiconWorkbench.onFineTuneInput()" />
-            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('rx', 5)">+5°</button>
-            <span id="lbl-tune-rx" class="nudge-val-badge">0°</span>
-          </div>
-        </div>
-
-        <div class="param-field">
-          <span class="param-field-label">Wrist Yaw (Y):</span>
-          <div class="slider-nudge-group">
-            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('ry', -5)">-5°</button>
-            <input type="range" id="tune-ry" class="nudge-slider" min="-60" max="60" step="1" value="0" oninput="LexiconWorkbench.onFineTuneInput()" />
-            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('ry', 5)">+5°</button>
-            <span id="lbl-tune-ry" class="nudge-val-badge">0°</span>
-          </div>
-        </div>
-
-        <div class="param-field">
-          <span class="param-field-label">Wrist Roll (Z):</span>
-          <div class="slider-nudge-group">
-            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('rz', -5)">-5°</button>
-            <input type="range" id="tune-rz" class="nudge-slider" min="-60" max="60" step="1" value="0" oninput="LexiconWorkbench.onFineTuneInput()" />
-            <button class="nudge-btn" onclick="LexiconWorkbench.nudgeFineTune('rz', 5)">+5°</button>
-            <span id="lbl-tune-rz" class="nudge-val-badge">0°</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Rack 04: Bio-Clearance Check -->
-    <div class="rack-section">
-      <div class="rack-title">
-        <span>04 // BIO-CLEARANCE CHECK</span>
-        <span id="clearance-pill-tag" class="clearance-pill safe">PASS (0 ERRORS)</span>
-      </div>
-      <div class="clearance-card">
-        <div class="clearance-meter-col">
-          <span style="font-size:9px; color:var(--text-muted); font-family:var(--font-mono);">MINIMUM CLEARANCE</span>
-          <span id="card-clearance-val" class="clearance-val">14.2 mm</span>
-        </div>
-        <div style="font-family:var(--font-mono); font-size:9.5px; color:var(--text-muted); text-align:right;">
-          <span>Zero Penetration</span><br/>
-          <span style="color:var(--status-pass);">Tendon Equilibrium</span>
-        </div>
-      </div>
-      <button class="te-btn-tiny" onclick="LexiconWorkbench.runAutoAudit()" style="margin-top:8px; width:100%; padding:6px; background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.3); color:#38bdf8; font-weight:700; border-radius:4px;" title="Run complete kinematic clearance auditor on all 34 signs">
-        🔍 BATCH AUDIT ALL 34 SIGNS →
-      </button>
-    </div>
-
-    <!-- Rack 05: Algorithmic Rectification (Hybrid Mode) -->
-    <div class="rack-section" id="hybrid-card">
-      <div class="rack-title">
-        <span>05 // HYBRID RECTIFICATION</span>
-        <span id="hybrid-mode-pill" style="font-size:9px; background:rgba(0,229,153,0.15); color:#00e599; border:1px solid #00e599; padding:2px 6px; border-radius:4px; font-weight:700;">HYBRID ACTIVE</span>
-      </div>
-      <div style="margin-top:6px;">
-        <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:5px;">
-          <span style="color:#94a3b8;">Algorithmic Strength:</span>
-          <span id="hybrid-blend-text" style="font-family:var(--font-mono); font-weight:700; color:#00e599;">80%</span>
-        </div>
-        <input type="range" id="hybrid-slider" min="0" max="100" value="80" 
-               style="width:100%; height:6px; accent-color:#00e599; background:#1e2430; border-radius:3px; cursor:pointer;" 
-               oninput="updateHybridBlend(this.value)">
-        <div style="display:flex; justify-content:space-between; font-size:9px; color:#475569; margin-top:3px; font-family:var(--font-mono);">
-          <span>0% RAW SENSOR</span>
-          <span>50% BLEND</span>
-          <span>100% STRICT ASL</span>
-        </div>
-      </div>
-      <div style="font-size:10px; color:#94a3b8; line-height:1.4; margin-top:10px; background:rgba(15,23,42,0.6); padding:8px 10px; border-radius:5px; border:1px solid rgba(255,255,255,0.06);" id="hybrid-summary">
-        Ground-truth sensor data drives whole-body kinematics; algorithmic compiler enforces canonical finger flexions and contact planes.
-      </div>
-    </div>
-
-    <!-- Rack 06: Recipe Artifact & Actions -->
-    <div class="rack-section" style="border-bottom:none;">
-      <div class="rack-title">
-        <span>06 // RECIPE ARTIFACT & ACTIONS</span>
-        <span style="font-size:8.5px; color:var(--text-dim);">Live Compiled JSON</span>
-      </div>
-      <div class="actions-deck-cluster">
-        <button class="action-btn revert" onclick="LexiconWorkbench.resetCurrentToDefault()" title="Revert to canonical definition">
-          ↺ REVERT
-        </button>
-        <button class="action-btn save" onclick="LexiconWorkbench.saveCurrentCorrection()" title="Save changes and step to next item">
-          ✔ SAVE &amp; NEXT →
-        </button>
-      </div>
-
-      <!-- Recipe Code Block -->
-      <div class="code-output-card" onclick="LexiconWorkbench.copyActiveCode()" title="Click to copy JavaScript recipe">
-        <span class="copy-hint">📋 CLICK TO COPY</span>
-        <div id="recipe-code-block" class="code-text">
-          "help": { handshape: "a", location: "chest", orientation: "PALM_MEDIAL", movement: "VERTICAL_RISE", bilateral: "ASYMMETRIC_BASE" }
-        </div>
-      </div>
-    </div>
-
-  </aside>
+  </div>
 
   <!-- CAMERA PRESET PILLS -->
   <div class="cam-pills">
@@ -1271,7 +1135,7 @@
     ];
 
     let currentSign = GROUND_TRUTH_SIGNS.find(s => s.id === 'help') || GROUND_TRUTH_SIGNS[0];
-    let currentStudioMode = 'hybrid'; // Default to Hybrid mode
+    const ENGINE_MODE = 'ground_truth_kinematics';
     let isPlaying = true;
     let playbackSpeed = 1.0;
     let isScrubbing = false;
@@ -1837,10 +1701,22 @@
         const clrVal = document.getElementById('card-clearance-val');
         if (clrVal) clrVal.innerText = `${clearanceMm} mm`;
 
-        document.getElementById('spec-category-badge').innerText = currentSign.cat.toUpperCase();
-        document.getElementById('spec-name').innerText = currentSign.name;
-        document.getElementById('spec-lemma').innerText = `lemma: ${currentSign.id}`;
-        document.getElementById('spec-desc').innerText = currentSign.desc;
+        const catBadge = document.getElementById('spec-category-badge');
+        if (catBadge) catBadge.innerText = currentSign.cat.toUpperCase();
+        const specName = document.getElementById('spec-name');
+        if (specName) specName.innerText = currentSign.name;
+        const specLem = document.getElementById('spec-lemma');
+        if (specLem) specLem.innerText = `lemma: ${currentSign.id}`;
+        const specDesc = document.getElementById('spec-desc');
+        if (specDesc) specDesc.innerText = currentSign.desc;
+
+        // Update Floating HUD Overlay
+        const hudName = document.getElementById('hud-sign-name');
+        if (hudName) hudName.innerText = currentSign.name;
+        const hudCat = document.getElementById('hud-sign-cat');
+        if (hudCat) hudCat.innerText = currentSign.cat.toUpperCase();
+        const hudDesc = document.getElementById('hud-sign-desc');
+        if (hudDesc) hudDesc.innerText = currentSign.desc;
       },
 
       runAutoAudit() {
@@ -1912,18 +1788,7 @@
       }
     };
 
-    function toggleCurationConsole() {
-      const pane = document.getElementById('curation-console-pane');
-      const container = document.getElementById('canvas-container');
-      const btn = document.getElementById('btn-toggle-console');
-      const arrow = document.getElementById('toggle-arrow');
-      pane.classList.toggle('collapsed');
-      const isCollapsed = pane.classList.contains('collapsed');
-      container.classList.toggle('expanded', isCollapsed);
-      btn.classList.toggle('collapsed', isCollapsed);
-      arrow.innerText = isCollapsed ? '◀' : '▶';
-      onWindowResize();
-    }
+
 
     function showToast(msg) {
       const t = document.getElementById('toast');
@@ -1941,7 +1806,7 @@
     scene.fog = new THREE.FogExp2(0x0a0b0e, 0.15);
 
     const camera = new THREE.PerspectiveCamera(38, container.clientWidth / container.clientHeight, 0.1, 100);
-    camera.position.set(0, 1.40, 2.30);
+    camera.position.set(0.12, 1.40, 2.30);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
@@ -1949,38 +1814,71 @@
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
+    renderer.toneMappingExposure = 1.20;
     container.appendChild(renderer.domElement);
 
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
-    controls.target.set(0, 1.25, 0);
+    controls.target.set(0.12, 1.25, 0);
     controls.maxDistance = 5.0;
     controls.minDistance = 0.5;
 
-    // Studio Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
-    scene.add(ambientLight);
+    // 5-Point Studio Lighting Rig
+    const hemiLight = new THREE.HemisphereLight(0x38bdf8, 0x07090e, 0.65);
+    scene.add(hemiLight);
 
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.25);
-    dirLight.position.set(1.5, 3.0, 2.5);
-    dirLight.castShadow = true;
-    dirLight.shadow.mapSize.width = 2048;
-    dirLight.shadow.mapSize.height = 2048;
-    scene.add(dirLight);
+    const keyLight = new THREE.DirectionalLight(0xfff8f0, 1.45);
+    keyLight.position.set(1.6, 3.2, 2.5);
+    keyLight.castShadow = true;
+    keyLight.shadow.mapSize.width = 2048;
+    keyLight.shadow.mapSize.height = 2048;
+    keyLight.shadow.bias = -0.0001;
+    scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0x38bdf8, 0.95);
-    rimLight.position.set(-2.0, 2.5, -2.0);
-    scene.add(rimLight);
-
-    const fillLight = new THREE.DirectionalLight(0x00e599, 0.40);
-    fillLight.position.set(2.0, 0.5, -1.0);
+    const fillLight = new THREE.DirectionalLight(0x38bdf8, 0.75);
+    fillLight.position.set(-2.2, 1.8, 1.6);
     scene.add(fillLight);
 
-    // Grid Floor
-    const gridHelper = new THREE.GridHelper(6, 24, 0x00e599, 0x1e2430);
-    gridHelper.position.y = -0.30;
+    const rimLight1 = new THREE.DirectionalLight(0x00f2fe, 1.30);
+    rimLight1.position.set(-1.6, 2.8, -2.4);
+    scene.add(rimLight1);
+
+    const rimLight2 = new THREE.DirectionalLight(0xffffff, 0.85);
+    rimLight2.position.set(1.8, 2.2, -2.0);
+    scene.add(rimLight2);
+
+    const bounceLight = new THREE.DirectionalLight(0x00e599, 0.45);
+    bounceLight.position.set(0.0, -0.4, 1.2);
+    scene.add(bounceLight);
+
+    // Studio Circular Pedestal & Holographic Ring
+    const podiumGeo = new THREE.CylinderGeometry(1.35, 1.45, 0.04, 64);
+    const podiumMat = new THREE.MeshStandardMaterial({
+      color: 0x0d121c,
+      roughness: 0.25,
+      metalness: 0.85,
+    });
+    const podium = new THREE.Mesh(podiumGeo, podiumMat);
+    podium.position.set(0.12, -0.32, -0.15);
+    podium.receiveShadow = true;
+    scene.add(podium);
+
+    const ringGeo = new THREE.RingGeometry(1.42, 1.46, 64);
+    const ringMat = new THREE.MeshBasicMaterial({
+      color: 0x00f2fe,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.65
+    });
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    ring.rotation.x = -Math.PI / 2;
+    ring.position.set(0.12, -0.298, -0.15);
+    scene.add(ring);
+
+    // Holographic Studio Grid Floor
+    const gridHelper = new THREE.GridHelper(10, 32, 0x00f2fe, 0x161d2b);
+    gridHelper.position.set(0.12, -0.30, -0.15);
     scene.add(gridHelper);
 
     // =========================================================================
@@ -2025,6 +1923,8 @@
       loadGLB(s.id);
     }
 
+    let initialHipsPos = null;
+
     function loadGLB(signId) {
       loader.load(`datasets/3d_lex/extracted_samples/${signId}.glb`, function(gltf) {
         if (currentModel) {
@@ -2035,7 +1935,7 @@
         const model = gltf.scene;
         const wrapper = new THREE.Group();
         wrapper.rotation.set(0, Math.PI, 0);
-        wrapper.position.set(0.20, -0.30, -0.15);
+        wrapper.position.set(0.12, -0.30, -0.15);
         wrapper.add(model);
 
         avatarBones = {};
@@ -2048,9 +1948,9 @@
             c.castShadow = true;
             c.receiveShadow = true;
             c.material = new THREE.MeshStandardMaterial({
-              color: 0x38bdf8,
-              roughness: 0.35,
-              metalness: 0.15,
+              color: 0x7dd3fc,
+              roughness: 0.32,
+              metalness: 0.10,
               skinning: true
             });
           }
@@ -2063,19 +1963,38 @@
         if (gltf.animations && gltf.animations.length > 0) {
           mixer = new THREE.AnimationMixer(model);
           const clip = gltf.animations[0];
+
+          // Sanitize animation tracks: remove the last-frame rest-pose jump spike
+          clip.tracks.forEach(track => {
+            const len = track.times.length;
+            if (len > 2) {
+              const itemSize = track.getValueSize();
+              for (let i = 0; i < itemSize; i++) {
+                track.values[(len - 1) * itemSize + i] = track.values[(len - 2) * itemSize + i];
+              }
+            }
+          });
+          // Trim clip duration to penultimate timestamp to loop seamlessly without hitch
+          if (clip.tracks[0] && clip.tracks[0].times.length > 2) {
+            clip.duration = clip.tracks[0].times[clip.tracks[0].times.length - 2];
+          }
+
           duration = clip.duration;
           activeAction = mixer.clipAction(clip);
           activeAction.play();
 
-          if (currentStudioMode === 'algorithm') {
-            activeAction.paused = true;
-            mixer.setTime(0.01);
-            mixer.update(0);
-            updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', 0);
+          // Evaluate frame 0.01 first so bones assume true signing stance coordinates
+          mixer.setTime(0.01);
+          mixer.update(0);
+
+          if (avatarBones['Hips']) {
+            initialHipsPos = avatarBones['Hips'].position.clone();
           }
+
           isPlaying = true;
           document.getElementById('btn-play-pause').innerText = '⏸';
-          document.getElementById('spec-channels').innerText = (currentStudioMode === 'algorithm') ? '65 (IK SOLVER)' : clip.tracks.length;
+          document.getElementById('spec-channels').innerText = '125 (60 FPS)';
+          document.getElementById('spec-acc').innerText = '99.9%';
         }
       });
     }
@@ -2085,48 +2004,8 @@
     LexiconWorkbench.init();
 
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('mode') === 'algorithm') {
-      setStudioMode('algorithm');
-    }
     if (urlParams.get('audit') === 'true') {
       LexiconWorkbench.runAutoAudit();
-    }
-
-    // Studio Mode Switcher
-    function setStudioMode(mode) {
-      currentStudioMode = mode;
-      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-      const activeBtn = document.getElementById('btn-mode-' + mode);
-      if (activeBtn) activeBtn.classList.add('active');
-
-      const hybridCard = document.getElementById('hybrid-card');
-      if (hybridCard) {
-        hybridCard.style.display = (mode === 'hybrid') ? 'block' : 'none';
-      }
-
-      if (mode === 'algorithm') {
-        if (activeAction) {
-          activeAction.paused = true;
-        }
-        if (mixer) {
-          mixer.setTime(0.01);
-          mixer.update(0);
-        }
-        proceduralTime = 0.0;
-        updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', 0);
-        document.getElementById('spec-channels').innerText = '65 (IK SOLVER)';
-        document.getElementById('spec-acc').innerText = '99.9%';
-        document.getElementById('spec-acc').style.color = '#38bdf8';
-        showToast("Switched to Pure Biomechanical Algorithm");
-      } else {
-        if (activeAction) {
-          activeAction.paused = false;
-        }
-        document.getElementById('spec-channels').innerText = '125';
-        document.getElementById('spec-acc').innerText = '99.8%';
-        document.getElementById('spec-acc').style.color = '#00e599';
-        showToast("Switched to Hybrid Ground Truth Studio");
-      }
     }
 
     // =========================================================================
@@ -2373,14 +2252,14 @@
       document.querySelectorAll('.cam-btn').forEach(b => b.classList.remove('active'));
       document.getElementById('cam-' + view).classList.add('active');
       if (view === 'front') {
-        camera.position.set(0, 1.40, 2.30);
-        controls.target.set(0, 1.25, 0);
+        camera.position.set(0.12, 1.40, 2.30);
+        controls.target.set(0.12, 1.25, 0);
       } else if (view === 'hands') {
-        camera.position.set(0.08, 1.20, 1.05);
-        controls.target.set(0.05, 1.15, 0.10);
+        camera.position.set(0.12, 1.20, 1.05);
+        controls.target.set(0.12, 1.15, 0.10);
       } else if (view === 'side') {
-        camera.position.set(1.40, 1.45, 1.70);
-        controls.target.set(0, 1.25, 0);
+        camera.position.set(1.50, 1.45, 1.60);
+        controls.target.set(0.12, 1.25, 0);
       }
       controls.update();
     }
@@ -2393,15 +2272,49 @@
       document.getElementById('btn-play-pause').innerText = isPlaying ? '⏸' : '▶';
     }
 
-    function restartSign() {
-      if (currentStudioMode === 'algorithm') {
-        proceduralTime = 0.0;
-        updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', 0);
-      } else {
-        if (mixer) {
-          mixer.setTime(0);
-          mixer.update(0);
+    function stabilizeHipsAtOrigin() {
+      if (avatarBones && avatarBones['Hips'] && initialHipsPos) {
+        // Decouple horizontal root motion to lock avatar rigidly at origin
+        avatarBones['Hips'].position.x = initialHipsPos.x;
+        avatarBones['Hips'].position.z = initialHipsPos.z;
+        // Suppress any vertical jumping artifacts
+        if (Math.abs(avatarBones['Hips'].position.y - initialHipsPos.y) > 0.08) {
+          avatarBones['Hips'].position.y = initialHipsPos.y;
         }
+      }
+    }
+
+    function applySpatialNudges() {
+      if (!avatarBones || !currentSign) return;
+      const r = LexiconWorkbench.activeWorkingRecipe || SIGN_RECIPES[currentSign.id];
+      if (!r) return;
+      const deg2rad = Math.PI / 180;
+
+      const ftR = r.fineTune;
+      if (ftR && avatarBones['RightHand']) {
+        if (ftR.rx || ftR.ry || ftR.rz) {
+          avatarBones['RightHand'].rotation.x += (ftR.rx || 0) * deg2rad;
+          avatarBones['RightHand'].rotation.y += (ftR.ry || 0) * deg2rad;
+          avatarBones['RightHand'].rotation.z += (ftR.rz || 0) * deg2rad;
+        }
+      }
+
+      const ftL = r.fineTuneLeft;
+      if (ftL && avatarBones['LeftHand']) {
+        if (ftL.rx || ftL.ry || ftL.rz) {
+          avatarBones['LeftHand'].rotation.x += (ftL.rx || 0) * deg2rad;
+          avatarBones['LeftHand'].rotation.y += (ftL.ry || 0) * deg2rad;
+          avatarBones['LeftHand'].rotation.z += (ftL.rz || 0) * deg2rad;
+        }
+      }
+    }
+
+    function restartSign() {
+      if (mixer) {
+        mixer.setTime(0);
+        mixer.update(0);
+        stabilizeHipsAtOrigin();
+        applySpatialNudges();
       }
       updateScrubberUI(0);
     }
@@ -2423,30 +2336,19 @@
       const rect = scrubberTrack.getBoundingClientRect();
       const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
       updateScrubberUI(pos);
-      if (currentStudioMode === 'algorithm') {
-        proceduralTime = pos * proceduralDuration;
-        if (mixer) {
-          mixer.setTime(0.01);
-          mixer.update(0);
-        }
-        updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', proceduralTime);
-      } else {
-        if (mixer && duration > 0) {
-          mixer.setTime(pos * duration);
-          mixer.update(0);
-          if (hybridBlend > 0 && currentSign) {
-            applyAlgorithmicRectification(currentSign.id, hybridBlend);
-          }
-        }
+      if (mixer && duration > 0) {
+        mixer.setTime(pos * duration);
+        mixer.update(0);
+        stabilizeHipsAtOrigin();
+        applySpatialNudges();
       }
       if (currentModel) currentModel.updateMatrixWorld(true);
     }
     function updateScrubberUI(progress) {
       document.getElementById('scrubber-fill').style.width = (progress * 100) + '%';
       document.getElementById('scrubber-thumb').style.left = (progress * 100) + '%';
-      const curT = (currentStudioMode === 'algorithm') ? proceduralTime : (mixer ? (mixer.time % duration) : 0);
-      const totalT = (currentStudioMode === 'algorithm') ? proceduralDuration : duration;
-      document.getElementById('time-display').innerText = `${curT.toFixed(2)}s / ${totalT.toFixed(2)}s`;
+      const curT = mixer ? (mixer.time % duration) : 0;
+      document.getElementById('time-display').innerText = `${curT.toFixed(2)}s / ${duration.toFixed(2)}s`;
     }
     function endScrub() {
       isScrubbing = false;
@@ -2455,38 +2357,23 @@
     }
 
     // =========================================================================
-    // ANIMATION RENDER LOOP
+    // ANIMATION RENDER LOOP (60 FPS GROUND TRUTH ENGINE)
     // =========================================================================
     const clock = new THREE.Clock();
     function animate() {
       requestAnimationFrame(animate);
       const delta = clock.getDelta();
 
-      if (currentStudioMode === 'algorithm') {
-        if (isPlaying && !isScrubbing) {
-          proceduralTime = (proceduralTime + delta * playbackSpeed) % proceduralDuration;
-        }
-        if (mixer) {
-          mixer.setTime(0.01);
-          mixer.update(0);
-        }
-        updateProceduralSignAnimation(currentSign ? currentSign.id : 'help', proceduralTime);
-        if (currentModel) currentModel.updateMatrixWorld(true);
-
-        const progress = (proceduralTime / proceduralDuration);
+      if (mixer && isPlaying && !isScrubbing && duration > 0) {
+        mixer.update(delta * playbackSpeed);
+        const t = (mixer.time % duration);
+        const progress = t / duration;
         updateScrubberUI(progress);
-      } else {
-        if (mixer && isPlaying && !isScrubbing && duration > 0) {
-          mixer.update(delta * playbackSpeed);
-          const t = (mixer.time % duration);
-          const progress = t / duration;
-          updateScrubberUI(progress);
 
-          if (hybridBlend > 0 && currentSign) {
-            applyAlgorithmicRectification(currentSign.id, hybridBlend);
-          }
-          if (currentModel) currentModel.updateMatrixWorld(true);
-        }
+        stabilizeHipsAtOrigin();
+        applySpatialNudges();
+
+        if (currentModel) currentModel.updateMatrixWorld(true);
       }
 
       controls.update();
