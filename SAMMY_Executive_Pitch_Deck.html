@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SAMMY Technologies — Pre-Seed Executive Investor Deck</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+    @page {
+      size: 11in 6.1875in; /* 16:9 widescreen presentation ratio */
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #080b11;
+      color: #e2e8f0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .slide {
+      width: 11in;
+      height: 6.1875in;
+      page-break-after: always;
+      position: relative;
+      padding: 0.45in 0.55in;
+      background: #080b11;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .slide-bg-glow {
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, rgba(8, 11, 17, 0) 70%);
+      pointer-events: none;
+    }
+
+    .slide-bg-glow-purple {
+      position: absolute;
+      bottom: -100px;
+      left: -100px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.10) 0%, rgba(8, 11, 17, 0) 70%);
+      pointer-events: none;
+    }
+
+    /* Header */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 0.12in;
+      margin-bottom: 0.15in;
+    }
+
+    .slide-title-group h2 {
+      font-size: 20pt;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slide-title-group .category {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #38bdf8;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .slide-meta {
+      text-align: right;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8pt;
+      color: #64748b;
+    }
+
+    /* Body */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.15in;
+    }
+
+    /* Footer */
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 0.08in;
+      font-size: 7.5pt;
+      color: #475569;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Typography & Utilities */
+    .text-sky { color: #38bdf8; }
+    .text-emerald { color: #34d399; }
+    .text-purple { color: #c084fc; }
+    .text-amber { color: #fbbf24; }
+    .text-rose { color: #fb7185; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.2in; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.15in; }
+    .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.12in; }
+    .grid-1-2 { display: grid; grid-template-columns: 1fr 2fr; gap: 0.2in; }
+    .grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 0.2in; }
+
+    /* Cards */
+    .card {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 0.14in 0.16in;
+    }
+
+    .card-highlight-sky {
+      border-top: 2px solid #0284c7;
+      background: linear-gradient(180deg, rgba(2, 132, 199, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%);
+    }
+
+    .card-highlight-emerald {
+      border-top: 2px solid #059669;
+      background: linear-gradient(180deg, rgba(5, 150, 105, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%);
+    }
+
+    .card-highlight-purple {
+      border-top: 2px solid #9333ea;
+      background: linear-gradient(180deg, rgba(147, 51, 234, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%);
+    }
+
+    .card-highlight-amber {
+      border-top: 2px solid #d97706;
+      background: linear-gradient(180deg, rgba(217, 119, 6, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%);
+    }
+
+    .card h3 {
+      font-size: 11pt;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .card p {
+      font-size: 8.5pt;
+      line-height: 1.4;
+      color: #94a3b8;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 7pt;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-sky { background: rgba(2, 132, 199, 0.2); color: #38bdf8; border: 1px solid rgba(2, 132, 199, 0.4); }
+    .badge-emerald { background: rgba(5, 150, 105, 0.2); color: #34d399; border: 1px solid rgba(5, 150, 105, 0.4); }
+    .badge-purple { background: rgba(147, 51, 234, 0.2); color: #c084fc; border: 1px solid rgba(147, 51, 234, 0.4); }
+    .badge-amber { background: rgba(217, 119, 6, 0.2); color: #fbbf24; border: 1px solid rgba(217, 119, 6, 0.4); }
+    .badge-rose { background: rgba(225, 29, 72, 0.2); color: #fb7185; border: 1px solid rgba(225, 29, 72, 0.4); }
+
+    .stat-box {
+      background: rgba(2, 6, 23, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      padding: 8px 12px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 16pt;
+      font-weight: 900;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .stat-label {
+      font-size: 7pt;
+      color: #64748b;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    ul.bullet-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    ul.bullet-list li {
+      font-size: 8.5pt;
+      line-height: 1.45;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+      position: relative;
+      padding-left: 14px;
+    }
+
+    ul.bullet-list li::before {
+      content: "•";
+      color: #38bdf8;
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
+    /* Comparison Table */
+    table.comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8pt;
+    }
+
+    table.comp-table th {
+      background: rgba(15, 23, 42, 0.9);
+      color: #94a3b8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 7px 10px;
+      text-align: left;
+      border-bottom: 1px solid #334155;
+    }
+
+    table.comp-table td {
+      padding: 7px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+    }
+
+    table.comp-table tr.highlight-row {
+      background: rgba(2, 132, 199, 0.12);
+      border-left: 3px solid #38bdf8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== SLIDE 1: COVER & EXECUTIVE SUMMARY ==================== -->
+  <div class="slide">
+    <div class="slide-bg-glow"></div>
+    <div class="slide-header">
+      <div class="slide-title-group">
+        <div class="category">EXECUTIVE INVESTOR MEMORANDUM &bull; PRE-SEED SAFE</div>
+        <h2>SAMMY Technologies</h2>
+      </div>
+      <div class="slide-meta">
+        STAGE: PRE-SEED<br>
+        INSTRUMENT: POST-MONEY SAFE ($5M CAP)
+      </div>
+    </div>
+
+    <div class="slide-body">
+      <div class="grid-2-1" style="align-items: center;">
+        <div style="space-y: 10px;">
+          <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+            <span class="badge badge-sky">Universal 3D Sign Language Infrastructure</span>
+            <span class="badge badge-emerald">AI-Assisted &bull; Lexicon-First</span>
+            <span class="badge badge-amber">$500K–$1M Raise</span>
+          </div>
+          <h1 style="font-size: 26pt; font-weight: 900; line-height: 1.15; color: #ffffff; letter-spacing: -0.5px; margin-bottom: 12px;">
+            Deterministic 3D Spatial Sign Language for Enterprise Compliance.
+          </h1>
+          <p style="font-size: 10pt; line-height: 1.5; color: #94a3b8; max-width: 95%;">
+            Over 70M Deaf individuals globally rely on visual-gestural sign language. Because natural sign is a 3D spatial language with no written orthography, black-box AI video models fail. SAMMY solves bidirectional sign synthesis through a deterministic kinematic compiler running at 60 FPS in browser WebGL—slashing cloud GPU rendering fees and streaming bandwidth by 95%+.
+          </p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div class="stat-box">
+            <div class="stat-number text-emerald">$234M</div>
+            <div class="stat-label">Initial Beachhead TAM (Aviation + ER)</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number text-sky">60 FPS / &Delta; = 0.000</div>
+            <div class="stat-label">Client WebGL &bull; Invariant Bone Lengths</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number text-purple">$500K &ndash; $1.0M</div>
+            <div class="stat-label">Pre-Seed SAFE Target ($5M Cap)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-highlight-sky" style="padding: 10px 14px; margin-top: 5px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 8pt; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #38bdf8;">
+            LIVE PROTOTYPE STATUS:
+          </span>
+          <span style="font-size: 8pt; color: #cbd5e1;">
+            34 ASL Signs Audited &bull; 27-DOF Skeletal Hand/Arm Rig &bull; Sub-100ms Latency &bull; Zero Cloud GPUs
+          </span>
+          <span class="badge badge-emerald">Interactive Demo Online</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>SAMMY Technologies Inc. &bull; Confidential Pre-Seed Presentation</span>
+      <span>Slide 1 of 8</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 2: THE PROBLEM & WHY INCUMBENTS FAIL ==================== -->
+  <div class="slide">
+    <div class="slide-bg-glow"></div>
+    <div class="slide-header">
+      <div class="slide-title-group">
+        <div class="category">THE MARKET PROBLEM &bull; UNMET NEED</div>
+        <h2>Why Legacy Avatars &amp; Big Tech AI Video Fail</h2>
+      </div>
+      <div class="slide-meta">
+        COMPLIANCE EXPOSURE<br>
+        14 CFR &sect; 382.53(a)(3)
+      </div>
+    </div>
+
+    <div class="slide-body">
+      <div class="grid-3">
+        <!-- Flaw 1 -->
+        <div class="card" style="border-top: 2px solid #ef4444;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span class="badge badge-rose">Flaw 01 &bull; Community</span>
+            <span style="font-size: 14pt;">🧤</span>
+          </div>
+          <h3>Student "AI Gloves" &amp; Toys</h3>
+          <p>
+            Well-meaning engineering students repeatedly invent sensor gloves identifying 20 isolated signs. The Deaf community fiercely rejects them: natural sign language is conveyed primarily through facial non-manual markers, spatial syntax, and torso posture—not isolated hand flexions.
+          </p>
+        </div>
+
+        <!-- Flaw 2 -->
+        <div class="card" style="border-top: 2px solid #f59e0b;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span class="badge badge-amber">Flaw 02 &bull; Unit Economics</span>
+            <span style="font-size: 14pt;">🎬</span>
+          </div>
+          <h3>Optical Mocap Avatars</h3>
+          <p>
+            Incumbents pay $100K+ recording human signers in optical mocap suits, locking them to narrow, rigid pre-recorded clips. They cannot scale to open-domain vocabulary, and they burn expensive cloud GPUs streaming heavy MP4 video to screens—running up unsustainable bandwidth bills.
+          </p>
+        </div>
+
+        <!-- Flaw 3 -->
+        <div class="card" style="border-top: 2px solid #a855f7;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span class="badge badge-purple">Flaw 03 &bull; Hallucination</span>
+            <span style="font-size: 14pt;">🌀</span>
+          </div>
+          <h3>Generative Video Diffusion</h3>
+          <p>
+            Big Tech (Google, Meta) treats sign language as a 2D pixel problem. Video diffusion models suffer from catastrophic topological hallucinations: phantom 6th fingers, rubber-band bone stretching, $0.20/query compute fees, and 20-second latencies that make dynamic transit announcements impossible.
+          </p>
+        </div>
+      </div>
+
+      <div class="card card-highlight-sky" style="padding: 10px 14px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 18pt;">⚖️</span>
+          <div>
+            <div style="font-weight: 700; color: #ffffff; font-size: 9pt;">The Regulatory Compliance Vacuum:</div>
+            <div style="font-size: 8pt; color: #94a3b8; line-height: 1.4;">
+              Under <b>14 CFR &sect; 382.53(a)(3)</b> and Title II of the ADA, airlines, airports, and hospitals face statutory liability to provide prompt access to the same information. Yet today, operators have <b>literally zero dynamic software to buy</b>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>SAMMY Technologies Inc. &bull; Confidential Pre-Seed Presentation</span>
+      <span>Slide 2 of 8</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 3: THE TRIPARTITE ARCHITECTURE ==================== -->
+  <div class="slide">
+    <div class="slide-bg-glow"></div>
+    <div class="slide-header">
+      <div class="slide-title-group">
+        <div class="category">THE CORE SOLUTION &bull; TECHNICAL ROADMAP</div>
+        <h2>The Tripartite Architecture: Decoupling Spatial Language</h2>
+      </div>
+      <div class="slide-meta">
+        TECHNICAL ROADMAP<br>
+        3 COMPLEMENTARY PILLARS
+      </div>
+    </div>
+
+    <div class="slide-body">
+      <div class="grid-3">
+        <!-- Pillar 1 -->
+        <div class="card card-highlight-sky">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span class="badge badge-sky">Pillar 01 &bull; Live Prototype</span>
+            <span class="font-mono text-sky" style="font-size: 8pt;">27-DOF RIG</span>
+          </div>
+          <h3>1. 3D Kinematic Engine</h3>
+          <p style="margin-bottom: 8px;">
+            A deterministic active skeletal rig that compiles text and phonological lexicons (HamNoSys, ASL-LEX 2.0) into exact, repeatable 3D joint movements with invariant bone lengths (&Delta; = 0.000).
+          </p>
+          <div style="font-size: 7.5pt; font-family: 'JetBrains Mono', monospace; color: #38bdf8; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 4px;">
+            &bull; Live interactive WebGL demo<br>
+            &bull; Zero mocap studio recording
+          </div>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="card card-highlight-purple">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span class="badge badge-purple">Pillar 02 &bull; Milestone 2</span>
+            <span class="font-mono text-purple" style="font-size: 8pt;">FACIAL AUs</span>
+          </div>
+          <h3>2. Neural Humanization</h3>
+          <p style="margin-bottom: 8px;">
+            Layers realistic micro-dynamics, facial Action Units (eyebrow raises, mouth morphemes), and emotion over the physical skeleton. Directly crosses the Uncanny Valley to eliminate robotic avatar stiffness.
+          </p>
+          <div style="font-size: 7.5pt; font-family: 'JetBrains Mono', monospace; color: #c084fc; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 4px;">
+            &bull; Non-manual grammar compliance<br>
+            &bull; Fluid co-articulation blending
+          </div>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="card card-highlight-emerald">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span class="badge badge-emerald">Pillar 03 &bull; Milestone 3</span>
+            <span class="font-mono text-emerald" style="font-size: 8pt;">VISION CHANNEL</span>
+          </div>
+          <h3>3. Video Reading (Perception)</h3>
+          <p style="margin-bottom: 8px;">
+            Reads consumer camera video to track 3D hands and facial markers in real time. Translates continuous visual signing back into spoken text and audio, delivering true bidirectional communication.
+          </p>
+          <div style="font-size: 7.5pt; font-family: 'JetBrains Mono', monospace; color: #34d399; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 4px;">
+            &bull; Sign &rarr; Text reverse translation<br>
+            &bull; Two-way passenger/gate dialog
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-highlight-amber" style="padding: 10px 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <span class="badge badge-amber" style="margin-bottom: 3px;">Community Governance</span>
+            <div style="font-size: 8.5pt; font-weight: 700; color: #ffffff;">Hearing Founder Humility &amp; Deaf Leadership:</div>
+            <div style="font-size: 8pt; color: #cbd5e1;">
+              We allocate <b>$100,000 of our Pre-Seed round</b> to pay certified native Deaf linguistic researchers and recruit a Deaf co-designer into core executive leadership before commercial deployment.
+            </div>
+          </div>
+          <div class="stat-box" style="padding: 6px 12px; margin-left: 15px;">
+            <div class="stat-number text-amber">$100K</div>
+            <div class="stat-label">Deaf Co-Design Allocation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>SAMMY Technologies Inc. &bull; Confidential Pre-Seed Presentation</span>
+      <span>Slide 3 of 8</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 4: ARCHITECTURAL MOAT & UNIT ECONOMICS ==================== -->
+  <div class="slide">
+    <div class="slide-bg-glow"></div>
+    <div class="slide-header">
+      <div class="slide-title-group">
+        <div class="category">ARCHITECTURAL MOAT &bull; SCALABILITY</div>
+        <h2>Unit Economics: Kilobytes of JSON vs. Megabytes of Video</h2>
+      </div>
+      <div class="slide-meta">
+        COST REDUCTION<br>
+        95%+ INFRASTRUCTURE SAVINGS
+      </div>
+    </div>
+
+    <div class="slide-body">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Technical Vector</th>
+            <th>Legacy Mocap Avatars</th>
+            <th>Generative Video Diffusion</th>
+            <th style="color: #38bdf8;">SAMMY Kinematic Compiler</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Studio Recording</strong></td>
+            <td>Requires $100K+ optical mocap studios</td>
+            <td>Requires massive pre-training video sets</td>
+            <td style="color: #38bdf8; font-weight: 700;">Zero mocap recording required (Procedural)</td>
+          </tr>
+          <tr>
+            <td><strong>Network Bandwidth</strong></td>
+            <td>5 – 20 MB per video stream</td>
+            <td>High-bandwidth MP4 streaming</td>
+            <td style="color: #38bdf8; font-weight: 700;">~5 KB lightweight JSON tokens (95%+ savings)</td>
+          </tr>
+          <tr>
+            <td><strong>Cloud Compute Fees</strong></td>
+            <td>Cloud video servers ($50–$100/mo/screen)</td>
+            <td>$0.15–$0.30 per query (A100 clusters)</td>
+            <td style="color: #38bdf8; font-weight: 700;">$0.00 cloud rendering fees (Client WebGL)</td>
+          </tr>
+          <tr>
+            <td><strong>Execution Hardware</strong></td>
+            <td>Dedicated media playback boxes</td>
+            <td>Heavy server GPU infrastructure</td>
+            <td style="color: #38bdf8; font-weight: 700;">Runs locally in browser on existing gate displays</td>
+          </tr>
+          <tr>
+            <td><strong>Latency</strong></td>
+            <td>1 – 3 second video buffering</td>
+            <td>15 – 30 second inference latency</td>
+            <td style="color: #38bdf8; font-weight: 700;">Sub-100ms real-time procedural compilation</td>
+          </tr>
+          <tr class="highlight-row">
+            <td><strong>Topological Rigor</strong></td>
+            <td>Rigid, robotic pre-recorded clips</td>
+            <td>Frequent finger hallucination &amp; bone stretch</td>
+            <td style="color: #38bdf8; font-weight: 700;">Deterministic kinematics (&Delta; = 0.000 variance)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="grid-3" style="margin-top: 5px;">
+        <div class="stat-box">
+          <div class="stat-number text-sky">~5 KB</div>
+          <div class="stat-label">Payload per Gate Announcement</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number text-emerald">60 FPS</div>
+          <div class="stat-label">Client-Side WebGL Rendering</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number text-purple">&gt;90%</div>
+          <div class="stat-label">Target Gross Software Margin</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>SAMMY Technologies Inc. &bull; Confidential Pre-Seed Presentation</span>
+      <span>Slide 4 of 8</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 5: BEACHHEAD MARKET & TAM ==================== -->
+  <div class="slide">
+    <div class="slide-bg-glow"></div>
+    <div class="slide-header">
+      <div class="slide-title-group">
+        <div class="category">MARKET SIZING &bull; ENTERPRISE B2B SAAS</div>
+        <h2>$234M Initial Compliance Beachhead</h2>
+      </div>
+      <div class="slide-meta">
+        BOTTOM-UP TAM<br>
+        NON-DISCRETIONARY COMPLIANCE
+      </div>
+    </div>
+
+    <div class="slide-body">
+      <div class="grid-2">
+        <!-- Aviation Card -->
+        <div class="card card-highlight-sky">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span class="badge badge-sky">Beachhead 01 &bull; Aviation</span>
+            <span class="font-mono text-white font-bold" style="font-size: 13pt;">$144M ARR</span>
+          </div>
+          <h3>Commercial Airline Boarding Gates</h3>
+          <p style="margin-bottom: 10px;">
+            15,000 domestic commercial boarding gates across primary hub airports. Carriers and airport authorities share statutory responsibility under 14 CFR &sect; 382.53(a)(3) for timely accessible gate information.
+          </p>
+          <div class="grid-2" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
+            <div>
+              <div style="font-size: 7pt; color: #64748b; font-family: 'JetBrains Mono', monospace;">GATE TARGETS</div>
+              <div style="font-size: 11pt; font-weight: 700; color: #ffffff;">15,000 Gates</div>
+            </div>
+            <div>
+              <div style="font-size: 7pt; color: #64748b; font-family: 'JetBrains Mono', monospace;">PRICING</div>
+              <div style="font-size: 11pt; font-weight: 700; color: #38bdf8;">$800 / gate / mo</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Healthcare Card -->
+        <div class="card card-highlight-emerald">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span class="badge badge-emerald">Beachhead 02 &bull; Healthcare</span>
+            <span class="font-mono text-white font-bold" style="font-size: 13pt;">$90M ARR</span>
+          </div>
+          <h3>Hospital Emergency Department Triage</h3>
+          <p style="margin-bottom: 10px;">
+            5,000 acute hospital emergency intake desks subject to Title III of the ADA and Section 1557 of the Affordable Care Act, requiring immediate communication for critical intake.
+          </p>
+          <div class="grid-2" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
+            <div>
+              <div style="font-size: 7pt; color: #64748b; font-family: 'JetBrains Mono', monospace;">TRIAGE DESKS</div>
+              <div style="font-size: 11pt; font-weight: 700; color: #ffffff;">5,000 Desks</div>
+            </div>
+            <div>
+              <div style="font-size: 7pt; color: #64748b; font-family: 'JetBrains Mono', monospace;">PRICING</div>
+              <div style="font-size: 11pt; font-weight: 700; color: #34d399;">$1,500 / desk / mo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding: 10px 14px; background: rgba(15, 23, 42, 0.85);">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 8.5pt; font-weight: 700; color: #ffffff;">Closing the Disability Wealth Gap:</div>
+            <div style="font-size: 8pt; color: #94a3b8;">
+              SAMMY's consumer mobile application remains <b>permanently free for Deaf travelers</b>. Transit authorities, airlines, and hospital systems pay enterprise subscriptions out of compliance budgets.
+            </div>
+          </div>
+          <div class="stat-box" style="padding: 6px 14px; margin-left: 20px;">
+            <div class="stat-number text-emerald">$2.34M</div>
+            <div class="stat-label">1% Beachhead Capture ARR</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>SAMMY Technologies Inc. &bull; Confidential Pre-Seed Presentation</span>
+      <span>Slide 5 of 8</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 6: THE 4-IN-1 VENTURE ASYMMETRY ==================== -->
+  <div class="slide">
+    <div class="slide-bg-glow"></div>
+    <div class="slide-header">
+      <div class="slide-title-group">
+        <div class="category">INVESTOR THESIS &bull; ASYMMETRIC UPSIDE</div>
+        <h2>Why Back SAMMY at Pre-Seed: The 4-in-1 Asymmetry</h2>
+      </div>
+      <div class="slide-meta">
+        VENTURE ASYMMETRY<br>
+        BOUNDED RISK / CATEGORY UPSIDE
+      </div>
+    </div>
+
+    <div class="slide-body">
+      <div class="card card-highlight-sky" style="padding: 10px 14px; margin-bottom: 8px;">
+        <div style="font-size: 9.5pt; font-weight: 700; color: #ffffff;">
+          The downside risk is bounded to technical milestones; the upside return is asymmetric: if this works, SAMMY becomes the only complete framework uniting natural sign language translation with spatial AI.
+        </div>
+      </div>
+
+      <div class="grid-4">
+        <!-- 1 -->
+        <div class="card card-highlight-sky">
+          <span class="badge badge-sky" style="margin-bottom: 6px;">01 &bull; PROTOCOL MOAT</span>
+          <h3 style="font-size: 10pt;">The Stripe for Sign Language</h3>
+          <p style="font-size: 8pt;">
+            Big Tech burns capital on generative video models that hallucinate fingers. SAMMY builds the deterministic kinematic compiler, owning the underlying SDK standard for spatial headsets, kiosks, and operating systems globally.
+          </p>
+        </div>
+
+        <!-- 2 -->
+        <div class="card card-highlight-amber">
+          <span class="badge badge-amber" style="margin-bottom: 6px;">02 &bull; REGULATORY LOCK-IN</span>
+          <h3 style="font-size: 10pt;">DOJ / DOT Mandates</h3>
+          <p style="font-size: 8pt;">
+            Airports face active compliance exposure under 14 CFR &sect; 382.53 for acoustic gate changes, but have zero dynamic software to buy. Being first to gate compliance creates an unshakeable B2B enterprise beachhead.
+          </p>
+        </div>
+
+        <!-- 3 -->
+        <div class="card card-highlight-emerald">
+          <span class="badge badge-emerald" style="margin-bottom: 6px;">03 &bull; PORTFOLIO SYNERGY</span>
+          <h3 style="font-size: 10pt;">The Evolution of Ava</h3>
+          <p style="font-size: 8pt;">
+            Enable backed Ava for speech-to-text captions. English captions only serve people who read text; SAMMY completes the stack for native 3D spatial signers, creating an unassailable accessibility portfolio.
+          </p>
+        </div>
+
+        <!-- 4 -->
+        <div class="card card-highlight-purple">
+          <span class="badge badge-purple" style="margin-bottom: 6px;">04 &bull; VALUATION FLOOR</span>
+          <h3 style="font-size: 10pt;">Pre-Seed Entry Point</h3>
+          <p style="font-size: 8pt;">
+            Backing us at our <b>$5M pre-seed cap</b> secures ground-floor ownership of the foundational standard before our 500-phrase lexicon and live commercial airport trial re-rates the company to a $20M+ Series A valuation.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>SAMMY Technologies Inc. &bull; Confidential Pre-Seed Presentation</span>
+      <span>Slide 6 of 8</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 7: THE RAISE & USE OF FUNDS ==================== -->
+  <div class="slide">
+    <div class="slide-bg-glow"></div>
+    <div class="slide-header">
+      <div class="slide-title-group">
+        <div class="category">FINANCING &bull; CAPITAL ALLOCATION</div>
+        <h2>Pre-Seed Raise: $500K &ndash; $1.0M SAFE ($5M Cap)</h2>
+      </div>
+      <div class="slide-meta">
+        RUNWAY: 18&ndash;24 MONTHS<br>
+        VALUATION CAP: $5.0M POST-MONEY
+      </div>
+    </div>
+
+    <div class="slide-body">
+      <div class="grid-2">
+        <!-- Left: Allocation -->
+        <div class="card card-highlight-emerald">
+          <h3 style="margin-bottom: 8px;">Use of Funds Breakdown ($1.0M Target)</h3>
+          <div style="space-y: 6px; font-size: 8pt; font-family: 'JetBrains Mono', monospace;">
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 4px 0;">
+              <span style="color: #94a3b8;">Core Engineering &amp; Founder Runway:</span>
+              <span style="color: #ffffff; font-weight: 700;">$350,000</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 4px 0;">
+              <span style="color: #34d399;">Deaf Co-Design &amp; Linguistic Leadership:</span>
+              <span style="color: #34d399; font-weight: 700;">$100,000</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 4px 0;">
+              <span style="color: #38bdf8;">3D Assets, Rigging &amp; Facial Pipeline:</span>
+              <span style="color: #38bdf8; font-weight: 700;">$150,000</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 4px 0;">
+              <span style="color: #c084fc;">Airport Pilot &amp; Edge Hardware:</span>
+              <span style="color: #c084fc; font-weight: 700;">$150,000</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 4px 0;">
+              <span style="color: #fbbf24;">IP, Legal (DOT/FAA) &amp; Reserve Buffer:</span>
+              <span style="color: #fbbf24; font-weight: 700;">$250,000</span>
+            </div>
+          </div>
+          <div style="margin-top: 8px; font-size: 7.5pt; color: #64748b; line-height: 1.3;">
+            <em>Note: $500K minimum tranche fully de-risks the linguistic and neural milestones; $1.0M accelerates the live commercial airport gate deployment.</em>
+          </div>
+        </div>
+
+        <!-- Right: Milestones -->
+        <div class="card card-highlight-sky">
+          <h3 style="margin-bottom: 8px;">3 Critical De-Risking Milestones</h3>
+          <ul class="bullet-list">
+            <li>
+              <strong>Milestone 01: 500-Phrase Deaf-Audited Airport Lexicon</strong><br>
+              <span style="color: #94a3b8; font-size: 8pt;">Expand beyond current 34 signs to complete 500 validated gate, delay, and emergency aviation phrases audited and certified by native Deaf linguists.</span>
+            </li>
+            <li>
+              <strong>Milestone 02: Facial Action Units &amp; Neural Humanization</strong><br>
+              <span style="color: #94a3b8; font-size: 8pt;">Integrate non-manual grammar (eyebrow, mouth morphemes) to conquer the Uncanny Valley and achieve native linguistic acceptance.</span>
+            </li>
+            <li>
+              <strong>Milestone 03: Live Commercial Airport Gate Trial</strong><br>
+              <span style="color: #94a3b8; font-size: 8pt;">Deploy SAMMY on active boarding gate screens in partnership with an initial US regional/hub airport authority under 14 CFR &sect; 382.53.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>SAMMY Technologies Inc. &bull; Confidential Pre-Seed Presentation</span>
+      <span>Slide 7 of 8</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 8: FOUNDER, DEMO & CONTACT ==================== -->
+  <div class="slide">
+    <div class="slide-bg-glow"></div>
+    <div class="slide-header">
+      <div class="slide-title-group">
+        <div class="category">FOUNDER &bull; INTERACTIVE DEMO</div>
+        <h2>Team, Traction &amp; 15-Minute Video Call</h2>
+      </div>
+      <div class="slide-meta">
+        INTERACTIVE 3D PROTOTYPE<br>
+        60 FPS WEBGL DEMO
+      </div>
+    </div>
+
+    <div class="slide-body">
+      <div class="grid-2">
+        <!-- Founder Profile -->
+        <div class="card card-highlight-sky">
+          <div class="badge badge-sky" style="margin-bottom: 6px;">FOUNDER &amp; LEAD TECHNOLOGIST</div>
+          <h3>Iniyan Andrews Joseph</h3>
+          <p style="margin-bottom: 10px; font-size: 8.5pt;">
+            Deep-tech researcher specializing in inverse kinematics, computational linguistics, and spatial AI. Built the initial 27-DOF WebGL kinematic engine, eliminating the need for optical mocap suits or cloud GPUs.
+          </p>
+          <div style="font-size: 8pt; font-family: 'JetBrains Mono', monospace; color: #cbd5e1; space-y: 4px;">
+            <div>&bull; <strong>Email:</strong> iniyandrews@gmail.com</div>
+            <div>&bull; <strong>Phone:</strong> +91-9399258854</div>
+            <div>&bull; <strong>LinkedIn:</strong> linkedin.com/in/iniyandrews</div>
+          </div>
+        </div>
+
+        <!-- Live Demo Card -->
+        <div class="card card-highlight-emerald">
+          <div class="badge badge-emerald" style="margin-bottom: 6px;">LIVE 45-SECOND PROTOTYPE</div>
+          <h3>Try the 3D Kinematic Engine</h3>
+          <p style="margin-bottom: 10px; font-size: 8.5pt;">
+            Experience the real-time procedural rig running at 60 FPS directly in your browser with zero plugins or installation required:
+          </p>
+          <div style="background: rgba(2, 6, 23, 0.8); border: 1px solid rgba(52, 211, 153, 0.3); border-radius: 6px; padding: 8px 12px; margin-bottom: 8px;">
+            <div style="font-size: 7.5pt; font-family: 'JetBrains Mono', monospace; color: #34d399; word-break: break-all;">
+              https://joeytribb.github.io/sign-language-kinematics/?v=5
+            </div>
+          </div>
+          <div style="font-size: 7.5pt; color: #94a3b8;">
+            Features 34 validated signs, active finger kinematics, and real-time bone invariance verification.
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-highlight-purple" style="padding: 10px 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 8.5pt; font-weight: 700; color: #ffffff;">Proposed 15-Minute Live Video Demonstration:</div>
+            <div style="font-size: 8pt; color: #94a3b8;">
+              Because sign language is an embodied 3D spatial language, a video call is the ideal medium to demonstrate the kinematics and discuss roadmap alignment live.
+            </div>
+          </div>
+          <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 8pt; color: #c084fc; font-weight: 700;">
+            Tuesday, Oct 27 @ 10:00 AM ET<br>
+            Thursday, Oct 29 @ 2:00 PM ET
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>SAMMY Technologies Inc. &bull; iniyandrews@gmail.com &bull; +91-9399258854</span>
+      <span>Slide 8 of 8</span>
+    </div>
+  </div>
+
+</body>
+</html>
