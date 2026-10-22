@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SAMMY // BIOMECHANICAL ASL GROUND TRUTH STUDIO</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤟</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>ðŸ¤Ÿ</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
@@ -1717,7 +1717,7 @@
     <div id="live-airport-ticker" class="airport-ticker-glass" style="display:none;">
       <span class="ticker-dot"></span>
       <span class="ticker-code" id="ticker-flight-code">JFK // AY1331</span>
-      <span class="ticker-arrow">➔</span>
+      <span class="ticker-arrow">âž”</span>
       <span class="ticker-text" id="ticker-flight-msg">Flight Arrived Gate B22</span>
       <span class="ticker-status-badge">AUTO TRANSLATING</span>
     </div>
@@ -1726,7 +1726,7 @@
     <div class="cam-glass-group">
       <button class="cam-glass-btn active" id="cam-front" onclick="setCameraPreset('front')">FRONT</button>
       <button class="cam-glass-btn" id="cam-hands" onclick="setCameraPreset('hands')">HANDS</button>
-      <button class="cam-glass-btn" id="cam-side" onclick="setCameraPreset('side')">HERO 45°</button>
+      <button class="cam-glass-btn" id="cam-side" onclick="setCameraPreset('side')">HERO 45Â°</button>
     </div>
   </nav>
 
@@ -1744,7 +1744,7 @@
         <span class="popover-tag">PHONOLOGY &amp; IK</span>
         <span class="popover-title">ALGORITHMIC RECIPE FORMULATION</span>
       </div>
-      <button class="popover-close" onclick="toggleRecipePopover()">✕</button>
+      <button class="popover-close" onclick="toggleRecipePopover()">âœ•</button>
     </div>
 
     <div class="recipe-grid">
@@ -1779,7 +1779,7 @@
         QUARTIC JOINT STRAIN OBJECTIVE:
       </div>
       <div style="font-family:var(--font-mono); font-size:11px; color:#38bdf8; margin-bottom:5px; letter-spacing:0.02em;">
-        <i>P</i><sub>strain</sub>(<b>θ</b>) = ∑ <i>k</i><sub><i>i</i></sub>(θ<sub><i>i</i></sub> − θ<sub>0,<i>i</i></sub>)<sup>4</sup> + λ ‖<b>x</b><sub>palm</sub> − <b>x</b><sub>locus</sub>‖<sup>2</sup>
+        <i>P</i><sub>strain</sub>(<b>Î¸</b>) = âˆ‘ <i>k</i><sub><i>i</i></sub>(Î¸<sub><i>i</i></sub> âˆ’ Î¸<sub>0,<i>i</i></sub>)<sup>4</sup> + Î» â€–<b>x</b><sub>palm</sub> âˆ’ <b>x</b><sub>locus</sub>â€–<sup>2</sup>
       </div>
       <div style="font-size:10px; color:#94a3b8; line-height:1.4;">
         Kinematic posture is synthesized with anatomical boundary checks preventing joint hyperextension and maintaining strict physical validity.
@@ -1794,14 +1794,14 @@
         <span class="popover-tag">TELEMETRY</span>
         <span class="popover-title">AIRPORT SITUATIONAL DISPATCH</span>
       </div>
-      <button class="popover-close" onclick="toggleSituationsPopover()">✕</button>
+      <button class="popover-close" onclick="toggleSituationsPopover()">âœ•</button>
     </div>
 
     <!-- PRESET PHRASES -->
     <div class="situation-presets-list">
       <div class="situation-card" onclick="executeAslSearch('flight arrive now'); toggleSituationsPopover();">
         <div class="situation-card-left">
-          <span class="situation-icon">🛫</span>
+          <span class="situation-icon">ðŸ›«</span>
           <div>
             <div class="situation-title">Flight Arrival &amp; Gate</div>
             <div class="situation-phrase">"Flight arrive now"</div>
@@ -1812,7 +1812,7 @@
 
       <div class="situation-card" onclick="executeAslSearch('please check ticket'); toggleSituationsPopover();">
         <div class="situation-card-left">
-          <span class="situation-icon">🛂</span>
+          <span class="situation-icon">ðŸ›‚</span>
           <div>
             <div class="situation-title">Security &amp; Boarding Verification</div>
             <div class="situation-phrase">"Please check ticket"</div>
@@ -1823,7 +1823,7 @@
 
       <div class="situation-card" onclick="executeAslSearch('where is bathroom please'); toggleSituationsPopover();">
         <div class="situation-card-left">
-          <span class="situation-icon">🚻</span>
+          <span class="situation-icon">ðŸš»</span>
           <div>
             <div class="situation-title">Passenger Wayfinding</div>
             <div class="situation-phrase">"Where is bathroom please"</div>
@@ -1834,7 +1834,7 @@
 
       <div class="situation-card" onclick="executeAslSearch('train and bus go now'); toggleSituationsPopover();">
         <div class="situation-card-left">
-          <span class="situation-icon">🧳</span>
+          <span class="situation-icon">ðŸ§³</span>
           <div>
             <div class="situation-title">Inter-Terminal Transit</div>
             <div class="situation-phrase">"Train and bus go now"</div>
@@ -1845,7 +1845,7 @@
 
       <div class="situation-card" onclick="executeAslSearch('can you help me'); toggleSituationsPopover();">
         <div class="situation-card-left">
-          <span class="situation-icon">🆘</span>
+          <span class="situation-icon">ðŸ†˜</span>
           <div>
             <div class="situation-title">Staff Assistance Request</div>
             <div class="situation-phrase">"Can you help me"</div>
@@ -1856,13 +1856,57 @@
 
       <div class="situation-card" onclick="executeAslSearch('sammy'); toggleSituationsPopover();">
         <div class="situation-card-left">
-          <span class="situation-icon">🔤</span>
+          <span class="situation-icon">ðŸ”¤</span>
           <div>
             <div class="situation-title">Proper Noun Fingerspelling</div>
             <div class="situation-phrase">Fingerspelling: "SAMMY"</div>
           </div>
         </div>
         <span class="situation-badge">5 LETTERS</span>
+      </div>
+
+      <div class="situation-card" onclick="executeAslSearch('coffee and water please'); toggleSituationsPopover();">
+        <div class="situation-card-left">
+          <span class="situation-icon">â˜•</span>
+          <div>
+            <div class="situation-title">Dining &amp; Beverage Request</div>
+            <div class="situation-phrase">"Coffee and water please"</div>
+          </div>
+        </div>
+        <span class="situation-badge">3 SIGNS</span>
+      </div>
+
+      <div class="situation-card" onclick="executeAslSearch('doctor please help'); toggleSituationsPopover();">
+        <div class="situation-card-left">
+          <span class="situation-icon">ðŸ¥</span>
+          <div>
+            <div class="situation-title">Medical &amp; Clinical Assistance</div>
+            <div class="situation-phrase">"Doctor please help"</div>
+          </div>
+        </div>
+        <span class="situation-badge">3 SIGNS</span>
+      </div>
+
+      <div class="situation-card" onclick="executeAslSearch('today train is late'); toggleSituationsPopover();">
+        <div class="situation-card-left">
+          <span class="situation-icon">â±ï¸</span>
+          <div>
+            <div class="situation-title">Transit Delay Notification</div>
+            <div class="situation-phrase">"Today train late"</div>
+          </div>
+        </div>
+        <span class="situation-badge">3 SIGNS</span>
+      </div>
+
+      <div class="situation-card" onclick="executeAslSearch('open door now'); toggleSituationsPopover();">
+        <div class="situation-card-left">
+          <span class="situation-icon">ðŸšª</span>
+          <div>
+            <div class="situation-title">Gate Clearance &amp; Departure</div>
+            <div class="situation-phrase">"Open door now"</div>
+          </div>
+        </div>
+        <span class="situation-badge">3 SIGNS</span>
       </div>
     </div>
 
@@ -1873,7 +1917,7 @@
         <div class="radar-toggle-desc">Pulls real-time flight dispatch events &amp; signs them automatically</div>
       </div>
       <button id="btn-live-radar-toggle" class="radar-switch-btn" onclick="toggleAirportLiveFeed()">
-        <span class="chip-icon">⚪</span>
+        <span class="chip-icon">âšª</span>
         <span>RADAR: OFF</span>
       </button>
     </div>
@@ -1883,9 +1927,9 @@
   <div id="bottom-island" class="apple-bottom-island">
     <!-- Playback Controls -->
     <div class="island-transport">
-      <button class="island-btn round-btn" onclick="prevSign()" title="Previous Sign (⏮)">⏮</button>
-      <button class="island-btn play-hero-btn" id="btn-play-pause" onclick="togglePlayPause()" title="Play / Pause">⏸</button>
-      <button class="island-btn round-btn" onclick="nextSign()" title="Next Sign (⏭)">⏭</button>
+      <button class="island-btn round-btn" onclick="prevSign()" title="Previous Sign (â®)">â®</button>
+      <button class="island-btn play-hero-btn" id="btn-play-pause" onclick="togglePlayPause()" title="Play / Pause">â¸</button>
+      <button class="island-btn round-btn" onclick="nextSign()" title="Next Sign (â­)">â­</button>
     </div>
 
     <div class="island-divider"></div>
@@ -1907,13 +1951,13 @@
 
     <!-- Algorithmic Recipe Inspector Button -->
     <button class="island-chip" id="btn-recipe-chip" onclick="toggleRecipePopover()" title="Inspect Algorithmic Kinematic Formulation">
-      <span>ⓘ</span>
+      <span>â“˜</span>
       <span>RECIPE</span>
     </button>
 
     <!-- Situations & Live Radar Feed Button -->
     <button class="island-chip" id="btn-situations-chip" onclick="toggleSituationsPopover()" title="Airport Situations & Live Telemetry Stream">
-      <span>✈</span>
+      <span>âœˆ</span>
       <span>AIRPORT LIVE</span>
     </button>
 
@@ -1921,7 +1965,7 @@
 
     <!-- Integrated Search Bar -->
     <div class="island-search">
-      <span class="island-search-icon">🔍</span>
+      <span class="island-search-icon">ðŸ”</span>
       <input type="text" id="asl-search-input" 
              placeholder="Sign any word or sentence..." 
              autocomplete="off"
@@ -1946,17 +1990,17 @@
           <span style="background:rgba(56,189,248,0.2); color:#38bdf8; border:1px solid rgba(56,189,248,0.4); padding:3px 7px; border-radius:4px; font-family:var(--font-mono); font-size:9px; font-weight:800;">AUDIT</span>
           <span style="font-family:var(--font-mono); font-size:12px; font-weight:800; color:#fff;">AUTOMATED KINEMATIC CLEARANCE &amp; PHONOLOGY AUDITOR</span>
         </div>
-        <button onclick="LexiconWorkbench.closeAuditModal()" style="background:transparent; border:none; color:var(--text-muted); font-size:18px; cursor:pointer; padding:4px 8px;">✕</button>
+        <button onclick="LexiconWorkbench.closeAuditModal()" style="background:transparent; border:none; color:var(--text-muted); font-size:18px; cursor:pointer; padding:4px 8px;">âœ•</button>
       </div>
 
       <div class="audit-summary-strip">
         <div class="audit-summary-pill">
           <span>AUDITED:</span>
-          <strong id="audit-count-total" style="color:var(--bone-white);">34</strong>
+          <strong id="audit-count-total" style="color:var(--bone-white);">150</strong>
         </div>
         <div class="audit-summary-pill">
           <span>PASSED:</span>
-          <strong id="audit-count-pass" style="color:var(--status-pass);">34</strong>
+          <strong id="audit-count-pass" style="color:var(--status-pass);">150</strong>
         </div>
         <div class="audit-summary-pill">
           <span>WARNINGS:</span>
@@ -1969,7 +2013,7 @@
         <div style="flex:1;"></div>
         <div style="color:var(--accent-glow); display:flex; align-items:center; gap:6px;">
           <span>VERIFIED:</span>
-          <strong id="audit-count-verified">0 / 34</strong>
+          <strong id="audit-count-verified">0 / 150</strong>
         </div>
       </div>
 
@@ -1997,48 +2041,1510 @@
   <div id="toast">Recipe Copied to Clipboard</div>
 
   <script>
-    // 34 High-Fidelity Optical Ground Truth Signs Bank
+    // 150 High-Fidelity Optical Ground Truth Signs Bank (With Motion Smoothing & Co-Articulation)
     const GROUND_TRUTH_SIGNS = [
-      // Airport & Travel
-      { id: "fly", name: "AIRPLANE", cat: "travel", desc: "Flight transport. Dominant ILY-handshape glides along takeoff vector.", hs: "ILY (I Love You)", loc: "Temple / Upper Chest", mov: "Forward-Upward Flight", bil: "Unilateral" },
-      { id: "arrive", name: "ARRIVE", cat: "travel", desc: "Arrival at destination. Open-B hand arcs down and lands into base palm.", hs: "Open-B (Flat Palm)", loc: "Neutral Mid", mov: "Coronal Arc Landing", bil: "Asymmetric Base" },
-      { id: "ticket", name: "TICKET", cat: "travel", desc: "Boarding pass. Bent-V double clips into vertical non-dominant palm edge.", hs: "Bent-V (Pincer)", loc: "Neutral Mid", mov: "Double Clip Contact", bil: "Asymmetric Base" },
-      { id: "check", name: "CHECK", cat: "travel", desc: "Security & boarding check. Bent-index traces downward checkmark on palm.", hs: "Bent-1 / Hook", loc: "Neutral Mid", mov: "Downward Verification", bil: "Asymmetric Base" },
-      { id: "door", name: "DOOR", cat: "travel", desc: "Airport gate / exit door. Base hand holds frame; dominant hand pivots open.", hs: "Open-B", loc: "Neutral Mid", mov: "72° Hinge Pivot", bil: "Asymmetric Base" },
-      { id: "money", name: "MONEY", cat: "travel", desc: "Currency / fare payment. Flat-O hand double taps supine palm.", hs: "Flat-O (Pinched)", loc: "Neutral Mid", mov: "Double Palm Tap", bil: "Asymmetric Base" },
-      { id: "bus", name: "BUS", cat: "travel", desc: "Public transit bus transport.", hs: "Open-B", loc: "Neutral Mid", mov: "Forward Transit", bil: "Unilateral" },
-      { id: "train", name: "TRAIN", cat: "travel", desc: "Railway / train transit. Two H-hands rub across track fingers.", hs: "H-Handshape", loc: "Neutral Mid", mov: "Linear Rub", bil: "Bilateral Symmetric" },
-      { id: "car", name: "CAR", cat: "travel", desc: "Automobile steering wheel oscillation.", hs: "S-Fist (Dual)", loc: "Neutral Mid", mov: "Steering Oscillation", bil: "Bilateral Symmetric" },
-      { id: "go", name: "GO", cat: "travel", desc: "Departure & movement forward.", hs: "1-Handshape", loc: "Neutral Mid", mov: "Sagittal Arc", bil: "Bilateral Symmetric" },
-
-      // Passenger Needs & Inquiries
-      { id: "help", name: "HELP", cat: "needs", desc: "Assistance request. Left palm lifts right A-fist together.", hs: "A-Fist on Open-B", loc: "Neutral Space", mov: "Synchronous Rise (+8cm)", bil: "Asymmetric Base" },
-      { id: "water", name: "WATER", cat: "needs", desc: "Hydration request. W-handshape index edge gently taps chin twice.", hs: "W-Handshape", loc: "Chin / Lower Lip", mov: "Double Tap (Impulse)", bil: "Unilateral" },
-      { id: "bathroom", name: "BATHROOM", cat: "needs", desc: "Restroom query. Dominant T-handshape shakes side-to-side.", hs: "T-Handshape", loc: "Shoulder Lateral", mov: "Harmonic Shake (3.5x)", bil: "Unilateral" },
-      { id: "where", name: "WHERE", cat: "needs", desc: "Location query. Extended index finger wags laterally back and forth.", hs: "1-Handshape", loc: "Neutral Mid", mov: "Wrist Yaw Waggle (±22°)", bil: "Unilateral" },
-      { id: "in", name: "IN", cat: "needs", desc: "Inside / enclosed position. Flat-O hand drops into C-hand cup.", hs: "Flat-O into C", loc: "Neutral Mid", mov: "Vertical Insertion", bil: "Asymmetric Base" },
-      { id: "on", name: "ON", cat: "needs", desc: "Surface contact. Flat palm places downward onto base hand back.", hs: "Open-B", loc: "Neutral Mid", mov: "Down Contact", bil: "Asymmetric Base" },
-      { id: "bad", name: "BAD", cat: "needs", desc: "Discomfort or negative status. Hand moves from chin with downward flip.", hs: "Open-B", loc: "Chin", mov: "Pronation Drop", bil: "Unilateral" },
-
-      // Communication & Dialogue
-      { id: "yes", name: "YES", cat: "common", desc: "Affirmation. S-fist nods forward on wrist hinge.", hs: "S-Fist", loc: "Neutral Mid", mov: "Wrist Nodding", bil: "Unilateral" },
-      { id: "no", name: "NO", cat: "common", desc: "Negation. Index and middle fingers snap shut against thumb.", hs: "Modified Bent-V", loc: "Neutral Mid", mov: "Aperture Close", bil: "Unilateral" },
-      { id: "please", name: "PLEASE", cat: "common", desc: "Polite request. Flat palm circles gently over chest sternum.", hs: "Open-B (Flat)", loc: "Sternum", mov: "Transverse Circle", bil: "Unilateral" },
-      { id: "stop", name: "STOP", cat: "common", desc: "Halt command. Dominant open-B hand chops down onto supine palm.", hs: "Open-B", loc: "Neutral Mid", mov: "Decisive Palm Chop", bil: "Asymmetric Base" },
-      { id: "all", name: "ALL", cat: "common", desc: "Entire group or whole set.", hs: "Open-B Sweep", loc: "Neutral High", mov: "Circumferential Sweep", bil: "Asymmetric Base" },
-      { id: "can", name: "CAN", cat: "common", desc: "Capability / permission. Dual S-fists drop together.", hs: "Dual S-Fists", loc: "Neutral Mid", mov: "Vertical Drop", bil: "Bilateral Symmetric" },
-      { id: "finish", name: "FINISH", cat: "common", desc: "Completed / done. 5-hands flip from chest outwards.", hs: "5-Handshape", loc: "Neutral Mid", mov: "Coronal Arc Release", bil: "Bilateral Symmetric" },
-      { id: "know", name: "KNOW", cat: "common", desc: "Cognition. Bent-B fingers tap temple.", hs: "Bent-B", loc: "Temple", mov: "Double Tap", bil: "Unilateral" },
-      { id: "make", name: "MAKE", cat: "common", desc: "Creation / construct. S-fists twist against each other.", hs: "S-Fists", loc: "Neutral Mid", mov: "Forearm Twist", bil: "Bilateral Symmetric" },
-      { id: "minute", name: "MINUTE", cat: "common", desc: "Time duration. Index finger pivots like clock hand.", hs: "1 on Open-B", loc: "Neutral Mid", mov: "Angular Pivot", bil: "Asymmetric Base" },
-      { id: "not", name: "NOT", cat: "common", desc: "Negation. Thumb flicks out from under chin.", hs: "A-Fist", loc: "Chin", mov: "Forward Release", bil: "Unilateral" },
-      { id: "now", name: "NOW", cat: "common", desc: "Present moment. Dual Y-hands drop into space.", hs: "Y-Handshapes", loc: "Neutral Mid", mov: "Downward Drop", bil: "Bilateral Symmetric" },
-      { id: "see", name: "SEE", cat: "common", desc: "Visual perception. V-fingers move from eyes forward.", hs: "V-Handshape", loc: "Eyes", mov: "Forward Projection", bil: "Unilateral" },
-      { id: "want", name: "WANT", cat: "common", desc: "Desire / pull. Curved 5-hands pull backward towards body.", hs: "Curved-5 (Claw)", loc: "Neutral Mid", mov: "Inward Retraction", bil: "Bilateral Symmetric" },
-      { id: "we", name: "WE", cat: "common", desc: "Inclusive group. Index arcs from right shoulder to left.", hs: "1-Handshape", loc: "Clavicle", mov: "Coronal Arc", bil: "Unilateral" },
-      { id: "with", name: "WITH", cat: "common", desc: "Accompaniment. Dual A-fists bring palms together.", hs: "A-Fists", loc: "Neutral Mid", mov: "Medial Convergence", bil: "Bilateral Symmetric" },
-      { id: "work", name: "WORK", cat: "common", desc: "Labor / duty. Dominant S-fist taps base of non-dominant wrist.", hs: "S-Fists", loc: "Passive Wrist", mov: "Double Wrist Tap", bil: "Asymmetric Base" }
-    ];
+    {
+        "id":  "afternoon",
+        "name":  "AFTERNOON",
+        "cat":  "time",
+        "desc":  "Midday progression. Forearm angles down across non-dominant elbow.",
+        "hs":  "Open-B on Forearm",
+        "loc":  "Neutral Space",
+        "mov":  "Descending Meridian Angle",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "again",
+        "name":  "AGAIN",
+        "cat":  "common",
+        "desc":  "Repetition request. Dominant bent-hand arcs into center of base palm.",
+        "hs":  "Bent-B Hand",
+        "loc":  "Neutral Mid",
+        "mov":  "Coronal Pivot Arc",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "all",
+        "name":  "ALL",
+        "cat":  "common",
+        "desc":  "Entire group or whole set.",
+        "hs":  "Open-B Sweep",
+        "loc":  "Neutral High",
+        "mov":  "Circumferential Sweep",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "always",
+        "name":  "ALWAYS",
+        "cat":  "common",
+        "desc":  "Perpetual duration. 1-finger traces continuous upward circle.",
+        "hs":  "1-Handshape",
+        "loc":  "Neutral Space",
+        "mov":  "Continuous Clockwise Orbit",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "answer",
+        "name":  "ANSWER",
+        "cat":  "common",
+        "desc":  "Response to inquiry. 1-fingers at lips arc forward together.",
+        "hs":  "Dual 1-Handshapes",
+        "loc":  "Lips to Neutral Space",
+        "mov":  "Outward Projection Arc",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "area",
+        "name":  "AREA",
+        "cat":  "places",
+        "desc":  "Designated region. Flat palm sweeps across horizontal circle.",
+        "hs":  "Open-B Hand",
+        "loc":  "Neutral Space",
+        "mov":  "Horizontal Circular Sweep",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "arrive",
+        "name":  "ARRIVE",
+        "cat":  "travel",
+        "desc":  "Arrival at destination. Open-B hand arcs down and lands into base palm.",
+        "hs":  "Open-B (Flat Palm)",
+        "loc":  "Neutral Mid",
+        "mov":  "Coronal Arc Landing",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "ask",
+        "name":  "ASK",
+        "cat":  "common",
+        "desc":  "Inquiry / question. 1-hand transitions into X-hook while extending.",
+        "hs":  "1 to X-Hook",
+        "loc":  "Neutral Space",
+        "mov":  "Forward Inquiry Stroke",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "back",
+        "name":  "BACK",
+        "cat":  "places",
+        "desc":  "Rear locus. A-fist thumbs backward over dominant shoulder.",
+        "hs":  "A-Fist (Thumb Ext)",
+        "loc":  "Shoulder",
+        "mov":  "Backward Directed Thrust",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "bad",
+        "name":  "BAD",
+        "cat":  "medical",
+        "desc":  "Discomfort or negative status. Hand moves from chin with downward flip.",
+        "hs":  "Open-B",
+        "loc":  "Chin",
+        "mov":  "Pronation Drop",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "bathroom",
+        "name":  "BATHROOM",
+        "cat":  "places",
+        "desc":  "Restroom query. Dominant T-handshape shakes side-to-side.",
+        "hs":  "T-Handshape",
+        "loc":  "Shoulder Lateral",
+        "mov":  "Harmonic Shake (3.5x)",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "better",
+        "name":  "BETTER",
+        "cat":  "medical",
+        "desc":  "Improved condition. Flat hand moves from chin up to thumb-up.",
+        "hs":  "Open-B to A-Thumb",
+        "loc":  "Chin to Eye Level",
+        "mov":  "Upward Diagonal Ascent",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "blind",
+        "name":  "BLIND",
+        "cat":  "medical",
+        "desc":  "Visual impairment. Bent-V fingers pull back across eyes.",
+        "hs":  "Bent-V Handshape",
+        "loc":  "Eyes / Orbit",
+        "mov":  "Inward Retraction Touch",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "boat",
+        "name":  "BOAT",
+        "cat":  "travel",
+        "desc":  "Vessel sailing water. Cupped hands form hull and bob forward.",
+        "hs":  "Cupped B-Hands",
+        "loc":  "Neutral Mid",
+        "mov":  "Oscillating Forward Float",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "body",
+        "name":  "BODY",
+        "cat":  "medical",
+        "desc":  "Physical anatomy. Dual flat hands touch upper chest then waist.",
+        "hs":  "Flat-B Hands",
+        "loc":  "Chest to Abdomen",
+        "mov":  "Bilateral Downward Tap",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "book",
+        "name":  "BOOK",
+        "cat":  "social",
+        "desc":  "Publication / reading material. Closed palms hinge open like binding.",
+        "hs":  "Flat-B Hands",
+        "loc":  "Neutral Mid",
+        "mov":  "Symmetrical Hinge Opening",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "boss",
+        "name":  "BOSS",
+        "cat":  "social",
+        "desc":  "Authority / supervisor. Curved C-hand taps on top of shoulder.",
+        "hs":  "Curved Claw",
+        "loc":  "Dominant Shoulder",
+        "mov":  "Shoulder Epaulet Tap",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "breathe",
+        "name":  "BREATHE",
+        "cat":  "medical",
+        "desc":  "Respiration. Hands expand outward from chest rhythmically.",
+        "hs":  "Open-5 Hands",
+        "loc":  "Chest Sternum",
+        "mov":  "Inhalation Expansion Cycle",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "bus",
+        "name":  "BUS",
+        "cat":  "travel",
+        "desc":  "Public transit bus transport.",
+        "hs":  "Open-B",
+        "loc":  "Neutral Mid",
+        "mov":  "Forward Transit",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "call",
+        "name":  "CALL",
+        "cat":  "actions",
+        "desc":  "Summon / telephone. Y-hand taps ear then extends forward.",
+        "hs":  "Y-Handshape",
+        "loc":  "Ear to Space",
+        "mov":  "Telephonic Radial Projection",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "can",
+        "name":  "CAN",
+        "cat":  "common",
+        "desc":  "Capability / permission. Dual S-fists drop together.",
+        "hs":  "Dual S-Fists",
+        "loc":  "Neutral Mid",
+        "mov":  "Vertical Drop",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "car",
+        "name":  "CAR",
+        "cat":  "travel",
+        "desc":  "Automobile steering wheel oscillation.",
+        "hs":  "S-Fist (Dual)",
+        "loc":  "Neutral Mid",
+        "mov":  "Steering Oscillation",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "center",
+        "name":  "CENTER",
+        "cat":  "places",
+        "desc":  "Central core. Dominant curved hand circles and lands in palm center.",
+        "hs":  "Curved-B on Open-B",
+        "loc":  "Neutral Mid",
+        "mov":  "Circular Drop Landing",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "change",
+        "name":  "CHANGE",
+        "cat":  "actions",
+        "desc":  "Modify / adjust. Dual X-hooks twist across each other.",
+        "hs":  "Dual X-Hooks",
+        "loc":  "Neutral Mid",
+        "mov":  "Cross-Axis Joint Twist",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "cheap",
+        "name":  "CHEAP",
+        "cat":  "actions",
+        "desc":  "Low cost. Dominant palm brushes down off base vertical hand edge.",
+        "hs":  "Open-B Hands",
+        "loc":  "Neutral Mid",
+        "mov":  "Downward Blade Brush",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "check",
+        "name":  "CHECK",
+        "cat":  "actions",
+        "desc":  "Security \u0026 boarding check. Bent-index traces downward checkmark on palm.",
+        "hs":  "Bent-1 / Hook",
+        "loc":  "Neutral Mid",
+        "mov":  "Downward Verification",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "city",
+        "name":  "CITY",
+        "cat":  "places",
+        "desc":  "Metropolitan area. Fingertips tap together repeatedly like rooftops.",
+        "hs":  "Flat-B Hands",
+        "loc":  "Neutral High",
+        "mov":  "Rooftop Pivoting Taps",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "clean",
+        "name":  "CLEAN",
+        "cat":  "medical",
+        "desc":  "Sterile / hygienic. Dominant palm sweeps across base palm smoothly.",
+        "hs":  "Open-B Hands",
+        "loc":  "Neutral Mid",
+        "mov":  "Smooth Horizontal Sweep",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "coffee",
+        "name":  "COFFEE",
+        "cat":  "actions",
+        "desc":  "Beverage / coffee bean grinder. Top S-fist rotates over lower S-fist.",
+        "hs":  "Dual S-Fists",
+        "loc":  "Neutral Mid",
+        "mov":  "Circular Grinding Pivot",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "cold",
+        "name":  "COLD",
+        "cat":  "medical",
+        "desc":  "Low temperature / chill. Dual S-fists shiver near shoulders.",
+        "hs":  "Dual S-Fists",
+        "loc":  "Upper Chest",
+        "mov":  "High-Frequency Shiver",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "cook",
+        "name":  "COOK",
+        "cat":  "actions",
+        "desc":  "Food preparation. Dominant hand flips repeatedly across base palm.",
+        "hs":  "Open-B Hands",
+        "loc":  "Neutral Mid",
+        "mov":  "Alternating Prone-Supine Flip",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "cough",
+        "name":  "COUGH",
+        "cat":  "medical",
+        "desc":  "Cough reflex. C-hand taps chest repeatedly.",
+        "hs":  "C-Handshape",
+        "loc":  "Mid-Sternum",
+        "mov":  "Repetitive Sternum Impulses",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "dance",
+        "name":  "DANCE",
+        "cat":  "social",
+        "desc":  "Rhythmic performance. Inverted V-legs swing across base palm stage.",
+        "hs":  "Inverted-V on Palm",
+        "loc":  "Neutral Mid",
+        "mov":  "Pendular Coronal Swing",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "danger",
+        "name":  "DANGER",
+        "cat":  "medical",
+        "desc":  "Hazard / peril. A-fist sweeps upward past base fist repeatedly.",
+        "hs":  "Dual A-Fists",
+        "loc":  "Neutral Space",
+        "mov":  "Rapid Upward Scrape",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "day",
+        "name":  "DAY",
+        "cat":  "time",
+        "desc":  "24-hour cycle. 1-hand arcs across horizon like sun setting.",
+        "hs":  "1 on Open-B Arm",
+        "loc":  "Coronal Plane",
+        "mov":  "90Â° Solar Arc Descent",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "dirty",
+        "name":  "DIRTY",
+        "cat":  "medical",
+        "desc":  "Contaminated / unwashed. 4-hand flutters under chin.",
+        "hs":  "Curved 4 Hand",
+        "loc":  "Chin / Throat",
+        "mov":  "Sub-Mandibular Flutter",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "doctor",
+        "name":  "DOCTOR",
+        "cat":  "medical",
+        "desc":  "Physician / clinician. M-hand/fingertips tap non-dominant pulse wrist.",
+        "hs":  "M / Bent-B",
+        "loc":  "Passive Wrist",
+        "mov":  "Radial Pulse Taps (2x)",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "door",
+        "name":  "DOOR",
+        "cat":  "places",
+        "desc":  "Airport gate / exit door. Base hand holds frame; dominant hand pivots open.",
+        "hs":  "Open-B",
+        "loc":  "Neutral Mid",
+        "mov":  "72Â° Hinge Pivot",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "dream",
+        "name":  "DREAM",
+        "cat":  "social",
+        "desc":  "Subconscious vision. Index finger wiggles outward from forehead.",
+        "hs":  "1 to X-Hook Oscillation",
+        "loc":  "Temple / Cranial",
+        "mov":  "Outward Dream Wave",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "drink",
+        "name":  "DRINK",
+        "cat":  "actions",
+        "desc":  "Hydration consumption. C-hand tilts toward mouth like drinking glass.",
+        "hs":  "C-Handshape",
+        "loc":  "Mouth / Oral",
+        "mov":  "Sagittal Tilting Arc",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "drive",
+        "name":  "DRIVE",
+        "cat":  "travel",
+        "desc":  "Operating vehicle. S-fists grip steering wheel and turn.",
+        "hs":  "Dual S-Fists",
+        "loc":  "Neutral Mid",
+        "mov":  "Steering Arc",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "expensive",
+        "name":  "EXPENSIVE",
+        "cat":  "actions",
+        "desc":  "High price. Money-sign lifts and drops outward with open release.",
+        "hs":  "Flat-O to Open-5",
+        "loc":  "Neutral Mid to Space",
+        "mov":  "Ascending Drop Release",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "family",
+        "name":  "FAMILY",
+        "cat":  "social",
+        "desc":  "Kinship circle. Dual F-hands circle outward until pinkies touch.",
+        "hs":  "F-Handshapes",
+        "loc":  "Neutral Mid",
+        "mov":  "Horizontal Orbital Circle",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "far",
+        "name":  "FAR",
+        "cat":  "travel",
+        "desc":  "Distant locus. 1-handshape arcs forward into distant space.",
+        "hs":  "1-Handshape",
+        "loc":  "Neutral Space",
+        "mov":  "Forward Extended Arc",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "fast",
+        "name":  "FAST",
+        "cat":  "travel",
+        "desc":  "Rapid velocity. Modified-1 handshapes snap back into fists.",
+        "hs":  "Modified 1",
+        "loc":  "Neutral Space",
+        "mov":  "Rapid Snap Retraction",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "feel",
+        "name":  "FEEL",
+        "cat":  "social",
+        "desc":  "Emotional / sensory state. Middle finger strokes upward on chest.",
+        "hs":  "Bent-Middle Hand",
+        "loc":  "Mid-Sternum",
+        "mov":  "Upward Sensory Stroke",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "finish",
+        "name":  "FINISH",
+        "cat":  "common",
+        "desc":  "Completed / done. 5-hands flip from chest outwards.",
+        "hs":  "5-Handshape",
+        "loc":  "Neutral Mid",
+        "mov":  "Coronal Arc Release",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "fire",
+        "name":  "FIRE",
+        "cat":  "medical",
+        "desc":  "Combustion / alarm. Open 5-hands flutter upward like rising flames.",
+        "hs":  "5-Handshapes (Open)",
+        "loc":  "Neutral Space",
+        "mov":  "Alternating Flame Flutter",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "floor",
+        "name":  "FLOOR",
+        "cat":  "places",
+        "desc":  "Ground / level. Dual flat hands sweep outward laterally.",
+        "hs":  "Flat-B Hands",
+        "loc":  "Neutral Low",
+        "mov":  "Lateral Horizontal Sweep",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "fly",
+        "name":  "AIRPLANE",
+        "cat":  "travel",
+        "desc":  "Flight transport. Dominant ILY-handshape glides along takeoff vector.",
+        "hs":  "ILY (I Love You)",
+        "loc":  "Temple / Upper Chest",
+        "mov":  "Forward-Upward Flight",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "front",
+        "name":  "FRONT",
+        "cat":  "places",
+        "desc":  "Anterior position. Flat hand drops in front of face.",
+        "hs":  "Open-B Hand",
+        "loc":  "Face / Cranial",
+        "mov":  "Downward Sagittal Sweep",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "game",
+        "name":  "GAME",
+        "cat":  "social",
+        "desc":  "Recreation / contest. Dual A-fists bump knuckles together in center.",
+        "hs":  "Dual A-Fists",
+        "loc":  "Neutral Mid",
+        "mov":  "Medial Collision Tap",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "give",
+        "name":  "GIVE",
+        "cat":  "actions",
+        "desc":  "Transfer object. Flat-O hands extend forward toward interlocutor.",
+        "hs":  "Flat-O Hands",
+        "loc":  "Chest to Space",
+        "mov":  "Forward Deictic Extension",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "go",
+        "name":  "GO",
+        "cat":  "travel",
+        "desc":  "Departure \u0026 movement forward.",
+        "hs":  "1-Handshape",
+        "loc":  "Neutral Mid",
+        "mov":  "Sagittal Arc",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "happy",
+        "name":  "HAPPY",
+        "cat":  "social",
+        "desc":  "Joy / contentment. Open hands brush upward on chest repeatedly.",
+        "hs":  "Open-B Hands",
+        "loc":  "Sternum / Chest",
+        "mov":  "Upward Joyous Flutter",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "head",
+        "name":  "HEAD",
+        "cat":  "medical",
+        "desc":  "Cranial anatomy. Bent hand taps temple then cheek.",
+        "hs":  "Bent-B Hand",
+        "loc":  "Temple to Jaw",
+        "mov":  "Cranial Double Touch",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "help",
+        "name":  "HELP",
+        "cat":  "medical",
+        "desc":  "Assistance request. Left palm lifts right A-fist together.",
+        "hs":  "A-Fist on Open-B",
+        "loc":  "Neutral Space",
+        "mov":  "Synchronous Rise (+8cm)",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "here",
+        "name":  "HERE",
+        "cat":  "places",
+        "desc":  "Present location. Dual supine hands circle horizontally in unison.",
+        "hs":  "Open-B (Supine)",
+        "loc":  "Neutral Mid",
+        "mov":  "Dual Horizontal Circles",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "hope",
+        "name":  "HOPE",
+        "cat":  "social",
+        "desc":  "Optimistic anticipation. Flat hands bend inward toward each other.",
+        "hs":  "Flat-B Hands",
+        "loc":  "Temple to Eye Level",
+        "mov":  "Reciprocal Inward Bow",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "hospital",
+        "name":  "HOSPITAL",
+        "cat":  "places",
+        "desc":  "Medical center. H-fingers trace a cross on upper arm.",
+        "hs":  "H-Handshape",
+        "loc":  "Upper Arm / Shoulder",
+        "mov":  "Cross Intersection Trace",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "hour",
+        "name":  "HOUR",
+        "cat":  "time",
+        "desc":  "Clock duration. 1-finger traces complete 360Â° circle on vertical palm.",
+        "hs":  "1-Hand on Flat Palm",
+        "loc":  "Neutral Mid",
+        "mov":  "Full 360Â° Clockwise Rotation",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "house",
+        "name":  "HOUSE",
+        "cat":  "places",
+        "desc":  "Residence / building. Hands trace roof pitch and vertical walls.",
+        "hs":  "Flat-B Hands",
+        "loc":  "Neutral Space",
+        "mov":  "Roof-to-Wall Path Trace",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "how",
+        "name":  "HOW",
+        "cat":  "common",
+        "desc":  "Manner / methodology query. Curved hands rotate outward together.",
+        "hs":  "Curved-B Hands",
+        "loc":  "Neutral Mid",
+        "mov":  "Synchronous Outward Roll",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "hungry",
+        "name":  "HUNGRY",
+        "cat":  "actions",
+        "desc":  "Appetite / food need. C-hand slides down along esophagus / sternum.",
+        "hs":  "C-Handshape",
+        "loc":  "Throat to Sternum",
+        "mov":  "Downward Longitudinal Glide",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "hurry",
+        "name":  "HURRY",
+        "cat":  "travel",
+        "desc":  "Urgent speed. H-hands oscillate up and down rapidly.",
+        "hs":  "H-Handshapes",
+        "loc":  "Neutral Space",
+        "mov":  "Reciprocal Rapid Bounce",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "hurt",
+        "name":  "HURT",
+        "cat":  "medical",
+        "desc":  "Physical pain. Extended index fingers twist inward toward each other.",
+        "hs":  "Dual 1-Handshapes",
+        "loc":  "Neutral Space / Locus",
+        "mov":  "Opposed Axonometric Twist",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "in",
+        "name":  "IN",
+        "cat":  "common",
+        "desc":  "Inside / enclosed position. Flat-O hand drops into C-hand cup.",
+        "hs":  "Flat-O into C",
+        "loc":  "Neutral Mid",
+        "mov":  "Vertical Insertion",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "inside",
+        "name":  "INSIDE",
+        "cat":  "places",
+        "desc":  "Interior enclosure. Flat-O hand drops into cupped C-hand.",
+        "hs":  "Flat-O into C",
+        "loc":  "Neutral Mid",
+        "mov":  "Vertical Insertion (2x)",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "jump",
+        "name":  "JUMP",
+        "cat":  "social",
+        "desc":  "Vertical leap. Inverted V-legs spring up and land into base palm.",
+        "hs":  "Inverted-V Hand",
+        "loc":  "Neutral Mid",
+        "mov":  "Vertical Spring and Landing",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "know",
+        "name":  "KNOW",
+        "cat":  "common",
+        "desc":  "Cognition. Bent-B fingers tap temple.",
+        "hs":  "Bent-B",
+        "loc":  "Temple",
+        "mov":  "Double Tap",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "late",
+        "name":  "LATE",
+        "cat":  "travel",
+        "desc":  "Tardy / behind schedule. Flat hand flaps backward at hip.",
+        "hs":  "Open-B Hand",
+        "loc":  "Lateral Waist",
+        "mov":  "Backward Flap (1x)",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "leave",
+        "name":  "LEAVE",
+        "cat":  "travel",
+        "desc":  "Departure / exiting. 5-hands close into fists while pulling back.",
+        "hs":  "5 to S-Fist",
+        "loc":  "Neutral Space",
+        "mov":  "Retraction and Fist Closure",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "love",
+        "name":  "LOVE",
+        "cat":  "social",
+        "desc":  "Affection / devotion. Crossed S-fists press against heart.",
+        "hs":  "Dual S-Fists Crossed",
+        "loc":  "Mid-Chest",
+        "mov":  "Firm Medial Compression",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "make",
+        "name":  "MAKE",
+        "cat":  "common",
+        "desc":  "Creation / construct. S-fists twist against each other.",
+        "hs":  "S-Fists",
+        "loc":  "Neutral Mid",
+        "mov":  "Forearm Twist",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "man",
+        "name":  "MAN",
+        "cat":  "social",
+        "desc":  "Adult male. 5-hand touches forehead then descends to chest.",
+        "hs":  "Open-5 Hand",
+        "loc":  "Forehead to Sternum",
+        "mov":  "Descending Compound Tap",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "maybe",
+        "name":  "MAYBE",
+        "cat":  "common",
+        "desc":  "Uncertainty / possibility. Supine palms oscillate like balance scale.",
+        "hs":  "Open-B (Supine)",
+        "loc":  "Neutral Mid",
+        "mov":  "Alternating Pitch Flap",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "meet",
+        "name":  "MEET",
+        "cat":  "common",
+        "desc":  "Encounter / convergence. 1-hands converge until knuckles touch.",
+        "hs":  "Dual 1-Handshapes",
+        "loc":  "Neutral Space",
+        "mov":  "Medial Convergence Touch",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "minute",
+        "name":  "MINUTE",
+        "cat":  "actions",
+        "desc":  "Time duration. Index finger pivots like clock hand.",
+        "hs":  "1 on Open-B",
+        "loc":  "Neutral Mid",
+        "mov":  "Angular Pivot",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "money",
+        "name":  "MONEY",
+        "cat":  "actions",
+        "desc":  "Currency / fare payment. Flat-O hand double taps supine palm.",
+        "hs":  "Flat-O (Pinched)",
+        "loc":  "Neutral Mid",
+        "mov":  "Double Palm Tap",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "month",
+        "name":  "MONTH",
+        "cat":  "time",
+        "desc":  "Calendar increment. Index finger slides down back of base index.",
+        "hs":  "1-Hand on 1-Hand",
+        "loc":  "Neutral Mid",
+        "mov":  "Downward Longitudinal Stroke",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "morning",
+        "name":  "MORNING",
+        "cat":  "time",
+        "desc":  "Sunrise / dawn. Dominant flat hand rises through crook of base arm.",
+        "hs":  "Open-B rising through Arm",
+        "loc":  "Chest Level",
+        "mov":  "Ascending Sunrise Stroke",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "music",
+        "name":  "MUSIC",
+        "cat":  "social",
+        "desc":  "Melody / rhythm. Dominant flat hand conducts across base forearm.",
+        "hs":  "Open-B Hands",
+        "loc":  "Non-dominant Forearm",
+        "mov":  "Graceful Conducting Wave",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "near",
+        "name":  "NEAR",
+        "cat":  "travel",
+        "desc":  "Close proximity. Bent-B dominant hand pats toward base hand.",
+        "hs":  "Bent-B Hands",
+        "loc":  "Neutral Mid",
+        "mov":  "Medial Approach Pat",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "never",
+        "name":  "NEVER",
+        "cat":  "common",
+        "desc":  "Absolute negation. Flat-B hand sweeps down and across in question mark.",
+        "hs":  "Open-B Hand",
+        "loc":  "Neutral Space",
+        "mov":  "Downward S-Curve Stroke",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "night",
+        "name":  "NIGHT",
+        "cat":  "time",
+        "desc":  "Nocturnal hours. Dominant hand curves down over edge of base wrist.",
+        "hs":  "Bent-B on Forearm",
+        "loc":  "Neutral Mid",
+        "mov":  "Curved Downward Horizon Drop",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "no",
+        "name":  "NO",
+        "cat":  "common",
+        "desc":  "Negation. Index and middle fingers snap shut against thumb.",
+        "hs":  "Modified Bent-V",
+        "loc":  "Neutral Mid",
+        "mov":  "Aperture Close",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "not",
+        "name":  "NOT",
+        "cat":  "common",
+        "desc":  "Negation. Thumb flicks out from under chin.",
+        "hs":  "A-Fist",
+        "loc":  "Chin",
+        "mov":  "Forward Release",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "now",
+        "name":  "NOW",
+        "cat":  "common",
+        "desc":  "Present moment. Dual Y-hands drop into space.",
+        "hs":  "Y-Handshapes",
+        "loc":  "Neutral Mid",
+        "mov":  "Downward Drop",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "nurse",
+        "name":  "NURSE",
+        "cat":  "medical",
+        "desc":  "Healthcare professional. N-fingers tap non-dominant pulse point.",
+        "hs":  "N-Handshape",
+        "loc":  "Passive Wrist",
+        "mov":  "Pulse Diagnostic Taps",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "office",
+        "name":  "OFFICE",
+        "cat":  "places",
+        "desc":  "Administrative workspace. O-hands outline perimeter boundaries.",
+        "hs":  "O-Handshapes",
+        "loc":  "Neutral Space",
+        "mov":  "Rectangular Perimeter Trace",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "ok",
+        "name":  "OK",
+        "cat":  "common",
+        "desc":  "Agreement / standard approval. Fingerspell O followed immediately by K.",
+        "hs":  "O to K Handshape",
+        "loc":  "Neutral Space",
+        "mov":  "Rapid Orthographic Shift",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "on",
+        "name":  "ON",
+        "cat":  "common",
+        "desc":  "Surface contact. Flat palm places downward onto base hand back.",
+        "hs":  "Open-B",
+        "loc":  "Neutral Mid",
+        "mov":  "Down Contact",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "open",
+        "name":  "OPEN",
+        "cat":  "actions",
+        "desc":  "Ajar / accessible. Dual flat palms rotate outward like swinging doors.",
+        "hs":  "Open-B Hands",
+        "loc":  "Neutral Mid",
+        "mov":  "Bilateral Outward Swing",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "outside",
+        "name":  "OUTSIDE",
+        "cat":  "places",
+        "desc":  "Exterior space. Hand reaches into C-hand and pulls out to 5-hand.",
+        "hs":  "Flat-O to 5",
+        "loc":  "Neutral Space",
+        "mov":  "Outward Retraction Sweep",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "pack",
+        "name":  "PACK",
+        "cat":  "travel",
+        "desc":  "Packing suitcase / bags. Open hands press downward into container.",
+        "hs":  "Curved-B",
+        "loc":  "Neutral Space",
+        "mov":  "Repetitive Placement Taps",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "pass",
+        "name":  "PASS",
+        "cat":  "travel",
+        "desc":  "Overtaking or transit pass. A-hand moves past stationary base fist.",
+        "hs":  "Dual A-Fists",
+        "loc":  "Neutral Mid",
+        "mov":  "Forward Linear Stroke",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "pay",
+        "name":  "PAY",
+        "cat":  "actions",
+        "desc":  "Financial payment. Index finger slides forward off supine palm.",
+        "hs":  "1-Hand on Open-B",
+        "loc":  "Neutral Mid",
+        "mov":  "Linear Forward Discharge",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "place",
+        "name":  "PLACE",
+        "cat":  "places",
+        "desc":  "Specific location. Dual P-hands circle horizontally and touch.",
+        "hs":  "P-Handshapes",
+        "loc":  "Neutral Space",
+        "mov":  "Horizontal Circumference Touch",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "play",
+        "name":  "PLAY",
+        "cat":  "social",
+        "desc":  "Recreational activity. Dual Y-hands shake playfully in neutral space.",
+        "hs":  "Dual Y-Hands",
+        "loc":  "Neutral Space",
+        "mov":  "Oscillating Wrist Swivel",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "please",
+        "name":  "PLEASE",
+        "cat":  "common",
+        "desc":  "Polite request. Flat palm circles gently over chest sternum.",
+        "hs":  "Open-B (Flat)",
+        "loc":  "Sternum",
+        "mov":  "Transverse Circle",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "price",
+        "name":  "PRICE",
+        "cat":  "actions",
+        "desc":  "Cost valuation. X-hook brushes upward across vertical base palm.",
+        "hs":  "X-Hook on Open-B",
+        "loc":  "Neutral Mid",
+        "mov":  "Upward Diagnostic Brush",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "read",
+        "name":  "READ",
+        "cat":  "social",
+        "desc":  "Document scanning. V-fingers scan up and down base palm page.",
+        "hs":  "V-Hand on Open-B",
+        "loc":  "Neutral Mid",
+        "mov":  "Vertical Scanning Sweep",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "remember",
+        "name":  "REMEMBER",
+        "cat":  "common",
+        "desc":  "Memory recall. Dominant thumb touches temple then base thumb.",
+        "hs":  "A-Thumb Ext",
+        "loc":  "Temple to Base Thumb",
+        "mov":  "Connecting Sagittal Arc",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "room",
+        "name":  "ROOM",
+        "cat":  "places",
+        "desc":  "Enclosed chamber. Flat hands trace rectangular bounding box.",
+        "hs":  "Flat-B Hands",
+        "loc":  "Neutral Space",
+        "mov":  "Boundary Walls Enclosure",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "run",
+        "name":  "RUN",
+        "cat":  "social",
+        "desc":  "Locomotion velocity. L-hands hook together and index fingers flick.",
+        "hs":  "L-Handshapes Interlocked",
+        "loc":  "Neutral Mid",
+        "mov":  "High-Speed Gallop Flick",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "sad",
+        "name":  "SAD",
+        "cat":  "social",
+        "desc":  "Sorrow / grief. Open 5-hands drop downward before face.",
+        "hs":  "Curved-5 Hands",
+        "loc":  "Face to Chest",
+        "mov":  "Somatic Downward Slump",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "school",
+        "name":  "SCHOOL",
+        "cat":  "places",
+        "desc":  "Educational facility. Dominant palm claps down onto base palm twice.",
+        "hs":  "Open-B Hands",
+        "loc":  "Neutral Mid",
+        "mov":  "Double Horizontal Clap",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "see",
+        "name":  "SEE",
+        "cat":  "common",
+        "desc":  "Visual perception. V-fingers move from eyes forward.",
+        "hs":  "V-Handshape",
+        "loc":  "Eyes",
+        "mov":  "Forward Projection",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "sell",
+        "name":  "SELL",
+        "cat":  "actions",
+        "desc":  "Commercial retail. Dual flat-O hands flick forward repeatedly.",
+        "hs":  "Dual Flat-O Hands",
+        "loc":  "Neutral Space",
+        "mov":  "Forward Wrist Oscillations",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "send",
+        "name":  "SEND",
+        "cat":  "actions",
+        "desc":  "Transmit / dispatch. Flat hand flips forward off base hand back.",
+        "hs":  "Open-B Hands",
+        "loc":  "Neutral Mid to Forward",
+        "mov":  "Forward Cast Trajectory",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "sign",
+        "name":  "SIGN",
+        "cat":  "common",
+        "desc":  "Sign language articulation. Dual 1-hands cycle backward reciprocally.",
+        "hs":  "Dual 1-Hands",
+        "loc":  "Neutral Mid",
+        "mov":  "Reciprocal Sagittal Cycles",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "sit",
+        "name":  "SIT",
+        "cat":  "social",
+        "desc":  "Seated posture. Dominant bent-H fingers hook over base H fingers.",
+        "hs":  "Bent-H on H",
+        "loc":  "Neutral Mid",
+        "mov":  "Downward Leg Hook",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "sleep",
+        "name":  "SLEEP",
+        "cat":  "actions",
+        "desc":  "Slumber / rest. Hand sweeps down over face closing to flat-O.",
+        "hs":  "5-Hand to Flat-O",
+        "loc":  "Face / Cranial",
+        "mov":  "Downward Mandibular Close",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "slow",
+        "name":  "SLOW",
+        "cat":  "travel",
+        "desc":  "Low velocity. Dominant palm strokes slowly up the base forearm.",
+        "hs":  "Open-B Palm",
+        "loc":  "Non-dominant Forearm",
+        "mov":  "Slow Longitudinal Stroke",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "smile",
+        "name":  "SMILE",
+        "cat":  "social",
+        "desc":  "Facial expression. Index fingers trace upward curl at mouth corners.",
+        "hs":  "1-Handshapes",
+        "loc":  "Mouth Corners",
+        "mov":  "Upward Bilateral Arc",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "sorry",
+        "name":  "SORRY",
+        "cat":  "common",
+        "desc":  "Apology / contrition. A-fist circles gently over center of chest.",
+        "hs":  "A-Fist (Closed)",
+        "loc":  "Mid-Sternum",
+        "mov":  "Circular Friction Pattern",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "stairs",
+        "name":  "STAIRS",
+        "cat":  "places",
+        "desc":  "Ascending steps. Bent-V fingers hop upward in stepping increments.",
+        "hs":  "Bent-V Handshape",
+        "loc":  "Neutral Space",
+        "mov":  "Progressive Upward Stepping",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "start",
+        "name":  "START",
+        "cat":  "actions",
+        "desc":  "Initiate / commence. Index finger twists between base index \u0026 middle fingers.",
+        "hs":  "1-Hand into V",
+        "loc":  "Neutral Mid",
+        "mov":  "Key-in-Ignition Twist",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "stay",
+        "name":  "STAY",
+        "cat":  "travel",
+        "desc":  "Remain in place. Dual Y-hands press downward firmly.",
+        "hs":  "Dual Y-Hands",
+        "loc":  "Neutral Mid",
+        "mov":  "Decisive Downward Press",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "straight",
+        "name":  "STRAIGHT",
+        "cat":  "places",
+        "desc":  "Direct forward path. Flat hand chops straight forward along meridian.",
+        "hs":  "Open-B Blade",
+        "loc":  "Sagittal Plane",
+        "mov":  "Direct Forward Linear Stroke",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "street",
+        "name":  "STREET",
+        "cat":  "places",
+        "desc":  "Thoroughfare / avenue. Dual parallel hands glide forward.",
+        "hs":  "Open-B Hands",
+        "loc":  "Neutral Mid",
+        "mov":  "Parallel Forward Transit",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "student",
+        "name":  "STUDENT",
+        "cat":  "social",
+        "desc":  "Learner / scholar. Learn-sign followed by agent marker.",
+        "hs":  "Learn + Person Marker",
+        "loc":  "Neutral Mid to Torso",
+        "mov":  "Two-Part Compound Sweep",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "sure",
+        "name":  "SURE",
+        "cat":  "common",
+        "desc":  "Certainty / affirmation. 1-finger moves directly forward from lips.",
+        "hs":  "1-Handshape",
+        "loc":  "Lips / Mandible",
+        "mov":  "Forward Linear Trajectory",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "take",
+        "name":  "TAKE",
+        "cat":  "actions",
+        "desc":  "Acquire / grasp. Open hand grabs space and retracts into S-fist.",
+        "hs":  "5-Hand to S-Fist",
+        "loc":  "Space to Body",
+        "mov":  "Inward Grasping Stroke",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "tea",
+        "name":  "TEA",
+        "cat":  "actions",
+        "desc":  "Hot tea infusion. F-hand stirs gently inside base O-hand cup.",
+        "hs":  "F-Hand in O-Cup",
+        "loc":  "Neutral Mid",
+        "mov":  "Circular Infusion Stir",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "tell",
+        "name":  "TELL",
+        "cat":  "common",
+        "desc":  "Verbal communication. Index finger flicks forward from chin.",
+        "hs":  "1-Handshape",
+        "loc":  "Chin / Lower Lip",
+        "mov":  "Forward Radial Flick",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "thirsty",
+        "name":  "THIRSTY",
+        "cat":  "actions",
+        "desc":  "Hydration need. Index finger traces downward along trachea.",
+        "hs":  "1-Handshape",
+        "loc":  "Throat / Larynx",
+        "mov":  "Downward Tracheal Stroke",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "ticket",
+        "name":  "TICKET",
+        "cat":  "travel",
+        "desc":  "Boarding pass. Bent-V double clips into vertical non-dominant palm edge.",
+        "hs":  "Bent-V (Pincer)",
+        "loc":  "Neutral Mid",
+        "mov":  "Double Clip Contact",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "today",
+        "name":  "TODAY",
+        "cat":  "time",
+        "desc":  "Current day. Dual Y-hands bounce downward decisively twice.",
+        "hs":  "Dual Y-Hands",
+        "loc":  "Neutral Mid",
+        "mov":  "Double Vertical Impulse",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "tomorrow",
+        "name":  "TOMORROW",
+        "cat":  "time",
+        "desc":  "Next day. A-thumb strokes forward from cheek.",
+        "hs":  "A-Thumb Ext",
+        "loc":  "Cheek to Anterior Space",
+        "mov":  "Forward Sagittal Stroke",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "train",
+        "name":  "TRAIN",
+        "cat":  "travel",
+        "desc":  "Railway / train transit. Two H-hands rub across track fingers.",
+        "hs":  "H-Handshape",
+        "loc":  "Neutral Mid",
+        "mov":  "Linear Rub",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "understand",
+        "name":  "UNDERSTAND",
+        "cat":  "common",
+        "desc":  "Comprehension. Index finger flicks upward beside forehead like lightbulb.",
+        "hs":  "Flick to 1-Hand",
+        "loc":  "Temple / Cranial",
+        "mov":  "Rapid Upward Flick",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "vacation",
+        "name":  "VACATION",
+        "cat":  "travel",
+        "desc":  "Holiday / time off. Open 5-hands with thumbs tap shoulders/armpits.",
+        "hs":  "5-Handshapes (Open)",
+        "loc":  "Upper Chest / Clavicle",
+        "mov":  "Relaxed Double Tap",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "wait",
+        "name":  "WAIT",
+        "cat":  "travel",
+        "desc":  "Awaiting arrival. Curved 5-hands flutter fingers rhythmically.",
+        "hs":  "Curved 5 (Flutter)",
+        "loc":  "Neutral Space",
+        "mov":  "Phalangeal Flutter Cycle",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "walk",
+        "name":  "WALK",
+        "cat":  "social",
+        "desc":  "Pedestrian stride. Dual flat hands step forward alternately.",
+        "hs":  "Flat-B Hands (Prone)",
+        "loc":  "Neutral Space",
+        "mov":  "Alternating Forward Strides",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "want",
+        "name":  "WANT",
+        "cat":  "common",
+        "desc":  "Desire / pull. Curved 5-hands pull backward towards body.",
+        "hs":  "Curved-5 (Claw)",
+        "loc":  "Neutral Mid",
+        "mov":  "Inward Retraction",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "watch",
+        "name":  "WATCH",
+        "cat":  "actions",
+        "desc":  "Observation / gaze. Bent-V hand extends forward from eye line.",
+        "hs":  "Bent-V Hand",
+        "loc":  "Eye Level",
+        "mov":  "Sustained Anterior Gaze",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "water",
+        "name":  "WATER",
+        "cat":  "actions",
+        "desc":  "Hydration request. W-handshape index edge gently taps chin twice.",
+        "hs":  "W-Handshape",
+        "loc":  "Chin / Lower Lip",
+        "mov":  "Double Tap (Impulse)",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "we",
+        "name":  "WE",
+        "cat":  "common",
+        "desc":  "Inclusive group. Index arcs from right shoulder to left.",
+        "hs":  "1-Handshape",
+        "loc":  "Clavicle",
+        "mov":  "Coronal Arc",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "where",
+        "name":  "WHERE",
+        "cat":  "places",
+        "desc":  "Location query. Extended index finger wags laterally back and forth.",
+        "hs":  "1-Handshape",
+        "loc":  "Neutral Mid",
+        "mov":  "Wrist Yaw Waggle (Â±22Â°)",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "which",
+        "name":  "WHICH",
+        "cat":  "common",
+        "desc":  "Alternative query. Dual A-fists alternate up and down in balance.",
+        "hs":  "Dual A-Fists",
+        "loc":  "Neutral Mid",
+        "mov":  "Alternating Vertical Bob",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "who",
+        "name":  "WHO",
+        "cat":  "common",
+        "desc":  "Identity query. Index finger wiggles in front of puckered lips.",
+        "hs":  "1-Handshape (Curved)",
+        "loc":  "Lips / Oral",
+        "mov":  "Phalangeal Nodding Oscillation",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "why",
+        "name":  "WHY",
+        "cat":  "common",
+        "desc":  "Reasoning query. Hand touches forehead then pulls down into Y-shape.",
+        "hs":  "Open-B to Y",
+        "loc":  "Forehead to Neutral Space",
+        "mov":  "Downward Diagnostic Stroke",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "with",
+        "name":  "WITH",
+        "cat":  "common",
+        "desc":  "Accompaniment. Dual A-fists bring palms together.",
+        "hs":  "A-Fists",
+        "loc":  "Neutral Mid",
+        "mov":  "Medial Convergence",
+        "bil":  "Bilateral Symmetric"
+    },
+    {
+        "id":  "woman",
+        "name":  "WOMAN",
+        "cat":  "social",
+        "desc":  "Adult female. 5-hand thumb strokes chin then descends to sternum.",
+        "hs":  "Open-5 Hand",
+        "loc":  "Chin to Chest",
+        "mov":  "Descending Graceful Stroke",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "work",
+        "name":  "WORK",
+        "cat":  "common",
+        "desc":  "Labor / duty. Dominant S-fist taps base of non-dominant wrist.",
+        "hs":  "S-Fists",
+        "loc":  "Passive Wrist",
+        "mov":  "Double Wrist Tap",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "write",
+        "name":  "WRITE",
+        "cat":  "social",
+        "desc":  "Written text. Pincer thumb/index scribes across supine palm.",
+        "hs":  "Pincer on Open-B",
+        "loc":  "Neutral Mid",
+        "mov":  "Horizontal Scribing Waves",
+        "bil":  "Asymmetric Base"
+    },
+    {
+        "id":  "yes",
+        "name":  "YES",
+        "cat":  "common",
+        "desc":  "Affirmation. S-fist nods forward on wrist hinge.",
+        "hs":  "S-Fist",
+        "loc":  "Neutral Mid",
+        "mov":  "Wrist Nodding",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "yesterday",
+        "name":  "YESTERDAY",
+        "cat":  "time",
+        "desc":  "Previous day. A-thumb strokes backward from chin to ear.",
+        "hs":  "A-Thumb Ext",
+        "loc":  "Chin to Ear / Jaw",
+        "mov":  "Backward Temporal Stroke",
+        "bil":  "Unilateral"
+    },
+    {
+        "id":  "you",
+        "name":  "YOU",
+        "cat":  "common",
+        "desc":  "Second-person deictic. Index finger points directly forward to interlocutor.",
+        "hs":  "1-Handshape",
+        "loc":  "Neutral Mid",
+        "mov":  "Direct Anterior Point",
+        "bil":  "Unilateral"
+    }
+]
+;
 
     let currentSign = GROUND_TRUTH_SIGNS.find(s => s.id === 'help') || GROUND_TRUTH_SIGNS[0];
     const ENGINE_MODE = 'ground_truth_kinematics';
@@ -2060,7 +3566,7 @@
         div.innerHTML = `
           <div>
             <div class="sign-name">
-              ${s.name} ${isVer ? '<span style="color:var(--status-pass); font-size:11px; margin-left:3px;" title="Biochemically Verified">✔</span>' : ''}
+              ${s.name} ${isVer ? '<span style="color:var(--status-pass); font-size:11px; margin-left:3px;" title="Biochemically Verified">âœ”</span>' : ''}
             </div>
             <div class="sign-sub">${s.desc.substring(0, 32)}...</div>
           </div>
@@ -2299,7 +3805,7 @@
         window.verifiedSignsMap[id] = !window.verifiedSignsMap[id];
         this.updateVerificationUI();
         populateSignList(GROUND_TRUTH_SIGNS);
-        showToast(window.verifiedSignsMap[id] ? `✔ ${currentSign.name} marked as VERIFIED` : `⏳ ${currentSign.name} marked as PENDING`);
+        showToast(window.verifiedSignsMap[id] ? `âœ” ${currentSign.name} marked as VERIFIED` : `â³ ${currentSign.name} marked as PENDING`);
       },
 
       updateVerificationUI() {
@@ -2310,7 +3816,7 @@
         if (btn) {
           btn.className = 'verify-toggle-switch ' + (isVer ? 'verified' : 'pending');
         }
-        if (icon) icon.innerText = isVer ? '✔' : '⏳';
+        if (icon) icon.innerText = isVer ? 'âœ”' : 'â³';
         if (lbl) lbl.innerText = isVer ? 'VERIFIED' : 'PENDING';
       },
 
@@ -2442,9 +3948,9 @@
               <span class="param-field-label" style="color:#00e599;">H2 Bilateral Role:</span>
               <div class="param-field-control">
                 <select class="param-select" onchange="LexiconWorkbench.onParamChange('bilateral', this.value)">
-                  <option value="UNILATERAL" ${isUnilateral ? 'selected' : ''}>💤 PASSIVE REST (Arm Relaxed)</option>
-                  <option value="ASYMMETRIC_BASE" ${r.bilateral === 'ASYMMETRIC_BASE' ? 'selected' : ''}>🛡 ASYMMETRIC BASE (Stationary Shelf)</option>
-                  <option value="BILATERAL_SYMMETRIC" ${r.bilateral === 'BILATERAL_SYMMETRIC' ? 'selected' : ''}>🪞 MIRROR SYMMETRIC (Mirrors H1)</option>
+                  <option value="UNILATERAL" ${isUnilateral ? 'selected' : ''}>ðŸ’¤ PASSIVE REST (Arm Relaxed)</option>
+                  <option value="ASYMMETRIC_BASE" ${r.bilateral === 'ASYMMETRIC_BASE' ? 'selected' : ''}>ðŸ›¡ ASYMMETRIC BASE (Stationary Shelf)</option>
+                  <option value="BILATERAL_SYMMETRIC" ${r.bilateral === 'BILATERAL_SYMMETRIC' ? 'selected' : ''}>ðŸªž MIRROR SYMMETRIC (Mirrors H1)</option>
                 </select>
               </div>
             </div>
@@ -2459,8 +3965,8 @@
             </div>
 
             <div style="display:flex; gap:6px; margin-top:4px;">
-              <button class="te-btn-tiny" style="flex:1;" onclick="LexiconWorkbench.onParamChange('baseHandshape', 'open_b')">✋ FLAT PALM SHELF</button>
-              <button class="te-btn-tiny" style="flex:1;" onclick="LexiconWorkbench.onParamChange('baseHandshape', 's')">✊ FIST BASE</button>
+              <button class="te-btn-tiny" style="flex:1;" onclick="LexiconWorkbench.onParamChange('baseHandshape', 'open_b')">âœ‹ FLAT PALM SHELF</button>
+              <button class="te-btn-tiny" style="flex:1;" onclick="LexiconWorkbench.onParamChange('baseHandshape', 's')">âœŠ FIST BASE</button>
             </div>
           `;
         }
@@ -2498,7 +4004,7 @@
           const lbl = document.getElementById('lbl-tune-' + axis);
           const val = ft[axis] || 0;
           if (inp) inp.value = val;
-          if (lbl) lbl.innerText = axis.startsWith('r') ? `${val}°` : `${Number(val).toFixed(1)} cm`;
+          if (lbl) lbl.innerText = axis.startsWith('r') ? `${val}Â°` : `${Number(val).toFixed(1)} cm`;
         });
       },
 
@@ -2514,9 +4020,9 @@
         document.getElementById('lbl-tune-ox').innerText = ox.toFixed(1) + " cm";
         document.getElementById('lbl-tune-oy').innerText = oy.toFixed(1) + " cm";
         document.getElementById('lbl-tune-oz').innerText = oz.toFixed(1) + " cm";
-        document.getElementById('lbl-tune-rx').innerText = rx + "°";
-        document.getElementById('lbl-tune-ry').innerText = ry + "°";
-        document.getElementById('lbl-tune-rz').innerText = rz + "°";
+        document.getElementById('lbl-tune-rx').innerText = rx + "Â°";
+        document.getElementById('lbl-tune-ry').innerText = ry + "Â°";
+        document.getElementById('lbl-tune-rz').innerText = rz + "Â°";
 
         if (this.activeHandTab === 'dominant') {
           this.activeWorkingRecipe.fineTune = { ox, oy, oz, rx, ry, rz };
@@ -2589,7 +4095,7 @@
         const el = document.getElementById('recipe-code-block');
         if (!el) return;
         navigator.clipboard.writeText(el.innerText).then(() => {
-          showToast("📋 JavaScript Recipe Copied to Clipboard!");
+          showToast("ðŸ“‹ JavaScript Recipe Copied to Clipboard!");
         });
       },
 
@@ -2645,11 +4151,11 @@
           const nudgeMag = Math.sqrt(ft.ox*ft.ox + ft.oy*ft.oy + ft.oz*ft.oz);
 
           let status = 'PASS';
-          let diag = 'Torso clearance nominal (14.2mm) • ROM equilibrium nominal';
+          let diag = 'Torso clearance nominal (14.2mm) â€¢ ROM equilibrium nominal';
 
           if (nudgeMag > 9.0) {
             status = 'WARNING';
-            diag = `High spatial nudge (${nudgeMag.toFixed(1)}cm) • Nearing workspace limit`;
+            diag = `High spatial nudge (${nudgeMag.toFixed(1)}cm) â€¢ Nearing workspace limit`;
             warnCount++;
           } else {
             passCount++;
@@ -2657,22 +4163,22 @@
 
           const tr = document.createElement('tr');
           const statusBadge = (status === 'PASS')
-            ? '<span style="color:var(--status-pass); font-weight:700;">✔ PASS</span>'
-            : '<span style="color:var(--accent-orange); font-weight:700;">⚠ WARN</span>';
+            ? '<span style="color:var(--status-pass); font-weight:700;">âœ” PASS</span>'
+            : '<span style="color:var(--accent-orange); font-weight:700;">âš  WARN</span>';
 
-          const verBadge = isVer ? ' <span style="color:var(--status-pass); font-weight:800;" title="Verified">✔</span>' : '';
+          const verBadge = isVer ? ' <span style="color:var(--status-pass); font-weight:800;" title="Verified">âœ”</span>' : '';
 
           tr.innerHTML = `
             <td>${statusBadge}</td>
             <td style="color:var(--accent-cyan); font-weight:700;">${s.id}</td>
             <td><strong>${s.name}</strong>${verBadge}</td>
             <td style="color:var(--text-muted); font-size:9.5px;">
-              H:${r.handshape || 'open_b'} • L:${r.location || 'mid'} • M:${r.movement || 'hold'} • B:${r.bilateral || 'uni'}
+              H:${r.handshape || 'open_b'} â€¢ L:${r.location || 'mid'} â€¢ M:${r.movement || 'hold'} â€¢ B:${r.bilateral || 'uni'}
             </td>
             <td style="color:var(--text-dim); font-size:9.5px;">${diag}</td>
             <td>
               <button class="audit-fix-btn" onclick="selectSign(GROUND_TRUTH_SIGNS.find(x => x.id === '${s.id}')); LexiconWorkbench.closeAuditModal();">
-                INSPECT &amp; TUNE →
+                INSPECT &amp; TUNE â†’
               </button>
             </td>
           `;
@@ -2823,41 +4329,668 @@
     // UNIVERSAL ASL SEARCH, SEMANTIC SYNONYM MATCHING & SEQUENCING ENGINE
     // =========================================================================
     const ASL_SYNONYM_MAP = {
-      'help': 'help', 'assist': 'help', 'assistance': 'help', 'support': 'help', 'aid': 'help', 'rescue': 'help',
-      'fly': 'fly', 'airplane': 'fly', 'plane': 'fly', 'flight': 'fly', 'jet': 'fly', 'airport': 'fly', 'aviation': 'fly', 'takeoff': 'fly',
-      'bathroom': 'bathroom', 'restroom': 'bathroom', 'toilet': 'bathroom', 'washroom': 'bathroom', 'lavatory': 'bathroom', 'wc': 'bathroom',
-      'water': 'water', 'drink': 'water', 'beverage': 'water', 'hydrate': 'water', 'thirsty': 'water', 'aqua': 'water',
-      'car': 'car', 'automobile': 'car', 'drive': 'car', 'driving': 'car', 'vehicle': 'car', 'auto': 'car',
-      'ticket': 'ticket', 'boarding': 'ticket', 'pass': 'ticket', 'card': 'ticket', 'admission': 'ticket',
-      'door': 'door', 'gate': 'door', 'exit': 'door', 'entrance': 'door', 'entry': 'door', 'portal': 'door',
-      'money': 'money', 'cash': 'money', 'pay': 'money', 'dollar': 'money', 'currency': 'money', 'cost': 'money', 'price': 'money', 'fare': 'money',
-      'bus': 'bus', 'shuttle': 'bus', 'coach': 'bus', 'transit': 'bus',
-      'train': 'train', 'railway': 'train', 'subway': 'train', 'metro': 'train', 'rail': 'train',
-      'arrive': 'arrive', 'arrival': 'arrive', 'land': 'arrive', 'landing': 'arrive', 'destination': 'arrive', 'here': 'arrive', 'reach': 'arrive',
-      'go': 'go', 'depart': 'go', 'leave': 'go', 'move': 'go', 'walk': 'go', 'traveling': 'go', 'heading': 'go',
-      'check': 'check', 'verify': 'check', 'inspect': 'check', 'inspection': 'check', 'security': 'check', 'scan': 'check', 'confirm': 'check',
-      'please': 'please', 'kindly': 'please', 'polite': 'please', 'request': 'please',
-      'yes': 'yes', 'sure': 'yes', 'ok': 'yes', 'okay': 'yes', 'correct': 'yes', 'agree': 'yes', 'yep': 'yes', 'true': 'yes', 'fine': 'yes',
-      'no': 'no', 'nope': 'no', 'negative': 'no', 'deny': 'no', 'refuse': 'no',
-      'not': 'not', 'dont': 'not', 'never': 'not', 'cannot': 'not', "can't": 'not', 'wont': 'not',
-      'now': 'now', 'today': 'now', 'current': 'now', 'present': 'now', 'immediately': 'now', 'soon': 'now',
-      'minute': 'minute', 'time': 'minute', 'clock': 'minute', 'hour': 'minute', 'wait': 'minute', 'moment': 'minute', 'second': 'minute',
-      'want': 'want', 'need': 'want', 'desire': 'want', 'require': 'want', 'wish': 'want',
-      'know': 'know', 'understand': 'know', 'comprehend': 'know', 'familiar': 'know', 'remember': 'know', 'learn': 'know',
-      'see': 'see', 'look': 'see', 'watch': 'see', 'view': 'see', 'observe': 'see', 'sight': 'see', 'visual': 'see',
-      'work': 'work', 'job': 'work', 'labor': 'work', 'duty': 'work', 'task': 'work', 'busy': 'work',
-      'make': 'make', 'create': 'make', 'build': 'make', 'produce': 'make', 'construct': 'make', 'fix': 'make',
-      'finish': 'finish', 'done': 'finish', 'complete': 'finish', 'completed': 'finish', 'ended': 'finish', 'stop': 'finish', 'halt': 'finish',
-      'can': 'can', 'able': 'can', 'capable': 'can', 'could': 'can', 'may': 'can', 'possible': 'can',
-      'bad': 'bad', 'terrible': 'bad', 'awful': 'bad', 'poor': 'bad', 'sick': 'bad', 'ill': 'bad', 'pain': 'bad', 'hurt': 'bad',
-      'you': 'you', 'your': 'you', 'yourself': 'you',
-      'we': 'we', 'us': 'we', 'our': 'we', 'ourselves': 'we',
-      'in': 'in', 'inside': 'in', 'within': 'in', 'into': 'in',
-      'on': 'on', 'upon': 'on', 'above': 'on', 'surface': 'on',
-      'with': 'with', 'together': 'with', 'along': 'with',
-      'all': 'all', 'everyone': 'all', 'everybody': 'all', 'everything': 'all', 'entire': 'all', 'whole': 'all',
-      'where': 'where', 'location': 'where', 'place': 'where', 'which': 'where'
-    };
+    "query":  "ask",
+    "learner":  "student",
+    "dollars":  "money",
+    "present":  "now",
+    "gentle":  "slow",
+    "infirmary":  "hospital",
+    "campus":  "school",
+    "might":  "maybe",
+    "scan":  "read",
+    "railway":  "train",
+    "commence":  "start",
+    "nocturnal":  "night",
+    "recall":  "remember",
+    "always":  "always",
+    "urban":  "city",
+    "immediately":  "now",
+    "aqua":  "water",
+    "reply":  "answer",
+    "viewing":  "watch",
+    "breath":  "breathe",
+    "tune":  "music",
+    "man":  "man",
+    "may":  "can",
+    "cash":  "money",
+    "this day":  "today",
+    "join":  "meet",
+    "possible":  "can",
+    "reverse":  "back",
+    "tonight":  "night",
+    "cruise":  "boat",
+    "polite":  "please",
+    "rapid":  "fast",
+    "positive":  "sure",
+    "novel":  "book",
+    "low":  "cheap",
+    "sitting":  "sit",
+    "modify":  "change",
+    "certain":  "sure",
+    "funds":  "money",
+    "sorrow":  "sad",
+    "feel":  "feel",
+    "pure":  "clean",
+    "check":  "check",
+    "cautious":  "slow",
+    "employment":  "work",
+    "monthly":  "month",
+    "hydrate":  "water",
+    "kindly":  "please",
+    "flight":  "fly",
+    "happy":  "happy",
+    "us":  "we",
+    "ticket":  "ticket",
+    "starting":  "start",
+    "sit":  "sit",
+    "area":  "area",
+    "fun":  "play",
+    "not":  "not",
+    "school":  "school",
+    "leader":  "boss",
+    "story":  "floor",
+    "shuttle":  "bus",
+    "carry":  "take",
+    "heart":  "love",
+    "workplace":  "office",
+    "sense":  "feel",
+    "choice":  "which",
+    "cannot":  "not",
+    "ourselves":  "we",
+    "attendant":  "nurse",
+    "reach":  "arrive",
+    "deck":  "floor",
+    "none":  "never",
+    "coughing":  "cough",
+    "avenue":  "street",
+    "office":  "office",
+    "switch":  "change",
+    "improve":  "better",
+    "knowledge":  "know",
+    "hop":  "jump",
+    "clearance":  "pass",
+    "no":  "no",
+    "buying":  "pay",
+    "inexpensive":  "cheap",
+    "line":  "wait",
+    "luggage":  "pack",
+    "evening":  "night",
+    "whom":  "who",
+    "interior":  "inside",
+    "reason":  "why",
+    "sick":  "bad",
+    "isnt":  "not",
+    "purchase":  "pay",
+    "hydration":  "water",
+    "beg":  "please",
+    "nap":  "sleep",
+    "phone":  "call",
+    "definitely":  "sure",
+    "road":  "street",
+    "work":  "work",
+    "wherefore":  "why",
+    "inspect":  "check",
+    "fly":  "fly",
+    "agreed":  "ok",
+    "blind":  "blind",
+    "better":  "better",
+    "past day":  "yesterday",
+    "settle":  "pay",
+    "recreation":  "play",
+    "ride":  "drive",
+    "boarding":  "pass",
+    "manual":  "book",
+    "eat":  "hungry",
+    "nearby":  "near",
+    "walk":  "walk",
+    "costly":  "expensive",
+    "front":  "front",
+    "center":  "center",
+    "distant":  "far",
+    "how":  "how",
+    "transit":  "bus",
+    "bureau":  "office",
+    "coach":  "bus",
+    "near":  "near",
+    "male":  "man",
+    "could":  "can",
+    "student":  "student",
+    "today":  "today",
+    "labor":  "work",
+    "trip":  "vacation",
+    "exterior":  "outside",
+    "hub":  "center",
+    "level":  "floor",
+    "sending":  "send",
+    "along":  "with",
+    "mail":  "send",
+    "not ever":  "never",
+    "housing":  "house",
+    "stop":  "finish",
+    "desk":  "office",
+    "where":  "where",
+    "dial":  "call",
+    "sip":  "drink",
+    "forehead":  "head",
+    "stairs":  "stairs",
+    "blaze":  "fire",
+    "driving":  "drive",
+    "tomorrow":  "tomorrow",
+    "send":  "send",
+    "smoke":  "fire",
+    "nowadays":  "today",
+    "minutes":  "minute",
+    "college":  "school",
+    "onward":  "straight",
+    "subway":  "train",
+    "passport":  "pass",
+    "vision":  "dream",
+    "ill":  "bad",
+    "wish":  "want",
+    "well":  "better",
+    "sightless":  "blind",
+    "drink":  "water",
+    "pm":  "afternoon",
+    "terrible":  "bad",
+    "unlock":  "open",
+    "fire":  "fire",
+    "fare":  "price",
+    "afternoon":  "afternoon",
+    "hazard":  "danger",
+    "dangerous":  "danger",
+    "appetite":  "hungry",
+    "rail":  "train",
+    "chamber":  "room",
+    "out":  "outside",
+    "room":  "room",
+    "dawn":  "morning",
+    "space":  "room",
+    "offer":  "give",
+    "gesturing":  "sign",
+    "takeoff":  "fly",
+    "complete":  "finish",
+    "inform":  "tell",
+    "break":  "vacation",
+    "watch":  "watch",
+    "grab":  "take",
+    "nope":  "no",
+    "pause":  "wait",
+    "grasp":  "understand",
+    "bed":  "sleep",
+    "begin":  "start",
+    "view":  "see",
+    "floor":  "floor",
+    "poor":  "bad",
+    "surface":  "on",
+    "clinic":  "hospital",
+    "you":  "you",
+    "path":  "street",
+    "running":  "run",
+    "train":  "train",
+    "unclean":  "dirty",
+    "downtown":  "city",
+    "retry":  "again",
+    "ahead":  "front",
+    "family":  "family",
+    "rush":  "hurry",
+    "summon":  "call",
+    "method":  "how",
+    "stub":  "ticket",
+    "call":  "call",
+    "build":  "make",
+    "physical":  "body",
+    "zone":  "area",
+    "game":  "game",
+    "boardingpass":  "ticket",
+    "ache":  "hurt",
+    "landing":  "arrive",
+    "ok":  "ok",
+    "money":  "money",
+    "fry":  "cook",
+    "jump":  "jump",
+    "go":  "go",
+    "agree":  "yes",
+    "day":  "day",
+    "verify":  "check",
+    "familiar":  "know",
+    "town":  "city",
+    "door":  "door",
+    "sad":  "sad",
+    "alarm":  "danger",
+    "affirmative":  "yes",
+    "supervisor":  "boss",
+    "bags":  "pack",
+    "pay":  "pay",
+    "residence":  "house",
+    "moment":  "minute",
+    "baggage":  "pack",
+    "excuse":  "sorry",
+    "stay":  "stay",
+    "again":  "again",
+    "departure":  "go",
+    "opened":  "open",
+    "eye":  "watch",
+    "temple":  "head",
+    "emergency":  "hospital",
+    "locale":  "place",
+    "soiled":  "dirty",
+    "reiterate":  "again",
+    "stairway":  "stairs",
+    "smiling":  "smile",
+    "giving":  "give",
+    "asl":  "sign",
+    "spot":  "place",
+    "sector":  "area",
+    "hours":  "hour",
+    "here":  "here",
+    "morning":  "morning",
+    "hurry":  "hurry",
+    "melody":  "music",
+    "constantly":  "always",
+    "awful":  "bad",
+    "outdoors":  "outside",
+    "away":  "far",
+    "cheap":  "cheap",
+    "swift":  "fast",
+    "study":  "read",
+    "able":  "can",
+    "parched":  "thirsty",
+    "all":  "all",
+    "remember":  "remember",
+    "distance":  "far",
+    "repeat":  "again",
+    "yeah":  "yes",
+    "arrival":  "arrive",
+    "maybe":  "maybe",
+    "airline":  "fly",
+    "your":  "you",
+    "stroll":  "walk",
+    "signing":  "sign",
+    "filthy":  "dirty",
+    "telephone":  "call",
+    "capable":  "can",
+    "beverage":  "drink",
+    "entire":  "all",
+    "yourself":  "you",
+    "exit":  "leave",
+    "alright":  "ok",
+    "wait":  "stay",
+    "starving":  "hungry",
+    "academy":  "school",
+    "high price":  "expensive",
+    "direct":  "straight",
+    "midpoint":  "center",
+    "comprehend":  "understand",
+    "hope":  "hope",
+    "director":  "boss",
+    "freezing":  "cold",
+    "loving":  "love",
+    "everyone":  "all",
+    "tell":  "tell",
+    "mention":  "tell",
+    "hour":  "hour",
+    "okay":  "ok",
+    "who":  "who",
+    "clean":  "clean",
+    "audit":  "check",
+    "retail":  "sell",
+    "pack":  "pack",
+    "minute":  "minute",
+    "bargain":  "cheap",
+    "assist":  "help",
+    "cough":  "cough",
+    "tardy":  "late",
+    "leaving":  "leave",
+    "permit":  "pass",
+    "step":  "walk",
+    "deny":  "no",
+    "doctor":  "doctor",
+    "manager":  "boss",
+    "encounter":  "meet",
+    "holiday":  "vacation",
+    "sold":  "sell",
+    "direction":  "where",
+    "pass":  "pass",
+    "joy":  "happy",
+    "delayed":  "late",
+    "wc":  "bathroom",
+    "pain":  "hurt",
+    "location":  "where",
+    "fast":  "fast",
+    "plane":  "fly",
+    "support":  "help",
+    "above":  "on",
+    "yours":  "you",
+    "flame":  "fire",
+    "guy":  "man",
+    "never":  "never",
+    "depressed":  "sad",
+    "yes":  "yes",
+    "start":  "start",
+    "in":  "in",
+    "aircraft":  "fly",
+    "injury":  "hurt",
+    "apartment":  "house",
+    "play":  "play",
+    "craft":  "make",
+    "cause":  "why",
+    "response":  "answer",
+    "hospital":  "hospital",
+    "chai":  "tea",
+    "paid":  "pay",
+    "body":  "body",
+    "portal":  "door",
+    "queue":  "wait",
+    "can":  "can",
+    "lavatory":  "bathroom",
+    "unhappy":  "sad",
+    "city":  "city",
+    "love":  "love",
+    "dancing":  "dance",
+    "vehicle":  "car",
+    "recollect":  "remember",
+    "md":  "doctor",
+    "close":  "near",
+    "bad":  "bad",
+    "hurrying":  "hurry",
+    "selling":  "sell",
+    "open":  "open",
+    "why":  "why",
+    "review":  "check",
+    "back":  "back",
+    "nurse":  "nurse",
+    "hold":  "stay",
+    "know":  "know",
+    "household":  "family",
+    "h2o":  "water",
+    "middle":  "center",
+    "express":  "fast",
+    "wound":  "hurt",
+    "doorway":  "door",
+    "like":  "want",
+    "tea":  "tea",
+    "sport":  "game",
+    "vacation":  "vacation",
+    "negative":  "no",
+    "done":  "finish",
+    "jumping":  "jump",
+    "hourly":  "hour",
+    "apologies":  "sorry",
+    "our":  "we",
+    "am":  "morning",
+    "boulevard":  "street",
+    "want":  "want",
+    "seat":  "sit",
+    "healing":  "better",
+    "sunrise":  "morning",
+    "cooking":  "cook",
+    "slowly":  "slow",
+    "espresso":  "coffee",
+    "remain":  "stay",
+    "water":  "water",
+    "cranial":  "head",
+    "music":  "music",
+    "whichever":  "which",
+    "leave":  "vacation",
+    "request":  "ask",
+    "automobile":  "car",
+    "aid":  "help",
+    "audio":  "music",
+    "language":  "sign",
+    "book":  "book",
+    "university":  "school",
+    "ship":  "boat",
+    "venue":  "place",
+    "finish":  "finish",
+    "currently":  "now",
+    "steps":  "stairs",
+    "change":  "change",
+    "thirsty":  "thirsty",
+    "pricey":  "expensive",
+    "scribe":  "write",
+    "suitcase":  "pack",
+    "urgent":  "hurry",
+    "vend":  "sell",
+    "anatomy":  "body",
+    "bathroom":  "bathroom",
+    "vessel":  "boat",
+    "accompanied":  "with",
+    "question":  "ask",
+    "travel":  "vacation",
+    "coffee":  "coffee",
+    "chair":  "sit",
+    "adore":  "love",
+    "aviation":  "fly",
+    "rear":  "back",
+    "cappuccino":  "coffee",
+    "expensive":  "expensive",
+    "staircase":  "stairs",
+    "airplane":  "fly",
+    "with":  "with",
+    "relatives":  "family",
+    "sleeping":  "sleep",
+    "tired":  "sleep",
+    "ground":  "floor",
+    "sterile":  "clean",
+    "playing":  "play",
+    "dont":  "not",
+    "remote":  "far",
+    "sell":  "sell",
+    "burning":  "fire",
+    "grant":  "give",
+    "cold":  "cold",
+    "er":  "hospital",
+    "say":  "tell",
+    "woman":  "woman",
+    "forgive":  "sorry",
+    "walking":  "walk",
+    "together":  "with",
+    "dreaming":  "dream",
+    "gate":  "arrive",
+    "get it":  "understand",
+    "section":  "area",
+    "far":  "far",
+    "shiver":  "cold",
+    "which":  "where",
+    "contest":  "game",
+    "quick":  "fast",
+    "arriving":  "arrive",
+    "breathing":  "breathe",
+    "flying":  "fly",
+    "inside":  "in",
+    "once more":  "again",
+    "suite":  "room",
+    "hunger":  "hungry",
+    "charge":  "price",
+    "going":  "go",
+    "boss":  "boss",
+    "bus":  "bus",
+    "greeting":  "meet",
+    "give":  "give",
+    "ended":  "finish",
+    "way":  "street",
+    "emotion":  "feel",
+    "voucher":  "ticket",
+    "taking":  "take",
+    "outside":  "outside",
+    "smile":  "smile",
+    "brew":  "coffee",
+    "dispatch":  "send",
+    "joyful":  "happy",
+    "ask":  "ask",
+    "hoping":  "hope",
+    "hungry":  "hungry",
+    "look":  "watch",
+    "affordable":  "cheap",
+    "female":  "woman",
+    "into":  "in",
+    "possibly":  "maybe",
+    "song":  "music",
+    "person":  "who",
+    "see":  "see",
+    "jog":  "run",
+    "continually":  "always",
+    "in respiration":  "breathe",
+    "currency":  "money",
+    "match":  "game",
+    "steer":  "drive",
+    "duty":  "work",
+    "proximity":  "near",
+    "daytime":  "day",
+    "cook":  "cook",
+    "mind":  "head",
+    "alter":  "change",
+    "whose":  "who",
+    "night":  "night",
+    "fine":  "ok",
+    "provide":  "give",
+    "aware":  "know",
+    "beside":  "near",
+    "observe":  "watch",
+    "next day":  "tomorrow",
+    "sorry":  "sorry",
+    "slow":  "slow",
+    "please":  "please",
+    "breathe":  "breathe",
+    "sore":  "hurt",
+    "fee":  "price",
+    "task":  "work",
+    "glad":  "happy",
+    "parents":  "family",
+    "run":  "run",
+    "document":  "book",
+    "place":  "where",
+    "respire":  "breathe",
+    "toilet":  "bathroom",
+    "fantasy":  "dream",
+    "lady":  "woman",
+    "leap":  "jump",
+    "create":  "make",
+    "read":  "read",
+    "transmit":  "send",
+    "dream":  "dream",
+    "yesterday":  "yesterday",
+    "boat":  "boat",
+    "head":  "go",
+    "examine":  "check",
+    "core":  "center",
+    "entrance":  "door",
+    "inquire":  "ask",
+    "price":  "price",
+    "seize":  "take",
+    "behind":  "back",
+    "warning":  "danger",
+    "on":  "on",
+    "we":  "we",
+    "drinking":  "drink",
+    "make":  "make",
+    "completed":  "finish",
+    "opening":  "open",
+    "car":  "car",
+    "caregiver":  "nurse",
+    "gather":  "meet",
+    "respond":  "answer",
+    "sail":  "boat",
+    "waiting":  "wait",
+    "yep":  "yes",
+    "straight":  "straight",
+    "upon":  "on",
+    "whole":  "all",
+    "writing":  "write",
+    "ferry":  "boat",
+    "peril":  "danger",
+    "apologize":  "sorry",
+    "manner":  "how",
+    "tidy":  "clean",
+    "pupil":  "student",
+    "time":  "minute",
+    "payment":  "money",
+    "staying":  "stay",
+    "clinician":  "doctor",
+    "restroom":  "bathroom",
+    "drive":  "drive",
+    "packing":  "pack",
+    "unwell":  "bad",
+    "site":  "place",
+    "forward":  "straight",
+    "everything":  "all",
+    "gentleman":  "man",
+    "cheerful":  "happy",
+    "month":  "month",
+    "chill":  "cold",
+    "take":  "take",
+    "hack":  "cough",
+    "delay":  "late",
+    "locomotive":  "train",
+    "grin":  "smile",
+    "optimism":  "hope",
+    "latte":  "coffee",
+    "arrived":  "arrive",
+    "cost":  "price",
+    "land":  "arrive",
+    "understand":  "understand",
+    "late":  "late",
+    "job":  "work",
+    "bag":  "pack",
+    "dirty":  "dirty",
+    "danger":  "danger",
+    "everybody":  "all",
+    "initiate":  "start",
+    "sprint":  "run",
+    "slumber":  "sleep",
+    "house":  "house",
+    "washroom":  "bathroom",
+    "crave":  "want",
+    "arrive":  "arrive",
+    "sign":  "sign",
+    "medic":  "nurse",
+    "hot tea":  "tea",
+    "note":  "write",
+    "torso":  "body",
+    "service":  "help",
+    "sanitize":  "clean",
+    "within":  "in",
+    "thirst":  "thirsty",
+    "desire":  "want",
+    "surgeon":  "doctor",
+    "winter":  "cold",
+    "dance":  "dance",
+    "anterior":  "front",
+    "agency":  "office",
+    "forever":  "always",
+    "depart":  "go",
+    "daily":  "day",
+    "assistance":  "help",
+    "haste":  "hurry",
+    "state":  "tell",
+    "improved":  "better",
+    "street":  "street",
+    "physician":  "doctor",
+    "hurt":  "hurt",
+    "feeling":  "feel",
+    "now":  "now",
+    "metro":  "train",
+    "swap":  "change",
+    "region":  "area",
+    "memory":  "remember",
+    "meet":  "meet",
+    "write":  "write",
+    "produce":  "make",
+    "bake":  "cook",
+    "groove":  "dance",
+    "reading":  "read",
+    "speed":  "fast",
+    "prepare food":  "cook",
+    "sure":  "sure",
+    "perhaps":  "maybe",
+    "home":  "house",
+    "doesnt":  "not",
+    "midday":  "afternoon",
+    "sleep":  "sleep",
+    "help":  "help",
+    "answer":  "answer"
+}
+;
 
     const FINGERSPELL_MAP = {
       a: 'a', b: 'open_b', c: 'c', d: '1', e: 'flat_o', f: 'f', g: '1', h: 'h',
@@ -2894,7 +5027,8 @@
       }
 
       LexiconWorkbench.loadRecipe(s.id);
-      loadGLB(s.id);
+      // Smoothly transition with 280ms co-articulation (no hard cuts, no avatar re-instantiation)
+      loadGLB(s.id, !!keepQueue, currentModel ? 0.28 : 0);
     }
 
     function executeAslSearch(text) {
@@ -2920,7 +5054,7 @@
           if (signObj) {
             signQueue = [];
             selectSign(signObj);
-            showToast(`⚡ Signing "${signObj.name}"`);
+            showToast(`âš¡ Signing "${signObj.name}"`);
             return;
           }
         }
@@ -2941,10 +5075,12 @@
       });
 
       if (sequence.length > 0) {
+        // Pre-cache all clips in sequence in parallel for instant 0ms transition latency!
+        sequence.forEach(sId => preloadClip(sId));
         signQueue = sequence;
         signQueueIndex = 0;
         playQueueStep();
-        showToast(`⚡ Multi-Sign Sequence: ${sequence.map(s => s.toUpperCase()).join(' ➔ ')}`);
+        showToast(`âš¡ Smooth Multi-Sign Sequence: ${sequence.map(s => s.toUpperCase()).join(' âž” ')}`);
       } else {
         // Unknown multi-word phrase: spell first key token
         startFingerspelling(tokens[0]);
@@ -2974,7 +5110,7 @@
         const pillsHtml = queue.map((sId, i) => {
           const isActive = (i === index);
           return `<span style="display:inline-block; font-family:var(--font-mono); font-size:10px; font-weight:800; padding:2px 7px; margin:2px; border-radius:4px; ${isActive ? 'background:#00e599; color:#000; box-shadow:0 0 10px #00e599;' : 'background:rgba(255,255,255,0.08); color:#94a3b8;'}">${sId.toUpperCase()}</span>`;
-        }).join(' ➔ ');
+        }).join(' âž” ');
         descEl.innerHTML = `<div style="margin-bottom:4px; color:#00e599; font-weight:700;">Multi-Sign Sequence Queue:</div><div>${pillsHtml}</div>`;
       }
     }
@@ -2990,7 +5126,7 @@
       fingerspellIndex = 0;
       fingerspellTimer = 0;
 
-      showToast(`🔤 Fingerspelling "${word.toUpperCase()}" (${fingerspellQueue.length} letters)`);
+      showToast(`ðŸ”¤ Fingerspelling "${word.toUpperCase()}" (${fingerspellQueue.length} letters)`);
       updateFingerspellHud(word);
     }
 
@@ -3093,7 +5229,7 @@
       dd.innerHTML = matches.map(m => `
         <div class="dropdown-item" onclick="executeAslSearch('${m.signId || m.word}')">
           <div class="dropdown-item-left">
-            <span style="font-size:12px;">${m.type === 'SPELL' ? '🔤' : '⚡'}</span>
+            <span style="font-size:12px;">${m.type === 'SPELL' ? 'ðŸ”¤' : 'âš¡'}</span>
             <div>
               <div class="dropdown-item-name">${m.title}</div>
               <div class="dropdown-item-sub">${m.desc ? m.desc.substring(0, 36) + '...' : ''}</div>
@@ -3113,69 +5249,89 @@
       if (!e.target.closest('.header-search-container')) closeSearchDropdown();
     });
 
-    let initialHipsPos = null;
+        let initialHipsPos = null;
+    const animationClipCache = {};
+    const pendingClipCallbacks = {};
+    const DEFAULT_BLEND_DURATION = 0.28; // 280ms smooth physiological co-articulation
 
-    function loadGLB(signId) {
-      loader.load(`datasets/asl_signs/${signId}.glb`, function(gltf) {
-        if (currentModel) {
-          scene.remove(currentModel);
-          if (mixer) mixer.stopAllAction();
+    // Sanitize animation tracks: remove the last-frame rest-pose jump spike
+    function sanitizeClip(clip) {
+      if (!clip || !clip.tracks) return;
+      clip.tracks.forEach(track => {
+        const len = track.times.length;
+        if (len > 2) {
+          const itemSize = track.getValueSize();
+          for (let i = 0; i < itemSize; i++) {
+            track.values[(len - 1) * itemSize + i] = track.values[(len - 2) * itemSize + i];
+          }
         }
+      });
+      if (clip.tracks[0] && clip.tracks[0].times.length > 2) {
+        clip.duration = clip.tracks[0].times[clip.tracks[0].times.length - 2];
+      }
+    }
 
-        const model = gltf.scene;
-        const wrapper = new THREE.Group();
-        wrapper.rotation.set(0, Math.PI, 0);
-        wrapper.position.set(0.12, -0.30, -0.15);
-        wrapper.add(model);
+    // Preload and cache animation clip
+    function preloadClip(signId, callback) {
+      if (animationClipCache[signId]) {
+        if (callback) callback(animationClipCache[signId]);
+        return;
+      }
+      if (pendingClipCallbacks[signId]) {
+        if (callback) pendingClipCallbacks[signId].push(callback);
+        return;
+      }
+      pendingClipCallbacks[signId] = callback ? [callback] : [];
 
-        avatarBones = {};
-        model.traverse(function(c) {
-          if (c.isBone) {
-            avatarBones[c.name] = c;
-          }
-          if (c.isSkinnedMesh) {
-            c.frustumCulled = false;
-            c.castShadow = true;
-            c.receiveShadow = true;
-            c.material = new THREE.MeshStandardMaterial({
-              color: 0x7dd3fc,
-              roughness: 0.32,
-              metalness: 0.10,
-              skinning: true
-            });
-          }
-        });
-
-        scene.add(wrapper);
-        currentModel = wrapper;
-        wrapper.visible = true;
-
+      loader.load(`datasets/asl_signs/${signId}.glb`, function(gltf) {
         if (gltf.animations && gltf.animations.length > 0) {
-          mixer = new THREE.AnimationMixer(model);
           const clip = gltf.animations[0];
+          sanitizeClip(clip);
+          animationClipCache[signId] = clip;
+          const cbs = pendingClipCallbacks[signId] || [];
+          delete pendingClipCallbacks[signId];
+          cbs.forEach(cb => cb(clip));
+        }
+      }, undefined, function(err) {
+        console.warn("Could not preload sign:", signId, err);
+        delete pendingClipCallbacks[signId];
+      });
+    }
 
-          // Sanitize animation tracks: remove the last-frame rest-pose jump spike
-          clip.tracks.forEach(track => {
-            const len = track.times.length;
-            if (len > 2) {
-              const itemSize = track.getValueSize();
-              for (let i = 0; i < itemSize; i++) {
-                track.values[(len - 1) * itemSize + i] = track.values[(len - 2) * itemSize + i];
-              }
+    // Persistent Rig & Smooth Co-articulation Loader
+    function loadGLB(signId, isSequence = false, blendDuration = DEFAULT_BLEND_DURATION) {
+      // 1. Initial Avatar Bootstrap (runs only on very first sign load)
+      if (!currentModel || !mixer) {
+        loader.load(`datasets/asl_signs/${signId}.glb`, function(gltf) {
+          const model = gltf.scene;
+          const wrapper = new THREE.Group();
+          wrapper.rotation.set(0, Math.PI, 0);
+          wrapper.position.set(0.12, -0.30, -0.15);
+          wrapper.add(model);
+
+          avatarBones = {};
+          model.traverse(function(c) {
+            if (c.isBone) {
+              avatarBones[c.name] = c;
+            }
+            if (c.isSkinnedMesh) {
+              c.frustumCulled = false;
+              c.castShadow = true;
+              c.receiveShadow = true;
+              c.material = new THREE.MeshStandardMaterial({
+                color: 0x7dd3fc,
+                roughness: 0.32,
+                metalness: 0.10,
+                skinning: true
+              });
             }
           });
-          // Trim clip duration to penultimate timestamp to loop seamlessly without hitch
-          if (clip.tracks[0] && clip.tracks[0].times.length > 2) {
-            clip.duration = clip.tracks[0].times[clip.tracks[0].times.length - 2];
-          }
 
-          duration = clip.duration;
-          activeAction = mixer.clipAction(clip);
-          activeAction.play();
+          scene.add(wrapper);
+          currentModel = wrapper;
+          wrapper.visible = true;
 
-          // Evaluate frame 0.01 first so bones assume true signing stance coordinates
-          mixer.setTime(0.01);
-          mixer.update(0);
+          mixer = new THREE.AnimationMixer(model);
 
           if (avatarBones['Hips']) {
             initialHipsPos = avatarBones['Hips'].position.clone();
@@ -3193,21 +5349,69 @@
             }
           }
 
-          isPlaying = true;
-          const btnPlay = document.getElementById('btn-play-pause');
-          if (btnPlay) btnPlay.innerText = '⏸';
-          const specChannels = document.getElementById('spec-channels');
-          if (specChannels) specChannels.innerText = '125 (60 FPS)';
-          const specAcc = document.getElementById('spec-acc');
-          if (specAcc) specAcc.innerText = '99.9%';
-        }
-      }, undefined, function(err) {
-        console.warn("Could not load sign asset:", signId, err);
-        // Resilient fallback: articulate procedurally if asset fetch encounters network block
-        if (!isFingerspelling) {
-          startFingerspelling(signId);
-        }
+          if (gltf.animations && gltf.animations.length > 0) {
+            const clip = gltf.animations[0];
+            sanitizeClip(clip);
+            animationClipCache[signId] = clip;
+            playClipAction(clip, isSequence, 0);
+          }
+        }, undefined, function(err) {
+          console.warn("Could not load sign asset:", signId, err);
+          if (!isFingerspelling) startFingerspelling(signId);
+        });
+        return;
+      }
+
+      // 2. Avatar already exists in scene: execute smooth SLERP co-articulation transition!
+      if (animationClipCache[signId]) {
+        playClipAction(animationClipCache[signId], isSequence, blendDuration);
+        return;
+      }
+
+      // Load animation track from GLB without re-instantiating the 3D avatar mesh
+      preloadClip(signId, function(clip) {
+        playClipAction(clip, isSequence, blendDuration);
       });
+    }
+
+    // Play action on persistent mixer with smooth crossfade
+    function playClipAction(clip, isSequence, blendDuration) {
+      if (!mixer) return;
+
+      const newAction = mixer.clipAction(clip);
+      newAction.enabled = true;
+      newAction.setEffectiveTimeScale(playbackSpeed);
+      newAction.setEffectiveWeight(1.0);
+      newAction.reset();
+
+      if (isSequence) {
+        newAction.setLoop(THREE.LoopOnce, 1);
+        newAction.clampWhenFinished = true;
+      } else {
+        newAction.setLoop(THREE.LoopRepeat);
+      }
+
+      duration = clip.duration;
+
+      if (activeAction && activeAction !== newAction && blendDuration > 0) {
+        newAction.play();
+        activeAction.crossFadeTo(newAction, blendDuration, true);
+      } else {
+        if (activeAction && activeAction !== newAction) {
+          activeAction.stop();
+        }
+        newAction.play();
+      }
+
+      activeAction = newAction;
+      isPlaying = true;
+
+      const btnPlay = document.getElementById('btn-play-pause');
+      if (btnPlay) btnPlay.innerText = 'â¸';
+      const specChannels = document.getElementById('spec-channels');
+      if (specChannels) specChannels.innerText = '125 (60 FPS)';
+      const specAcc = document.getElementById('spec-acc');
+      if (specAcc) specAcc.innerText = '99.9%';
     }
 
     // Default initial sign
@@ -3480,7 +5684,7 @@
     // =========================================================================
     function togglePlayPause() {
       isPlaying = !isPlaying;
-      document.getElementById('btn-play-pause').innerText = isPlaying ? '⏸' : '▶';
+      document.getElementById('btn-play-pause').innerText = isPlaying ? 'â¸' : 'â–¶';
     }
 
     function stabilizeHipsAtOrigin() {
@@ -3586,17 +5790,21 @@
         stabilizeHipsAtOrigin();
         applySpatialNudges();
 
-        // Check if sentence sequence queue has next sign
+        // Check if sentence sequence queue has next sign with 280ms co-articulation window
         if (signQueue.length > 0 && !isScrubbing) {
-          if (t >= duration - 0.16 && !window._queueTrigger) {
+          const actionTime = (activeAction && typeof activeAction.time === 'number') ? activeAction.time : (mixer.time % duration);
+          const blendLeadTime = 0.28; // Begin crossfading 280ms before sign stroke finishes
+          if (actionTime >= duration - blendLeadTime && !window._queueTrigger) {
             window._queueTrigger = true;
             signQueueIndex++;
             if (signQueueIndex < signQueue.length) {
               playQueueStep();
             } else {
+              // Sequence complete
               signQueue = [];
+              showToast('âœ“ Sequence Complete');
             }
-            setTimeout(() => { window._queueTrigger = false; }, 400);
+            setTimeout(() => { window._queueTrigger = false; }, 320);
           }
         }
 
@@ -3703,9 +5911,12 @@
       { flight: 'LHR // BA0178', msg: 'Security Checkpoint Call', query: 'please check ticket' },
       { flight: 'SFO // UA0852', msg: 'Passenger Wayfinding Desk', query: 'where is bathroom please' },
       { flight: 'CDG // AF0012', msg: 'Inter-Terminal Shuttle Transfer', query: 'train and bus go now' },
+      { flight: 'ORD // AA0410', msg: 'Clinical Response Unit', query: 'doctor please help' },
       { flight: 'DXB // EK0201', msg: 'Mobility & Boarding Assistance', query: 'can you help me' },
+      { flight: 'MUC // LH2460', msg: 'Rail Transit Connection', query: 'today train is late' },
+      { flight: 'NRT // NH0011', msg: 'Terminal Passenger Lounge', query: 'coffee and water please' },
       { flight: 'HND // JL0004', msg: 'Baggage & Payment Service', query: 'ticket and money please' },
-      { flight: 'HEL // AY0001', msg: 'Gate Exit Clearance', query: 'door arrive now' }
+      { flight: 'HEL // AY0001', msg: 'Gate Exit Clearance', query: 'open door now' }
     ];
 
     function toggleAirportLiveFeed() {
@@ -3717,16 +5928,16 @@
         if (tickerEl) tickerEl.style.display = 'flex';
         if (feedBtn) {
           feedBtn.classList.add('active');
-          feedBtn.innerHTML = '<span class="chip-icon">🟢</span><span>RADAR: ACTIVE</span>';
+          feedBtn.innerHTML = '<span class="chip-icon">ðŸŸ¢</span><span>RADAR: ACTIVE</span>';
         }
-        showToast('📡 Autonomous Airport Radar Activated');
+        showToast('ðŸ“¡ Autonomous Airport Radar Activated');
         triggerNextAirportDispatch();
         airportDispatchTimer = setInterval(triggerNextAirportDispatch, 14000);
       } else {
         if (tickerEl) tickerEl.style.display = 'none';
         if (feedBtn) {
           feedBtn.classList.remove('active');
-          feedBtn.innerHTML = '<span class="chip-icon">⚪</span><span>RADAR: OFF</span>';
+          feedBtn.innerHTML = '<span class="chip-icon">âšª</span><span>RADAR: OFF</span>';
         }
         if (airportDispatchTimer) clearInterval(airportDispatchTimer);
         showToast('Airport Radar Feed Paused');
@@ -3765,6 +5976,27 @@
         }
       }
     });
+
+    // Bridge for parent embedding (index.html) & external controls
+    window.loadUniversalPreset = executeAslSearch;
+    window.executeAslSearch = executeAslSearch;
+    window.setCameraPreset = setCameraPreset;
+
+    if (window.LexiconWorkbench) {
+      window.LexiconWorkbench.setCameraPreset = setCameraPreset;
+      window.LexiconWorkbench.executeAslSearch = executeAslSearch;
+      window.LexiconWorkbench.loadUniversalPreset = executeAslSearch;
+      window.LexiconWorkbench.toggleAutoRotate = function() {
+        controls.autoRotate = !controls.autoRotate;
+        return controls.autoRotate;
+      };
+      window.LexiconWorkbench.toggleKioskMode = function() {
+        toggleAirportLiveFeed();
+      };
+      Object.defineProperty(window.LexiconWorkbench, 'isKioskMode', {
+        get: function() { return isAirportLiveFeedActive; }
+      });
+    }
 </script>
 </body>
 </html>

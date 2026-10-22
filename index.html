@@ -288,7 +288,7 @@
                 </div>
                 <div class="text-[10px] font-mono text-neutral-400 flex items-center gap-1.5 hidden md:flex">
                   <span>✦</span>
-                  <span>Alpha prototype &bull; 34 audited signs</span>
+                  <span>Production prototype &bull; 150 mocap signs &bull; Co-articulated motion smoothing</span>
                 </div>
               </div>
 
@@ -455,7 +455,7 @@
             Our live interactive prototype: A deterministic 27-DOF active skeletal rig that procedurally compiles text and phonological lexicons (HamNoSys, ASL-LEX 2.0) into exact, repeatable 3D joint movements with invariant bone lengths (&Delta; = 0.000) and zero hallucinations—requiring zero optical mocap studio recording.
           </p>
           <div class="text-[10px] font-mono text-neutral-400 pt-1 border-t border-neutral-800">
-            Live interactive prototype (34 signs)
+            Live interactive prototype (150 mocap signs with continuous transition smoothing)
           </div>
         </div>
 
@@ -786,9 +786,13 @@
 
     function playHeroSign(name) {
       const frame = document.getElementById('hero-engine-frame');
-      if (frame && frame.contentWindow && typeof frame.contentWindow.loadUniversalPreset === 'function') {
-        setFrameSpeed(frame, 0.4);
-        frame.contentWindow.loadUniversalPreset(name);
+      if (frame && frame.contentWindow) {
+        if (typeof frame.contentWindow.executeAslSearch === 'function') {
+          frame.contentWindow.executeAslSearch(name);
+        } else if (typeof frame.contentWindow.loadUniversalPreset === 'function') {
+          setFrameSpeed(frame, 0.4);
+          frame.contentWindow.loadUniversalPreset(name);
+        }
       }
       const badge = document.getElementById('active-sign-badge');
       if (badge) {
