@@ -1267,6 +1267,25 @@
       max-width: 95vw;
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
+    
+    /* SUBTLE ALPHA BUILD DISCLAIMER FOOTER (SMALL & HIDDEN) */
+    .alpha-disclaimer-footer {
+      position: fixed;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-mono);
+      font-size: 7.5px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: rgba(148, 163, 184, 0.28);
+      text-transform: uppercase;
+      pointer-events: none;
+      z-index: 40;
+      white-space: nowrap;
+      user-select: none;
+    }
+
     .apple-bottom-island:hover {
       border-color: rgba(0, 242, 254, 0.35);
       box-shadow: 
@@ -1912,6 +1931,11 @@
       <!-- Autocomplete Dropdown -->
       <div id="search-dropdown" class="search-dropdown-menu" style="display:none;"></div>
     </div>
+  </div>
+
+  <!-- SUBTLE ALPHA BUILD DISCLAIMER FOOTER (SMALL & HIDDEN) -->
+  <div class="alpha-disclaimer-footer">
+    Alpha build &bull; For representational purposes only
   </div>
 
   <!-- BATCH AUDITOR MODAL OVERLAY (LEXICON CHECKER) -->
