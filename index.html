@@ -3,29 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SAMMY &mdash; Universal 3D Sign Language Infrastructure | Enable Ventures Investment Memorandum</title>
+  <title>SAMMY &mdash; Deterministic 3D Sign Language Infrastructure for Enterprise Displays</title>
   
-  <!-- Inter Font from Google Fonts for clean Scandinavian grotesque typography -->
+  <!-- Inter & JetBrains Mono Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- MathJax for KaTeX/LaTeX mathematical rendering -->
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']]
-      },
-      svg: { fontCache: 'global' }
-    };
-  </script>
-  <script type="text/javascript" id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-  </script>
   
   <!-- Academic Visitor Telemetry & Analytics (Cookieless & Non-blocking) -->
   <script src="visitor-telemetry.js" defer></script>
@@ -43,13 +29,11 @@
       font-family: 'JetBrains Mono', monospace;
     }
     
-    /* Aalto & Apple signature tight tracking */
-    .tracking-apple-tight {
-      letter-spacing: -0.04em;
+    .tracking-tight-custom {
+      letter-spacing: -0.035em;
     }
     
-    /* Aalto signature underline link */
-    .aalto-link {
+    .custom-link {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
@@ -58,28 +42,28 @@
       text-decoration: none;
       transition: color 0.2s ease;
     }
-    .aalto-link .link-text {
+    .custom-link .link-text {
       border-bottom: 2px solid #ffffff;
       padding-bottom: 2px;
       transition: border-color 0.2s ease, color 0.2s ease;
     }
-    .aalto-link:hover {
+    .custom-link:hover {
       color: #38bdf8;
     }
-    .aalto-link:hover .link-text {
+    .custom-link:hover .link-text {
       border-color: #38bdf8;
       color: #38bdf8;
     }
 
     /* Subtle Glassmorphism Card Style */
-    .apple-glass-card {
+    .glass-card {
       background: rgba(24, 24, 27, 0.75);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
     }
-    .apple-glass-card:hover {
+    .glass-card:hover {
       border-color: rgba(255, 255, 255, 0.16);
     }
 
@@ -113,9 +97,9 @@
   <header class="border-b border-neutral-800/80 bg-[#0d0d0d]/90 sticky top-0 z-50 backdrop-blur-xl">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       
-      <!-- Left: Research Project Identity & Institutional Mark -->
+      <!-- Brand Logo -->
       <div class="flex items-center gap-3">
-        <a href="#top" class="flex items-center gap-3 group" title="Project BiSign Research Home">
+        <a href="#top" class="flex items-center gap-3 group" title="SAMMY Home">
           <div class="w-9 h-9 bg-neutral-900 border border-neutral-800 rounded-lg flex items-center justify-center group-hover:border-sky-500/50 transition">
             <svg class="w-5 h-5 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/>
@@ -126,29 +110,28 @@
           </div>
           <div class="flex flex-col">
             <span class="text-sm font-bold text-white tracking-tight leading-tight">SAMMY</span>
-            <span class="text-[11px] text-emerald-400 font-medium leading-none">Enable Ventures Investment Brief</span>
+            <span class="text-[11px] text-emerald-400 font-medium leading-none">3D Sign Language Infrastructure</span>
           </div>
         </a>
       </div>
 
-      <!-- Center / Right: Section Navigation Links -->
-      <nav class="hidden lg:flex items-center gap-6 text-xs font-semibold text-neutral-300">
-        <a href="#top" class="hover:text-white transition">Executive Memo</a>
-        <a href="#problem" class="hover:text-sky-400 transition">The Problem &amp; TAM</a>
-        <a href="#pipeline" class="hover:text-purple-400 transition">Kinematic Foundation</a>
-        <a href="#synergy" class="hover:text-emerald-400 transition">Enable Ventures Thesis</a>
-        <a href="#roadmap" class="hover:text-sky-400 transition">Commercial Roadmap</a>
-        <a href="#dossier" class="hover:text-emerald-400 transition">Technical Whitepaper</a>
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex items-center gap-6 text-xs font-semibold text-neutral-300">
+        <a href="#top" class="hover:text-white transition">Live Demo</a>
+        <a href="#problem" class="hover:text-sky-400 transition">The Problem</a>
+        <a href="#method" class="hover:text-purple-400 transition">Our Method</a>
+        <a href="#market" class="hover:text-emerald-400 transition">Beachhead &amp; TAM</a>
+        <a href="#contact" class="hover:text-sky-400 transition">Contact</a>
       </nav>
 
-      <!-- Right: Direct Application Dossier Actions -->
+      <!-- Action Buttons -->
       <div class="flex items-center gap-3">
         <a href="04_Procedural_Engine_PoC/anatomical_hand.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/25 hover:text-white transition font-semibold text-xs shadow-lg shadow-emerald-950/40">
-          <span>✨</span>
+          <span>🚀</span>
           <span>Launch 3D Studio</span>
         </a>
 
-        <a href="https://github.com/Joeytribb/sign-language-kinematics" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition text-xs font-medium">
+        <a href="https://github.com/Joeytribb/sign-language-kinematics" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition text-xs font-medium" title="GitHub Repository">
           <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
         </a>
       </div>
@@ -157,86 +140,75 @@
   </header>
 
   <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-24 sm:space-y-36 w-full">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-20 sm:space-y-28 w-full">
 
-    <!-- ==================== HERO & PROPOSAL ABSTRACT ==================== -->
-    <section id="top" class="space-y-6 pt-2 sm:pt-6">
+    <!-- ==================== HERO SECTION & LIVE 3D ENGINE ==================== -->
+    <section id="top" class="space-y-6 pt-2 sm:pt-4">
+      
+      <!-- Stage & Thesis Badge -->
       <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-sky-400 font-bold bg-neutral-900/80 px-3.5 py-1.5 rounded-full border border-sky-500/30">
-        <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
-        <span>Enable Ventures Investment Brief &bull; Seed Stage &bull; Double Bottom Line</span>
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>Pre-Seed Opportunity &bull; $500K SAFE &bull; Double Bottom Line</span>
       </div>
       
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         
-        <!-- Left: Project BiSign Title & Comprehensive Doctoral Abstract (Strictly Future Tense) -->
-        <div class="lg:col-span-6 space-y-6">
+        <!-- Left: Core Thesis & Executive Overview -->
+        <div class="lg:col-span-6 space-y-5">
           <div>
-            <span class="text-xs uppercase tracking-widest text-emerald-400 font-mono font-bold">DEEP-TECH SEED INVESTMENT MEMORANDUM &bull; PREPARED FOR ENABLE VENTURES</span>
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-apple-tight leading-none mt-2">
+            <span class="text-xs uppercase tracking-widest text-emerald-400 font-mono font-bold">PRE-SEED INVESTMENT BRIEF</span>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight-custom leading-none mt-2">
               SAMMY.
             </h1>
             <h2 class="text-xl sm:text-2xl text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-teal-300 to-emerald-400 font-bold tracking-tight mt-2">
-              Universal 3D Sign Language &amp; Accessibility Infrastructure
+              Deterministic 3D Sign Language Infrastructure for Airport Displays &amp; Enterprise Kiosks
             </h2>
-            <p class="text-xs font-mono text-neutral-400 mt-1">Deterministic 125-DOF Kinematic Engine &bull; Zero-Cloud Edge WebGL &bull; Enterprise ADA/EAA &amp; 14 CFR &sect; 382.57 Compliance</p>
+            <p class="text-xs font-mono text-neutral-400 mt-2">27-DOF Active Kinematic Chain &bull; 125-Channel Avatar Rig &bull; Edge WebGL at 60 FPS &bull; 14 CFR &sect; 382.53(a)(3)</p>
           </div>
           
-          <!-- Comprehensive Abstract covering Enable Ventures Thesis -->
+          <!-- Executive Brief Card -->
           <div class="p-5 rounded-2xl bg-neutral-900/80 border border-neutral-800 text-neutral-300 space-y-3.5 text-xs sm:text-sm leading-relaxed">
-            <div class="flex items-center justify-between border-b border-neutral-800/80 pb-2.5">
-              <div class="flex items-center gap-2 text-[11px] font-mono font-bold text-emerald-400 uppercase tracking-widest">
-                <span>✦</span>
-                <span>Thesis Match: Enable Ventures Fund I</span>
-              </div>
-              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/25 font-bold">
-                Double Bottom Line
-              </span>
-            </div>
             <p>
-              Over <b>70 million Deaf individuals</b> globally communicate primarily through visual-gestural sign languages, yet spontaneous communication in critical public environments (commercial airport terminals, emergency triage, intensive care, enterprise workplaces) remains paralyzed by an acute shortage of certified human interpreters ($150+/hr with 48-hour advance booking windows). Natural sign languages have <b>no written orthography</b> and encode complex syntax across 4D physical space.
+              Over <b>70 million Deaf individuals</b> globally communicate primarily through visual-gestural sign language. In commercial airport terminals and public transit hubs, critical gate reassignments and emergency announcements are broadcast almost exclusively over audio loudspeakers. Under <b>14 CFR &sect; 382.53(a)(3)</b>, air carriers and airport operators share statutory responsibility to provide deaf passengers with prompt, equivalent access to the same flight information.
             </p>
             <p>
-              While Big Tech generative video models (black-box diffusion, Sora, video LLMs) suffer from fatal topological hallucinations&mdash;spawning phantom fingers, rubber-band bone stretching, and incoherent spatial grammar&mdash;<b>SAMMY establishes the first deterministic, physically grounded 3D kinematic engine running at 60 FPS directly on the edge.</b>
+              While generative AI video models (diffusion, video LLMs) suffer from severe topological hallucinations&mdash;spawning phantom fingers, rubber-band bone stretching, and costing $0.15&ndash;$0.30 per query with 20-second latencies&mdash;<b>SAMMY compiles flight updates into deterministic 3D sign language running at 60 FPS directly in the browser.</b>
             </p>
             <p>
-              By combining universal phonological parameterization ($langle H, L, M, O, \text{FNMS} \rangle$) with analytical inverse kinematics, 125 articulated DOFs, and zero cloud GPU inference fees, SAMMY delivers <b>100% Euclidean bone-length invariance ($Delta \equiv 0.000$)</b> and sub-100&nbsp;ms latency. Developed in authentic participatory co-design with native Deaf organizations, SAMMY captures a <b>$25.1B enterprise compliance TAM</b> across <b>U.S. DOT 14 CFR &sect; 382.57 airport mandates</b>, <b>ADA Title III</b>, and the <b>European Accessibility Act (EAA 2025)</b>.
+              By combining established linguistic frameworks (ASL-LEX 2.0, HamNoSys) with analytical inverse kinematics, SAMMY guarantees <b>invariant bone lengths (&Delta; = 0.000)</b>, sub-100&nbsp;ms latency, and $0.00 cloud inference costs. The application remains permanently free for Deaf travelers, while enterprise airports and carriers subscribe via B2B SaaS.
             </p>
           </div>
 
-          <!-- Key Metadata Pills (Enable Ventures Metrics) -->
+          <!-- Grounded Key Metrics Badges -->
           <div class="flex flex-wrap items-center gap-2.5 text-xs font-mono text-neutral-400">
             <span class="px-2.5 py-1 rounded bg-neutral-900 border border-neutral-800 text-neutral-300">
-              <strong class="text-white">Round:</strong> Seed ($750k&ndash;$1.5M SAFE)
+              <strong class="text-white">Raise:</strong> $500K SAFE ($5M Cap)
             </span>
             <span class="px-2.5 py-1 rounded bg-emerald-950/40 border border-emerald-800/60 text-emerald-300">
-              <strong class="text-white">Enterprise TAM:</strong> $25.1B Mandated Compliance
+              <strong class="text-white">Beachhead TAM:</strong> $234M ARR
             </span>
             <span class="px-2.5 py-1 rounded bg-sky-950/40 border border-sky-800/60 text-sky-300">
-              <strong class="text-white">Deployment:</strong> Edge WebGL (Zero Cloud Costs)
+              <strong class="text-white">1% Beachhead:</strong> $2.34M ARR
             </span>
             <span class="px-2.5 py-1 rounded bg-neutral-900 border border-neutral-800 text-neutral-300">
-              <strong class="text-white">Kinematics:</strong> 125 DOF @ 60 FPS (0.0mm Drift)
+              <strong class="text-white">Runtime:</strong> 60 FPS Edge WebGL ($0 Cloud Cost)
             </span>
           </div>
 
-          <!-- Direct Action Links to Dossier Documents -->
-          <div class="space-y-2.5 pt-1">
-            <div>
-              <a href="#synergy" class="aalto-link text-sm sm:text-base text-emerald-400 hover:text-white">
-                <span class="text-lg font-bold leading-none">&rarr;</span>
-                <span class="link-text border-emerald-400">View Enable Ventures Thesis Alignment (4 Pillars)</span>
-              </a>
-            </div>
-            <div>
-              <a href="#dossier" class="aalto-link text-sm sm:text-base text-sky-400 hover:text-white">
-                <span class="text-lg font-bold leading-none">&rarr;</span>
-                <span class="link-text border-sky-400">Read Complete Technical Whitepaper (14 Pages PDF)</span>
-              </a>
-            </div>
+          <!-- Action Links -->
+          <div class="flex flex-wrap items-center gap-4 pt-1">
+            <a href="#method" class="custom-link text-sm text-sky-400 hover:text-white">
+              <span class="text-lg font-bold leading-none">&rarr;</span>
+              <span class="link-text border-sky-400">Explore Our Method &amp; Kinematic Pipeline</span>
+            </a>
+            <a href="mailto:iniyandrews@gmail.com?subject=SAMMY%20Pre-Seed%20Inquiry" class="custom-link text-sm text-emerald-400 hover:text-white">
+              <span class="text-lg font-bold leading-none">&rarr;</span>
+              <span class="link-text border-emerald-400">Request 1-Page Teaser &amp; Call</span>
+            </a>
           </div>
         </div>
 
-        <!-- Right: Interactive Live 60 FPS WebGL Digital Twin & Engine Tutorial -->
+        <!-- Right: Interactive Live 60 FPS WebGL Digital Twin -->
         <div class="lg:col-span-6 space-y-4">
           
           <!-- WebGL Container -->
@@ -256,10 +228,10 @@
                   👋 SIGN: HELLO (GREETING)
                 </span>
                 <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/15 text-purple-300 border border-purple-500/30 font-semibold hidden md:inline">
-                  🐢 SPEED: 0.4× (40%)
+                  SPEED: 0.4×
                 </span>
                 <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-semibold hidden sm:inline">
-                  ‖E-S‖ ≡ 16.5 cm &bull; Δ ≡ 0.000
+                  Δ = 0.000 (Rigid Bone)
                 </span>
               </div>
               <a href="04_Procedural_Engine_PoC/anatomical_hand.html" target="_blank" rel="noopener noreferrer" class="text-xs text-sky-400 hover:text-white transition font-semibold flex items-center gap-1">
@@ -289,7 +261,7 @@
               <div class="flex items-center justify-between flex-wrap gap-2 pb-2 border-b border-neutral-800/80">
                 <div class="flex items-center gap-1.5 font-mono text-[11px] overflow-x-auto py-0.5">
                   <span class="text-[10px] uppercase font-bold text-sky-400 flex items-center gap-1 mr-1">
-                    <span>🎥</span> 3D Camera:
+                    <span>🎥</span> Camera:
                   </span>
                   <button id="hero-cam-front" onclick="setHeroCamera('front')" class="hero-cam-btn active px-2.5 py-1 rounded bg-sky-600 text-white font-semibold text-xs transition">
                     Front View
@@ -309,14 +281,14 @@
                 </div>
                 <div class="text-[10px] font-mono text-neutral-400 flex items-center gap-1.5 hidden md:flex">
                   <span>✦</span>
-                  <span>Alpha build &bull; For representational purposes only</span>
+                  <span>Alpha prototype &bull; 34 audited signs</span>
                 </div>
               </div>
 
-              <!-- Quick Signs & Ablation Row -->
+              <!-- Quick Signs & Airport Mode Row -->
               <div class="flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center gap-1.5 overflow-x-auto py-0.5">
-                  <span class="text-[10px] uppercase font-bold text-neutral-400 mr-1">Quick Signs:</span>
+                  <span class="text-[10px] uppercase font-bold text-neutral-400 mr-1">Signs:</span>
                   <button id="btn-sign-hello" onclick="playHeroSign('hello')" class="px-2.5 py-1 rounded bg-sky-600 text-white font-medium text-xs transition">
                     👋 Hello
                   </button>
@@ -339,13 +311,13 @@
                     👉 Me
                   </button>
                   <button id="btn-sign-you" onclick="playHeroSign('you')" class="px-2.5 py-1 rounded bg-neutral-800 hover:bg-sky-600 text-neutral-200 hover:text-white font-medium text-xs transition">
-                    🫵 You (Far Reach)
+                    🫵 You
                   </button>
                 </div>
                 
                 <div class="flex items-center gap-2">
-                  <button id="hero-kiosk-toggle-btn" onclick="toggleHeroKioskMode()" class="px-3 py-1.5 rounded bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/40 text-xs font-bold font-mono transition flex items-center gap-1.5 shadow-lg shadow-sky-950/40" title="Toggle Airport Accessible Kiosk Simulator (14 CFR § 382.57 Mandate / Washington Dulles IAD Feed)">
-                    <span>✈️</span> Airport Kiosk (14 CFR § 382.57)
+                  <button id="hero-kiosk-toggle-btn" onclick="toggleHeroKioskMode()" class="px-3 py-1.5 rounded bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/40 text-xs font-bold font-mono transition flex items-center gap-1.5 shadow-lg shadow-sky-950/40" title="Toggle Airport Gate Announcement Mode (14 CFR § 382.53(a)(3))">
+                    <span>✈️</span> Airport Gate (14 CFR &sect; 382.53)
                   </button>
                   <button id="ablation-toggle-btn" onclick="const win = document.getElementById('hero-engine-frame').contentWindow; win.setAblationMode(!win.isAblationActive); this.innerText = win.isAblationActive ? '⚠️ Baseline Active (Ablation)' : '⚡ Ablation Test'; this.className = win.isAblationActive ? 'px-3 py-1.5 rounded bg-red-500/20 text-red-300 border border-red-500/40 text-xs font-bold font-mono transition' : 'px-3 py-1.5 rounded bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 border border-amber-500/30 text-xs font-bold font-mono transition';" class="px-3 py-1.5 rounded bg-amber-500/15 text-amber-300 hover:bg-amber-500/25 border border-amber-500/30 text-xs font-bold font-mono transition">
                     ⚡ Ablation Test
@@ -356,1057 +328,340 @@
 
           </div>
 
-          <!-- HTML ENGINE TUTORIAL & USER GUIDE (User Request) -->
-          <div class="apple-glass-card rounded-2xl p-5 border border-neutral-800 space-y-3 text-xs">
-            <div class="flex items-center justify-between border-b border-neutral-800/80 pb-2.5">
-              <div class="flex items-center gap-2 font-mono font-bold text-sky-400 uppercase tracking-widest text-[11px]">
-                <span>💡</span>
-                <span>Interactive Kinematic Engine Tutorial &bull; How to Test</span>
-              </div>
+          <!-- Quick Interactive Guide -->
+          <div class="glass-card rounded-2xl p-4 border border-neutral-800 text-xs space-y-2">
+            <div class="flex items-center justify-between border-b border-neutral-800/80 pb-2">
+              <span class="font-mono font-bold text-sky-400 uppercase text-[11px] flex items-center gap-1.5">
+                <span>💡</span> How to Inspect the Engine
+              </span>
               <span class="text-[10px] font-mono text-neutral-400">WebGL 60 Hz PoC</span>
             </div>
-
-            <p class="text-neutral-300 leading-relaxed">
-              This interactive 3D digital twin is an embodied proof-of-concept demonstrating <b>rigid Euclidean bone-length invariance ($\Delta \equiv 0.000$)</b> and 3D contact kinematics across 30 articulated joints.
-            </p>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-              <div class="p-2.5 rounded-lg bg-neutral-900/90 border border-neutral-800/90 space-y-1">
-                <div class="font-bold text-white flex items-center gap-1.5">
-                  <span class="text-sky-400">1.</span> 360° Orbit &amp; Zoom
-                </div>
-                <p class="text-[11px] text-neutral-400 leading-normal">
-                  Click and drag anywhere on the canvas to rotate around the skeletal hand and arm. Scroll mouse wheel to zoom in on distal phalanges or zoom out for full open-space reach.
-                </p>
-              </div>
-
-              <div class="p-2.5 rounded-lg bg-neutral-900/90 border border-neutral-800/90 space-y-1">
-                <div class="font-bold text-white flex items-center gap-1.5">
-                  <span class="text-emerald-400">2.</span> Trigger Quick Signs
-                </div>
-                <p class="text-[11px] text-neutral-400 leading-normal">
-                  Click any sign button above (<code class="text-white">Hello</code>, <code class="text-white">Mother</code>, <code class="text-white">Father</code>, <code class="text-white">Me</code>, <code class="text-white">You</code>). Signs articulate at deliberate 40% speed with smooth analytical circle swivel transitions.
-                </p>
-              </div>
-
-              <div class="p-2.5 rounded-lg bg-neutral-900/90 border border-neutral-800/90 space-y-1">
-                <div class="font-bold text-white flex items-center gap-1.5">
-                  <span class="text-purple-400">3.</span> Inspect 3D Spatial Loci
-                </div>
-                <p class="text-[11px] text-neutral-400 leading-normal">
-                  Observe the colored spheres around the torso and head. These are the 24 calibrated body loci projected 5&ndash;10&nbsp;cm outward, eliminating torso clipping and modeling authentic conversational volume.
-                </p>
-              </div>
-
-              <div class="p-2.5 rounded-lg bg-neutral-900/90 border border-neutral-800/90 space-y-1">
-                <div class="font-bold text-white flex items-center gap-1.5">
-                  <span class="text-amber-400">4.</span> ⚡ Ablation Mode (Failure Test)
-                </div>
-                <p class="text-[11px] text-neutral-400 leading-normal">
-                  Toggle the <span class="text-amber-300 font-semibold">⚡ Ablation Test</span> button to disable analytical constraints. You will witness firsthand the severe bone stretching, joint dislocation, and spatial drift of unconstrained baselines.
-                </p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ==================== INTRODUCTION TO SIGN LANGUAGE (THE PROBLEM) ==================== -->
-    <section id="problem" class="space-y-12 pt-8 border-t border-neutral-800 scroll-mt-24">
-      
-      <div class="space-y-3 max-w-4xl">
-        <div class="text-xs font-bold uppercase tracking-widest text-sky-400 font-mono">INTRODUCTION TO SIGN LANGUAGE</div>
-        <h2 class="text-3xl sm:text-5xl font-black text-white tracking-apple-tight">
-          Spatial Physics. Not Text Translation.
-        </h2>
-        <p class="text-base sm:text-lg text-neutral-300 leading-relaxed">
-          Why unconstrained text-to-video generators collapse, and how natural sign languages encode syntax across 4D physical space.
-        </p>
-      </div>
-
-      <!-- Top Row: Problem & Linguistic Reality -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-        
-        <!-- Left Column (User Request: 1 & 2) -->
-        <div class="lg:col-span-6 apple-glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between space-y-6">
-          <div class="space-y-4">
-            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20 text-xs font-mono font-semibold">
-              CRISIS 01 &bull; 70 MILLION DEAF INDIVIDUALS
-            </div>
-            <h3 class="text-2xl font-bold text-white tracking-tight">
-              Over 70 Million Deaf People Worldwide.
-            </h3>
-            <p class="text-sm text-neutral-300 leading-relaxed">
-              Over <b>70 million Deaf and hard-of-hearing individuals</b> communicate primarily through natural sign languages. Without professional human interpreters booked days in advance, spontaneous communication in mission-critical environments&mdash;such as acute emergency triage, intensive care units, legal courtrooms, or university STEM lectures&mdash;is virtually impossible.
-            </p>
-            <p class="text-sm text-neutral-400 leading-relaxed">
-              Under the World Health Organization mandate (<a href="https://www.who.int/publications/i/item/9789240020481" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">WHO World Report on Hearing</a>), Finland's Sign Language Act (<a href="https://finlex.fi/fi/laki/alkup/2015/20150359" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline"><em>Viittomakielilaki 359/2015</em></a>), and the European Accessibility Act (<a href="https://eur-lex.europa.eu/eli/dir/2019/882/oj" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline"><em>EU Directive 2019/882</em></a>), equal access to public services and emergency healthcare is legally, socially, and constitutionally mandated.
-            </p>
-          </div>
-          <div class="pt-4 border-t border-neutral-800 text-xs font-mono text-neutral-400 flex flex-wrap items-center justify-between gap-2">
-            <a href="https://finlex.fi/fi/laki/alkup/2015/20150359" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline font-semibold">&rarr; Viittomakielilaki 359/2015</a>
-            <a href="https://eur-lex.europa.eu/eli/dir/2019/882/oj" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline font-semibold">&rarr; EU Directive 2019/882</a>
-          </div>
-        </div>
-
-        <!-- Right Column: The Spatial Physics Mandate (Core Quote) -->
-        <div class="lg:col-span-6 apple-glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between space-y-6 border-l-4 border-l-sky-500">
-          <div class="space-y-4">
-            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-mono font-semibold">
-              LINGUISTIC PRINCIPLE 02 &bull; 4D PHYSICAL SYNTAX
-            </div>
-            
-            <blockquote class="text-lg sm:text-xl font-semibold text-white tracking-tight leading-snug italic bg-neutral-900/60 p-4 rounded-xl border border-neutral-800">
-              &ldquo;Sign languages cannot be modeled as simple text translations: they possess no conventional written orthography and communicate grammar through continuous spatio-temporal dynamics across 4D physical space.&rdquo;
-            </blockquote>
-
-            <p class="text-sm text-neutral-300 leading-relaxed">
-              Spoken words are linearly sequenced acoustic vibrations. In stark contrast, sign languages utilize <b>multi-channel parallel articulation</b>: both hands articulate simultaneous paths, while facial action units modulate grammatical mood and ocular gaze locks onto invisible spatial coordinate anchors established in 3D air.
-            </p>
-            <p class="text-xs text-neutral-400 leading-relaxed">
-              When classical NLP models treat signs as flat phonetic glosses, they trigger <b>Spatial State Collapse</b>: losing the continuous spatial referents that dictate pronouns, subject-object agreement, and discourse coherence.
-            </p>
-          </div>
-          
-          <div class="pt-3 border-t border-neutral-800 text-xs font-mono text-neutral-500">
-            Parallel Visual-Gestural Channel &bull; Continuous 3D Spatial Grammar
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Full-Width Lower Section (ASL-LEX, S = <H,L,M,O,FNMS>, Diagrams & Minimal Pair Photos) -->
-      <div class="space-y-8 pt-4">
-        
-        <!-- Formula & ASL-LEX Deep Dive Card -->
-        <div class="apple-glass-card rounded-2xl p-6 sm:p-8 space-y-6">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-800 pb-4">
-            <div>
-              <div class="text-xs font-mono uppercase tracking-widest text-emerald-400 font-bold">
-                MATHEMATICAL FORMALIZATION &bull; ASL-LEX 2.0
-              </div>
-              <h3 class="text-2xl font-bold text-white tracking-tight mt-1">
-                Sub-Lexical Decomposition of the Signing Envelope
-              </h3>
-            </div>
-            <div class="text-sm font-mono px-3.5 py-1.5 rounded-lg bg-neutral-900 border border-neutral-700 text-emerald-400 font-bold">
-              $$S = \langle H, L, M, O, \text{FNMS} \rangle$$
-            </div>
-          </div>
-
-          <p class="text-sm text-neutral-300 leading-relaxed max-w-4xl">
-            To formalize continuous sign synthesis without unconstrained black-box hallucinations, our parameter space will be mathematically calibrated against 
-            <a href="https://asl-lex.org" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline font-semibold">ASL-LEX 2.0 (Sehyr et al., 2021)</a> 
-            encompassing 2,723 signs across 54 phonological dimensions. Every grammatical sign $S$ decomposes into an orthogonal 5-tuple:
-          </p>
-
-          <!-- HLMO + FNMS Visual Diagram Cards (5 Columns) -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            
-            <!-- H: Handshape -->
-            <div class="p-4 rounded-xl bg-neutral-900/90 border border-neutral-800 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-lg font-black text-sky-400 font-mono">H</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-500/10 text-sky-300">41 Classes</span>
-              </div>
-              <div class="text-xs font-bold text-white uppercase tracking-tight">Handshape (DEZ)</div>
-              <p class="text-[11px] text-neutral-400 leading-relaxed">
-                20-DOF finger flexion and abduction configuration (Stokoe Designator). Fully constrained by natural inter-phalangeal bio-bounds.
-              </p>
-            </div>
-
-            <!-- L: Location -->
-            <div class="p-4 rounded-xl bg-neutral-900/90 border border-neutral-800 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-lg font-black text-emerald-400 font-mono">L</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300">24 Loci</span>
-              </div>
-              <div class="text-xs font-bold text-white uppercase tracking-tight">3D Location (TAB)</div>
-              <p class="text-[11px] text-neutral-400 leading-relaxed">
-                Euclidean coordinates across 24 cranial, facial, torso, and neutral-space targets projected with 5&ndash;10&nbsp;cm surface clearance.
-              </p>
-            </div>
-
-            <!-- M: Movement -->
-            <div class="p-4 rounded-xl bg-neutral-900/90 border border-neutral-800 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-lg font-black text-purple-400 font-mono">M</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-300">16 Trajectories</span>
-              </div>
-              <div class="text-xs font-bold text-white uppercase tracking-tight">Movement (SIG)</div>
-              <p class="text-[11px] text-neutral-400 leading-relaxed">
-                Kinematic trajectories (Signation): taps, continuous arcs, outward ballistic bounces, and periodic circular oscillations.
-              </p>
-            </div>
-
-            <!-- O: Orientation -->
-            <div class="p-4 rounded-xl bg-neutral-900/90 border border-neutral-800 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-lg font-black text-amber-400 font-mono">O</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-300">10 Normals</span>
-              </div>
-              <div class="text-xs font-bold text-white uppercase tracking-tight">Orientation (ORI)</div>
-              <p class="text-[11px] text-neutral-400 leading-relaxed">
-                Palm and wrist normal vectors in $\mathrm{SO}(3)$, driven by dual-bone radius revolving around stationary ulna.
-              </p>
-            </div>
-
-            <!-- FNMS: Facial Non-Manual Signals -->
-            <div class="p-4 rounded-xl bg-neutral-900/90 border border-neutral-800 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-lg font-black text-rose-400 font-mono">FNMS</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-500/10 text-rose-300">50 Blendshapes</span>
-              </div>
-              <div class="text-xs font-bold text-white uppercase tracking-tight">Non-Manual Signals</div>
-              <p class="text-[11px] text-neutral-400 leading-relaxed">
-                $\langle b, m, g, h \rangle$: Eyebrow Action Units (AU1+2 vs AU4), mouth morphemes, 3D ocular gaze raycasting ($g_{\text{gaze}}$), and head tilt.
-              </p>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Phonological Minimal Pairs & R-loci Photo Showcase (From Verified Proposal Figures) -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-          
-          <!-- Card 1: Minimal Pairs (Proposal Figure 1, 2, 3) -->
-          <div class="apple-glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between space-y-6">
-            <div class="space-y-4">
-              <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-red-500/10 text-red-400 border border-red-500/20 text-xs font-mono font-semibold">
-                PHONOLOGICAL MINIMAL PAIRS &bull; MILLIMETRIC PRECISION
-              </div>
-              <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                5 cm Spatial Drift Inverts Semantic Kinship
-              </h3>
-              <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed">
-                In sign language phonology, signs differing in exactly one physical parameter constitute <b>minimal pairs</b>. Unconstrained models lack spatial grounding and constantly fail:
-              </p>
-
-              <!-- Proposal Minimal Pairs Photos (Figure 1 & Figure 2) -->
-              <div class="space-y-3 pt-1">
-                <div class="p-3 bg-neutral-900/90 rounded-xl border border-neutral-800 space-y-2">
-                  <div class="text-xs font-bold text-white flex items-center justify-between">
-                    <span>(a) ASL FATHER (Single Tap) vs (b) GRANDFATHER (Double Arc Bounce)</span>
-                    <span class="text-[10px] font-mono text-neutral-400">Figure 1 from Proposal</span>
-                  </div>
-                  <div class="rounded-lg overflow-hidden border border-neutral-800 bg-neutral-950 flex items-center justify-center">
-                    <img src="01_PhD_Proposals/figures/figure_2.png" alt="Phonological Minimal Pairs: FATHER vs GRANDFATHER" class="w-full h-auto object-contain max-h-[160px]" loading="lazy">
-                  </div>
-                  <div class="text-[11px] text-neutral-400 leading-relaxed">
-                    Identical open-5 handshape and forehead locus. Differentiation requires high-frequency temporal acceleration tracking to prevent kinship inversion.
-                  </div>
-                </div>
-
-                <!-- Proposal NMS Visual Prosody Photo (Figure 3) -->
-                <div class="p-3 bg-neutral-900/90 rounded-xl border border-neutral-800 space-y-2">
-                  <div class="text-xs font-bold text-white flex items-center justify-between">
-                    <span>Non-Manual Signals (NMS) as Visual Prosody</span>
-                    <span class="text-[10px] font-mono text-neutral-400">Figure 2 from Proposal</span>
-                  </div>
-                  <div class="rounded-lg overflow-hidden border border-neutral-800 bg-neutral-950 flex items-center justify-center">
-                    <img src="01_PhD_Proposals/figures/figure_3.png" alt="Non-Manual Signals as Visual Prosody" class="w-full h-auto object-contain max-h-[140px]" loading="lazy">
-                  </div>
-                  <div class="text-[11px] text-neutral-400 leading-relaxed">
-                    Multi-channel face tracking capturing sub-pixel eyebrow Action Units (AU1+AU2 raised for conditionals vs. AU4 furrowed for wh-questions) and 3D ocular gaze vectors locking onto referents.
-                  </div>
-                </div>
-              </div>
-
-              <!-- Interactive Engine Minimal Pair Triggers -->
-              <div class="p-3 bg-neutral-900/80 rounded-lg border border-neutral-800 text-xs font-mono space-y-2">
-                <div class="text-neutral-300">
-                  <strong class="text-emerald-400">MOTHER (Chin Locus):</strong> Open-5 hand contacting mandible ($y \approx 8.8\,\text{cm}$).
-                </div>
-                <div class="text-neutral-300">
-                  <strong class="text-sky-400">FATHER (Forehead Locus):</strong> Open-5 hand contacting frontal bone ($y \approx 13.8\,\text{cm}$).
-                </div>
-                <div class="flex gap-2 pt-1">
-                  <button onclick="playHeroSign('mother'); document.getElementById('top').scrollIntoView({behavior: 'smooth'});" class="px-2.5 py-1 rounded bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-mono font-medium transition">
-                    👩 Test MOTHER in Engine &uarr;
-                  </button>
-                  <button onclick="playHeroSign('father'); document.getElementById('top').scrollIntoView({behavior: 'smooth'});" class="px-2.5 py-1 rounded bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/40 text-xs font-mono font-medium transition">
-                    👨 Test FATHER in Engine &uarr;
-                  </button>
-                </div>
-              </div>
-            </div>
-            
-            <div class="text-[11px] font-mono text-neutral-400 border-t border-neutral-800 pt-3">
-              Spatial tolerance: $\text{rtol} \le 5\,\text{mm}$ to prevent semantic inversion.
-            </div>
-          </div>
-
-          <!-- Card 2: Referential Loci (R-loci) & 3D Spatial Syntax (Proposal Figure 4, 5, 6) -->
-          <div class="apple-glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between space-y-6">
-            <div class="space-y-4">
-              <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 text-xs font-mono font-semibold">
-                REFERENTIAL LOCI (R-LOCI) &bull; 3D SPATIAL SYNTAX
-              </div>
-              <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                3D Spatial Deixis &amp; Directional Verb Trajectories
-              </h3>
-              <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed">
-                Signers construct continuous 3D grammatical coordinate anchors in the air around their body, termed <b>Referential Loci ($R$-loci)</b>:
-              </p>
-
-              <!-- Proposal Figures 4, 5, 6 Grid -->
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
-                
-                <!-- Figure 4: R-loci Overhead Diagram -->
-                <div class="p-2.5 bg-neutral-900/90 rounded-xl border border-neutral-800 space-y-1.5 text-center">
-                  <div class="text-[11px] font-bold text-white">3D R-Loci Anchors</div>
-                  <div class="h-28 rounded-lg overflow-hidden border border-neutral-800 bg-white flex items-center justify-center p-1">
-                    <img src="01_PhD_Proposals/figures/figure_4.jpeg" alt="3D Referential Loci Anchors" class="max-h-full max-w-full object-contain" loading="lazy">
-                  </div>
-                  <div class="text-[10px] font-mono text-neutral-400">
-                    1: Sternum (Me)<br>2: Addressee (You)<br>3a/3b: Referents
-                  </div>
-                </div>
-
-                <!-- Figure 5: Regular Verbs VISIT -->
-                <div class="p-2.5 bg-neutral-900/90 rounded-xl border border-neutral-800 space-y-1.5 text-center">
-                  <div class="text-[11px] font-bold text-white">Agreement: VISIT</div>
-                  <div class="h-28 rounded-lg overflow-hidden border border-neutral-800 bg-neutral-950 flex items-center justify-center">
-                    <img src="01_PhD_Proposals/figures/figure_5.jpeg" alt="Regular Agreement Verbs VISIT" class="max-h-full max-w-full object-contain" loading="lazy">
-                  </div>
-                  <div class="text-[10px] font-mono text-neutral-400">
-                    Subject &rarr; Object<br>Traversing $3a \to 1$<br>&ldquo;Mother visits me&rdquo;
-                  </div>
-                </div>
-
-                <!-- Figure 6: PAM Marker -->
-                <div class="p-2.5 bg-neutral-900/90 rounded-xl border border-neutral-800 space-y-1.5 text-center">
-                  <div class="text-[11px] font-bold text-white">Agreement Marker</div>
-                  <div class="h-28 rounded-lg overflow-hidden border border-neutral-800 bg-neutral-950 flex items-center justify-center">
-                    <img src="01_PhD_Proposals/figures/figure_6.jpeg" alt="Person Agreement Marker PAM" class="max-h-full max-w-full object-contain" loading="lazy">
-                  </div>
-                  <div class="text-[10px] font-mono text-neutral-400">
-                    Person Agreement<br>Marker (PAM)<br>Deictic Projector
-                  </div>
-                </div>
-
-              </div>
-
-              <!-- Coordinate Breakdown from Proposal Section 2.2 -->
-              <div class="p-3 bg-neutral-900/80 rounded-lg border border-neutral-800 text-[11px] font-mono space-y-1 text-neutral-300">
-                <div><span class="text-sky-400 font-bold">&bull; Locus 1 (Signer Sternum):</span> $[0.00, 0.00, 0.00]\,\text{m}$ &rarr; First-person (&ldquo;I&rdquo;, &ldquo;Me&rdquo;)</div>
-                <div><span class="text-emerald-400 font-bold">&bull; Locus 2 (Addressee):</span> $[0.00, 0.60, 0.00]\,\text{m}$ &rarr; Second-person (&ldquo;You&rdquo;)</div>
-                <div><span class="text-purple-400 font-bold">&bull; Locus 3a/3b (3rd-Party):</span> $[\pm 0.35, 0.45, +0.05]\,\text{m}$ &rarr; Distinct entities</div>
-              </div>
-
-              <!-- Interactive Engine Deictic Triggers -->
-              <div class="flex gap-2 pt-1">
-                <button onclick="playHeroSign('me'); document.getElementById('top').scrollIntoView({behavior: 'smooth'});" class="px-2.5 py-1 rounded bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/40 text-xs font-mono font-medium transition">
-                  👉 Test ME (Locus 1) &uarr;
-                </button>
-                <button onclick="playHeroSign('you'); document.getElementById('top').scrollIntoView({behavior: 'smooth'});" class="px-2.5 py-1 rounded bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/40 text-xs font-mono font-medium transition">
-                  🫵 Test YOU (Locus 2 Far Reach) &uarr;
-                </button>
-              </div>
-            </div>
-
-            <div class="text-[11px] font-mono text-neutral-400 border-t border-neutral-800 pt-3">
-              Solves Spatial State Collapse via $\mathcal{O}(1)$ Causal Spatial Memory ($M_t$).
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- ==================== THE TRIPARTITE FOUNDATION PIPELINE (ARCHITECTURAL LAYOUT) ==================== -->
-    <section id="pipeline" class="space-y-12 pt-8 border-t border-neutral-800 scroll-mt-24">
-      
-      <div class="space-y-3 max-w-4xl">
-        <div class="text-xs font-bold uppercase tracking-widest text-purple-400 font-mono">FOUNDATION ARCHITECTURE &bull; SIMPLIFIED BREAKDOWN</div>
-        <h2 class="text-3xl sm:text-5xl font-black text-white tracking-apple-tight">
-          How the Foundation Pipeline Works.
-        </h2>
-        <p class="text-base sm:text-lg text-neutral-300 leading-relaxed">
-          Think of Project BiSign as a living digital twin: an <b>AI Brain</b> that reasons directly in 3D motion, supported by unbreakable <b>Physical Bone Guardrails</b> and a <b>3D Spatial Memory Notebook</b> that never loses track of the conversation.
-        </p>
-      </div>
-
-      <!-- Architectural Layout: BiSign-LLM on TOP (full width) supported by Two Base Pillars below -->
-      <div class="space-y-6">
-        
-        <!-- CROWN / TOP FULL-WIDTH FOUNDATION CORE: BiSign-LLM -->
-        <div class="glow-box rounded-2xl p-6 sm:p-8 space-y-6 border-t-4 border-t-purple-500">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-800/80 pb-4">
-            <div>
-              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 border border-purple-400/40 text-purple-300 text-xs font-mono font-bold">
-                <span>🧠</span>
-                <span>THE OVERARCHING FOUNDATION BRAIN &bull; FULL-WIDTH MULTIMODAL LINTEL</span>
-              </div>
-              <h3 class="text-2xl sm:text-3xl font-black text-white tracking-tight mt-2">
-                BiSign-LLM: The Brain That "Thinks" &amp; Moves in 3D Space
-              </h3>
-            </div>
-            <div class="text-xs font-mono px-3 py-1.5 rounded-lg bg-neutral-900 border border-neutral-700 text-purple-300 shrink-0">
-              EuroHPC LUMI &bull; Sub-100 ms Real-Time Loop
-            </div>
-          </div>
-
-          <!-- Plain English & Technical Dual-Layer -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-            
-            <!-- Left: Plain English Concept (8 Cols) -->
-            <div class="lg:col-span-8 space-y-4">
-              
-              <!-- Simple Words Highlight Box -->
-              <div class="p-4 rounded-xl bg-purple-950/30 border border-purple-500/30 space-y-2">
-                <div class="text-xs font-bold font-mono uppercase tracking-wide text-purple-300 flex items-center gap-1.5">
-                  <span>💡</span> In Simple Words: Teaching AI to Speak in Physical Motion
-                </div>
-                <p class="text-sm text-neutral-200 leading-relaxed">
-                  <b>Standard AI only knows flat text:</b> Tools like ChatGPT can read and type words, but sign language has no written alphabet. It is communicated through simultaneous hand shapes, body movements, and facial expressions in 3D air.
-                </p>
-                <p class="text-sm text-neutral-300 leading-relaxed">
-                  <b>Thinking in 3D motion tokens:</b> We teach a frontier language model (Llama/Mistral) a specialized vocabulary of 3D physical gestures ($V_{\text{sign}}$). When you speak to the system in English or Finnish, the AI doesn't reply with text—it plans the exact 3D movements for the avatar to sign back.
-                </p>
-                <p class="text-xs text-neutral-300 leading-relaxed">
-                  <b>Instant calculation, zero lag:</b> Instead of slowly rendering heavy video, the AI sends coordinates to our lightning-fast arm solver (Circle Swivel IK). It computes exact elbow and wrist angles in under a millisecond, giving the avatar human-like reflexes with zero awkward pauses.
-                </p>
-              </div>
-
-              <!-- Mathematical Specification -->
-              <div class="text-xs text-neutral-400 space-y-1.5 pt-1">
-                <p>
-                  <strong class="text-neutral-200">Formal Vocabulary Expansion:</strong> We expand the LLM tokenizer via $V_{\text{extended}} = V_{\text{base}} \cup V_{\text{sign}}$, natively unifying discrete semantic tokens with continuous spatial anchors.
-                </p>
-                <p>
-                  <strong class="text-neutral-200">Closed-Form Circle Swivel Actuation:</strong> Output tokens compile into two-sphere circle intersections ($\|\mathbf{E}(\psi) - \mathbf{S}\| \equiv 16.5\,\text{cm}$), guaranteeing 100% Euclidean bone-length invariance ($\Delta \equiv 0.000$) and deterministic 60 FPS execution.
-                </p>
-              </div>
-
-            </div>
-
-            <!-- Right: Execution Specs Box (4 Cols) -->
-            <div class="lg:col-span-4 p-5 rounded-xl bg-neutral-950/90 border border-neutral-800 font-mono text-xs space-y-3 flex flex-col justify-between">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-neutral-300 text-[11px] leading-relaxed">
               <div>
-                <div class="text-purple-400 font-bold uppercase tracking-wider text-[11px] pb-2 border-b border-neutral-800">
-                  Execution Specifications
-                </div>
-                <div class="space-y-2 mt-3 text-neutral-300 text-[11px]">
-                  <div class="flex justify-between items-center py-0.5 border-b border-neutral-900">
-                    <span class="text-neutral-400">Foundation Base:</span> 
-                    <span class="text-white font-semibold">Llama 3.1 8B / NeMo 12B</span>
-                  </div>
-                  <div class="flex justify-between items-center py-0.5 border-b border-neutral-900">
-                    <span class="text-neutral-400">Pre-training Compute:</span> 
-                    <span class="text-white font-semibold">EuroHPC LUMI (MI250X)</span>
-                  </div>
-                  <div class="flex justify-between items-center py-0.5 border-b border-neutral-900">
-                    <span class="text-neutral-400">Vocabulary:</span> 
-                    <span class="text-purple-300 font-semibold">$V_{\text{extended}}$ 3D Tokens</span>
-                  </div>
-                  <div class="flex justify-between items-center py-0.5 border-b border-neutral-900">
-                    <span class="text-neutral-400">Motor Latency:</span> 
-                    <span class="text-emerald-400 font-bold">&lt; 100 ms (Real-Time)</span>
-                  </div>
-                  <div class="flex justify-between items-center py-0.5">
-                    <span class="text-neutral-400">Bone Invariance:</span> 
-                    <span class="text-sky-400 font-bold">$\Delta \equiv 0.000$ (Rigid)</span>
-                  </div>
-                </div>
+                <strong class="text-white">1. Rotate &amp; Zoom:</strong> Click and drag to orbit 360°. Scroll to inspect hand-contact points and joint limits.
               </div>
-
-              <div class="p-2.5 rounded-lg bg-purple-950/40 border border-purple-800/40 text-[10px] text-purple-200">
-                <strong>Why this matters:</strong> Eliminates the seconds of delay common in AI video generation, making natural, fluid conversation possible.
+              <div>
+                <strong class="text-white">2. Trigger Signs:</strong> Click buttons above to observe smooth circle-swivel elbow motion and zero bone stretching.
               </div>
-            </div>
-
-          </div>
-
-          <!-- Architectural Visual Connector Line indicating the two pillars upholding the core -->
-          <div class="pt-2 flex items-center justify-center gap-3 text-xs font-mono text-neutral-400 uppercase tracking-widest border-t border-neutral-800/60">
-            <span>▲ Upholding Base Pillars Below ▲</span>
-          </div>
-        </div>
-
-        <!-- TWO SUPPORTING FOUNDATIONAL BASE PILLARS (Side-by-Side, 6 cols each) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-          
-          <!-- Pillar 01: Manifold + Kinematic Diffusion (Left Base) -->
-          <div class="apple-glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between space-y-6 border-t-4 border-t-sky-500">
-            <div class="space-y-4">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-mono font-bold uppercase tracking-widest text-sky-400">SUPPORTING PILLAR 01 &bull; PHYSICAL GUARDRAILS</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-500/10 text-sky-300 border border-sky-500/20">Anatomy &amp; Physics</span>
+              <div>
+                <strong class="text-white">3. Ablation Test:</strong> Click <span class="text-amber-300 font-semibold">⚡ Ablation Test</span> to see how unconstrained models dislocate fingers and drift off-target.
               </div>
-
-              <h4 class="text-2xl font-bold text-white tracking-tight">
-                Manifold Kinematics: Stopping AI Hand Glitches &amp; Broken Bones
-              </h4>
-
-              <!-- Plain English Explanation Box -->
-              <div class="p-4 rounded-xl bg-sky-950/30 border border-sky-500/30 space-y-2">
-                <div class="text-xs font-bold font-mono uppercase tracking-wide text-sky-300 flex items-center gap-1.5">
-                  <span>💡</span> In Simple Words: The Unbreakable Skeleton
-                </div>
-                <p class="text-xs sm:text-sm text-neutral-200 leading-relaxed">
-                  <b>Why regular AI video fails at hands:</b> Generative video models (like Sora or Runway) guess raw pixels. They constantly create bizarre glitches—fingers melting together, extra knuckles appearing, or arms stretching like rubber bands. In sign language, a single deformed finger completely changes the word's meaning.
-                </p>
-                <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed">
-                  <b>Strict anatomical guardrails:</b> Instead of guessing pixels, this pillar acts as an unyielding physical skeleton. Every bone has a fixed millimeter length that can never stretch ($\Delta \equiv 0.000$), and every joint obeys natural human bending limits (e.g. fingers cannot bend backwards).
-                </p>
-              </div>
-
-              <!-- Technical & Mathematical Underpinnings -->
-              <div class="space-y-2 text-xs text-neutral-300">
-                <p class="text-neutral-400">
-                  Operates residual diffusion directly on the <b>Riemannian joint manifold $\mathcal{M}_{\text{kin}}$</b> rather than Euclidean image space.
-                </p>
-                <div class="p-3 bg-neutral-900 border border-neutral-800 rounded font-mono text-[11px] text-sky-300 space-y-1">
-                  <div>&bull; Manifold Projection: $\Pi_{\mathcal{M}} : \mathbb{R}^{3K} \to \mathcal{M}_{\text{kin}}$</div>
-                  <div>&bull; Rigid Invariance: $\|\mathbf{p}_i - \mathbf{p}_j\| \equiv L_{ij} \pm 0.000$</div>
-                  <div>&bull; Anatomical Strain Regularizer: $\mathcal{L}_{\text{bio}}$</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="border-t border-neutral-800 pt-3 text-xs text-neutral-400 font-mono flex items-center justify-between">
-              <span>Feeds Biomechanical Grounding &uarr;</span>
-              <span class="text-sky-400 font-semibold">Zero Anatomical Hallucinations</span>
             </div>
           </div>
 
-          <!-- Pillar 02: Sign Lexicon Identification + Translation (Right Base) -->
-          <div class="apple-glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between space-y-6 border-t-4 border-t-emerald-500">
-            <div class="space-y-4">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-mono font-bold uppercase tracking-widest text-emerald-400">SUPPORTING PILLAR 02 &bull; EYES &amp; 3D MEMORY</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Perception &amp; Memory</span>
-              </div>
-
-              <h4 class="text-2xl font-bold text-white tracking-tight">
-                Articulatory Tokenizer &amp; Spatial Memory ($M_t$): Seeing &amp; Remembering
-              </h4>
-
-              <!-- Plain English Explanation Box -->
-              <div class="p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 space-y-2">
-                <div class="text-xs font-bold font-mono uppercase tracking-wide text-emerald-300 flex items-center gap-1.5">
-                  <span>💡</span> In Simple Words: The Eyes &amp; The 3D Notebook
-                </div>
-                <p class="text-xs sm:text-sm text-neutral-200 leading-relaxed">
-                  <b>The "Eyes" (Reading the Signer):</b> When a Deaf person signs on webcam, this module breaks the video down into 5 clean physical building blocks at 60 FPS: Handshape, 3D Location, Movement, Palm Orientation, and Facial Expressions ($S = \langle H, L, M, O, \text{FNMS} \rangle$).
-                </p>
-                <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed">
-                  <b>The "3D Memory Notebook":</b> In sign language, people place invisible anchors in the air. For example, pointing to the left sets up "the doctor" and pointing to the right sets up "the patient." Normal AI forgets these anchors after a few sentences. Our 3D Spatial Memory ($M_t$) acts as a permanent notebook, remembering who is anchored where so the conversation never gets mixed up.
-                </p>
-              </div>
-
-              <!-- Technical & Mathematical Underpinnings -->
-              <div class="space-y-2 text-xs text-neutral-300">
-                <p class="text-neutral-400">
-                  Solves <b>Spatial State Collapse</b> across multi-turn dialogue with continuous deictic parity inversion ($\mathbf{P}_{\text{deictic}}$).
-                </p>
-                <div class="p-3 bg-neutral-900 border border-neutral-800 rounded font-mono text-[11px] text-emerald-300 space-y-1">
-                  <div>&bull; Articulatory Tokenizer: $\langle H, L, M, O, \text{FNMS} \rangle$ at 60 Hz</div>
-                  <div>&bull; Persistent Memory Bank: $\mathcal{O}(1)$ Causal Memory $M_t$</div>
-                  <div>&bull; Perspective Inversion: $\mathbf{P}_{\text{deictic}}$ (You &harr; Me)</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="border-t border-neutral-800 pt-3 text-xs text-neutral-400 font-mono flex items-center justify-between">
-              <span>Feeds Structured Spatial Syntax &uarr;</span>
-              <span class="text-emerald-400 font-semibold">Zero Conversational Amnesia</span>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Real-Time Flow Banner: How All Three Work Together in 3 Seconds -->
-        <div class="apple-glass-card rounded-xl p-5 border border-neutral-800 bg-gradient-to-r from-purple-950/20 via-neutral-900/60 to-sky-950/20 space-y-3">
-          <div class="flex items-center justify-between flex-wrap gap-2">
-            <span class="text-xs font-mono font-bold uppercase tracking-wider text-purple-300 flex items-center gap-1.5">
-              <span>🔄</span> How the Three Parts Work Together in Under 100 Milliseconds
-            </span>
-            <span class="text-[10px] font-mono text-neutral-400">End-to-End Real-Time Interactive Loop</span>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-            <div class="p-3 rounded-lg bg-neutral-900/80 border border-neutral-800 space-y-1">
-              <div class="font-bold text-emerald-400 font-mono flex items-center gap-1">
-                <span>1.</span> Perceive &amp; Remember (Pillar 02)
-              </div>
-              <p class="text-neutral-300 text-[11px] leading-relaxed">
-                The webcam detects the user's handshapes, facial markers, and 3D spatial anchors, storing who is who in the 3D memory bank.
-              </p>
-            </div>
-
-            <div class="p-3 rounded-lg bg-neutral-900/80 border border-neutral-800 space-y-1">
-              <div class="font-bold text-purple-400 font-mono flex items-center gap-1">
-                <span>2.</span> Reason &amp; Translate (BiSign-LLM)
-              </div>
-              <p class="text-neutral-300 text-[11px] leading-relaxed">
-                The foundation model processes the message, recalls the 3D anchors, and generates the response directly in 3D motion tokens.
-              </p>
-            </div>
-
-            <div class="p-3 rounded-lg bg-neutral-900/80 border border-neutral-800 space-y-1">
-              <div class="font-bold text-sky-400 font-mono flex items-center gap-1">
-                <span>3.</span> Enforce Anatomy &amp; Animate (Pillar 01)
-              </div>
-              <p class="text-neutral-300 text-[11px] leading-relaxed">
-                Physical bone constraints lock joint lengths, and the circle-swivel solver animates the 3D avatar at 60 FPS with zero lag.
-              </p>
-            </div>
-          </div>
         </div>
 
       </div>
-
     </section>
 
-    <!-- ==================== STRATEGIC ALIGNMENT WITH ENABLE VENTURES ==================== -->
-    <section id="synergy" class="space-y-12 pt-8 border-t border-neutral-800 scroll-mt-24">
+    <!-- ==================== THE PROBLEM: TRANSIT BARRIERS & GENERATIVE AI FLAWS ==================== -->
+    <section id="problem" class="space-y-8 pt-8 border-t border-neutral-800 scroll-mt-20">
       
-      <div class="space-y-3 max-w-4xl">
-        <div class="text-xs font-bold uppercase tracking-widest text-emerald-400 font-mono">STRATEGIC ALIGNMENT &bull; ENABLE VENTURES INVESTMENT THESIS</div>
-        <h2 class="text-3xl sm:text-5xl font-black text-white tracking-apple-tight">
-          Strategic Alignment with Enable Ventures.
+      <div class="space-y-2 max-w-3xl">
+        <div class="text-xs font-bold uppercase tracking-widest text-sky-400 font-mono">THE PROBLEM &bull; MANDATE &amp; LIMITS OF VIDEO AI</div>
+        <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight-custom">
+          Why Public Transit Fails Deaf Travelers &mdash; And Why Video AI Can't Fix It.
         </h2>
-        <p class="text-base sm:text-lg text-neutral-300 leading-relaxed">
-          How SAMMY exemplifies Enable Ventures' double-bottom-line mandate: proving that disability-inclusive design is an engine for high-tech innovation, unlocking vast enterprise TAMs while closing the disability wealth gap.
+        <p class="text-sm sm:text-base text-neutral-300 leading-relaxed">
+          The legal and operational breakdown at 15,000 U.S. airport boarding gates, and why generative video models fail in spatial physics.
         </p>
       </div>
 
-      <!-- 4 Structured Affirmative Enable Ventures Answer Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
         
-        <!-- Pillar 1: Next-Generation Assistive Technology & AI -->
-        <div class="apple-glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between space-y-6 border-t-4 border-t-emerald-500">
-          <div class="space-y-4">
-            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono font-semibold">
-              PILLAR 01 &bull; NEXT-GEN ASSISTIVE AI
-            </div>
-            <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
-              Foundational 3D Embodied AI (Beyond 2D Screen Readers)
-            </h3>
-            <p class="text-sm text-neutral-300 leading-relaxed">
-              Enable Ventures champions AI breakthroughs that treat accessibility as a core product advantage rather than an afterthought. SAMMY builds the foundational visual layer for 70M+ Deaf signers:
-            </p>
-            <ul class="space-y-2.5 text-xs text-neutral-300 leading-relaxed">
-              <li class="flex items-start gap-2">
-                <span class="text-emerald-400 font-bold">&bull;</span>
-                <span><b>Deterministic Spatial Kinematics:</b> Replaces hallucinating 2D generative video with a deterministic 125-DOF kinematic engine. Guarantees 100% Euclidean bone-length invariance ($Delta equiv 0.000$) and prevents dislocated fingers or rubber-band stretching.</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-emerald-400 font-bold">&bull;</span>
-                <span><b>Zero Cloud Fees &bull; Edge Native:</b> Runs at 60 FPS hardware-accelerated WebGL directly on client kiosks and edge mobile chips. Zero per-minute cloud GPU costs, enabling 85%+ software gross margins.</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-emerald-400 font-bold">&bull;</span>
-                <span><b>Sub-Lexical Phonological Accuracy:</b> Calibrated across all 54 phonological dimensions of ASL-LEX 2.0 ($langle H, L, M, O, 	ext{FNMS} angle$), preserving millimetric minimal pairs (e.g., single tap vs double bounce).</span>
-              </li>
-            </ul>
-          </div>
-          <div class="pt-4 border-t border-neutral-800 text-xs font-mono text-neutral-400 flex items-center justify-between">
-            <span class="text-emerald-400 font-semibold">&bull; 125 Articulated DOFs</span>
-            <span class="text-emerald-400 font-semibold">&bull; 0.0mm Anchor Drift</span>
-            <span class="text-emerald-400 font-semibold">&bull; 60 FPS Edge WebGL</span>
-          </div>
-        </div>
-
-        <!-- Pillar 2: Workplace & Public Transit Infrastructure -->
-        <div class="apple-glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between space-y-6 border-t-4 border-t-sky-500">
-          <div class="space-y-4">
+        <!-- Card 1: The Commercial Aviation Information Gap -->
+        <div class="glass-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-5 border-t-4 border-t-sky-500">
+          <div class="space-y-3.5">
             <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20 text-xs font-mono font-semibold">
-              PILLAR 02 &bull; WORKPLACE &amp; PUBLIC TRANSIT
+              TRANSIT PROBLEM &bull; 14 CFR &sect; 382.53(a)(3)
             </div>
-            <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
-              Aviation (14 CFR &sect; 382.57) &amp; Emergency Healthcare
+            <h3 class="text-xl font-bold text-white tracking-tight">
+              Airport Information is Built for Hearing Passengers
             </h3>
-            <p class="text-sm text-neutral-300 leading-relaxed">
-              Enable Ventures targets technologies that eliminate systemic barriers in public infrastructure and the workplace, unlocking economic participation and autonomous mobility:
+            <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed">
+              When a gate assignment changes or an urgent boarding announcement is made, it is broadcast via overhead audio. Deaf travelers frequently miss flights because they cannot hear these updates.
             </p>
-            <ul class="space-y-2.5 text-xs text-neutral-300 leading-relaxed">
-              <li class="flex items-start gap-2">
-                <span class="text-sky-400 font-bold">&bull;</span>
-                <span><b>Airport Kiosk Mandates (14 CFR &sect; 382.57):</b> U.S. DOT strictly mandates that airport public announcements and self-service kiosks be accessible to passengers with hearing disabilities. SAMMY synthesizes live flight dispatch (JFK, LHR, SFO, CDG) in real-time ASL directly at the gate.</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-sky-400 font-bold">&bull;</span>
-                <span><b>Emergency Healthcare Triage:</b> Under ACA Section 1557 and ADA Title III, hospitals must provide auxiliary aids without delay. SAMMY bridges the acute 48-hour human interpreter booking gap during urgent triage admissions.</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-sky-400 font-bold">&bull;</span>
-                <span><b>Automating the Unstaffed 95%:</b> Delivers instantaneous 24/7 signing for routine wayfinding, gate reassignments, and ticketing where human interpreters are never physically stationed.</span>
-              </li>
-            </ul>
+            <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed">
+              Under federal regulations (<b>14 CFR &sect; 382.53(a)(3)</b>), carriers and airport authorities that control gates share explicit responsibility to provide passengers who are deaf or hard-of-hearing with prompt access to the same flight information available to others.
+            </p>
+            <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed">
+              Stationing certified human interpreters 24/7 across 15,000 domestic gates is financially and logistically impossible ($150+/hour with 48-hour advance booking windows). Automated visual infrastructure is the only scalable path.
+            </p>
           </div>
-          <div class="pt-4 border-t border-neutral-800 text-xs font-mono text-neutral-400">
-            <span class="text-sky-400 font-semibold">&bull; 14 CFR &sect; 382.57 Kiosk Compliance &bull; ACA Section 1557</span>
+          <div class="pt-3 border-t border-neutral-800 text-xs font-mono text-neutral-400">
+            Mandate: Prompt, equivalent flight accessibility at all commercial gates
           </div>
         </div>
 
-        <!-- Pillar 3: Market-Rate Returns & Enterprise Compliance TAM -->
-        <div class="apple-glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between space-y-6 border-t-4 border-t-amber-500">
-          <div class="space-y-4">
+        <!-- Card 2: Why Generative Video Models Fail -->
+        <div class="glass-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-5 border-t-4 border-t-amber-500">
+          <div class="space-y-3.5">
             <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-mono font-semibold">
-              PILLAR 03 &bull; DOUBLE BOTTOM LINE &amp; $25B TAM
+              TECHNOLOGY FLAW &bull; BLACK-BOX 2D GENERATION
             </div>
-            <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
-              Statutory Forcing Functions &bull; B2B SaaS Economics
+            <h3 class="text-xl font-bold text-white tracking-tight">
+              Why Black-Box Generative Video Fails
             </h3>
-            <p class="text-sm text-neutral-300 leading-relaxed">
-              Unlike non-profit charity models, SAMMY operates as a high-margin enterprise B2B platform funded from non-discretionary compliance budgets:
+            <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed">
+              Big Tech generative video models (diffusion, video LLMs) generate unconstrained 2D pixel grids. Because they lack an underlying anatomical skeleton, they frequently hallucinate: spawning extra knuckles, melting fingers together, and stretching bones.
             </p>
-            <ul class="space-y-2.5 text-xs text-neutral-300 leading-relaxed">
-              <li class="flex items-start gap-2">
-                <span class="text-amber-400 font-bold">&bull;</span>
-                <span><b>$25.1 Billion Compliance TAM:</b> Spanning Airport Passenger Information ($7.8B), Healthcare Auxiliary Aids ($8.4B), Civic Buildings ($5.2B), and Retail/Banking Kiosks ($3.7B).</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-amber-400 font-bold">&bull;</span>
-                <span><b>Predictable B2B SaaS Subscriptions:</b> Enterprise pricing at $1,200&ndash;$3,000/terminal/month. Penetrating just 1% of commercial airport boarding gates and hospital networks yields over $250M ARR.</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-amber-400 font-bold">&bull;</span>
-                <span><b>European Accessibility Act (EAA 2025):</b> Mandatory accessibility enforcement for all ticketing, transport hubs, and banking terminals across the 27 EU member states creates immediate global pull.</span>
-              </li>
-            </ul>
+            <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed">
+              In sign language, spatial precision is grammar. A 2&nbsp;cm drift in hand location inverts the meaning of a sign (e.g., FATHER on the forehead vs. MOTHER on the chin). Hallucinated pixels produce linguistic gibberish.
+            </p>
+            <p class="text-xs sm:text-sm text-neutral-400 leading-relaxed">
+              Furthermore, streaming generative video to thousands of airport gate displays costs $0.15&ndash;$0.30 per query and incurs 15&ndash;30 second generation latencies. SAMMY eliminates server GPU streaming entirely by rendering locally in browser WebGL.
+            </p>
           </div>
-          <div class="pt-4 border-t border-neutral-800 text-xs font-mono text-neutral-400">
-            <span class="text-amber-400 font-semibold">&bull; $25.1B Addressable Pool &bull; 85%+ Gross Margins</span>
+          <div class="pt-3 border-t border-neutral-800 text-xs font-mono text-neutral-400">
+            SAMMY Solution: Invariant bone lengths (&Delta; = 0.000) &bull; Sub-100ms response
           </div>
         </div>
 
-        <!-- Pillar 4: Deaf-in-the-Loop & Economic Mobility -->
-        <div class="apple-glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between space-y-6 border-t-4 border-t-purple-500">
-          <div class="space-y-4">
-            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 text-xs font-mono font-semibold">
-              PILLAR 04 &bull; DEAF-LED ECONOMIC MOBILITY
-            </div>
-            <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
-              &ldquo;Nothing About Us Without Us&rdquo; &bull; Co-Design
-            </h3>
-            <p class="text-sm text-neutral-300 leading-relaxed">
-              Enable Ventures prioritizes ventures that foster wealth creation within disability communities. SAMMY rejects extractive, ungrounded AI in favor of authentic community governance:
-            </p>
-            <ul class="space-y-2.5 text-xs text-neutral-300 leading-relaxed">
-              <li class="flex items-start gap-2">
-                <span class="text-purple-400 font-bold">&bull;</span>
-                <span><b>High-Skill Remote Careers:</b> Certified Deaf linguists, educators, and 3D animators serve as paid phonetic curators and quality-assurance engineers, auditing and expanding the lexicon.</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-purple-400 font-bold">&bull;</span>
-                <span><b>Institutional Deaf Partnerships:</b> Collaborative evaluation with organizations such as <b>Kuurojen Liitto ry</b> (The Finnish Association of the Deaf) and regional Deaf advocacy groups ensures cultural integrity.</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-purple-400 font-bold">&bull;</span>
-                <span><b>Closing the Disability Wealth Gap:</b> Expanding Deaf employment in deep tech while providing native signers with dignified, autonomous access to public transit and healthcare.</span>
-              </li>
-            </ul>
-          </div>
-          <div class="pt-4 border-t border-neutral-800 text-xs font-mono text-neutral-400">
-            <span class="text-purple-400 font-semibold">&bull; Authentic Community Governance &bull; High-Skill Deaf Employment</span>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Strategic LP Synergy Banner (Enable Ventures Corporate & Healthcare LPs) -->
-      <div class="apple-glass-card rounded-2xl p-6 sm:p-8 border border-emerald-500/30 bg-gradient-to-r from-emerald-950/20 via-neutral-900 to-sky-950/20 space-y-4 shadow-xl">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-800/80 pb-3">
-          <div class="flex items-center gap-2">
-            <span class="text-emerald-400 font-mono text-sm font-bold">🏛️</span>
-            <h4 class="text-lg font-bold text-white tracking-tight">Direct Commercial Synergy with Enable Ventures' LP Ecosystem</h4>
-          </div>
-          <span class="text-xs font-mono text-emerald-300 bg-emerald-500/10 px-2.5 py-1 rounded border border-emerald-500/20 font-bold">
-            Built-In Enterprise Distribution
-          </span>
-        </div>
-        <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed">
-          Enable Ventures' Limited Partner (LP) base brings direct strategic alignment with major corporate employers, health systems, and financial institutions. SAMMY provides immediate enterprise deployment pilots across these networks:
-        </p>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-          <div class="p-3.5 rounded-xl bg-neutral-950/70 border border-neutral-800/80 space-y-1.5">
-            <div class="text-xs font-bold text-sky-400 font-mono">HEALTHCARE SYSTEMS</div>
-            <div class="text-sm font-bold text-white">UnitedHealth &bull; Ascension</div>
-            <p class="text-[11px] text-neutral-400 leading-relaxed">
-              Accessible patient check-in portals, emergency triage auxiliary aids, and telehealth signing interfaces complying with Section 1557.
-            </p>
-          </div>
-          <div class="p-3.5 rounded-xl bg-neutral-950/70 border border-neutral-800/80 space-y-1.5">
-            <div class="text-xs font-bold text-emerald-400 font-mono">FINANCIAL &amp; RETAIL</div>
-            <div class="text-sm font-bold text-white">Ally Bank &bull; Enterprise Banking</div>
-            <p class="text-[11px] text-neutral-400 leading-relaxed">
-              ADA Title III compliant smart ATM terminals, branch video teller assistance, and accessible mobile banking digital avatars.
-            </p>
-          </div>
-          <div class="p-3.5 rounded-xl bg-neutral-950/70 border border-neutral-800/80 space-y-1.5">
-            <div class="text-xs font-bold text-purple-400 font-mono">EMPLOYER &amp; INSURANCE</div>
-            <div class="text-sm font-bold text-white">Liberty Mutual Investments</div>
-            <p class="text-[11px] text-neutral-400 leading-relaxed">
-              Enterprise workplace accessibility, employee onboarding, claims filing, and worker accommodation compliance.
-            </p>
-          </div>
-        </div>
       </div>
 
     </section>
 
-    <!-- ==================== 4-YEAR COMMERCIAL VENTURE ROADMAP ==================== -->
-    <section id="roadmap" class="space-y-12 pt-8 border-t border-neutral-800 scroll-mt-24">
+    <!-- ==================== OUR METHOD: RIGOROUS KINEMATICS & COMMUNITY REVIEW ==================== -->
+    <section id="method" class="space-y-8 pt-8 border-t border-neutral-800 scroll-mt-20">
       
-      <div class="space-y-3 max-w-4xl">
-        <div class="text-xs font-bold uppercase tracking-widest text-sky-400 font-mono">COMMERCIAL VENTURE ROADMAP &bull; SEED TO SCALE</div>
-        <h2 class="text-3xl sm:text-5xl font-black text-white tracking-apple-tight">
-          4-Year Commercial Execution Roadmap.
+      <div class="space-y-2 max-w-3xl">
+        <div class="text-xs font-bold uppercase tracking-widest text-purple-400 font-mono">OUR METHOD &bull; DETERMINISTIC FOUNDATION</div>
+        <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight-custom">
+          How SAMMY Works: Combining Established Standards with Kinematics.
         </h2>
-        <p class="text-base sm:text-lg text-neutral-300 leading-relaxed">
-          Phased execution strategy from Seed engine deployment to global B2B SaaS category leadership across aviation, healthcare, and enterprise infrastructure.
+        <p class="text-sm sm:text-base text-neutral-300 leading-relaxed">
+          We combine proven phonological representations (HamNoSys, ASL-LEX 2.0), analytical inverse kinematics, and proprietary Deaf-reviewed data to guarantee anatomically valid signs.
         </p>
       </div>
 
-      <!-- Upward Zigzag Visual Curve Container -->
-      <div class="relative w-full py-8">
+      <!-- 4 Core Pillars of Method -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         
-        <!-- Background SVG Zigzag Progression Track (Desktop) -->
-        <div class="hidden lg:block absolute inset-0 pointer-events-none z-0">
-          <svg class="w-full h-full" viewBox="0 0 1000 320" fill="none" preserveAspectRatio="none">
-            <path d="M 125,260 L 375,180 L 625,100 L 875,30" stroke="url(#zigzag-gradient)" stroke-width="4" stroke-dasharray="8 6" stroke-linecap="round"/>
-            <defs>
-              <linearGradient id="zigzag-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#38bdf8"/>
-                <stop offset="35%" stop-color="#34d399"/>
-                <stop offset="70%" stop-color="#c084fc"/>
-                <stop offset="100%" stop-color="#fbbf24"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-
-        <!-- 4 Stepped Milestone Cards (Zigzag Upward Offsets) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
-          
-          <!-- Year 1: Seed Engine & Airport Pilot -->
-          <div class="apple-glass-card rounded-2xl p-6 space-y-4 border-t-4 border-t-sky-500 lg:translate-y-12">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-mono font-bold text-sky-400">YEAR 01 &bull; SEED STAGE</span>
-              <span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 text-[10px] font-mono font-bold border border-sky-500/30">M1&ndash;M12</span>
-            </div>
-            <h4 class="text-lg font-bold text-white tracking-tight">Core Kinematic Engine &amp; Airport Pilot</h4>
-            <div class="space-y-2 text-xs text-neutral-300 leading-relaxed">
-              <p>
-                <b>Core Engine Completion:</b> 125-DOF Kinematic Synthesizer with analytical circle-swivel IK, Battison symmetry laws, and 0.0mm anchor drift.
-              </p>
-              <p>
-                <b>Lexicon Scaling:</b> Cover all 2,723 ASL-LEX parametric signs with phonological ground truth and real-time fingerspelling fallback.
-              </p>
-              <p>
-                <b>Tier-1 Airport Pilot:</b> Deploy 14 CFR &sect; 382.57 accessible gate kiosk simulator in commercial airport terminal partnership.
-              </p>
-            </div>
-            <div class="text-[11px] font-mono text-neutral-400 pt-2 border-t border-neutral-800">
-              <span class="text-sky-400 font-semibold">Milestone:</span> 60 FPS Edge WebGL &bull; Airport Pilot Live
-            </div>
+        <!-- Step 1: Phonological Grounding -->
+        <div class="glass-card rounded-xl p-5 space-y-3 border-t-2 border-t-sky-500">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-sky-400">01 &bull; PHONOLOGY</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-500/10 text-sky-300">ASL-LEX 2.0</span>
           </div>
-
-          <!-- Year 2: Healthcare & Enterprise SDK -->
-          <div class="apple-glass-card rounded-2xl p-6 space-y-4 border-t-4 border-t-emerald-500 lg:translate-y-6">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-mono font-bold text-emerald-400">YEAR 02 &bull; SEED EXPANSION</span>
-              <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-mono font-bold border border-emerald-500/30">$2.4M ARR</span>
-            </div>
-            <h4 class="text-lg font-bold text-white tracking-tight">Healthcare Triage &amp; Enterprise B2B SDK</h4>
-            <div class="space-y-2 text-xs text-neutral-300 leading-relaxed">
-              <p>
-                <b>Healthcare Integration:</b> Deploy bedside emergency triage auxiliary aids under ACA Section 1557 across partner hospital systems.
-              </p>
-              <p>
-                <b>Enterprise B2B SDK:</b> Launch client-side JavaScript / WebGL SDK for banking ATMs, hotel check-in kiosks, and public transit terminals.
-              </p>
-              <p>
-                <b>Deaf-in-the-Loop Hub:</b> Formalize paid phonetic curation pipeline with certified native Deaf linguists and animators.
-              </p>
-            </div>
-            <div class="text-[11px] font-mono text-neutral-400 pt-2 border-t border-neutral-800">
-              <span class="text-emerald-400 font-semibold">Milestone:</span> 25 Enterprise Customers &bull; $2.4M ARR
-            </div>
-          </div>
-
-          <!-- Year 3: Series A & European Expansion -->
-          <div class="apple-glass-card rounded-2xl p-6 space-y-4 border-t-4 border-t-purple-500 lg:translate-y-0">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-mono font-bold text-purple-400">YEAR 03 &bull; SERIES A SCALE</span>
-              <span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 text-[10px] font-mono font-bold border border-purple-500/30">$12M ARR</span>
-            </div>
-            <h4 class="text-lg font-bold text-white tracking-tight">European Accessibility Act (EAA 2025)</h4>
-            <div class="space-y-2 text-xs text-neutral-300 leading-relaxed">
-              <p>
-                <b>Multilingual Sign Expansion:</b> Expand parametric engine to British Sign Language (BSL), Finnish Sign Language (SVK), and International Sign.
-              </p>
-              <p>
-                <b>EU Commercial Rollout:</b> Capitalize on EAA 2025 statutory enforcement across European aviation hubs, rail terminals, and banking networks.
-              </p>
-              <p>
-                <b>Aviation Fleet Contracts:</b> Sign multi-airport enterprise contracts with major commercial airline carriers and port authorities.
-              </p>
-            </div>
-            <div class="text-[11px] font-mono text-neutral-400 pt-2 border-t border-neutral-800">
-              <span class="text-purple-400 font-semibold">Milestone:</span> 120 Airport Deployments &bull; $12M ARR
-            </div>
-          </div>
-
-          <!-- Year 4: Category Leadership -->
-          <div class="apple-glass-card rounded-2xl p-6 space-y-4 border-t-4 border-t-amber-500 lg:-translate-y-6">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-mono font-bold text-amber-400">YEAR 04 &bull; CATEGORY LEADERSHIP</span>
-              <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-mono font-bold border border-amber-500/30">$45M+ ARR</span>
-            </div>
-            <h4 class="text-lg font-bold text-white tracking-tight">Omnichannel Digital Twin &amp; Spatial OS</h4>
-            <div class="space-y-2 text-xs text-neutral-300 leading-relaxed">
-              <p>
-                <b>Ubiquitous Terminal Embeddedness:</b> Operating across 500+ global commercial aviation gates, municipal transit hubs, and retail points of sale.
-              </p>
-              <p>
-                <b>Spatial Computing Integration:</b> Native spatial digital avatar integration on Apple Vision Pro, Meta Quest, and enterprise AR smart glasses.
-              </p>
-              <p>
-                <b>Market Standard:</b> Defacto global standard for automated 3D visual accessibility infrastructure.
-              </p>
-            </div>
-            <div class="text-[11px] font-mono text-neutral-400 pt-2 border-t border-neutral-800">
-              <span class="text-amber-400 font-semibold">Peak:</span> Category Standard &bull; $45M+ ARR &bull; Global Scale
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- ==================== TECHNICAL PROPOSAL DOSSIER (EMBEDDED IN-PAGE READER) ==================== -->
-    <section id="dossier" class="space-y-8 pt-8 border-t border-neutral-800 scroll-mt-24">
-      
-      <!-- Section Header with Quick Actions -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <div class="text-xs uppercase tracking-widest text-emerald-400 font-semibold font-mono">FOUNDATIONAL TECHNICAL WHITEPAPER &bull; SEED STAGE</div>
-          <h2 class="text-3xl sm:text-5xl font-black text-white tracking-apple-tight mt-1">Foundational Technical Proposal</h2>
-          <p class="text-sm text-neutral-400 mt-1 max-w-3xl">
-            For rigorous mathematical derivations, kinematic physics equations, phonological proofs, and architecture benchmarks, review the complete 14-page whitepaper directly below.
+          <h4 class="text-base font-bold text-white">Phonological Parameterization</h4>
+          <p class="text-xs text-neutral-300 leading-relaxed">
+            Every sign decomposes into validated phonological parameters: Handshape, 3D Location, Movement Path, Palm Orientation, and Facial Action Units. Calibrated against ASL-LEX 2.0 (2,723 signs) and HamNoSys.
           </p>
-        </div>
-
-        <!-- Direct Actions Bar -->
-        <div class="flex flex-wrap items-center gap-3">
-          <a href="Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs tracking-tight transition shadow-lg shadow-sky-600/30">
-            <svg class="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            <span>Open Fullscreen (PDF)</span>
-          </a>
-          <a href="Motivation_Letter.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-purple-300 border border-neutral-700 font-semibold text-xs transition">
-            <span>Motivation Letter (2p) &rarr;</span>
-          </a>
-          <a href="CV_Iniyan-Joseph_Aalto.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-emerald-300 border border-neutral-700 font-semibold text-xs transition">
-            <span>Academic CV (2p) &rarr;</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- In-Page Embedded PDF Proposal Viewer (User Request) -->
-      <div class="w-full bg-[#111111] border border-neutral-800 rounded-2xl overflow-hidden shadow-2xl">
-        <div class="p-3 bg-[#151515] border-b border-neutral-800 flex items-center justify-between text-xs font-mono text-neutral-400">
-          <div class="flex items-center gap-2">
-            <span class="text-sky-400 font-bold">📄 DOCUMENT:</span>
-            <span class="text-white font-semibold">Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf</span>
-            <span class="hidden sm:inline">&bull; 14 Pages &bull; Verified LaTeX Source</span>
+          <div class="text-[10px] font-mono text-neutral-400 pt-1 border-t border-neutral-800">
+            Universal anatomical decomposition
           </div>
-          <a href="Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-white transition flex items-center gap-1">
-            <span>Fullscreen View</span>
-            <span>&rarr;</span>
-          </a>
         </div>
-        
-        <iframe src="Bidirectional_PhD_Proposal_Aalto_ELLIS.pdf#toolbar=1&navpanes=0" class="w-full h-[850px] border-0 bg-neutral-950" title="Full Technical Proposal (14 Pages PDF)"></iframe>
+
+        <!-- Step 2: Analytical Inverse Kinematics -->
+        <div class="glass-card rounded-xl p-5 space-y-3 border-t-2 border-t-purple-500">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-purple-400">02 &bull; KINEMATICS</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-300">27-DOF Chain</span>
+          </div>
+          <h4 class="text-base font-bold text-white">Analytical IK &amp; Rigid Bones</h4>
+          <p class="text-xs text-neutral-300 leading-relaxed">
+            A 27-DOF active skeletal chain (7-DOF arm + 20-DOF articulated hand across 15 joints) drives a 125-channel avatar rig. Closed-form circle-swivel solvers ensure exact bone-length invariance (&Delta; = 0.000).
+          </p>
+          <div class="text-[10px] font-mono text-neutral-400 pt-1 border-t border-neutral-800">
+            No rubber-banding &bull; No dislocated joints
+          </div>
+        </div>
+
+        <!-- Step 3: Proprietary Data & Deaf Review -->
+        <div class="glass-card rounded-xl p-5 space-y-3 border-t-2 border-t-emerald-500">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-emerald-400">03 &bull; CO-DESIGN</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300">$50K Audit</span>
+          </div>
+          <h4 class="text-base font-bold text-white">Deaf-Reviewed Lexicon</h4>
+          <p class="text-xs text-neutral-300 leading-relaxed">
+            We supplement academic lexicons with proprietary kinematic recordings from native signers. $50K of pre-seed funds are budgeted for paid contracts with native Deaf linguists to audit and approve every deployed sign.
+          </p>
+          <div class="text-[10px] font-mono text-neutral-400 pt-1 border-t border-neutral-800">
+            Participatory community co-design
+          </div>
+        </div>
+
+        <!-- Step 4: Edge WebGL -->
+        <div class="glass-card rounded-xl p-5 space-y-3 border-t-2 border-t-amber-500">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-amber-400">04 &bull; RUNTIME</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-300">60 FPS WebGL</span>
+          </div>
+          <h4 class="text-base font-bold text-white">Edge-Native Deployment</h4>
+          <p class="text-xs text-neutral-300 leading-relaxed">
+            Runs client-side in standard WebGL on existing airport display hardware, gate tablets, and kiosks. Zero cloud streaming fees, sub-100&nbsp;ms latency, and 100% operational reliability during airport network outages.
+          </p>
+          <div class="text-[10px] font-mono text-neutral-400 pt-1 border-t border-neutral-800">
+            $0.00 cloud inference cost
+          </div>
+        </div>
+
       </div>
 
     </section>
 
-    <!-- ==================== FULLSCREEN ENGINE EMBED ==================== -->
-    <section id="kinematics-demo" class="space-y-4 pt-8 border-t border-neutral-800">
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
-        <div>
-          <div class="text-xs uppercase tracking-widest text-emerald-400 font-semibold font-mono">Live WebGL Prototype &bull; Minimal Finger Collisions</div>
-          <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight mt-1">Universal Kinematic Synthesizer Workspace</h2>
-          <p class="text-sm text-neutral-400 mt-1">Deterministic anatomical solver with 5 foundational parametric lexicons, universal sign composer covering all 2,723 ASL-LEX signs, and minimal finger collisions across all 26 alphabet letters.</p>
+    <!-- ==================== BEACHHEAD MARKET & BUSINESS MODEL ==================== -->
+    <section id="market" class="space-y-8 pt-8 border-t border-neutral-800 scroll-mt-20">
+      
+      <div class="space-y-2 max-w-3xl">
+        <div class="text-xs font-bold uppercase tracking-widest text-emerald-400 font-mono">BEACHHEAD MARKET &bull; B2B SAAS ECONOMICS</div>
+        <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight-custom">
+          $234M Commercial Aviation Beachhead.
+        </h2>
+        <p class="text-sm sm:text-base text-neutral-300 leading-relaxed">
+          A bottom-up, compliance-driven enterprise model targeting commercial airline boarding gates and airport terminal kiosks.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        
+        <!-- Left: Bottom-up Math (7 Cols) -->
+        <div class="lg:col-span-7 glass-card rounded-2xl p-6 sm:p-7 space-y-5">
+          <h3 class="text-xl font-bold text-white tracking-tight">
+            Bottom-Up Aviation Beachhead Sizing
+          </h3>
+          
+          <div class="space-y-3 text-xs sm:text-sm text-neutral-300 leading-relaxed">
+            <div class="p-3.5 rounded-xl bg-neutral-900/90 border border-neutral-800 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-white">15,000 U.S. Commercial Airline Gates</span>
+                <p class="text-xs text-neutral-400">At $800 / gate / month recurring B2B SaaS</p>
+              </div>
+              <span class="font-mono text-sm font-bold text-sky-400">$144.0M ARR</span>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-neutral-900/90 border border-neutral-800 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-white">5,000 Airport Terminal Wayfinding Kiosks</span>
+                <p class="text-xs text-neutral-400">At $1,500 / kiosk / month recurring B2B SaaS</p>
+              </div>
+              <span class="font-mono text-sm font-bold text-emerald-400">$90.0M ARR</span>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-neutral-950 border border-sky-500/30 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-white">Combined Aviation Beachhead TAM</span>
+                <p class="text-xs text-sky-300/80">Non-discretionary federal compliance budget (14 CFR &sect; 382.53)</p>
+              </div>
+              <span class="font-mono text-base font-bold text-sky-300">$234.0M ARR</span>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-neutral-900/90 border border-neutral-800 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-white">1% Beachhead Penetration Sensitivity</span>
+                <p class="text-xs text-neutral-400">150 airline gates + 50 airport terminal kiosks</p>
+              </div>
+              <span class="font-mono text-sm font-bold text-purple-300">$2.34M ARR</span>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-lg bg-emerald-950/30 border border-emerald-500/30 text-xs text-neutral-300">
+            <strong class="text-emerald-300">Free for Deaf Travelers:</strong> Consumer mobile apps and web viewers remain 100% free for Deaf users. Costs are borne entirely by enterprise airport operators and airlines, directly supporting the thesis of closing the disability wealth gap.
+          </div>
         </div>
-        <div>
-          <a href="04_Procedural_Engine_PoC/anatomical_hand.html" class="aalto-link text-sm" target="_blank" rel="noopener noreferrer">
-            <span class="text-base font-bold">&rarr;</span>
-            <span class="link-text">Open Fullscreen Workspace</span>
+
+        <!-- Right: $500K Use of Funds & Milestones (5 Cols) -->
+        <div class="lg:col-span-5 glass-card rounded-2xl p-6 sm:p-7 space-y-4 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between border-b border-neutral-800 pb-2">
+              <span class="text-xs font-mono font-bold text-emerald-400 uppercase">USE OF FUNDS &bull; $500K</span>
+              <span class="text-[10px] font-mono text-neutral-400">18-Month Runway</span>
+            </div>
+            
+            <div class="space-y-2.5 mt-3 text-xs text-neutral-300 font-mono">
+              <div class="flex justify-between items-center py-1 border-b border-neutral-900">
+                <span class="text-neutral-400">Core Engineering &amp; Founder:</span>
+                <span class="text-white font-semibold">$150,000</span>
+              </div>
+              <div class="flex justify-between items-center py-1 border-b border-neutral-900">
+                <span class="text-neutral-400">Deaf Reviewers &amp; Linguistics:</span>
+                <span class="text-emerald-400 font-semibold">$50,000</span>
+              </div>
+              <div class="flex justify-between items-center py-1 border-b border-neutral-900">
+                <span class="text-neutral-400">3D Assets, Rigging &amp; Facial:</span>
+                <span class="text-sky-400 font-semibold">$50,000</span>
+              </div>
+              <div class="flex justify-between items-center py-1 border-b border-neutral-900">
+                <span class="text-neutral-400">Airport Pilot &amp; Hardware:</span>
+                <span class="text-purple-400 font-semibold">$75,000</span>
+              </div>
+              <div class="flex justify-between items-center py-1">
+                <span class="text-neutral-400">IP, Legal &amp; Reserve Buffer:</span>
+                <span class="text-amber-400 font-semibold">$175,000</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-neutral-900/90 border border-neutral-800 space-y-1.5 text-xs">
+            <span class="font-bold text-white text-[11px] uppercase tracking-wider text-sky-400 font-mono">Key Milestone Objectives:</span>
+            <ul class="space-y-1 text-neutral-300 text-[11px] leading-relaxed">
+              <li>&bull; Expand lexicon to 500 validated airport phrases.</li>
+              <li>&bull; Integrate facial Action Units and non-manual grammar.</li>
+              <li>&bull; Complete first live commercial airport gate trial.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================== FOUNDER & CONTACT ==================== -->
+    <section id="contact" class="space-y-6 pt-8 border-t border-neutral-800 scroll-mt-20">
+      
+      <div class="glass-card rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 border-l-4 border-l-sky-500">
+        <div class="space-y-2 text-center md:text-left">
+          <div class="text-xs font-mono font-bold text-sky-400 uppercase">FOUNDER &bull; DIRECT CONTACT</div>
+          <h3 class="text-2xl font-bold text-white tracking-tight">Iniyan Andrews Joseph</h3>
+          <p class="text-xs sm:text-sm text-neutral-300 max-w-xl leading-relaxed">
+            Founder &bull; SAMMY Technologies. Raising $500K on a post-money SAFE ($5M cap) to fund an 18-month roadmap: Deaf-reviewed lexicon expansion, facial grammar, and a first commercial airport gate trial.
+          </p>
+          <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2 text-xs font-mono">
+            <a href="mailto:iniyandrews@gmail.com" class="text-sky-400 hover:underline flex items-center gap-1">
+              <span>✉️</span> iniyandrews@gmail.com
+            </a>
+            <a href="https://www.linkedin.com/in/iniyandrews" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:underline flex items-center gap-1">
+              <span>💼</span> linkedin.com/in/iniyandrews
+            </a>
+            <a href="https://github.com/Joeytribb/sign-language-kinematics" target="_blank" rel="noopener noreferrer" class="text-neutral-400 hover:text-white flex items-center gap-1">
+              <span>🐙</span> GitHub Repository
+            </a>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0">
+          <a href="mailto:iniyandrews@gmail.com?subject=SAMMY%20Pre-Seed%20Meeting" class="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs tracking-tight transition shadow-lg shadow-sky-600/30">
+            Schedule a Demo / Meeting
+          </a>
+          <a href="04_Procedural_Engine_PoC/anatomical_hand.html" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-neutral-700 font-semibold text-xs transition">
+            Launch 3D Studio &rarr;
           </a>
         </div>
       </div>
-      
-      <div class="w-full aspect-[16/10] sm:aspect-[16/9] bg-[#0c0c0c] border border-neutral-800 rounded-xl overflow-hidden shadow-2xl">
-        <iframe src="04_Procedural_Engine_PoC/anatomical_hand.html" class="w-full h-full border-0" title="Kinematic Synthesizer (30 Articulated Joints)"></iframe>
-      </div>
+
     </section>
 
   </main>
 
-  <!-- ==================== SCANDINAVIAN ACADEMIC FOOTER ==================== -->
-  <footer class="border-t border-neutral-800 bg-[#0a0a0a] py-12 mt-24 text-xs text-neutral-500">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-      
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-        <div class="space-y-3">
-          <div class="text-white font-bold text-sm tracking-tight">SAMMY</div>
-          <p class="leading-relaxed">Universal Accessibility Infrastructure<br>Deterministic Kinematic 3D Sign Engine<br>Universal Design &amp; Enterprise Compliance</p>
-        </div>
-        <div class="space-y-3">
-          <div class="text-white font-bold text-sm tracking-tight">Institutional Affiliations</div>
-          <ul class="space-y-1.5">
-            <li><a href="https://www.aalto.fi/en/department-of-computer-science" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">Department of CS, Aalto</a></li>
-            <li><a href="https://ellis.eu/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">ELLIS Institute Finland</a></li>
-            <li><a href="https://www.lumi-supercomputer.eu/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">EuroHPC LUMI Supercomputer</a></li>
-          </ul>
-        </div>
-        <div class="space-y-3">
-          <div class="text-white font-bold text-sm tracking-tight">Community &amp; Ethics</div>
-          <ul class="space-y-1.5">
-            <li><a href="https://kuurojenliitto.fi/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">Kuurojen Liitto ry</a></li>
-            <li><a href="https://finlex.fi/fi/laki/alkup/2015/20150359" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">Viittomakielilaki (359/2015)</a></li>
-            <li><a href="https://eur-lex.europa.eu/eli/dir/2019/882/oj" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">EU Directive 2019/882</a></li>
-            <li><a href="https://www.who.int/publications/i/item/9789240020481" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">WHO Hearing Guidelines</a></li>
-          </ul>
-        </div>
-        <div class="space-y-3">
-          <div class="text-white font-bold text-sm tracking-tight">Applicant Contact</div>
-          <p class="leading-relaxed">
-            Iniyan Andrews Joseph<br>
-            <a href="mailto:iniyandrews@gmail.com" class="text-sky-400 hover:underline" target="_blank" rel="noopener noreferrer">iniyandrews@gmail.com</a><br>
-            <a href="https://www.linkedin.com/in/iniyandrews" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">linkedin.com/in/iniyandrews</a><br>
-            <a href="https://github.com/Joeytribb/sign-language-kinematics" target="_blank" rel="noopener noreferrer" class="text-neutral-400 hover:text-white transition">GitHub Repository &rarr;</a>
-          </p>
-        </div>
+  <!-- ==================== MINIMAL CLEAN FOOTER ==================== -->
+  <footer class="border-t border-neutral-800 bg-[#0a0a0a] py-8 mt-20 text-xs text-neutral-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="text-white font-bold">SAMMY</span>
+        <span>&bull;</span>
+        <span>Deterministic 3D Sign Language Infrastructure</span>
       </div>
-
-      <div class="pt-8 border-t border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-600">
-        <div>
-          &copy; 2026 SAMMY Technologies &middot; Universal Accessibility Infrastructure &middot; All Rights Reserved
-        </div>
-        <div class="font-mono text-[9.5px] text-neutral-600/60 uppercase tracking-widest">
-          Alpha build &bull; For representational purposes only
-        </div>
-        <div class="text-neutral-600">
-          Designed with Scandinavian Minimalist Principles &middot; Universal Design
-        </div>
+      <div class="text-neutral-500 text-[11px]">
+        &copy; 2026 SAMMY Technologies. All Rights Reserved. &bull; 14 CFR &sect; 382.53(a)(3) Compliance
+      </div>
+      <div>
+        <a href="#top" class="text-neutral-400 hover:text-white transition">Back to Top &uarr;</a>
       </div>
     </div>
   </footer>
 
+  <!-- ==================== JAVASCRIPT CONTROLLERS ==================== -->
   <script>
     // ==========================================
     // HERO 3D ENGINE DISPLAY INITIALIZER & GREETING
@@ -1445,7 +700,7 @@
           father: '👨 SIGN: FATHER (FOREHEAD)',
           work: '🔨 SIGN: WORK (ASYMMETRIC)',
           me: '👉 SIGN: ME (STERNUM)',
-          you: '🫵 SIGN: YOU (FAR OPEN REACH)'
+          you: '🫵 SIGN: YOU (FAR REACH)'
         };
         badge.innerText = labels[name] || `SIGN: ${name.toUpperCase()}`;
       }
@@ -1509,10 +764,10 @@
         const btn = document.getElementById('hero-kiosk-toggle-btn');
         if (btn) {
           if (isKiosk) {
-            btn.innerHTML = "<span>✈️</span> Kiosk Active (14 CFR § 382.57)";
+            btn.innerHTML = "<span>✈️</span> Flight Gate Active (14 CFR &sect; 382.53)";
             btn.className = "px-3 py-1.5 rounded bg-sky-500 text-white font-bold font-mono text-xs transition flex items-center gap-1.5 shadow-lg shadow-sky-500/30";
           } else {
-            btn.innerHTML = "<span>✈️</span> Airport Kiosk (14 CFR § 382.57)";
+            btn.innerHTML = "<span>✈️</span> Airport Gate (14 CFR &sect; 382.53)";
             btn.className = "px-3 py-1.5 rounded bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/40 text-xs font-bold font-mono transition flex items-center gap-1.5 shadow-lg shadow-sky-950/40";
           }
         }
@@ -1593,26 +848,6 @@
       [150, 450, 950].forEach(delay => setTimeout(configureHero, delay));
     }
 
-    // Keep bottom workspace iframe functional while dismissing modal and setting 40% speed
-    function setupWorkspaceEngine() {
-      const otherFrames = document.querySelectorAll('iframe:not(#hero-engine-frame)');
-      otherFrames.forEach(frame => {
-        function configureWorkspace() {
-          try {
-            const doc = frame.contentDocument || frame.contentWindow.document;
-            if (doc) {
-              const modal = doc.getElementById('admissions-modal-overlay');
-              if (modal) modal.style.display = 'none';
-              setFrameSpeed(frame, 0.4);
-            }
-          } catch(e) {}
-        }
-        frame.addEventListener('load', configureWorkspace);
-        configureWorkspace();
-        [200, 500, 1000, 2000].forEach(delay => setTimeout(configureWorkspace, delay));
-      });
-    }
-
     // Sync window resize to iframe Three.js canvas
     window.addEventListener('resize', () => {
       const frame = document.getElementById('hero-engine-frame');
@@ -1625,7 +860,6 @@
 
     function initAll() {
       setupHeroEngine();
-      setupWorkspaceEngine();
       const scrollTarget = new URLSearchParams(window.location.search).get('scroll') || window.location.hash.replace('#', '');
       if (scrollTarget && document.getElementById(scrollTarget)) {
         document.documentElement.classList.remove('scroll-smooth');
