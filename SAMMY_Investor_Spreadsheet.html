@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAMMY — Pre-Seed Investor Master Spreadsheet & Pipeline Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #07090e;
+            --bg-secondary: #0d111a;
+            --bg-surface: #141b29;
+            --bg-hover: #1c2538;
+            --border: #232d42;
+            --text-main: #f1f5f9;
+            --text-muted: #8e9bb5;
+            --accent-cyan: #00f2fe;
+            --accent-blue: #4facfe;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --accent-purple: #a855f7;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 24px;
+            overflow-x: hidden;
+        }
+
+        .header {
+            max-width: 1600px;
+            margin: 0 auto 24px auto;
+            background: linear-gradient(135deg, rgba(20, 27, 41, 0.9) 0%, rgba(13, 17, 26, 0.95) 100%);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .header-title h1 {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .badge-live {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-emerald);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .header-title p {
+            color: var(--text-muted);
+            font-size: 13.5px;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 16px;
+        }
+
+        .stat-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 18px;
+            text-align: center;
+            min-width: 110px;
+        }
+
+        .stat-val {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
+        .controls-card {
+            max-width: 1600px;
+            margin: 0 auto 20px auto;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .controls-row-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 280px;
+            max-width: 480px;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 16px 10px 40px;
+            color: var(--text-main);
+            font-size: 13.5px;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 9px 16px;
+            border-radius: 9px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--text-muted);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            color: #040914;
+            border: none;
+            font-weight: 700;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .filter-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .pill {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pill:hover {
+            color: var(--text-main);
+            border-color: #3b4763;
+        }
+
+        .pill.active {
+            background: rgba(0, 242, 254, 0.12);
+            color: var(--accent-cyan);
+            border-color: rgba(0, 242, 254, 0.4);
+        }
+
+        .table-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow-x: auto;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            text-align: left;
+            min-width: 1350px;
+        }
+
+        thead {
+            background: #0f1523;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th {
+            padding: 14px 16px;
+            font-size: 11.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--text-muted);
+            border-bottom: 2px solid var(--border);
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(35, 45, 66, 0.6);
+            transition: background 0.15s ease;
+        }
+
+        tbody tr:hover {
+            background: rgba(28, 37, 56, 0.7);
+        }
+
+        td {
+            padding: 14px 16px;
+            vertical-align: top;
+            line-height: 1.45;
+        }
+
+        .col-firm {
+            font-weight: 700;
+            color: #fff;
+            min-width: 160px;
+        }
+
+        .firm-link {
+            color: var(--text-main);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .firm-link:hover {
+            color: var(--accent-cyan);
+        }
+
+        .col-category {
+            white-space: nowrap;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .tag-deeptech {
+            background: rgba(168, 85, 247, 0.15);
+            color: #c084fc;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .tag-accelerator {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .tag-crossborder {
+            background: rgba(20, 184, 166, 0.15);
+            color: #2dd4bf;
+            border: 1px solid rgba(20, 184, 166, 0.3);
+        }
+
+        .tag-impact {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .tag-grant {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .col-check {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            white-space: nowrap;
+        }
+
+        .col-tier {
+            white-space: nowrap;
+        }
+
+        .tier-badge {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 7px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .tier-1 {
+            background: rgba(244, 63, 94, 0.2);
+            color: #fb7185;
+            border: 1px solid rgba(244, 63, 94, 0.4);
+        }
+
+        .tier-2 {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+        }
+
+        .tier-3 {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+        }
+
+        .col-thesis {
+            max-width: 300px;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .col-angle {
+            max-width: 320px;
+            font-size: 12px;
+            color: #cbd5e1;
+        }
+
+        .col-contact {
+            min-width: 160px;
+            font-size: 12px;
+        }
+
+        .mail-btn {
+            display: inline-block;
+            margin-top: 4px;
+            font-size: 11px;
+            color: var(--accent-blue);
+            text-decoration: none;
+            background: rgba(79, 172, 254, 0.1);
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(79, 172, 254, 0.2);
+        }
+
+        .mail-btn:hover {
+            background: rgba(79, 172, 254, 0.2);
+            border-color: var(--accent-blue);
+        }
+
+        select.status-select {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 5px 8px;
+            border-radius: 6px;
+            font-size: 11.5px;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+        }
+
+        select.status-select:focus {
+            border-color: var(--accent-cyan);
+        }
+
+        .status-To-Contact { color: #cbd5e1; }
+        .status-To-Apply { color: #60a5fa; }
+        .status-Applied---In-Progress { color: #f59e0b; }
+        .status-In-Review { color: #a855f7; }
+        .status-Committed { color: #10b981; }
+        .status-Passed { color: #64748b; }
+
+        .footer-note {
+            max-width: 1600px;
+            margin: 24px auto 40px auto;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 12.5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-title">
+            <h1>
+                SAMMY Pre-Seed Investor Master Pipeline
+                <span class="badge-live">Live Roster</span>
+            </h1>
+            <p>
+                Curated for an <strong>Indian Technical Founder</strong> executing a cross-border playbook: R&D in India, enterprise public transit compliance (14 CFR § 382.53) in the US and global markets.
+            </p>
+        </div>
+        <div class="header-stats">
+            <div class="stat-card">
+                <div class="stat-val" id="stat-total">30</div>
+                <div class="stat-label">Total Targets</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="stat-tier1" style="color: #fb7185;">11</div>
+                <div class="stat-label">Tier 1 Leads</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="stat-grants" style="color: #34d399;">3</div>
+                <div class="stat-label">Non-Dilutive</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val">$5.0M</div>
+                <div class="stat-label">Valuation Cap</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls-card">
+        <div class="controls-row-top">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search investor name, partner, city, check size, or thesis..." onkeyup="filterTable()">
+            </div>
+            <div class="action-btns">
+                <a href="SAMMY_Pre_Seed_Investor_Roster.csv" download class="btn btn-primary">
+                    📥 Download CSV for Excel / Sheets
+                </a>
+                <button class="btn" onclick="resetFilters()">↺ Reset Filters</button>
+            </div>
+        </div>
+        <div class="filter-pills" id="categoryPills">
+            <span class="pill active" onclick="setCategoryFilter('ALL', this)">All Categories</span>
+            <span class="pill" onclick="setCategoryFilter('Indian DeepTech VC', this)">Indian DeepTech VCs</span>
+            <span class="pill" onclick="setCategoryFilter('Top Accelerator', this)">Accelerators & Pre-Seed</span>
+            <span class="pill" onclick="setCategoryFilter('Cross-Border', this)">US-India Cross-Border</span>
+            <span class="pill" onclick="setCategoryFilter('Impact', this)">Disability & Accessibility</span>
+            <span class="pill" onclick="setCategoryFilter('Grant', this)">Govt Non-Dilutive Grants</span>
+            <span class="pill" onclick="setTierFilter('Tier 1', this)" style="margin-left: 12px; border-color: rgba(244,63,94,0.4); color: #fb7185;">⚡ Tier 1 Only</span>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table id="investorTable">
+            <thead>
+                <tr>
+                    <th>Investor / Firm</th>
+                    <th>Category</th>
+                    <th>HQ / Geography</th>
+                    <th>Check Size</th>
+                    <th>Instrument</th>
+                    <th>Key Partners</th>
+                    <th>Strategic Thesis Match</th>
+                    <th>Pitch Angle & Moat</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Injected via JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer-note">
+        SAMMY • Pre-Seed Round Target: $500,000 – $1,000,000 on a $5,000,000 Cap SAFE • Delaware C-Corp parent with India R&D subsidiary.
+    </div>
+
+    <script>
+        const investors = [
+            // Tier 1: Indian DeepTech & AI
+            {
+                name: "Speciale Invest",
+                category: "Indian DeepTech VC",
+                tagClass: "tag-deeptech",
+                hq: "Chennai / Bengaluru, India",
+                check: "$250K - $750K",
+                instrument: "SAFE / Equity",
+                partners: "Vishesh Rajaram, Arjun Rao",
+                url: "https://specialeinvest.com",
+                email: "vishesh@specialeinvest.com",
+                thesis: "Top deeptech pre-seed VC in India (backed Agnikul, CynLr, GalaxEye). Prioritizes hard engineering and IP moats over vanity traction.",
+                angle: "Deterministic 3D kinematic compiler solving hand hallucination (Δ = 0.000) for sign language at 60 FPS in WebGL with $0 cloud GPU compute.",
+                tier: "Tier 1",
+                tierClass: "tier-1",
+                status: "To Contact"
+            },
+            {
+                name: "pi Ventures",
+                category: "Indian DeepTech VC",
+                tagClass: "tag-deeptech",
+                hq: "Bengaluru, India",
+                check: "$500K - $1M",
+                instrument: "SAFE / Equity",
+                partners: "Manish Singhal, Roopan Salwan",
+                url: "https://piventures.in",
+                email: "manish@piventures.in",
+                thesis: "Dedicated early-stage AI/deeptech fund. Loves algorithmic moats, computer vision, and global enterprise disruption from India.",
+                angle: "Spatial AI & procedural kinematics replacing expensive, hallucinating video diffusion models for transit accessibility infrastructure.",
+                tier: "Tier 1",
+                tierClass: "tier-1",
+                status: "To Contact"
+            },
+            {
+                name: "Yali Capital",
+                category: "Indian DeepTech VC",
+                tagClass: "tag-deeptech",
+                hq: "Bengaluru, India",
+                check: "$500K - $1M",
+                instrument: "SAFE / Equity",
+                partners: "Ganapathy Subramaniam, Lip-Bu Tan Network",
+                url: "https://yali.vc",
+                email: "contact@yali.vc",
+                thesis: "Focused on early-stage deeptech leveraging Indian engineering depth to scale global enterprise infrastructure.",
+                angle: "Cross-border deeptech play: Indian 3D graphics R&D solving mandatory US federal airport accessibility mandates (14 CFR § 382.53).",
+                tier: "Tier 1",
+                tierClass: "tier-1",
+                status: "To Contact"
+            },
+            {
+                name: "Grayscale Ventures",
+                category: "Cross-Border Pre-Seed VC",
+                tagClass: "tag-crossborder",
+                hq: "Bengaluru, India",
+                check: "$200K - $500K",
+                instrument: "SAFE / Equity",
+                partners: "Siddharth Verma, Nikhil Kapur",
+                url: "https://grayscale.vc",
+                email: "hello@grayscale.vc",
+                thesis: "100% focused on US-India cross-border pre-seed infrastructure, AI, and developer tools.",
+                angle: "High capital-efficiency cross-border infrastructure: $10K/gate SaaS licensed to US transit displays with 4x Indian engineering runway.",
+                tier: "Tier 1",
+                tierClass: "tier-1",
+                status: "To Contact"
+            },
+            // Tier 1: Premier Accelerators & Fast Pre-Seed
+            {
+                name: "Y Combinator (YC)",
+                category: "Top Accelerator",
+                tagClass: "tag-accelerator",
+                hq: "San Francisco, CA / Global",
+                check: "$500K ($125K + $375K)",
+                instrument: "Post-Money SAFE",
+                partners: "Garry Tan, Dalton Caldwell",
+                url: "https://www.ycombinator.com/apply",
+                email: "Application Portal",
+                thesis: "The gold standard for Indian technical founders selling to US enterprise. Loves regulatory tailwinds (DOT/FAA) + working client-side tech.",
+                angle: "Client-side spatial AI compiler replacing failed text captioning at airport gates under federal compliance. 150 mocap signs live.",
+                tier: "Tier 1",
+                tierClass: "tier-1",
+                status: "To Apply"
+            },
+            {
+                name: "Antler India",
+                category: "Top Accelerator",
+                tagClass: "tag-accelerator",
+                hq: "Bengaluru, India",
+                check: "$200K - $400K",
+                instrument: "SAFE / Equity (8-10%)",
+                partners: "Rajiv Srivatsa, Nitin Sharma",
+                url: "https://www.antler.co/location/india",
+                email: "india@antler.co",
+                thesis: "India’s most active pre-seed check-writer with a dedicated AI and deeptech thesis. Decides in 2-3 weeks.",
+                angle: "Solving the 70% Deaf literacy bottleneck with deterministic 3D WebGL motion compilers. High-margin B2B transit beachhead.",
+                tier: "Tier 1",
+                tierClass: "tier-1",
+                status: "To Apply"
+            },
+            {
+                name: "Better Capital",
+                category: "Cross-Border Pre-Seed VC",
+                tagClass: "tag-crossborder",
+                hq: "Silicon Valley / Bengaluru",
+                check: "$150K - $300K",
+                instrument: "Post-Money SAFE",
+                partners: "Vaibhav Domkundwar",
+                url: "https://bettercapital.vc",
+                email: "vaibhav@bettercapital.vc",
+                thesis: "Prolific pre-seed fund backing 200+ cross-border startups (Open, Teachmint, Slice). High speed, deep US-India network.",
+                angle: "First-check backing for Indian founder building global accessibility infrastructure with working WebGL prototype.",
+                tier: "Tier 1",
+                tierClass: "tier-1",
+                status: "To Contact"
+            },
+            {
+                name: "100X.VC",
+                category: "Top Accelerator",
+                tagClass: "tag-accelerator",
+                hq: "Mumbai, India",
+                check: "INR 1.25 Cr (~$150K)",
+                instrument: "iSAFE Note",
+                partners: "Sanjay Mehta, Ninad Karpe",
+                url: "https://www.100x.vc",
+                email: "pitch@100x.vc",
+                thesis: "First institutional check via iSAFE. Fast investment committee, massive investor demo day for next round syndication.",
+                angle: "iSAFE pre-seed investment to commercialize airport display engine and scale 3D sign language lexicon from 150 to 1,500 signs.",
+                tier: "Tier 1",
+                tierClass: "tier-1",
+                status: "To Apply"
+            },
+            {
+                name: "Titan Capital",
+                category: "Cross-Border Pre-Seed VC",
+                tagClass: "tag-crossborder",
+                hq: "Gurugram, India",
+                check: "$100K - $250K",
+                instrument: "SAFE / Convertible",
+                partners: "Kunal Bahl, Rohit Bansal",
+                url: "https://titancapital.vc",
+                email: "pitch@titancapital.vc",
+                thesis: "Snapdeal founders’ investment office. Extremely fast turnaround (often within 7 days) for compelling tech and clear enterprise GTM.",
+                angle: "High-conviction angel check in a defensible spatial graphics compiler attacking the $3.2B transit display market.",
+                tier: "Tier 1",
+                tierClass: "tier-1",
+                status: "To Contact"
+            },
+            {
+                name: "Enable Ventures",
+                category: "Impact & Accessibility",
+                tagClass: "tag-impact",
+                hq: "Washington DC / SF, US",
+                check: "$500K - $1M",
+                instrument: "Post-Money SAFE",
+                partners: "Regina Kline, Philip Kiracofe",
+                url: "https://enableventures.vc",
+                email: "regina@enableventures.vc",
+                thesis: "The undisputed global leader in disability tech. Early backer of Ava ($10M Series A). Looking for the next Deaf tech breakthrough.",
+                angle: "Completing the Deaf infrastructure stack: Ava does English text, SAMMY provides native 3D spatial sign at airport gates. $100K Deaf co-design.",
+                tier: "Tier 1",
+                tierClass: "tier-1",
+                status: "Applied / In Progress"
+            },
+            {
+                name: "Together Fund",
+                category: "Cross-Border Pre-Seed VC",
+                tagClass: "tag-crossborder",
+                hq: "Bengaluru / San Mateo, US",
+                check: "$500K - $1M",
+                instrument: "SAFE / Equity",
+                partners: "Girish Mathrubootham, Manav Garg",
+                url: "https://together.fund",
+                email: "pitch@together.fund",
+                thesis: "Operator-led fund built by founders who scaled Indian engineering into multi-billion-dollar US enterprise software.",
+                angle: "B2B enterprise infrastructure playbook: built in India, licensed at $10K/gate to US airports and airlines.",
+                tier: "Tier 1",
+                tierClass: "tier-1",
+                status: "To Contact"
+            },
+            // Tier 2: Deeptech & Cross-border
+            {
+                name: "Seafund",
+                category: "Indian DeepTech VC",
+                tagClass: "tag-deeptech",
+                hq: "Bengaluru, India",
+                check: "$250K - $500K",
+                instrument: "SAFE / Equity",
+                partners: "Manoj Agarwal, Narendra Bhandari",
+                url: "https://seafund.in",
+                email: "pitch@seafund.in",
+                thesis: "Focuses on early-stage deeptech and AI/ML with global market relevance. Backs hardware/software frontier engineering.",
+                angle: "Edge AI and procedural WebGL rendering engine with zero cloud GPU dependence for physical digital signage.",
+                tier: "Tier 2",
+                tierClass: "tier-2",
+                status: "To Contact"
+            },
+            {
+                name: "Endiya Partners",
+                category: "Indian DeepTech VC",
+                tagClass: "tag-deeptech",
+                hq: "Hyderabad / Bengaluru",
+                check: "$500K - $1M",
+                instrument: "Equity / SAFE",
+                partners: "Sateesh Andra, Dr. Ramesh Byrapaneni",
+                url: "https://endiya.com",
+                email: "plans@endiya.com",
+                thesis: "Premier IP-led seed fund. Deep portfolio in enterprise tech and digital health/accessibility.",
+                angle: "Rigorous biomechanical IP and kinematics compiler for automated sign language translation.",
+                tier: "Tier 2",
+                tierClass: "tier-2",
+                status: "To Contact"
+            },
+            {
+                name: "Bharat Innovation Fund",
+                category: "Indian DeepTech VC",
+                tagClass: "tag-deeptech",
+                hq: "Ahmedabad / Bengaluru",
+                check: "$500K - $1M",
+                instrument: "Equity / SAFE",
+                partners: "Kunal Upadhyay, Ashwin Raguraman",
+                url: "https://bharatinnovationfund.com",
+                email: "connect@bharatinnovationfund.com",
+                thesis: "Born out of IIM Ahmedabad. Specifically mandates investing in hard intellectual property and breakthrough patents from India.",
+                angle: "Biomechanical constraint solver with zero bone drift; deep IP defensibility against generative video diffusion.",
+                tier: "Tier 2",
+                tierClass: "tier-2",
+                status: "To Contact"
+            },
+            {
+                name: "StartupXseed Ventures",
+                category: "Indian DeepTech VC",
+                tagClass: "tag-deeptech",
+                hq: "Bengaluru, India",
+                check: "$250K - $500K",
+                instrument: "Equity / SAFE",
+                partners: "BV Naidu, Ravi Thakur",
+                url: "https://startupxseed.in",
+                email: "info@startupxseed.in",
+                thesis: "Specializes in seed/pre-seed B2B tech and deeptech with international market linkages.",
+                angle: "US aviation compliance beachhead (14 CFR § 382.53) powered by Indian graphics engineering.",
+                tier: "Tier 2",
+                tierClass: "tier-2",
+                status: "To Contact"
+            },
+            {
+                name: "South Park Commons (SPC)",
+                category: "Top Accelerator",
+                tagClass: "tag-accelerator",
+                hq: "Bengaluru, India / San Francisco",
+                check: "$400K ($400K for 7%)",
+                instrument: "SAFE",
+                partners: "Ruchi Sanghvi, Aditya Agarwal",
+                url: "https://www.southparkcommons.com",
+                email: "Application Portal",
+                thesis: "Elite community and fund for technical founders in the -1 to 0 stage building ambitious frontier systems.",
+                angle: "First-principles rethink of spatial sign language translation via deterministic kinematics instead of LLM tokenization.",
+                tier: "Tier 2",
+                tierClass: "tier-2",
+                status: "To Apply"
+            },
+            {
+                name: "Axilor Ventures",
+                category: "Top Accelerator",
+                tagClass: "tag-accelerator",
+                hq: "Bengaluru, India",
+                check: "$250K - $500K",
+                instrument: "Equity / SAFE",
+                partners: "Ganapathy Venugopal, Kris Gopalakrishnan",
+                url: "https://axilor.com",
+                email: "contact@axilor.com",
+                thesis: "Early backer of tech startups with high capital efficiency and structured milestones.",
+                angle: "Capital-efficient spatial AI compiler targeting enterprise digital signage infrastructure.",
+                tier: "Tier 2",
+                tierClass: "tier-2",
+                status: "To Contact"
+            },
+            {
+                name: "Ideaspring Capital",
+                category: "Indian DeepTech VC",
+                tagClass: "tag-deeptech",
+                hq: "Bengaluru, India",
+                check: "$500K - $1M",
+                instrument: "Equity / SAFE",
+                partners: "Naganand Doraswamy",
+                url: "https://ideaspringcap.com",
+                email: "pitch@ideaspringcap.com",
+                thesis: "Pioneer in early-stage enterprise deep tech in India with international enterprise distribution focus.",
+                angle: "B2B enterprise display SDK with deterministic latency and zero cloud inference cost.",
+                tier: "Tier 2",
+                tierClass: "tier-2",
+                status: "To Contact"
+            },
+            {
+                name: "Exfinity Venture Partners",
+                category: "Cross-Border Pre-Seed VC",
+                tagClass: "tag-crossborder",
+                hq: "Bengaluru / Silicon Valley",
+                check: "$500K - $1M",
+                instrument: "Equity / SAFE",
+                partners: "Shailesh Ghorpade",
+                url: "https://exfinityventures.com",
+                email: "info@exfinityventures.com",
+                thesis: "Invests strictly across the US-India-Singapore tech corridors at the intersection of enterprise and deep tech.",
+                angle: "US transit authority and airline passenger communication compliance platform.",
+                tier: "Tier 2",
+                tierClass: "tier-2",
+                status: "To Contact"
+            },
+            {
+                name: "Aum Ventures (INDIA Deepspark)",
+                category: "Cross-Border Pre-Seed VC",
+                tagClass: "tag-crossborder",
+                hq: "Abu Dhabi / Mumbai, India",
+                check: "$250K - $750K",
+                instrument: "SAFE / Equity",
+                partners: "Chetan Mehta",
+                url: "https://aumvc.com",
+                email: "pitch@aumvc.com",
+                thesis: "Runs dedicated deeptech programs for IP-led ventures in edge AI, graphics, and robotics expanding internationally.",
+                angle: "Indian deeptech compiler expanding to US and Middle Eastern aviation and transportation hubs.",
+                tier: "Tier 2",
+                tierClass: "tier-2",
+                status: "To Contact"
+            },
+            // Tier 2: Accessibility & Impact
+            {
+                name: "SEED Inclusivity (Seedstars)",
+                category: "Impact & Accessibility",
+                tagClass: "tag-impact",
+                hq: "Singapore / India (APAC)",
+                check: "$100K - $250K",
+                instrument: "SAFE / Equity",
+                partners: "Inclusive Tech Alliance",
+                url: "https://seedinclusivity.com",
+                email: "Application Portal",
+                thesis: "Targeted accelerator backed by Visa Foundation for assistive tech, AI sign language, and inclusive infrastructure across APAC & India.",
+                angle: "Accessible public transit infrastructure: real-time 3D sign language avatar translation for transport hubs.",
+                tier: "Tier 2",
+                tierClass: "tier-2",
+                status: "To Apply"
+            },
+            {
+                name: "Adaptation Ventures",
+                category: "Impact & Accessibility",
+                tagClass: "tag-impact",
+                hq: "Boston, MA, US",
+                check: "$250K - $500K",
+                instrument: "SAFE",
+                partners: "Brittany Palmer, Rich Palmer",
+                url: "https://adaptationventures.com",
+                email: "brittany@adaptationventures.com",
+                thesis: "Explicit focus on accessible travel, aviation, and physical transit infrastructure.",
+                angle: "Direct solution for airline 14 CFR § 382.53 visual announcement compliance at departure gates.",
+                tier: "Tier 2",
+                tierClass: "tier-2",
+                status: "To Contact"
+            },
+            {
+                name: "Villgro & Mphasis Foundation",
+                category: "Impact & Accessibility",
+                tagClass: "tag-impact",
+                hq: "Chennai / Bengaluru, India",
+                check: "INR 25L - 1 Cr ($30K-$120K)",
+                instrument: "Grant + Equity",
+                partners: "Paul Basil, Arun Venkatesan",
+                url: "https://villgro.org",
+                email: "info@villgro.org",
+                thesis: "India’s pioneer impact and assistive technology incubator (backed NeoMotion and top disability innovators).",
+                angle: "Bridging the 18-million Indian Deaf literacy gap + scaling cross-border to global transit infrastructure.",
+                tier: "Tier 2",
+                tierClass: "tier-2",
+                status: "To Contact"
+            },
+            {
+                name: "Exceptional Ventures",
+                category: "Impact & Accessibility",
+                tagClass: "tag-impact",
+                hq: "London, UK / Global",
+                check: "$250K - $500K",
+                instrument: "SAFE / Convertible",
+                partners: "Matt Cooper",
+                url: "https://exceptionalventures.com",
+                email: "team@exceptionalventures.com",
+                thesis: "Funds technology that enhances human capabilities, health, and accessibility across the UK/US/Global markets.",
+                angle: "Solving spatial sign language translation via deterministic kinematics for the 70M+ global Deaf population.",
+                tier: "Tier 2",
+                tierClass: "tier-2",
+                status: "To Contact"
+            },
+            {
+                name: "Kapor Capital",
+                category: "Impact & Accessibility",
+                tagClass: "tag-impact",
+                hq: "Oakland, CA, US",
+                check: "$500K",
+                instrument: "Post-Money SAFE",
+                partners: "Brian Dixon, Allison Scott",
+                url: "https://kaporcapital.com",
+                email: "Online Intake",
+                thesis: "Invests in tech closing systemic gaps for underserved communities with high venture returns.",
+                angle: "Closing the 4th-grade English literacy gap for prelingually Deaf travelers through spatial sign language.",
+                tier: "Tier 2",
+                tierClass: "tier-2",
+                status: "To Contact"
+            },
+            {
+                name: "Khosla Ventures",
+                category: "Cross-Border Pre-Seed VC",
+                tagClass: "tag-crossborder",
+                hq: "Menlo Park, CA, US",
+                check: "$500K - $1M (Pre-Seed)",
+                instrument: "SAFE",
+                partners: "Sven Strohband, Rajesh Swaminathan",
+                url: "https://khosla.com",
+                email: "sven@khosla.com",
+                thesis: "Led Ava’s $10M Series A. Known for backing deep algorithmic solutions against hard physical/scientific barriers.",
+                angle: "Deterministic compiler alternative to hallucinating diffusion models; complementary spatial layer to Ava text.",
+                tier: "Tier 2",
+                tierClass: "tier-2",
+                status: "To Contact"
+            },
+            // Tier 3: Non-Dilutive Government Grants
+            {
+                name: "BIRAC BIG Scheme",
+                category: "Govt Non-Dilutive Grant",
+                tagClass: "tag-grant",
+                hq: "New Delhi / National, India",
+                check: "INR 50 Lakhs (~$60K)",
+                instrument: "100% Equity-Free Grant",
+                partners: "BIRAC Selection Committee",
+                url: "https://birac.nic.in",
+                email: "Online Cycles (Jan & July)",
+                thesis: "India’s premier deeptech/assistive technology grant for early prototype and clinical/biomechanical validation.",
+                angle: "Kinematic modeling and topological constraint algorithms for automated sign language assistive communication.",
+                tier: "Tier 3",
+                tierClass: "tier-3",
+                status: "To Apply"
+            },
+            {
+                name: "NIDHI PRAYAS (DST)",
+                category: "Govt Non-Dilutive Grant",
+                tagClass: "tag-grant",
+                hq: "Through IITs/IISc Incubators",
+                check: "INR 10 Lakhs (~$12K)",
+                instrument: "100% Equity-Free Grant",
+                partners: "Incubator PMU (SINE/RTBI)",
+                url: "https://nidhi-prayas.org",
+                email: "Incubator Portals",
+                thesis: "Designed specifically to fund idea-to-prototype development for hard engineering and AI systems.",
+                angle: "Prototype hardware acceleration and WebGL integration for real-time sign language rendering.",
+                tier: "Tier 3",
+                tierClass: "tier-3",
+                status: "To Apply"
+            },
+            {
+                name: "IndiaAI (MeitY)",
+                category: "Govt Non-Dilutive Grant",
+                tagClass: "tag-grant",
+                hq: "New Delhi, India",
+                check: "INR 25L - 50L + GPU Credits",
+                instrument: "Non-Dilutive Grant & Compute",
+                partners: "IndiaAI Mission Directorate",
+                url: "https://indiaai.gov.in",
+                email: "MeitY Portal",
+                thesis: "National AI mission prioritizing indigenous foundational AI models, accessibility tools, and digital public goods.",
+                angle: "Foundational 3D Sign Language compiler for Indian and International Sign, creating sovereign accessibility infrastructure.",
+                tier: "Tier 3",
+                tierClass: "tier-3",
+                status: "To Apply"
+            }
+        ];
+
+        let activeCategory = 'ALL';
+        let activeTier = 'ALL';
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            investors.forEach((inv, index) => {
+                // Category filter
+                let catMatch = true;
+                if (activeCategory === 'Indian DeepTech VC') catMatch = inv.category === 'Indian DeepTech VC';
+                else if (activeCategory === 'Top Accelerator') catMatch = inv.category === 'Top Accelerator';
+                else if (activeCategory === 'Cross-Border') catMatch = inv.category.includes('Cross-Border');
+                else if (activeCategory === 'Impact') catMatch = inv.category.includes('Impact');
+                else if (activeCategory === 'Grant') catMatch = inv.category.includes('Grant');
+
+                // Tier filter
+                let tierMatch = true;
+                if (activeTier === 'Tier 1') tierMatch = inv.tier === 'Tier 1';
+
+                // Search match
+                const rowStr = `${inv.name} ${inv.category} ${inv.hq} ${inv.check} ${inv.partners} ${inv.thesis} ${inv.angle}`.toLowerCase();
+                const searchMatch = !searchTerm || rowStr.includes(searchTerm);
+
+                if (catMatch && tierMatch && searchMatch) {
+                    const tr = document.createElement('tr');
+                    
+                    const mailtoLink = inv.email.includes('@') 
+                        ? `<a href="mailto:${inv.email}?subject=SAMMY%20(Pre-Seed)%20%E2%80%94%20Deterministic%203D%20Sign%20Language%20for%20Transit%20Displays" class="mail-btn">✉ ${inv.email}</a>`
+                        : `<span style="color:#64748b; font-size:11px;">${inv.email}</span>`;
+
+                    tr.innerHTML = `
+                        <td class="col-firm">
+                            <a href="${inv.url}" target="_blank" class="firm-link">
+                                ${inv.name}
+                                <span style="font-size:11px; color:#64748b;">↗</span>
+                            </a>
+                        </td>
+                        <td class="col-category">
+                            <span class="tag ${inv.tagClass}">${inv.category}</span>
+                        </td>
+                        <td>${inv.hq}</td>
+                        <td class="col-check">${inv.check}</td>
+                        <td style="font-size:11.5px; color:#94a3b8;">${inv.instrument}</td>
+                        <td class="col-contact">
+                            <div style="font-weight:600; color:#e2e8f0;">${inv.partners}</div>
+                            ${mailtoLink}
+                        </td>
+                        <td class="col-thesis">${inv.thesis}</td>
+                        <td class="col-angle">${inv.angle}</td>
+                        <td class="col-tier">
+                            <span class="tier-badge ${inv.tierClass}">${inv.tier}</span>
+                        </td>
+                        <td>
+                            <select class="status-select status-${inv.status.replace(/[\s\/]/g, '-')}" onchange="updateStatus(${index}, this.value)">
+                                <option value="To Contact" ${inv.status === 'To Contact' ? 'selected' : ''}>To Contact</option>
+                                <option value="To Apply" ${inv.status === 'To Apply' ? 'selected' : ''}>To Apply</option>
+                                <option value="Applied / In Progress" ${inv.status === 'Applied / In Progress' ? 'selected' : ''}>Applied / In Progress</option>
+                                <option value="In Review" ${inv.status === 'In Review' ? 'selected' : ''}>In Review</option>
+                                <option value="Committed" ${inv.status === 'Committed' ? 'selected' : ''}>Committed</option>
+                                <option value="Passed" ${inv.status === 'Passed' ? 'selected' : ''}>Passed</option>
+                            </select>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            });
+        }
+
+        function updateStatus(index, newStatus) {
+            investors[index].status = newStatus;
+            renderTable();
+        }
+
+        function filterTable() {
+            renderTable();
+        }
+
+        function setCategoryFilter(cat, element) {
+            activeCategory = cat;
+            activeTier = 'ALL';
+            document.querySelectorAll('#categoryPills .pill').forEach(p => p.classList.remove('active'));
+            element.classList.add('active');
+            renderTable();
+        }
+
+        function setTierFilter(tier, element) {
+            activeTier = tier;
+            activeCategory = 'ALL';
+            document.querySelectorAll('#categoryPills .pill').forEach(p => p.classList.remove('active'));
+            element.classList.add('active');
+            renderTable();
+        }
+
+        function resetFilters() {
+            activeCategory = 'ALL';
+            activeTier = 'ALL';
+            document.getElementById('searchInput').value = '';
+            document.querySelectorAll('#categoryPills .pill').forEach((p, idx) => {
+                if (idx === 0) p.classList.add('active');
+                else p.classList.remove('active');
+            });
+            renderTable();
+        }
+
+        // Initialize table on load
+        renderTable();
+    </script>
+</body>
+</html>
