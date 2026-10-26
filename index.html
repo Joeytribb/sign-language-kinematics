@@ -331,6 +331,30 @@
                   </button>
                 </div>
               </div>
+
+              <!-- Investor Phrase & Top 100 Words Test Bench Row -->
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-2 border-t border-neutral-800/80">
+                <div class="flex-1 flex items-center bg-black/60 border border-neutral-700/80 rounded-lg px-2.5 py-1 focus-within:border-sky-500 transition">
+                  <span class="text-neutral-400 mr-2 text-xs">💬</span>
+                  <input type="text" id="hero-phrase-input" placeholder="Type any phrase or test top 100 English words (e.g. 'can you help me', 'how are you today', 'where is bathroom')..." class="bg-transparent text-white text-xs w-full outline-none font-mono placeholder:text-neutral-500" onkeydown="if(event.key==='Enter') playHeroCustomPhrase()" />
+                </div>
+                <button onclick="playHeroCustomPhrase()" class="px-4 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs font-mono transition flex items-center justify-center gap-1.5 shadow-lg shadow-sky-950/50 shrink-0">
+                  <span>⚡</span> Sign Phrase
+                </button>
+              </div>
+
+              <!-- Top 100 Investor Common Phrases Preset Chips -->
+              <div class="flex items-center gap-1.5 overflow-x-auto py-1 text-[11px] font-mono text-neutral-400 scrollbar-none">
+                <span class="text-[10px] uppercase font-bold text-sky-400 shrink-0 mr-1">Top Phrases:</span>
+                <button onclick="playHeroPhrase('can you help me')" class="px-2 py-0.5 rounded bg-neutral-800/80 hover:bg-neutral-700 hover:text-white text-neutral-300 transition shrink-0">"Can you help me"</button>
+                <button onclick="playHeroPhrase('how are you today')" class="px-2 py-0.5 rounded bg-neutral-800/80 hover:bg-neutral-700 hover:text-white text-neutral-300 transition shrink-0">"How are you today"</button>
+                <button onclick="playHeroPhrase('where is the bathroom please')" class="px-2 py-0.5 rounded bg-neutral-800/80 hover:bg-neutral-700 hover:text-white text-neutral-300 transition shrink-0">"Where is bathroom"</button>
+                <button onclick="playHeroPhrase('i want water please')" class="px-2 py-0.5 rounded bg-neutral-800/80 hover:bg-neutral-700 hover:text-white text-neutral-300 transition shrink-0">"I want water"</button>
+                <button onclick="playHeroPhrase('the train is late')" class="px-2 py-0.5 rounded bg-neutral-800/80 hover:bg-neutral-700 hover:text-white text-neutral-300 transition shrink-0">"The train is late"</button>
+                <button onclick="playHeroPhrase('we are happy to meet you')" class="px-2 py-0.5 rounded bg-neutral-800/80 hover:bg-neutral-700 hover:text-white text-neutral-300 transition shrink-0">"Happy to meet you"</button>
+                <button onclick="playHeroPhrase('what is your name')" class="px-2 py-0.5 rounded bg-neutral-800/80 hover:bg-neutral-700 hover:text-white text-neutral-300 transition shrink-0">"What is your name"</button>
+                <button onclick="playHeroPhrase('doctor please help now')" class="px-2 py-0.5 rounded bg-neutral-800/80 hover:bg-neutral-700 hover:text-white text-neutral-300 transition shrink-0">"Doctor please help"</button>
+              </div>
             </div>
 
           </div>
@@ -815,6 +839,26 @@
           btn.className = "px-2.5 py-1 rounded bg-neutral-800 hover:bg-sky-600 text-neutral-200 hover:text-white font-medium text-xs transition";
         }
       });
+    }
+
+    function playHeroCustomPhrase() {
+      const input = document.getElementById('hero-phrase-input');
+      const val = input ? input.value.trim() : '';
+      if (!val) return;
+      playHeroPhrase(val);
+    }
+
+    function playHeroPhrase(phrase) {
+      const frame = document.getElementById('hero-engine-frame');
+      if (frame && frame.contentWindow && typeof frame.contentWindow.executeAslSearch === 'function') {
+        frame.contentWindow.executeAslSearch(phrase);
+      }
+      const badge = document.getElementById('active-sign-badge');
+      if (badge) {
+        badge.innerText = `💬 PHRASE: "${phrase.toUpperCase()}"`;
+      }
+      const input = document.getElementById('hero-phrase-input');
+      if (input) input.value = phrase;
     }
 
     function triggerInitialGreeting() {
