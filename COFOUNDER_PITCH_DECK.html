@@ -197,6 +197,12 @@
       gap: 20px;
     }
 
+    .grid-5 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+
     .card {
       background: var(--bg-surface);
       border: 1px solid var(--border);
@@ -205,6 +211,11 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+    }
+
+    .card-sm {
+      padding: 16px;
+      gap: 8px;
     }
 
     .card-highlight {
@@ -241,6 +252,7 @@
     .badge-purple { background: rgba(192, 132, 252, 0.15); color: var(--purple); border: 1px solid rgba(192, 132, 252, 0.3); }
     .badge-emerald { background: rgba(16, 185, 129, 0.15); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
     .badge-rose { background: rgba(251, 113, 133, 0.15); color: var(--rose); border: 1px solid rgba(251, 113, 133, 0.3); }
+    .badge-amber { background: rgba(245, 158, 11, 0.15); color: var(--amber); border: 1px solid rgba(245, 158, 11, 0.3); }
 
     .stat-number {
       font-size: 32px;
@@ -346,7 +358,7 @@
     </div>
 
     <div class="slide-progress">
-      <span id="current-slide">1</span> / <span id="total-slides">10</span>
+      <span id="current-slide">1</span> / <span id="total-slides">12</span>
     </div>
 
     <div class="controls-nav">
@@ -365,7 +377,7 @@
         <span class="cover-tag">Partnership &amp; Mission Briefing</span>
         <h1 class="cover-title">Building the Universal 3D Sign Language Infrastructure</h1>
         <p class="cover-subtitle">
-          Why I want you as my <strong>Co-Founder &amp; CTO</strong>, how our deterministic kinematic engine works, and the roadmap to raising a $750K Pre-Seed venture round.
+          Why I want you as my <strong>Co-Founder &amp; CTO</strong>, how linguistic data structures (HamNoSys &amp; ASL-LEX) map to our kinematic compiler, and our roadmap to raising a $750K venture round.
         </p>
         <div style="display:flex; gap:16px; margin-top:12px;">
           <a href="04_Procedural_Engine_PoC/anatomical_hand.html" target="_blank" class="live-demo-link">
@@ -379,10 +391,117 @@
       </footer>
     </section>
 
-    <!-- SLIDE 2: The Core Problem -->
+    <!-- SLIDE 2: What is ASL? (The 5 Parameters) -->
     <section class="slide">
       <header class="slide-header">
-        <div class="slide-category">01 // The Problem We Are Solving</div>
+        <div class="slide-category">01 // Linguistics 101</div>
+        <h2 class="slide-title">What is ASL? Sign Language is Not English</h2>
+        <p class="slide-subtitle">ASL is a standalone, natural visual-spatial language with its own morphology, syntax, and discrete phonology.</p>
+      </header>
+
+      <div class="slide-body">
+        <div style="font-size:14px; color:#cbd5e1; line-height:1.6; margin-bottom:12px;">
+          In 1960, linguist <strong>William Stokoe</strong> proved that sign languages are not crude pantomime or finger-spelled English. Every sign is formed by combining <strong>5 discrete phonological parameters</strong> (analogous to vowels and consonants in speech):
+        </div>
+
+        <div class="grid-5">
+          <div class="card card-sm">
+            <span class="badge badge-cyan">1. Handshape</span>
+            <div style="font-weight:700; font-size:14px; color:#fff;">(DEZ)</div>
+            <p style="font-size:11.5px; color:var(--text-muted); line-height:1.45;">
+              Specific finger &amp; thumb configurations (fist, open palm, index point, bent V). Over 30+ distinctive shapes.
+            </p>
+          </div>
+
+          <div class="card card-sm">
+            <span class="badge badge-cyan">2. Palm Orientation</span>
+            <div style="font-weight:700; font-size:14px; color:#fff;">(SIG)</div>
+            <p style="font-size:11.5px; color:var(--text-muted); line-height:1.45;">
+              Direction the palm faces (up, down, inward, outward) and pointing vector of extended knuckles.
+            </p>
+          </div>
+
+          <div class="card card-sm">
+            <span class="badge badge-cyan">3. Location</span>
+            <div style="font-weight:700; font-size:14px; color:#fff;">(TAB)</div>
+            <p style="font-size:11.5px; color:var(--text-muted); line-height:1.45;">
+              Anatomical contact loci relative to the body (forehead, chin, chest, neutral signing space).
+            </p>
+          </div>
+
+          <div class="card card-sm">
+            <span class="badge badge-cyan">4. Movement</span>
+            <div style="font-weight:700; font-size:14px; color:#fff;">(MOTION)</div>
+            <p style="font-size:11.5px; color:var(--text-muted); line-height:1.45;">
+              Trajectory path (straight, arc, wavy, rotational, contact tap) and repetition cadence.
+            </p>
+          </div>
+
+          <div class="card card-sm">
+            <span class="badge badge-purple">5. Facial NMMs</span>
+            <div style="font-weight:700; font-size:14px; color:#fff;">(GRAMMAR)</div>
+            <p style="font-size:11.5px; color:var(--text-muted); line-height:1.45;">
+              Eyebrows, mouth morphemes, head tilts. Over 50% of ASL grammar lives on the face!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <footer class="slide-footer">
+        <span>William Stokoe (1960) • Battison's Phonological Laws (Symmetry &amp; Dominance)</span>
+        <strong>Key insight: Shifting a finger position by just 1.5 cm creates a completely different word (Minimal Pair)!</strong>
+      </footer>
+    </section>
+
+    <!-- SLIDE 3: The Data Foundations (ASL-LEX & HamNoSys) -->
+    <section class="slide">
+      <header class="slide-header">
+        <div class="slide-category">02 // The Computational Data Layer</div>
+        <h2 class="slide-title">How Sign Language Becomes Code: ASL-LEX &amp; HamNoSys</h2>
+        <p class="slide-subtitle">We don't guess animations. We compile discrete phonological data structures into continuous 3D physics.</p>
+      </header>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card card-highlight">
+            <span class="badge badge-purple">HamNoSys (Hamburg Notation System)</span>
+            <div class="card-title">The "IPA" &amp; AST of Sign Language</div>
+            <p class="card-desc">
+              Developed at the University of Hamburg, <strong>HamNoSys</strong> is a machine-readable phonetic transcription system. It breaks any sign into an exact geometric vector:
+            </p>
+            <div class="code-pill">
+              Sign_Token = { Handshape: 0x4B, Palm_Rot: (0°, 90°, -45°), Locus: "CHIN_CONTACT", Motion: "ARC_FORWARD_20CM" }
+            </div>
+            <p class="card-desc">
+              To a software engineer, <strong>HamNoSys is an Abstract Syntax Tree (AST)</strong>. It gives us a discrete token format that our C++ compiler turns into continuous skeletal joint rotations!
+            </p>
+          </div>
+
+          <div class="card card-highlight">
+            <span class="badge badge-cyan">ASL-LEX (The Master Lexical Database)</span>
+            <div class="card-title">2,700+ Quantified Linguistic Vectors</div>
+            <p class="card-desc">
+              Created by researchers at Boston University, Tufts, and San Diego State, <strong>ASL-LEX</strong> is the world’s gold-standard quantitative database of American Sign Language.
+            </p>
+            <ul style="font-size:12.5px; color:var(--text-muted); line-height:1.6; padding-left:18px;">
+              <li>Catalogs thousands of signs with 200+ phonological parameters.</li>
+              <li>Encodes exact frequency, sign duration, iconicity, and grammatical class.</li>
+              <li>Acts as our ground-truth validation dictionary to verify that our 3D avatar's hand configurations match biological reality.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <footer class="slide-footer">
+        <span>Sehyr et al. (ASL-LEX, 2021) • Hanke et al. (HamNoSys, University of Hamburg)</span>
+        <strong>We treat HamNoSys &amp; ASL-LEX as the "Bytecode" our kinematic engine compiles.</strong>
+      </footer>
+    </section>
+
+    <!-- SLIDE 4: The Core Problem -->
+    <section class="slide">
+      <header class="slide-header">
+        <div class="slide-category">03 // The Problem We Are Solving</div>
         <h2 class="slide-title">Why Current Tech Fails 70 Million Deaf People</h2>
         <p class="slide-subtitle">The hearing world assumes text captions solve everything. The science proves otherwise.</p>
       </header>
@@ -421,10 +540,10 @@
       </footer>
     </section>
 
-    <!-- SLIDE 3: The Secret Weapon -->
+    <!-- SLIDE 5: The Secret Weapon -->
     <section class="slide">
       <header class="slide-header">
-        <div class="slide-category">02 // Our Technology Breakthrough</div>
+        <div class="slide-category">04 // Our Technology Breakthrough</div>
         <h2 class="slide-title">Deterministic Kinematics vs. Hallucinating AI</h2>
         <p class="slide-subtitle">We don't generate pixels. We compile biological bone invariants.</p>
       </header>
@@ -461,10 +580,10 @@
       </footer>
     </section>
 
-    <!-- SLIDE 4: Bidirectional Foundation -->
+    <!-- SLIDE 6: Bidirectional Foundation -->
     <section class="slide">
       <header class="slide-header">
-        <div class="slide-category">03 // The Full Vision</div>
+        <div class="slide-category">05 // The Full Vision</div>
         <h2 class="slide-title">We Are a Closed-Loop Bidirectional Engine</h2>
         <p class="slide-subtitle">BiSign-LLM unifies Production (Text-to-Sign) and Translation (Sign-to-Text).</p>
       </header>
@@ -499,10 +618,10 @@
       </footer>
     </section>
 
-    <!-- SLIDE 5: Where the Friend Fits In -->
+    <!-- SLIDE 7: Where the Friend Fits In -->
     <section class="slide">
       <header class="slide-header">
-        <div class="slide-category">04 // Your Superpower</div>
+        <div class="slide-category">06 // Your Superpower</div>
         <h2 class="slide-title">Why Your C / C++ &amp; Java Skillset Is Essential</h2>
         <p class="slide-subtitle">JavaScript was good for a prototype. You will architect the native industrial engine.</p>
       </header>
@@ -541,10 +660,10 @@
       </footer>
     </section>
 
-    <!-- SLIDE 6: The Commercial Beachhead -->
+    <!-- SLIDE 8: The Commercial Beachhead -->
     <section class="slide">
       <header class="slide-header">
-        <div class="slide-category">05 // The Business Model</div>
+        <div class="slide-category">07 // The Business Model</div>
         <h2 class="slide-title">Not Charity: Mandated Federal Enterprise SaaS</h2>
         <p class="slide-subtitle">Airlines are legally required to buy this. We sell compliance.</p>
       </header>
@@ -583,10 +702,10 @@
       </footer>
     </section>
 
-    <!-- SLIDE 7: How Fundraising Works -->
+    <!-- SLIDE 9: How Fundraising Works -->
     <section class="slide">
       <header class="slide-header">
-        <div class="slide-category">06 // Venture Capital 101</div>
+        <div class="slide-category">08 // Venture Capital 101</div>
         <h2 class="slide-title">How Startup Fundraising Actually Works</h2>
         <p class="slide-subtitle">Demystifying SAFE notes, valuation caps, and dilution.</p>
       </header>
@@ -622,10 +741,10 @@
       </footer>
     </section>
 
-    <!-- SLIDE 8: The Financial Plan in India -->
+    <!-- SLIDE 10: The Financial Plan in India -->
     <section class="slide">
       <header class="slide-header">
-        <div class="slide-category">07 // What This Means For Us</div>
+        <div class="slide-category">09 // What This Means For Us</div>
         <h2 class="slide-title">The 4-Year Sustenance &amp; Lifestyle Plan</h2>
         <p class="slide-subtitle">Raising US venture capital while building in India gives us total freedom.</p>
       </header>
@@ -659,10 +778,10 @@
       </footer>
     </section>
 
-    <!-- SLIDE 9: Partnership & Friendship -->
+    <!-- SLIDE 11: Partnership & Friendship -->
     <section class="slide">
       <header class="slide-header">
-        <div class="slide-category">08 // Partnership Structure</div>
+        <div class="slide-category">10 // Partnership Structure</div>
         <h2 class="slide-title">Protecting the Company &amp; Our Friendship</h2>
         <p class="slide-subtitle">How we divide equity, earn stock, and make decisions without drama.</p>
       </header>
@@ -699,7 +818,7 @@
       </footer>
     </section>
 
-    <!-- SLIDE 10: The Next Step -->
+    <!-- SLIDE 12: The Next Step -->
     <section class="slide">
       <div class="cover-content">
         <span class="cover-tag" style="background:rgba(16,185,129,0.15); color:var(--emerald); border-color:rgba(16,185,129,0.3);">
@@ -707,7 +826,7 @@
         </span>
         <h1 class="cover-title">Are You In? Let's Build This Together.</h1>
         <p class="cover-subtitle">
-          We have the working 3D engine, the federal compliance beachhead, and an application ready for Speciale Invest. With your systems engineering depth, we have the complete technical team to build the global standard.
+          We have the working 3D engine, the HamNoSys data pipeline, the federal compliance beachhead, and an application ready for Speciale Invest. With your systems engineering depth, we have the complete technical team to build the global standard.
         </p>
 
         <div style="background:var(--bg-surface); border:1px solid var(--border); border-radius:12px; padding:18px 28px; display:flex; gap:32px; margin-top:16px;">
