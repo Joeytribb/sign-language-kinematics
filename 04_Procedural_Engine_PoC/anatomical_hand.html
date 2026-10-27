@@ -5826,79 +5826,114 @@
       });
     }
 
-    // Persistent Rig & Smooth Co-articulation Loader
-    function loadGLB(signId, isSequence = false, blendDuration = DEFAULT_BLEND_DURATION) {
-      // 1. Initial Avatar Bootstrap (runs only on very first sign load)
-      if (!currentModel || !mixer) {
-        loader.load(`datasets/asl_signs/${signId}.glb`, function(gltf) {
-          const model = gltf.scene;
-          const wrapper = new THREE.Group();
-          wrapper.rotation.set(0, Math.PI, 0);
-          wrapper.position.set(0.12, -0.30, -0.15);
-          wrapper.add(model);
+    let isAvatarBootstrapping = false;
+    let pendingBootstrapRequests = [];
 
-          avatarBones = {};
-          model.traverse(function(c) {
-            if (c.isBone) {
-              avatarBones[c.name] = c;
-            }
-            if (c.isSkinnedMesh) {
-              c.frustumCulled = false;
-              c.castShadow = true;
-              c.receiveShadow = true;
-              c.material = new THREE.MeshStandardMaterial({
-                color: 0x7dd3fc,
-                roughness: 0.32,
-                metalness: 0.10,
-                skinning: true
-              });
-            }
+    // Purge any extraneous or duplicate avatars from scene
+    function purgeExtraneousAvatars(keepModel) {
+      const toRemove = [];
+      scene.children.forEach(c => {
+        if (c.isGroup && c !== keepModel) {
+          let hasAvatarComponents = false;
+          c.traverse(node => {
+            if (node.isSkinnedMesh || node.isBone) hasAvatarComponents = true;
           });
-
-          scene.add(wrapper);
-          currentModel = wrapper;
-          wrapper.visible = true;
-
-          mixer = new THREE.AnimationMixer(model);
-
-          if (avatarBones['Hips']) {
-            initialHipsPos = avatarBones['Hips'].position.clone();
-            if (!window.neutralStandingPose) {
-              window.neutralStandingPose = {};
-              const bonesToSave = ['Hips', 'Spine', 'Spine1', 'Spine2', 'Neck', 'Head', 'LeftShoulder', 'RightShoulder', 'LeftUpLeg', 'RightUpLeg', 'LeftLeg', 'RightLeg', 'LeftFoot', 'RightFoot'];
-              bonesToSave.forEach(b => {
-                if (avatarBones[b]) {
-                  window.neutralStandingPose[b] = {
-                    pos: avatarBones[b].position.clone(),
-                    quat: avatarBones[b].quaternion.clone()
-                  };
-                }
-              });
-            }
+          if (hasAvatarComponents) toRemove.push(c);
+        }
+      });
+      toRemove.forEach(c => {
+        scene.remove(c);
+        c.traverse(node => {
+          if (node.geometry) node.geometry.dispose();
+          if (node.material) {
+            if (Array.isArray(node.material)) node.material.forEach(m => m.dispose());
+            else node.material.dispose();
           }
+        });
+      });
+    }
 
-          if (gltf.animations && gltf.animations.length > 0) {
-            const clip = gltf.animations[0];
-            sanitizeClip(clip);
-            animationClipCache[signId] = clip;
-            playClipAction(clip, isSequence, 0);
-          }
-        }, undefined, function(err) {
-          console.warn("Could not load sign asset:", signId, err);
-          if (!isFingerspelling) startFingerspelling(signId);
+    // Persistent Rig & Smooth Co-articulation Loader (Strict Singleton Pattern)
+    function loadGLB(signId, isSequence = false, blendDuration = DEFAULT_BLEND_DURATION) {
+      // 1. Avatar already exists in scene: execute smooth SLERP co-articulation transition on single rig!
+      if (currentModel && mixer) {
+        if (animationClipCache[signId]) {
+          playClipAction(animationClipCache[signId], isSequence, blendDuration);
+          return;
+        }
+        preloadClip(signId, function(clip) {
+          playClipAction(clip, isSequence, blendDuration);
         });
         return;
       }
 
-      // 2. Avatar already exists in scene: execute smooth SLERP co-articulation transition!
-      if (animationClipCache[signId]) {
-        playClipAction(animationClipCache[signId], isSequence, blendDuration);
+      // 2. Avatar is currently downloading/bootstrapping: queue request, DO NOT create a second 3D mesh!
+      if (isAvatarBootstrapping) {
+        pendingBootstrapRequests.push({ signId, isSequence, blendDuration });
         return;
       }
 
-      // Load animation track from GLB without re-instantiating the 3D avatar mesh
-      preloadClip(signId, function(clip) {
-        playClipAction(clip, isSequence, blendDuration);
+      // 3. Initial Avatar Bootstrap (runs strictly once across application lifecycle)
+      isAvatarBootstrapping = true;
+      loader.load(`datasets/asl_signs/${signId}.glb`, function(gltf) {
+        // Enforce zero ghost avatars before scene attachment
+        purgeExtraneousAvatars(null);
+
+        const model = gltf.scene;
+        const wrapper = new THREE.Group();
+        wrapper.name = 'SAMMY_AVATAR_ROOT';
+        wrapper.rotation.set(0, Math.PI, 0);
+        wrapper.position.set(0.12, -0.30, -0.15);
+        wrapper.add(model);
+
+        avatarBones = {};
+        model.traverse(function(c) {
+          if (c.isBone) {
+            avatarBones[c.name] = c;
+          }
+          if (c.isSkinnedMesh) {
+            c.frustumCulled = false;
+            c.castShadow = true;
+            c.receiveShadow = true;
+            c.material = new THREE.MeshStandardMaterial({
+              color: 0x7dd3fc,
+              roughness: 0.32,
+              metalness: 0.10,
+              skinning: true
+            });
+          }
+        });
+
+        scene.add(wrapper);
+        currentModel = wrapper;
+        wrapper.visible = true;
+
+        mixer = new THREE.AnimationMixer(model);
+
+        if (avatarBones['Hips']) {
+          initialHipsPos = avatarBones['Hips'].position.clone();
+        }
+
+        // Release bootstrap lock
+        isAvatarBootstrapping = false;
+
+        if (gltf.animations && gltf.animations.length > 0) {
+          const clip = gltf.animations[0];
+          sanitizeClip(clip);
+          animationClipCache[signId] = clip;
+          playClipAction(clip, isSequence, 0);
+        }
+
+        // If other signs were requested during initial network download, play the latest one
+        if (pendingBootstrapRequests.length > 0) {
+          const req = pendingBootstrapRequests[pendingBootstrapRequests.length - 1];
+          pendingBootstrapRequests = [];
+          loadGLB(req.signId, req.isSequence, req.blendDuration);
+        }
+      }, undefined, function(err) {
+        console.warn("Could not load sign asset:", signId, err);
+        isAvatarBootstrapping = false;
+        if (!isFingerspelling) startFingerspelling(signId);
       });
     }
 
@@ -6309,6 +6344,16 @@
     function animate() {
       requestAnimationFrame(animate);
       const delta = clock.getDelta();
+
+      // Watchdog: Guarantee strictly ONE avatar exists in scene at all times
+      if (currentModel && scene) {
+        for (let i = scene.children.length - 1; i >= 0; i--) {
+          const c = scene.children[i];
+          if (c !== currentModel && c.isGroup && c.getObjectByProperty('isSkinnedMesh', true)) {
+            scene.remove(c);
+          }
+        }
+      }
 
       // Guarantee origin pedestal lock and upright posture on every single frame
       stabilizeHipsAtOrigin();
