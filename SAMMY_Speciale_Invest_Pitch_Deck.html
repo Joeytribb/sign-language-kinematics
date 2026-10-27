@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAMMY — Speciale Invest Pre-Seed Presentation Deck</title>
+    <title>SAMMY — Speciale Invest Pre-Seed Investment Presentation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -121,64 +121,49 @@
             color: var(--cyan-glow);
         }
 
-        .live-btn {
-            background: linear-gradient(135deg, #00f2fe 0%, #0284c7 100%);
-            color: #040914;
-            border: none;
-            font-weight: 700;
-        }
-
-        .live-btn:hover {
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
-            color: #000;
-        }
-
         /* Slide Viewport */
         .slide-container {
             flex: 1;
             position: relative;
+            width: 100%;
+            height: calc(100vh - 54px);
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px 40px;
         }
 
         .slide {
             position: absolute;
-            width: 94vw;
-            max-width: 1440px;
-            height: calc(94vw * 9 / 16);
-            max-height: 810px;
-            background: linear-gradient(145deg, #0a0e17 0%, #05080e 100%);
-            border: 1px solid var(--border-subtle);
-            border-radius: 16px;
-            padding: 44px 56px;
-            display: none;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 32px 48px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(30px);
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+            display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
-            opacity: 0;
-            transform: scale(0.98);
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            overflow-y: auto;
         }
 
         .slide.active {
-            display: flex;
             opacity: 1;
-            transform: scale(1);
+            visibility: visible;
+            transform: translateX(0);
         }
 
-        /* Slide Header */
+        /* Typography & Layouts */
         .slide-header {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .slide-category {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
+            font-size: 11.5px;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             color: var(--cyan-glow);
             margin-bottom: 6px;
             display: flex;
@@ -189,50 +174,51 @@
         .slide-category::before {
             content: "";
             display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: var(--cyan-glow);
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
-            box-shadow: 0 0 8px var(--cyan-glow);
+            background: var(--cyan-glow);
         }
 
         .slide-title {
-            font-size: 28px;
+            font-size: 27px;
             font-weight: 800;
             color: var(--text-heading);
-            letter-spacing: -0.5px;
+            letter-spacing: -0.6px;
             line-height: 1.25;
+            margin-bottom: 6px;
         }
 
         .slide-subtitle {
-            font-size: 14px;
+            font-size: 14.5px;
             color: var(--text-muted);
-            margin-top: 4px;
+            max-width: 980px;
+            line-height: 1.5;
         }
 
-        /* Slide Body Grids */
+        .slide-subtitle strong {
+            color: #f1f5f9;
+        }
+
+        /* Grid Containers */
         .grid-2col {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 24px;
+            gap: 20px;
             flex: 1;
+            align-items: stretch;
+            min-height: 0;
         }
 
         .grid-3col {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
             flex: 1;
+            align-items: stretch;
+            min-height: 0;
         }
 
-        .grid-4col {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 16px;
-            flex: 1;
-        }
-
-        /* Cards & Containers */
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
@@ -240,154 +226,197 @@
             padding: 22px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: flex-start;
             position: relative;
-            overflow: hidden;
+            transition: all 0.2s ease;
         }
 
-        .card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.4), transparent);
+        .card:hover {
+            border-color: var(--border-bright);
+            background: var(--bg-card-hover);
         }
 
         .card-highlight-cyan {
-            border-color: rgba(0, 242, 254, 0.4);
-            background: linear-gradient(180deg, rgba(0, 242, 254, 0.04) 0%, var(--bg-card) 100%);
+            border-color: rgba(0, 242, 254, 0.35);
+            background: linear-gradient(180deg, rgba(0, 242, 254, 0.04) 0%, rgba(12, 17, 28, 0.8) 100%);
         }
 
         .card-highlight-purple {
-            border-color: rgba(168, 85, 247, 0.4);
-            background: linear-gradient(180deg, rgba(168, 85, 247, 0.04) 0%, var(--bg-card) 100%);
+            border-color: rgba(168, 85, 247, 0.35);
+            background: linear-gradient(180deg, rgba(168, 85, 247, 0.04) 0%, rgba(12, 17, 28, 0.8) 100%);
         }
 
         .card-highlight-emerald {
-            border-color: rgba(16, 185, 129, 0.4);
-            background: linear-gradient(180deg, rgba(16, 185, 129, 0.04) 0%, var(--bg-card) 100%);
+            border-color: rgba(16, 185, 129, 0.35);
+            background: linear-gradient(180deg, rgba(16, 185, 129, 0.04) 0%, rgba(12, 17, 28, 0.8) 100%);
         }
 
         .card-title {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
             color: var(--text-heading);
             margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between;
         }
+
+        .card-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .tag-cyan { background: rgba(0, 242, 254, 0.12); color: var(--cyan-glow); border: 1px solid rgba(0, 242, 254, 0.3); }
+        .tag-emerald { background: rgba(16, 185, 129, 0.12); color: var(--emerald-glow); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .tag-purple { background: rgba(168, 85, 247, 0.12); color: var(--purple-glow); border: 1px solid rgba(168, 85, 247, 0.3); }
+        .tag-rose { background: rgba(244, 63, 94, 0.12); color: var(--rose-glow); border: 1px solid rgba(244, 63, 94, 0.3); }
 
         .card-desc {
-            font-size: 13px;
+            font-size: 13.5px;
+            color: var(--text-body);
             line-height: 1.55;
-            color: var(--text-body);
+            margin-bottom: 12px;
         }
 
-        .bullet-list {
-            list-style: none;
-            margin-top: 10px;
-        }
-
-        .bullet-list li {
-            font-size: 12.5px;
-            color: var(--text-body);
-            margin-bottom: 8px;
-            padding-left: 18px;
-            position: relative;
-            line-height: 1.45;
-        }
-
-        .bullet-list li::before {
-            content: "▹";
-            position: absolute;
-            left: 0;
-            color: var(--cyan-glow);
-            font-size: 14px;
-        }
-
-        /* Metric Callouts */
         .metric-hero {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-subtle);
         }
 
         .metric-val {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 34px;
+            font-size: 28px;
             font-weight: 800;
-            color: var(--text-heading);
-            line-height: 1.1;
+            letter-spacing: -0.5px;
         }
 
         .metric-val.cyan { color: var(--cyan-glow); }
         .metric-val.emerald { color: var(--emerald-glow); }
-        .metric-val.purple { color: #c084fc; }
+        .metric-val.purple { color: var(--purple-glow); }
+        .metric-val.rose { color: var(--rose-glow); }
 
         .metric-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
+            font-size: 12px;
             color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-body);
+            line-height: 1.45;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 16px;
+        }
+
+        .bullet-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--cyan-glow);
+            font-weight: bold;
+        }
+
+        /* Benchmark Comparison Table */
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+            text-align: left;
+            margin-top: 6px;
+        }
+
+        .custom-table th {
+            background: rgba(12, 17, 28, 0.9);
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
             font-weight: 600;
-            margin-top: 4px;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-bright);
+            text-transform: uppercase;
+        }
+
+        .custom-table td {
+            padding: 11px 14px;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-body);
+        }
+
+        .custom-table tr.highlight-row {
+            background: rgba(0, 242, 254, 0.06);
+        }
+
+        .custom-table tr.highlight-row td {
+            color: #ffffff;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(0, 242, 254, 0.3);
         }
 
         /* Slide Footer */
         .slide-footer {
-            margin-top: 20px;
-            padding-top: 14px;
+            margin-top: 18px;
+            padding-top: 12px;
             border-top: 1px solid var(--border-subtle);
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 11.5px;
             color: var(--text-muted);
-        }
-
-        .footer-left {
             font-family: 'JetBrains Mono', monospace;
         }
 
-        .footer-right {
-            display: flex;
-            gap: 16px;
+        .slide-footer a {
+            color: var(--cyan-glow);
+            text-decoration: none;
         }
 
-        /* Title Slide Specifics */
+        /* Hero Title Slide Specifics */
         .title-slide-content {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: flex-start;
             height: 100%;
-            padding: 40px 0;
+            max-width: 1080px;
         }
 
         .title-badge {
-            background: rgba(0, 242, 254, 0.1);
-            border: 1px solid rgba(0, 242, 254, 0.3);
-            color: var(--cyan-glow);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
+            border-radius: 6px;
+            background: rgba(168, 85, 247, 0.12);
+            border: 1px solid rgba(168, 85, 247, 0.35);
+            color: #e9d5ff;
             font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
             font-weight: 600;
             margin-bottom: 20px;
+            width: fit-content;
         }
 
         .title-hero {
-            font-size: 46px;
+            font-size: 44px;
             font-weight: 800;
-            letter-spacing: -1px;
             line-height: 1.15;
+            letter-spacing: -1.2px;
             color: #ffffff;
-            margin-bottom: 16px;
-            max-width: 900px;
+            margin-bottom: 18px;
         }
 
         .title-hero span {
@@ -396,433 +425,488 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .title-sub {
-            font-size: 18px;
-            color: var(--text-body);
-            max-width: 820px;
-            line-height: 1.5;
-            margin-bottom: 36px;
+        .title-hook-box {
+            background: rgba(12, 17, 28, 0.85);
+            border: 1px solid var(--border-bright);
+            border-left: 4px solid var(--cyan-glow);
+            border-radius: 8px;
+            padding: 16px 22px;
+            margin-bottom: 28px;
+            font-size: 15.5px;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        .title-hook-box strong {
+            color: var(--cyan-glow);
         }
 
         .title-meta-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            width: 100%;
+            gap: 16px;
+            padding-top: 18px;
             border-top: 1px solid var(--border-subtle);
-            padding-top: 24px;
         }
 
         .meta-item-label {
+            font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
             color: var(--text-muted);
-            margin-bottom: 4px;
+            text-transform: uppercase;
         }
 
         .meta-item-val {
-            font-size: 13.5px;
+            font-size: 17px;
             font-weight: 700;
-            color: #ffffff;
+            color: var(--text-heading);
+            margin-top: 4px;
+        }
+
+        /* Keyboard Shortcut Hint */
+        .key-hint {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-subtle);
+            padding: 2px 6px;
+            border-radius: 4px;
             font-family: 'JetBrains Mono', monospace;
-        }
-
-        /* Custom Comparison Table */
-        .custom-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-            margin-top: 8px;
-        }
-
-        .custom-table th {
-            text-align: left;
-            padding: 8px 12px;
-            color: var(--text-muted);
             font-size: 11px;
-            text-transform: uppercase;
-            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-muted);
         }
 
-        .custom-table td {
-            padding: 10px 12px;
-            border-bottom: 1px solid rgba(30, 41, 59, 0.6);
-            color: var(--text-body);
-        }
-
-        .custom-table tr:hover {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .badge-fail {
-            color: #fb7185;
-            background: rgba(244, 63, 94, 0.12);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 10.5px;
-            font-weight: 700;
-        }
-
-        .badge-pass {
-            color: #34d399;
-            background: rgba(16, 185, 129, 0.12);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 10.5px;
-            font-weight: 700;
-        }
-
-        /* Print styles for flawless PDF export */
+        /* PRINT STYLES FOR HIGH RESOLUTION PDF EXPORT */
         @media print {
             body {
-                overflow: visible;
-                height: auto;
+                overflow: visible !important;
+                height: auto !important;
+                background: #06080d !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
             .top-bar {
-                display: none;
+                display: none !important;
             }
             .slide-container {
-                padding: 0;
-                display: block;
+                display: block !important;
+                height: auto !important;
+                position: static !important;
             }
             .slide {
-                position: relative;
-                display: flex !important;
+                position: relative !important;
+                top: auto !important;
+                left: auto !important;
                 opacity: 1 !important;
+                visibility: visible !important;
                 transform: none !important;
-                page-break-after: always;
-                width: 100vw;
-                height: 100vh;
-                max-width: none;
-                max-height: none;
-                border-radius: 0;
-                border: none;
-                box-shadow: none;
+                display: flex !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                height: 100vh !important;
+                min-height: 100vh !important;
+                max-height: 100vh !important;
+                padding: 40px 48px !important;
+                box-sizing: border-box !important;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Top Navigation Header -->
-    <div class="top-bar">
+    <!-- TOP NAVIGATION BAR -->
+    <header class="top-bar">
         <div class="brand-badge">
-            <span>SAMMY</span>
-            <span class="brand-pill">DeepTech Kinematics</span>
-            <span class="speciale-custom-tag">Speciale Invest Deal Memo</span>
+            <span class="brand-pill">SAMMY</span>
+            <span>Universal Bidirectional Sign Language Protocol</span>
+            <span class="speciale-custom-tag">Tailored for Speciale Invest</span>
         </div>
         <div class="nav-controls">
+            <span class="key-hint">← / → Arrow Keys</span>
             <span class="slide-counter" id="slideCounter">Slide 1 / 10</span>
             <button class="nav-btn" onclick="prevSlide()">← Prev</button>
             <button class="nav-btn" onclick="nextSlide()">Next →</button>
-            <a href="https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/anatomical_hand.html" target="_blank" class="nav-btn live-btn">
-                ⚡ Test Live Engine (60 FPS)
-            </a>
-            <button class="nav-btn" onclick="window.print()">🖨 Print / PDF</button>
+            <button class="nav-btn" onclick="window.print()">Print / Export PDF</button>
         </div>
-    </div>
+    </header>
 
-    <!-- Main Slide Viewport -->
-    <div class="slide-container">
+    <!-- SLIDES CONTAINER -->
+    <main class="slide-container">
 
         <!-- SLIDE 1: Title & Executive Hook -->
-        <div class="slide active" id="slide-1">
+        <section class="slide active" id="slide-1">
             <div class="title-slide-content">
-                <div class="title-badge">PRE-SEED INVESTMENT BRIEF • TAILORED FOR SPECIALE INVEST</div>
+                <div class="title-badge">PRE-SEED INVESTMENT MEMORANDUM • SPECIALE INVEST DEEPTECH SYNDICATE</div>
                 <h1 class="title-hero">
-                    The Deterministic 3D Kinematic Compiler for <span>Public Spatial Infrastructure</span>
+                    The Universal Bidirectional <span>Sign Language Protocol</span>
                 </h1>
-                <p class="title-sub">
-                    Prioritizing <strong>exponential over incremental</strong> engineering: Solving the hand-hallucination and GPU-compute bottlenecks of Generative AI to deliver biologically constrained Sign Language in real-time on public displays.
-                </p>
+                
+                <div class="title-hook-box">
+                    <strong>Sammy is a bidirectional sign language translation engine.</strong> Wait—before you think this is just another CSR or charity grant, it is not. It is high-margin enterprise software addressing a mandatory legal compliance crisis. We are building the universal standard for everywhere and anywhere, using airport departure gates as our commercial beachhead.
+                </div>
+
                 <div class="title-meta-grid">
                     <div>
-                        <div class="meta-item-label">Target Round</div>
-                        <div class="meta-item-val" style="color: var(--cyan-glow);">$750K – $1.0M SAFE</div>
+                        <div class="meta-item-label">Target Raise</div>
+                        <div class="meta-item-val" style="color: var(--cyan-glow);">$750,000 SAFE</div>
                     </div>
                     <div>
-                        <div class="meta-item-label">Target Valuation Cap</div>
+                        <div class="meta-item-label">Valuation Cap</div>
                         <div class="meta-item-val">$6,000,000 Post-Money</div>
                     </div>
                     <div>
-                        <div class="meta-item-label">Structure</div>
+                        <div class="meta-item-label">Corporate Structure</div>
                         <div class="meta-item-val">Delaware Parent + India R&D</div>
                     </div>
                     <div>
                         <div class="meta-item-label">Operational Runway</div>
-                        <div class="meta-item-val" style="color: var(--emerald-glow);">48 Months Sustenance</div>
+                        <div class="meta-item-val" style="color: var(--emerald-glow);">48 Months (Indian DeepTech)</div>
                     </div>
                 </div>
             </div>
-            <div class="slide-footer">
-                <span class="footer-left">SAMMY • Vishesh Rajaram | Arjun Rao | Prathisht Aiyappa</span>
-                <span class="footer-right">Confidential Investment Memorandum</span>
-            </div>
-        </div>
+            <footer class="slide-footer">
+                <span class="footer-left">Prepared for: Vishesh Rajaram | Arjun Rao | Speciale Invest Investment Committee</span>
+                <span class="footer-right">Confidential Institutional Brief</span>
+            </footer>
+        </section>
 
-        <!-- SLIDE 2: The First-Principles Problem -->
-        <div class="slide" id="slide-2">
-            <div class="slide-header">
+        <!-- SLIDE 2: The First-Principles Bottleneck -->
+        <section class="slide" id="slide-2">
+            <header class="slide-header">
                 <div class="slide-category">First-Principles Problem</div>
                 <h2 class="slide-title">Why Existing AI & Text Architectures Fail Sign Language</h2>
-                <p class="slide-subtitle">Sign Language is not encrypted English speech; it is a 3D visual-spatial language with its own independent phonology.</p>
-            </div>
+                <p class="slide-subtitle">Sign Language is not spoken English with hand gestures; it is an independent 3D visual-spatial language with its own distinct grammar, phonology, and syntax.</p>
+            </header>
             <div class="grid-2col">
-                <div class="card card-highlight-purple">
-                    <div>
-                        <div class="card-title">
-                            <span>Failure Mode A: The English Text Captioning Myth (Ava)</span>
-                        </div>
-                        <div class="metric-hero">
-                            <span class="metric-val purple">Grade 3.9 – 4.0</span>
-                            <span class="metric-label">Median Reading Comprehension Ceiling for Deaf High School Leavers</span>
-                        </div>
-                        <p class="card-desc">
-                            Canonical psychometric standardization (Gallaudet / Oxford University Press - Traxler, 2000) proves that <strong>over 70% of prelingually Deaf individuals read English below a 4th-grade level</strong>.
-                        </p>
-                        <ul class="bullet-list">
-                            <li>English is a phonetic, sound-based second language; Deaf signers cannot decode phonetic acoustics.</li>
-                            <li>During high-stress travel disruptions (gate changes, cancellations), scrolling English text causes severe comprehension collapse.</li>
-                            <li>Text captioning (Ava) leaves enterprises legally exposed to disability access mandates.</li>
-                        </ul>
+                <div class="card card-highlight-rose">
+                    <div class="card-title">
+                        <span>1. The Text Captioning Illusion (Ava, Otter)</span>
+                        <span class="card-tag tag-rose">Linguistic Failure</span>
                     </div>
+                    <div class="metric-hero">
+                        <span class="metric-val rose">70%+</span>
+                        <span class="metric-label">Prelingually Deaf Read English Below 4th-Grade Level</span>
+                    </div>
+                    <p class="card-desc">
+                        Sign language is a spatial language, completely native and separate from spoken syntax. Subtitles and English transcripts fail during stressful, rapid airport disruptions or emergency announcements.
+                    </p>
+                    <ul class="bullet-list">
+                        <li>Deaf travelers cannot parse dense, rapidly scrolling English text during flight gate swaps.</li>
+                        <li>Captions provide <strong>zero bidirectional capability</strong>: a deaf passenger cannot sign back to ask where their gate is.</li>
+                    </ul>
                 </div>
-                <div class="card card-highlight-cyan">
-                    <div>
-                        <div class="card-title">
-                            <span>Failure Mode B: Generative Video Diffusion (Sora / Runway)</span>
-                        </div>
-                        <div class="metric-hero">
-                            <span class="metric-val cyan">Δ > 0.12 Drift</span>
-                            <span class="metric-label">Severe Anatomical Bone Length Hallucination in Pixel Video</span>
-                        </div>
-                        <p class="card-desc">
-                            Pixel diffusion models treat human hands as statistical pixel textures rather than physically constrained rigid mechanical joints.
-                        </p>
-                        <ul class="bullet-list">
-                            <li><strong>Anatomical Breakdown:</strong> Generative video merges fingers, alters phalanx lengths, and hallucinates impossible contact planes.</li>
-                            <li><strong>Ruinous Unit Economics:</strong> Costs $0.10 to $0.20 per sentence in cloud GPU compute, destroying SaaS margins.</li>
-                            <li><strong>Latency Lag:</strong> 10–20 second server generation times fail real-time operational transit feeds.</li>
-                        </ul>
+                <div class="card card-highlight-rose">
+                    <div class="card-title">
+                        <span>2. The Generative Video Dead-End (Sora, Runway)</span>
+                        <span class="card-tag tag-rose">DeepTech Dead-End</span>
                     </div>
+                    <div class="metric-hero">
+                        <span class="metric-val rose">$0.10 / sec</span>
+                        <span class="metric-label">Unsustainable Cloud GPU Streaming Burn</span>
+                    </div>
+                    <p class="card-desc">
+                        Statistical pixel diffusion models hallucinate finger counts, cause severe skeletal drift (Δ > 0.12 bone length error), and exhibit 15+ second latency.
+                    </p>
+                    <ul class="bullet-list">
+                        <li>Fingers merge, clip through faces, and destroy the precise spatial grammar required for semantic comprehension.</li>
+                        <li>Streaming multi-million-dollar cloud GPU clusters onto public airport gate screens makes unit economics impossible.</li>
+                    </ul>
                 </div>
             </div>
-            <div class="slide-footer">
-                <span class="footer-left">Citation: Traxler (2000), J. Deaf Studies & Deaf Education • NIH / Gallaudet Research Institute</span>
-                <span class="footer-right">Problem Definition</span>
-            </div>
-        </div>
+            <footer class="slide-footer">
+                <span class="footer-left">Linguistic Citation: Traxler (2000), J. Deaf Studies & Deaf Education • NIH / Gallaudet Research</span>
+                <span class="footer-right">Linguistic & Technical Dilemma</span>
+            </footer>
+        </section>
 
-        <!-- SLIDE 3: The Breakthrough Solution & Architecture -->
-        <div class="slide" id="slide-3">
-            <div class="slide-header">
+        <!-- SLIDE 3: The DeepTech Solution: True Bidirectional Kinematics -->
+        <section class="slide" id="slide-3">
+            <header class="slide-header">
                 <div class="slide-category">The DeepTech Architecture</div>
-                <h2 class="slide-title">The Deterministic 3D Kinematic Compiler</h2>
-                <p class="slide-subtitle">Replacing statistical pixel hallucination with rigid spatial constraint solvers executing in real-time client-side WebGL.</p>
-            </div>
+                <h2 class="slide-title">BiSign-LLM: The Deterministic Two-Way Spatial Engine</h2>
+                <p class="slide-subtitle">Replacing statistical pixel hallucination with rigid spatial constraint solvers executing client-side with <strong>$0.00 cloud GPU cost</strong>.</p>
+            </header>
             <div class="grid-3col">
-                <div class="card">
-                    <div class="metric-hero">
-                        <span class="metric-val emerald">Δ = 0.000</span>
-                        <span class="metric-label">Exact Bone Length Invariance</span>
+                <div class="card card-highlight-cyan">
+                    <div class="card-title">
+                        <span>Hearing → Deaf (Forward)</span>
+                        <span class="card-tag tag-cyan">3D Kinematic Avatar</span>
                     </div>
-                    <div class="card-title">Topological Skeletal Solvers</div>
+                    <div class="metric-hero">
+                        <span class="metric-val cyan">Δ = 0.000</span>
+                        <span class="metric-label">Rigid Bone Length Invariance</span>
+                    </div>
                     <p class="card-desc">
-                        Every sign is compiled using rigid anthropometric skeletal constraints. Joint angles and bone lengths remain mechanically locked, guaranteeing 100% anatomical accuracy with zero finger hallucination.
+                        Airlines/hospital staff speak naturally; Sammy parses the audio, generates continuous spatial tokens, and compiles them via continuous quaternion SLERP over a 280ms physiological co-articulation window into fluid 3D avatars.
                     </p>
                 </div>
-                <div class="card">
-                    <div class="metric-hero">
-                        <span class="metric-val cyan">280 ms</span>
-                        <span class="metric-label">Physiological Co-Articulation</span>
+                <div class="card card-highlight-purple">
+                    <div class="card-title">
+                        <span>Deaf → Hearing (Backward)</span>
+                        <span class="card-tag tag-purple">Spatial Vision Translation</span>
                     </div>
-                    <div class="card-title">Continuous SLERP Smoothing</div>
+                    <div class="metric-hero">
+                        <span class="metric-val purple">&lt; 150 ms</span>
+                        <span class="metric-label">Continuous Real-Time Latency</span>
+                    </div>
                     <p class="card-desc">
-                        Eliminates robotic hard cuts between signs. A geodesic spherical linear quaternion interpolation engine dynamically blends joint deceleration across a 280ms physiological window.
+                        Deaf user signs into any standard commodity webcam. Sammy's <strong>Causal Spatial Memory Bank (M_t)</strong> tracks 3D spatial bone coordinates and non-manual facial cues, translating signs back into natural spoken voice and text.
                     </p>
                 </div>
-                <div class="card">
-                    <div class="metric-hero">
-                        <span class="metric-val purple">$0.00</span>
-                        <span class="metric-label">Marginal Cloud GPU Compute Cost</span>
+                <div class="card card-highlight-emerald">
+                    <div class="card-title">
+                        <span>Edge Execution ($0 Cloud GPU)</span>
+                        <span class="card-tag tag-emerald">Pure Software Margin</span>
                     </div>
-                    <div class="card-title">Client-Side WebGL Execution</div>
+                    <div class="metric-hero">
+                        <span class="metric-val emerald">60 FPS</span>
+                        <span class="metric-label">In-Browser WebGL / Wasm Execution</span>
+                    </div>
                     <p class="card-desc">
-                        Runs at 60 FPS in Three.js directly on the client display processor (Raspberry Pi, Intel Atom, smart kiosk). Zero cloud server bills yield 90%+ pure software gross margins.
+                        Runs directly on existing client hardware—10-year-old Intel Atom airport display chips, bank teller monitors, or iOS/Android devices. Marginal compute cost per sign is $0.00, unlocking 90%+ gross margins.
                     </p>
                 </div>
             </div>
-            <div class="slide-footer">
-                <span class="footer-left">Architecture: WebGL / Three.js Procedural Motion Compiler (Zero GPU Server Inference)</span>
+            <footer class="slide-footer">
+                <span class="footer-left">Architecture: WebGL / Three.js / WebAssembly Procedural Engine (Zero Server GPU Inference)</span>
                 <span class="footer-right">Core Engine</span>
-            </div>
-        </div>
+            </footer>
+        </section>
 
-        <!-- SLIDE 4: Architectural Comparison Matrix -->
-        <div class="slide" id="slide-4">
-            <div class="slide-header">
+        <!-- SLIDE 4: Competitive Moat: Exponential over Incremental -->
+        <section class="slide" id="slide-4">
+            <header class="slide-header">
                 <div class="slide-category">Engineering Benchmarks</div>
                 <h2 class="slide-title">Exponential over Incremental: Architectural Comparison</h2>
-                <p class="slide-subtitle">Why SAMMY is structurally defensible against both Big Tech LLMs and legacy video captioning.</p>
-            </div>
+                <p class="slide-subtitle">Why SAMMY is structurally defensible against Big Tech foundation models, text captioning tools, and legacy avatars.</p>
+            </header>
             <table class="custom-table">
                 <thead>
                     <tr>
                         <th>Architectural Dimension</th>
-                        <th>Text Captioning (Ava)</th>
-                        <th>Generative Video (Sora / Veo)</th>
-                        <th>SAMMY (3D Kinematic Compiler)</th>
+                        <th>Generative Video (Sora / Runway)</th>
+                        <th>Text Captions (Ava / Otter)</th>
+                        <th>Legacy 3D (SignAll / DeafTawk)</th>
+                        <th>SAMMY (BiSign Kinematic Engine)</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><strong>Anatomical Fidelity</strong></td>
-                        <td>N/A (Text Only)</td>
-                        <td><span class="badge-fail">Fails (Hallucinates Joints)</span></td>
-                        <td><span class="badge-pass">Guaranteed (Δ = 0.000 Invariant)</span></td>
+                    <tr class="highlight-row">
+                        <td>Biomechanical Bone Rigidity</td>
+                        <td style="color: var(--rose-glow);">Hallucinates (Δ > 0.12)</td>
+                        <td>Not Applicable (Text)</td>
+                        <td>Robotic / Stiff Keyframes</td>
+                        <td style="color: var(--cyan-glow);">Exact Invariance (Δ = 0.000)</td>
                     </tr>
                     <tr>
-                        <td><strong>Deaf Literacy Efficacy</strong></td>
-                        <td><span class="badge-fail">Fails (4th-Grade Ceiling)</span></td>
-                        <td><span class="badge-fail">Illegible Motion Blur</span></td>
-                        <td><span class="badge-pass">Native Spatial 3D Sign Language</span></td>
+                        <td>Inference Latency</td>
+                        <td style="color: var(--rose-glow);">15,000 ms – 30,000 ms</td>
+                        <td>800 ms – 1,500 ms</td>
+                        <td>1,200 ms</td>
+                        <td style="color: var(--emerald-glow);">&lt; 150 ms (Real-Time 60 FPS)</td>
                     </tr>
                     <tr>
-                        <td><strong>Compute Cost / Query</strong></td>
-                        <td>$0.005 (ASR cloud)</td>
-                        <td><span class="badge-fail">$0.10 - $0.20 (Cloud GPU)</span></td>
-                        <td><span class="badge-pass">$0.000 (Client-Side WebGL)</span></td>
+                        <td>Cloud GPU Cost / Minute</td>
+                        <td style="color: var(--rose-glow);">$6.00 / minute streaming</td>
+                        <td>$0.01 / minute</td>
+                        <td>$0.08 / minute server-side</td>
+                        <td style="color: var(--emerald-glow);">$0.00 (100% Client-Side Edge)</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Two-Way Bidirectional Dialogue</td>
+                        <td style="color: var(--rose-glow);">No (One-way video only)</td>
+                        <td style="color: var(--rose-glow);">No (English text only)</td>
+                        <td style="color: var(--rose-glow);">No (One-way avatar only)</td>
+                        <td style="color: var(--cyan-glow);">YES: Speech-to-Sign & Sign-to-Speech</td>
                     </tr>
                     <tr>
-                        <td><strong>Latency to Display</strong></td>
-                        <td>2.0 - 5.0 seconds</td>
-                        <td><span class="badge-fail">10.0 - 25.0 seconds</span></td>
-                        <td><span class="badge-pass">&lt; 50 ms (Instantaneous)</span></td>
+                        <td>Enterprise Hardware CapEx</td>
+                        <td>Requires High-End Server GPU</td>
+                        <td>Zero (Software)</td>
+                        <td>Custom specialized cameras</td>
+                        <td style="color: var(--emerald-glow);">Zero (Integrates on existing displays)</td>
                     </tr>
                     <tr>
-                        <td><strong>Deployment Hardware</strong></td>
-                        <td>User Smartphone required</td>
-                        <td>Cloud Streaming / GPU Carts</td>
-                        <td><span class="badge-pass">Pre-Existing Airport FIDS Monitors</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Software Gross Margin</strong></td>
-                        <td>45% - 55% (Human Scribes)</td>
-                        <td>20% - 35% (Cloud GPU Cost)</td>
-                        <td><span class="badge-pass">90% - 95% (Pure SaaS License)</span></td>
+                        <td>14 CFR § 382 Federal Compliance</td>
+                        <td style="color: var(--rose-glow);">Non-compliant (Hallucinations)</td>
+                        <td style="color: var(--amber-glow);">Partial (Fails low-literacy signers)</td>
+                        <td style="color: var(--amber-glow);">Partial (Uncanny valley rejection)</td>
+                        <td style="color: var(--emerald-glow);">100% Fully Compliant</td>
                     </tr>
                 </tbody>
             </table>
-            <div class="slide-footer">
-                <span class="footer-left">Benchmark: Evaluated against 14 CFR § 382.53 Federal Transit Display Requirements</span>
+            <footer class="slide-footer">
+                <span class="footer-left">Benchmark: Evaluated against US DOT 14 CFR § 382.53 Federal Transit Display Requirements</span>
                 <span class="footer-right">Competitive Moat</span>
-            </div>
-        </div>
+            </footer>
+        </section>
 
-        <!-- SLIDE 5: Relentless Execution (Working Traction) -->
-        <div class="slide" id="slide-5">
-            <div class="slide-header">
-                <div class="slide-category">Proof of Relentless Execution</div>
-                <h2 class="slide-title">We Did Not Wait for Funding to Build the Engine</h2>
-                <p class="slide-subtitle">Operating prototype live in production right now on GitHub Pages with continuous co-articulation.</p>
-            </div>
-            <div class="grid-3col">
-                <div class="card card-highlight-cyan">
-                    <div class="metric-hero">
-                        <span class="metric-val cyan">150 Signs</span>
-                        <span class="metric-label">Verified Production Lexicon Live</span>
-                    </div>
-                    <div class="card-title">Production WebGL Studio</div>
-                    <p class="card-desc">
-                        Audited and deployed across 7 operational domains (aviation, medical, emergency, transit, general communication). Free, unconstrained 360-degree camera inspection.
-                    </p>
-                </div>
-                <div class="card">
-                    <div class="metric-hero">
-                        <span class="metric-val emerald">735 GLBs</span>
-                        <span class="metric-label">Audited 125-Channel MoCap Assets</span>
-                    </div>
-                    <div class="card-title">Rapid Lexicon Pipeline</div>
-                    <p class="card-desc">
-                        Direct pipeline to ingest an existing proprietary archive of 735 skeletal animations, scaling our operational vocabulary to 1,500+ signs in under 60 days.
-                    </p>
-                </div>
-                <div class="card card-highlight-purple">
-                    <div class="metric-hero">
-                        <span class="metric-val purple">60 FPS</span>
-                        <span class="metric-label">Zero-Lag In-Browser Benchmark</span>
-                    </div>
-                    <div class="card-title">Airport Feed Parser</div>
-                    <p class="card-desc">
-                        Built-in operational parser mapping live flight announcements (*"Flight 240 delayed to Gate B12"*) directly into continuous kinematic gesture sequences.
-                    </p>
-                </div>
-            </div>
-            <div class="slide-footer">
-                <span class="footer-left">Live Simulator: https://joeytribb.github.io/sign-language-kinematics/</span>
-                <span class="footer-right">Current Traction</span>
-            </div>
-        </div>
-
-        <!-- SLIDE 6: The Regulatory Beachhead -->
-        <div class="slide" id="slide-6">
-            <div class="slide-header">
-                <div class="slide-category">Market & Commercial Beachhead</div>
-                <h2 class="slide-title">The Commercial Beachhead: Airport Departure Gates</h2>
-                <p class="slide-subtitle">Driven by federal compliance mandates, zero hardware CapEx, and finite operational vocabularies.</p>
-            </div>
+        <!-- SLIDE 5: Commercial Beachhead: Airport Departure Gates -->
+        <section class="slide" id="slide-5">
+            <header class="slide-header">
+                <div class="slide-category">Commercial Beachhead</div>
+                <h2 class="slide-title">The High-Margin Beachhead: Airport Departure Gates</h2>
+                <p class="slide-subtitle">Driven by federal statutory compliance mandates, zero hardware CapEx, and finite operational vocabularies.</p>
+            </header>
             <div class="grid-2col">
                 <div class="card card-highlight-emerald">
                     <div class="card-title">
-                        <span>The Regulatory Driver: 14 CFR § 382.53</span>
+                        <span>The Regulatory Forcing Function: 14 CFR § 382.53</span>
+                        <span class="card-tag tag-emerald">Federal Mandate</span>
                     </div>
                     <div class="metric-hero">
                         <span class="metric-val emerald">$10,000 / Gate</span>
                         <span class="metric-label">Annual Enterprise Display SaaS License</span>
                     </div>
                     <p class="card-desc">
-                        Under the US Department of Transportation’s <strong>Air Carrier Access Act (14 CFR § 382.53)</strong>, airlines face severe federal consent decrees and fines if they fail to provide prompt, equivalent visual messaging for auditory gate announcements.
+                        Under the US Department of Transportation's <strong>Air Carrier Access Act (14 CFR § 382.53)</strong>, commercial airlines and airport operators face statutory six-figure federal consent decrees if dynamic flight gate changes and emergency announcements are not visually accessible to deaf passengers.
                     </p>
                     <ul class="bullet-list">
-                        <li><strong>Low Liability:</strong> Finite travel vocabulary (~150–300 phrases) with zero medical malpractice exposure.</li>
-                        <li><strong>$0 CapEx:</strong> Integrates directly into pre-existing gate monitors via standard browser runtime.</li>
-                        <li><strong>Scalable Hubs:</strong> A single hub like DFW or Atlanta represents $1M+ in annual recurring revenue.</li>
+                        <li><strong>Zero Hardware CapEx:</strong> Deploys directly onto existing gate monitors and flight information display systems (FIDS) via lightweight browser runtime.</li>
+                        <li><strong>Low Operational Liability:</strong> Finite travel vocabulary (~250 operational phrases) with zero medical malpractice exposure.</li>
+                        <li><strong>Immediate High ARR:</strong> A single hub like Dallas/Fort Worth (168 gates) or Atlanta (192 gates) represents $1.6M – $1.9M in annual recurring revenue.</li>
                     </ul>
                 </div>
                 <div class="card">
                     <div class="card-title">
                         <span>The $20M+ Ava Footprint is Our Warm Pipeline</span>
+                        <span class="card-tag tag-purple">Proven Budget Lines</span>
                     </div>
                     <p class="card-desc">
-                        Ava proved that enterprises have approved budget lines for Deaf accessibility, selling text captioning to <strong>Air France, UCLA, Autodesk, and state agencies</strong>.
+                        Ava proved that enterprise accessibility budgets already exist, selling text captioning to <strong>Air France, UCLA, Autodesk, and government agencies</strong>.
                     </p>
                     <ul class="bullet-list">
-                        <li>Every organization paying Ava today has an <strong>unresolved spatial sign language liability</strong> for native signers.</li>
-                        <li>We do not need to educate procurement departments on accessibility budgets; we provide the spatial 3D sign layer that completes their compliance.</li>
-                        <li>Expansion path: Airport Gates → Rail Terminals (Amtrak) → QSR Drive-Thrus → Healthcare Kiosks.</li>
+                        <li>Every enterprise paying Ava today has an <strong>unresolved spatial sign language liability</strong> for native Deaf signers who cannot read fast English captions.</li>
+                        <li>We do not need to educate procurement departments on accessibility budgets; we provide the spatial 3D signing engine that satisfies their legal mandate.</li>
+                        <li>Immediate expansion: Airport Gates → Rail Terminals (Amtrak) → Hospital Triage → Bank Teller Counters.</li>
                     </ul>
                 </div>
             </div>
-            <div class="slide-footer">
+            <footer class="slide-footer">
                 <span class="footer-left">Federal Compliance: US Department of Transportation 14 CFR § 382.53(a)(3)</span>
-                <span class="footer-right">Go-To-Market</span>
-            </div>
-        </div>
+                <span class="footer-right">Go-To-Market Beachhead</span>
+            </footer>
+        </section>
 
-        <!-- SLIDE 7: Speciale Portfolio Alignment -->
-        <div class="slide" id="slide-7">
-            <div class="slide-header">
+        <!-- SLIDE 6: Dual Flywheel Business Model: B2B Enterprise + B2C Mobile -->
+        <section class="slide" id="slide-6">
+            <header class="slide-header">
+                <div class="slide-category">Business Model & Growth Flywheel</div>
+                <h2 class="slide-title">The Dual Engines: $10K/Gate SaaS + $2/Month Consumer Mobile</h2>
+                <p class="slide-subtitle">Combining high-margin enterprise compliance ARR with mass consumer network effects across 70M+ deaf individuals globally.</p>
+            </header>
+            <div class="grid-2col">
+                <div class="card card-highlight-cyan">
+                    <div class="card-title">
+                        <span>Engine 1: B2B & B2B2C Enterprise SaaS</span>
+                        <span class="card-tag tag-cyan">Cash Flow Engine</span>
+                    </div>
+                    <div class="metric-hero">
+                        <span class="metric-val cyan">90%+</span>
+                        <span class="metric-label">Software Gross Margins (Client-Side Edge Compute)</span>
+                    </div>
+                    <p class="card-desc">
+                        High-ACV enterprise compliance software sold to airlines, airport authorities, hospitals, and transit hubs:
+                    </p>
+                    <ul class="bullet-list">
+                        <li><strong>Annual License:</strong> $10,000 per departure gate / public terminal annually.</li>
+                        <li><strong>B2B2C Dynamics:</strong> Enterprise pays the bill; thousands of daily deaf travelers and hearing staff use the bidirectional interface.</li>
+                        <li><strong>High Switching Costs:</strong> Once integrated into airport FIDS and ground crew operations, Sammy becomes standard operational infrastructure.</li>
+                    </ul>
+                </div>
+                <div class="card card-highlight-purple">
+                    <div class="card-title">
+                        <span>Engine 2: B2C Mobile Direct Subscriptions</span>
+                        <span class="card-tag tag-purple">Grassroots Moat</span>
+                    </div>
+                    <div class="metric-hero">
+                        <span class="metric-val purple">$2.00 / mo</span>
+                        <span class="metric-label">Mass-Market Accessible Smartphone Pricing</span>
+                    </div>
+                    <p class="card-desc">
+                        Over 70 million deaf individuals globally need everyday communication for ordering coffee, visiting retail stores, and talking to hearing peers:
+                    </p>
+                    <ul class="bullet-list">
+                        <li><strong>Zero CAC Flywheel:</strong> Travelers experience Sammy on airport monitors and download the smartphone app for personal use.</li>
+                        <li><strong>Unassailable Data Moat:</strong> Everyday consumer signing interactions continuously feed our causal spatial memory bank, expanding our real-world linguistic edge.</li>
+                        <li><strong>Community Trust:</strong> Transparent, affordable pricing cements deep cultural loyalty within Deaf associations worldwide.</li>
+                    </ul>
+                </div>
+            </div>
+            <footer class="slide-footer">
+                <span class="footer-left">Unit Economics: Edge Execution eliminates server streaming bills, enabling both enterprise scale and $2/mo pricing</span>
+                <span class="footer-right">Business Model</span>
+            </footer>
+        </section>
+
+        <!-- SLIDE 7: Universal Protocol Vision: Everywhere & Anywhere -->
+        <section class="slide" id="slide-7">
+            <header class="slide-header">
+                <div class="slide-category">Long-Term Platform Horizon</div>
+                <h2 class="slide-title">The Universal Standard: Sammy for Everywhere & Anywhere</h2>
+                <p class="slide-subtitle">Capturing airport gates first to establish regulatory cash flow, then scaling Sammy into the universal foundation protocol for deaf communication.</p>
+            </header>
+            <div class="grid-3col">
+                <div class="card card-highlight-cyan">
+                    <div class="card-title">
+                        <span>Healthcare & Emergency</span>
+                        <span class="card-tag tag-cyan">Life-Critical</span>
+                    </div>
+                    <div class="metric-hero">
+                        <span class="metric-val cyan">&lt; 30 sec</span>
+                        <span class="metric-label">Instant Emergency Room Triage</span>
+                    </div>
+                    <p class="card-desc">
+                        Hospitals currently wait 45+ minutes for live video-relay interpreters during medical emergencies. Sammy enables instantaneous two-way bedside diagnosis with full HIPAA compliance and zero data leaks.
+                    </p>
+                </div>
+                <div class="card card-highlight-emerald">
+                    <div class="card-title">
+                        <span>Civic, Banking & Retail</span>
+                        <span class="card-tag tag-emerald">Everyday Commerce</span>
+                    </div>
+                    <div class="metric-hero">
+                        <span class="metric-val emerald">100,000+</span>
+                        <span class="metric-label">Target Countertop Terminals</span>
+                    </div>
+                    <p class="card-desc">
+                        Bank teller stations, government DMV offices, and drive-thru kiosks integrate Sammy’s WebAssembly widget, making physical counter service accessible to every citizen without hiring specialized staff.
+                    </p>
+                </div>
+                <div class="card card-highlight-purple">
+                    <div class="card-title">
+                        <span>Video Calls & Mobile OS</span>
+                        <span class="card-tag tag-purple">Universal Software Layer</span>
+                    </div>
+                    <div class="metric-hero">
+                        <span class="metric-val purple">SDK / API</span>
+                        <span class="metric-label">Lightweight WebRTC Plug-in</span>
+                    </div>
+                    <p class="card-desc">
+                        Embedding Sammy directly into Zoom, Microsoft Teams, iOS, and Android. Any hearing participant talks normally, and any deaf attendee sees real-time signing on screen and signs back seamlessly.
+                    </p>
+                </div>
+            </div>
+            <footer class="slide-footer">
+                <span class="footer-left">Vision: Becoming the "TCP/IP" and Universal Runtime for Sign Language Worldwide</span>
+                <span class="footer-right">Platform Expansion</span>
+            </footer>
+        </section>
+
+        <!-- SLIDE 8: Portfolio Fit: Mirroring Speciale Invest’s DeepTech DNA -->
+        <section class="slide" id="slide-8">
+            <header class="slide-header">
                 <div class="slide-category">Speciale Portfolio Synergy</div>
                 <h2 class="slide-title">Parallel DNA: How SAMMY Fits Speciale Invest</h2>
-                <p class="slide-subtitle">Mirroring the engineering discipline of Speciale's landmark deeptech investments.</p>
-            </div>
+                <p class="slide-subtitle">Mirroring the rigorous engineering discipline of Speciale Invest's most successful deeptech investments.</p>
+            </header>
             <div class="grid-3col">
                 <div class="card card-highlight-cyan">
                     <div class="card-title">Like Morphing Machines</div>
                     <div class="metric-hero">
                         <span class="metric-val cyan">Compute Agility</span>
-                        <span class="metric-label">Efficiency over GPU Brute-Force</span>
+                        <span class="metric-label">Edge Efficiency over Server GPU Burn</span>
                     </div>
                     <p class="card-desc">
                         Just as Morphing Machines rethought parallel compute architectures out of IISc, SAMMY rejects multi-million-dollar cloud GPU clusters to execute deterministic spatial kinematics directly on edge display chips.
@@ -849,203 +933,177 @@
                     </p>
                 </div>
             </div>
-            <div class="slide-footer">
+            <footer class="slide-footer">
                 <span class="footer-left">Synergy Analysis: Indian DeepTech Engineering Serving Global Enterprise Infrastructure</span>
                 <span class="footer-right">Portfolio Fit</span>
-            </div>
-        </div>
+            </footer>
+        </section>
 
-        <!-- SLIDE 8: Cross-Border DeepTech Arbitrage (Budget) -->
-        <div class="slide" id="slide-8">
-            <div class="slide-header">
-                <div class="slide-category">Capital Efficiency</div>
-                <h2 class="slide-title">The Cross-Border Arbitrage: 4 Full Years of Runway</h2>
-                <p class="slide-subtitle">Leveraging Indian engineering depth to out-survive and out-execute US competitors on a single seed check.</p>
-            </div>
+        <!-- SLIDE 9: Team & 48-Month Cross-Border Capital Efficiency -->
+        <section class="slide" id="slide-9">
+            <header class="slide-header">
+                <div class="slide-category">Team & Capital Efficiency</div>
+                <h2 class="slide-title">Founding Team & The 4-Year Indian Runway Arbitrage</h2>
+                <p class="slide-subtitle">S-Tier systems and spatial AI engineering operating at 1/5th Silicon Valley burn rate.</p>
+            </header>
             <div class="grid-2col">
+                <div class="card card-highlight-cyan">
+                    <div class="card-title">
+                        <span>Founding Team & Engineering Complement</span>
+                        <span class="card-tag tag-cyan">Co-Founders</span>
+                    </div>
+                    <div class="metric-hero">
+                        <span class="metric-val cyan">2 Founders</span>
+                        <span class="metric-label">Spatial AI + Systems / Compiler Engineering</span>
+                    </div>
+                    <p class="card-desc">
+                        <strong>Iniyan Joseph (Founder & Spatial AI Engineer):</strong> Research background in sign language kinematics, procedural 3D inverse solvers, and bidirectional translation architectures.
+                    </p>
+                    <p class="card-desc">
+                        <strong>Co-Founder & CTO (Systems Architect):</strong> Expert C, C++, and Java background specializing in high-performance WebAssembly compilation, memory-constrained embedded runtimes, and native Android NDK integration.
+                    </p>
+                    <ul class="bullet-list">
+                        <li>Founder & Co-founder are aligned under a 4-year vesting schedule with a 1-year cliff.</li>
+                        <li>Uncompromising focus on low-level systems engineering rather than brittle API wrappers.</li>
+                    </ul>
+                </div>
                 <div class="card">
-                    <div class="card-title">Detailed 48-Month Financial Sustenance Model</div>
-                    <table class="custom-table">
+                    <div class="card-title">
+                        <span>The 48-Month Financial Sustenance Model ($750K / ₹6.24 Cr)</span>
+                        <span class="card-tag tag-emerald">Unmatched Efficiency</span>
+                    </div>
+                    <table class="custom-table" style="font-size: 11.5px;">
                         <thead>
                             <tr>
-                                <th>Expense Category</th>
+                                <th>Category</th>
                                 <th>Monthly (INR)</th>
                                 <th>48-Month Total (INR)</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Founder Executive Salary</td>
-                                <td>₹3,00,000 / mo</td>
-                                <td>₹1,44,00,000 ($173K)</td>
+                                <td>Founders & Systems Engineers</td>
+                                <td>₹5,50,000 / mo</td>
+                                <td>₹2,64,00,000 ($316K)</td>
                             </tr>
                             <tr>
-                                <td>4-6 Core Engineers (Graphics/IK)</td>
-                                <td>₹2,50,000 / mo</td>
-                                <td>₹1,20,00,000 ($145K)</td>
-                            </tr>
-                            <tr>
-                                <td>Office / Hacker House & Utilities</td>
+                                <td>Office / Engineering Hub</td>
                                 <td>₹1,00,000 / mo</td>
                                 <td>₹48,00,000 ($58K)</td>
                             </tr>
                             <tr>
-                                <td>In-House MoCap Lab (One-Time CapEx)</td>
+                                <td>In-House MoCap Lab (One-Time)</td>
                                 <td>—</td>
                                 <td>₹25,00,000 ($30K)</td>
                             </tr>
                             <tr>
-                                <td>Company Operational Field Vehicle</td>
+                                <td>US Corporate & International Patents</td>
                                 <td>—</td>
-                                <td>₹26,00,000 ($31K)</td>
+                                <td>₹35,00,000 ($42K)</td>
                             </tr>
                             <tr>
-                                <td><strong>Total Sustenance Budget (with Buffer)</strong></td>
+                                <td>Airport Pilots & Compliance Testing</td>
+                                <td>₹1,50,000 / mo</td>
+                                <td>₹72,00,000 ($86K)</td>
+                            </tr>
+                            <tr class="highlight-row">
+                                <td>Strategic Reserve / Buffer</td>
                                 <td>—</td>
-                                <td><strong>₹4,41,00,000 (~$535,000 USD)</strong></td>
+                                <td>₹1,80,00,000 ($218K)</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="card card-highlight-emerald">
-                    <div class="card-title">Why This Makes SAMMY Indestructible</div>
-                    <div class="metric-hero">
-                        <span class="metric-val emerald">48 Months</span>
-                        <span class="metric-label">Uninterrupted Engineering Runway</span>
-                    </div>
-                    <p class="card-desc">
-                        In Silicon Valley, a $500K check lasts 7 months on 2 engineers. 
-                        Because our core graphics and mathematical engineering is built in India, Speciale’s <strong>$750K check funds 4 complete years of relentless iteration</strong>.
-                    </p>
-                    <ul class="bullet-list">
-                        <li><strong>Zero Panic:</strong> We are default-alive from Day Zero, giving us total leverage in airport enterprise procurement.</li>
-                        <li><strong>Dedicated Deaf Council:</strong> $150,000 specifically allocated to native Deaf linguists, ensuring community co-design immunity.</li>
-                    </ul>
-                </div>
             </div>
-            <div class="slide-footer">
-                <span class="footer-left">Unit Economics: 90%+ Gross Margin • Zero Cloud GPU Server Dependency</span>
+            <footer class="slide-footer">
+                <span class="footer-left">Unit Economics: 48 Months of runway allows out-surviving and out-executing any US competitor</span>
                 <span class="footer-right">Runway Economics</span>
-            </div>
-        </div>
+            </footer>
+        </section>
 
-        <!-- SLIDE 9: What $750K - $1M Unlocks -->
-        <div class="slide" id="slide-9">
-            <div class="slide-header">
-                <div class="slide-category">Capital Allocation & Milestones</div>
-                <h2 class="slide-title">Deployment of Capital: What $750K – $1M Unlocks</h2>
-                <p class="slide-subtitle">Directly aligning with Speciale Invest's sweet spot to collapse a 3-year roadmap into 12 months.</p>
-            </div>
-            <div class="grid-3col">
-                <div class="card card-highlight-cyan">
-                    <div class="metric-hero">
-                        <span class="metric-val cyan">In-House Lab</span>
-                        <span class="metric-label">Hardware Ownership</span>
-                    </div>
-                    <div class="card-title">Dedicated MoCap Studio</div>
-                    <p class="card-desc">
-                        Procure dedicated Manus Metagloves and inertial suits. Allows our in-house Deaf signers to compile, verify, and ship custom airline safety phrases within 48 hours without renting commercial studios.
-                    </p>
-                </div>
-                <div class="card card-highlight-purple">
-                    <div class="metric-hero">
-                        <span class="metric-val purple">5,000+ Signs</span>
-                        <span class="metric-label">Multi-Lingual Lexicon</span>
-                    </div>
-                    <div class="card-title">ASL + ISL Dual Compiler</div>
-                    <p class="card-desc">
-                        Simultaneously unlock both US aviation (ASL) and Indian Civil Aviation (ISL at Delhi/Mumbai airports under Ministry of Civil Aviation accessibility directives).
-                    </p>
-                </div>
-                <div class="card card-highlight-emerald">
-                    <div class="metric-hero">
-                        <span class="metric-val emerald">Global PCT</span>
-                        <span class="metric-label">Intellectual Property Moat</span>
-                    </div>
-                    <div class="card-title">International Patents</div>
-                    <p class="card-desc">
-                        File full PCT international patent applications across the US, EU, and India covering deterministic skeletal compiling and quaternion SLERP co-articulation, legally blocking Big Tech.
-                    </p>
-                </div>
-            </div>
-            <div class="slide-footer">
-                <span class="footer-left">Milestone Target: 2 Commercial Airport Hub Deployments in 12 Months</span>
-                <span class="footer-right">Execution Roadmap</span>
-            </div>
-        </div>
-
-        <!-- SLIDE 10: The Ask & Partnership -->
-        <div class="slide" id="slide-10">
-            <div class="slide-header">
+        <!-- SLIDE 10: The Ask: Inviting Speciale Invest to Lead -->
+        <section class="slide" id="slide-10">
+            <header class="slide-header">
                 <div class="slide-category">The Investment Opportunity</div>
-                <h2 class="slide-title">The Ask: Inviting Speciale Invest to Lead</h2>
-                <p class="slide-subtitle">A category-defining DeepTech investment at the intersection of spatial AI, public transit, and civil rights.</p>
-            </div>
+                <h2 class="slide-title">The Ask: Inviting Speciale Invest to Lead Our Pre-Seed</h2>
+                <p class="slide-subtitle">A category-defining DeepTech investment at the intersection of spatial AI, public transit infrastructure, and civil rights.</p>
+            </header>
             <div class="grid-2col">
                 <div class="card card-highlight-cyan">
-                    <div class="card-title">The Offering Structure</div>
-                    <ul class="bullet-list" style="margin-top: 14px;">
-                        <li><strong>Target Raise:</strong> $750,000 – $1,000,000 (Speciale Sweet Spot).</li>
-                        <li><strong>Instrument:</strong> Standard YC Post-Money SAFE note.</li>
-                        <li><strong>Valuation Cap:</strong> $6,000,000 – $7,000,000 Post-Money.</li>
+                    <div class="card-title">
+                        <span>The Offering Structure</span>
+                        <span class="card-tag tag-cyan">Deal Terms</span>
+                    </div>
+                    <ul class="bullet-list" style="margin-top: 14px; gap: 12px;">
+                        <li><strong>Target Raise:</strong> $750,000 (Directly in Speciale Invest's pre-seed lead sweet spot).</li>
+                        <li><strong>Instrument:</strong> Standard Y Combinator Post-Money SAFE note.</li>
+                        <li><strong>Valuation Cap:</strong> $6,000,000 Post-Money.</li>
                         <li><strong>Position:</strong> Inviting Speciale Invest to serve as the <strong>Lead Institutional Investor</strong>.</li>
-                        <li><strong>Corporate Vehicle:</strong> Delaware C-Corp parent entity holding all IP, with Indian wholly-owned operational R&D subsidiary.</li>
+                        <li><strong>Corporate Vehicle:</strong> Delaware C-Corp parent holding all IP, with Indian wholly-owned operational R&D subsidiary.</li>
                     </ul>
                 </div>
                 <div class="card card-highlight-purple">
-                    <div class="card-title">Why Speciale Invest is Our First Choice</div>
+                    <div class="card-title">
+                        <span>Next Steps & Immediate Diligence Access</span>
+                        <span class="card-tag tag-purple">Live Proof</span>
+                    </div>
                     <p class="card-desc">
-                        We do not want passive capital. We want an operator-led deeptech lead who understands:
+                        We did not wait for funding to build the engine. Our live 3D procedural studio is operational right now for independent diligence:
                     </p>
-                    <ul class="bullet-list">
-                        <li><strong>Customer Access:</strong> Introducing SAMMY to Indian airport modernization projects (AAI, DigiYatra) while we scale US transit hubs.</li>
-                        <li><strong>Team Building:</strong> Sourcing elite 3D graphics, kinematics, and biomechanical talent from IIT Madras, IISc, and NIT networks.</li>
-                        <li><strong>Patient Conviction:</strong> Leveraging Speciale's 60% follow-on reserve to lead our Series A as airport contracts compound.</li>
+                    <ul class="bullet-list" style="margin-top: 10px;">
+                        <li><strong>Interactive 3D Studio Demo:</strong> <a href="https://joeytribb.github.io/sign-language-kinematics/04_Procedural_Engine_PoC/anatomical_hand.html" target="_blank">Launch 3D WebGL Engine</a></li>
+                        <li><strong>Founder Profile:</strong> <a href="https://www.linkedin.com/in/iniyandrews" target="_blank">linkedin.com/in/iniyandrews</a></li>
+                        <li><strong>Official Email:</strong> iniyandrews@gmail.com</li>
+                        <li><strong>Technical Readiness:</strong> Ready for immediate partner-level technical diligence with Speciale's investment team.</li>
                     </ul>
                 </div>
             </div>
-            <div class="slide-footer">
+            <footer class="slide-footer">
                 <span class="footer-left">SAMMY • Ready for Immediate Investment Committee Diligence</span>
-                <span class="footer-right">Founder & CEO: [Your Name] | Contact: [Your Email]</span>
-            </div>
-        </div>
+                <span class="footer-right">Founder: Iniyan Joseph | Email: iniyandrews@gmail.com</span>
+            </footer>
+        </section>
 
-    </div>
+    </main>
 
-    <!-- JavaScript Slide Controller -->
+    <!-- KEYBOARD NAVIGATION & INTERACTIVE SCRIPTS -->
     <script>
         let currentSlide = 1;
         const totalSlides = 10;
 
-        function updateSlide() {
-            document.querySelectorAll('.slide').forEach((s, idx) => {
-                s.classList.remove('active');
-                if (idx === currentSlide - 1) {
-                    s.classList.add('active');
-                }
+        function updateSlide(index) {
+            if (index < 1 || index > totalSlides) return;
+            
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
             });
-            document.getElementById('slideCounter').innerText = `Slide ${currentSlide} / ${totalSlides}`;
+
+            const activeSlide = document.getElementById(`slide-${index}`);
+            if (activeSlide) {
+                activeSlide.classList.add('active');
+                currentSlide = index;
+                document.getElementById('slideCounter').innerText = `Slide ${currentSlide} / ${totalSlides}`;
+            }
         }
 
         function nextSlide() {
             if (currentSlide < totalSlides) {
-                currentSlide++;
-                updateSlide();
+                updateSlide(currentSlide + 1);
             }
         }
 
         function prevSlide() {
             if (currentSlide > 1) {
-                currentSlide--;
-                updateSlide();
+                updateSlide(currentSlide - 1);
             }
         }
 
-        // Keyboard Navigation (Arrow Keys & Space)
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === ' ') {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
                 nextSlide();
-            } else if (e.key === 'ArrowLeft') {
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
                 prevSlide();
             }
         });
