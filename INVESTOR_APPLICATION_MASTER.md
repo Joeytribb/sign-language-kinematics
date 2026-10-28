@@ -28,8 +28,13 @@ Under US Federal Law (**14 CFR § 382.53 — Air Carrier Access Act**), commerci
   Over **70% of prelingually Deaf individuals read English below a 4th-grade reading level** (*Traxler, Journal of Deaf Studies and Deaf Education / Gallaudet Research Institute*). English is an acquired phonetic second language; during high-stress flight cancellations, text tickers cause cognitive failure. Native 3D visual Sign Language is an essential operational requirement.
 * **Why Generative Video (Sora / Runway) Fails:**  
   Pixel diffusion models hallucinate finger counts, drift bone lengths ($\Delta > 0.12$), take 15 seconds to generate, and burn **\$0.10 to \$0.20 per second** in cloud GPU compute—destroying unit economics.
-* **The Business Model:**  
+* **The Business Model & Beachhead:**  
   We license our lightweight display engine directly to airport authorities and airlines at **\$10,000 / gate / year** (\$1M+ ARR per hub). It executes on pre-existing digital display controllers with **\$0.00 new hardware CapEx** required.
+
+* **Market Sizing Architecture (TAM / SAM / SOM):**
+  * **SOM (\$200M ARR Beachhead):** Commercial Airport Departure Gates. 20,000 passenger boarding gates globally across Tier 1–3 hubs × \$10,000/gate/year SaaS = **\$200M ARR initial regulatory compliance market**.
+  * **SAM (\$3.2B ARR Physical Infrastructure):** High-speed rail/Amtrak stations (\$600M), hospital emergency room intake desks (\$1.2B), and everyday civic/banking counters (\$1.4B).
+  * **TAM (\$10.5B+ Universal Protocol):** Universal bidirectional software standard embedded via WebRTC SDKs into Zoom, Teams, telehealth, and call centers (\$4.8B), plus direct-to-consumer mobile subscriptions (\$2/mo) across 70M+ deaf individuals globally (\$168M+ consumer ARR) within the broader \$7B+ digital accessibility sector.
 
 ---
 
